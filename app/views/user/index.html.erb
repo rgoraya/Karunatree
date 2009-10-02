@@ -1,0 +1,53 @@
+<% content_for(:include_custom_stylesheet) do %>
+  <%= stylesheet_link_tag "storybook" %>
+<% end %>
+
+<% content_for(:include_custom_javascript) do %>
+  <script src="http://www.google.com/jsapi?key=ABQIAAAALuMnM-_PZBAC0jiiDlxy2xRGQdiD-hjaSRiclgqKLFtYALqY5BStWXbW2ka15MNHBzunqwVPJAJ65A" type="text/javascript"> </script>	  
+  <%= javascript_include_tag "ge_loader" %>
+  <script type="text/javascript">
+    load_ge(<%= @user.id -%>);
+  </script>
+  <%= javascript_include_tag "find_felix" %> 
+<% end %>
+
+<div id="drawer_wrapper">
+  <div id="drawer">
+    <div id="branch">
+      
+      <div id="leaf_right">
+        <div id="next_button">></div>
+        <div id="leaf_right_content">
+          <p>The breeze off the ocean was brisk, and Sam’s attention was drawn to a petrel floating towards him on the air currents. Reaching shore over Sam’s head, the bird turned to orbit in a wide circle, moving up and down as the breeze eddied and turning his head as though trying to keep Sam in view. The bird circled for a second time, lower now and still intent in his interest. <em>What a curious bird!</em>, Sam thought, shading his eyes to get a better look at this strange visitor. 
+        </div>
+      </div>
+    
+      <div id="leaf_separator">
+        &nbsp;
+      </div>
+  
+      <div id="leaf_left">
+        <div id="back_button"><</div>
+        <div id="leaf_left_content">
+          <img src="http://vintageprintable.com/wordpress/wp-content/gallery/japanese-brush-paintings/animal-bird-japanese-flying.jpg", width="400px">
+        </div>
+      </div>
+      
+    </div>
+    
+    
+    
+  </div>
+</div>
+</div>
+
+<div id="drawer_handle">
+  <a href="#" onclick="toggleDrawerState(); Effect.toggle('drawer', 'slide'); handleResize(); return false;">Toggle Drawer</a>
+</div>
+
+<!-- Non-resizing version
+<div id="drawer_handle">
+  <a href="#" onclick="Effect.toggle('drawer', 'appear', { duration: 0.5 }); return false;">Toggle Drawer</a>
+</div>
+-->
+<div id="earth"></div>

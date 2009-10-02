@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+valid_user:
+    id: 1
+    username: felix
+    email: felix.orangutango@hellofelix.com
+    password: banana
+
+invalid_user:
+    id: 2
+    username: aa/noyes
+    email: anoyes@example,com
+    password: boo

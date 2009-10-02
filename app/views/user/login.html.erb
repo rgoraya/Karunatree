@@ -1,0 +1,35 @@
+<h2>Log In</h2>
+<br />
+<% form_for :user do |form| %>
+  <fieldset>
+    <legend>Please enter your details</legend>
+    
+    <div class="form_row">
+      <label for="username">Username:</label>
+      <%= form.text_field :username,
+                          :size => User::USERNAME_SIZE,
+                          :maxlength => User::USERNAME_MAX_LENGTH %>
+    </div>
+    
+    <div class="form_row">
+      <label for="password">Password:</label>
+      <%= form.password_field :password,
+                              :size => User::PASSWORD_SIZE,
+                              :maxlength => User::PASSWORD_MAX_LENGTH %>
+    </div>
+    
+    <div class="form_row">
+      <label for="remember_me">Remember me?</label>
+      <%= form.check_box :remember_me %>
+    </div>
+    
+    <div class="form_row">
+      <%= submit_tag "Dive in!", :class => "submit" %>
+    </div>
+    
+  </fieldset>
+<% end %>
+  
+<p>
+  Not a member yet? You can <%= link_to "sign up now", :action => "signup"%> for free!
+</p>
