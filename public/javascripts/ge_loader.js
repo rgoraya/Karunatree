@@ -32,11 +32,11 @@ function failureCB(errorCode) {
 
 //Retrieve the KML file for the user
 function setupKmlNetworkLink() {
-	var href = 'http://localhost:3000/kml_bundle/transmit/'+user_id;
+	var href = 'http://localhost:3000/kml_bundle/transmit/'+USER_ID;
 	google.earth.fetchKml(ge, href, linkDidFinishLoading);
 }
 
-function linkDidFinishLoading(kmlObject) {
+function linkDidFinishLoading(kmlObject) {	
 	if (kmlObject) {
 		ge.getFeatures().appendChild(kmlObject);
 		//ge.getTourPlayer().setTour(kmlObject);
