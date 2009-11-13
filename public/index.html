@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+	  <title>KarunaTree JavaScript</title>
+	  
+	  <script type = "text/javascript">
+	    var CLOSURE_NO_DEPS = true;
+	    var CLOSURE_BASE_PATH = "/"; //The path where calcdeps.py was run
+	  </script>
+	  <script src = "javascripts/closure/goog/base.js"></script>
+	  <script src = "javascripts/ktree/deps.js"></script>
+	  <script src="http://www.google.com/jsapi?key=ABQIAAAALuMnM-_PZBAC0jiiDlxy2xRGQdiD-hjaSRiclgqKLFtYALqY5BStWXbW2ka15MNHBzunqwVPJAJ65A" type="text/javascript"> </script>
+    <script>
+      //Closure needs to know what the entry point for our js library is in order to add the right resources to the header
+      goog.require('ktree.Core');
+    </script>
+
+	  
+	</head>
+	  
+  <body>
+	  <div id="earth" style="height: 600px; width: 800px;"></div>
+	  <script>
+	      var karunaTree = new ktree.Core(true);
+	  </script>
+  </body>
+</html>
