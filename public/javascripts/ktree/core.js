@@ -1,7 +1,8 @@
 goog.provide('ktree.Core');
 
-goog.require('ktree.Utils');
+goog.require('ktree.debug');
 goog.require('ktree.World');
+goog.require('ktree.ktx.KtxManager');
 
 /**
 *	@fileoverview
@@ -14,11 +15,26 @@ goog.require('ktree.World');
 * 	@constructor
 */
 ktree.Core = function(debugOn) {
+	
+	if(debugOn) {
+		ktree.debug.startDebugger();
+	}
 
-	if (debugOn) {
-		ktree.Utils.startDebugger();
+	this.world_ = new ktree.GoogleEarth('Main');
+	this.ktxManager_ = new ktree.ktx.KtxManager(this.world_);
+}
+
+ktree.Core.prototype.debugTemp = function() {
+	var target = this;
+	var name = 'http://localhost:3000/kml/ktree-1-1.xml';
+	
+	success = function(dataSource) {
+
 	}
 	
-	this.world_ = new ktree.World();
-	this.world_.initialize();
+	failure = function() {
+		alert('Failed to load KtxDataSource')
+	}
+	this.world_.makeAnimTestButton();
+	this.ktxManager_.loadKtx(name, 'KTXTest', success, failure);
 }

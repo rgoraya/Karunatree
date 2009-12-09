@@ -195,7 +195,11 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ktree.GoogleEarth.html">ktree.GoogleEarth</a></li>
 	
-	<li><a href="../symbols/ktree.Utils.html">ktree.Utils</a></li>
+	<li><a href="../symbols/ktree.ktx.KtxDataSource.html">ktree.ktx.KtxDataSource</a></li>
+	
+	<li><a href="../symbols/ktree.ktx.KtxInterpreter.html">ktree.ktx.KtxInterpreter</a></li>
+	
+	<li><a href="../symbols/ktree.ktx.KtxManager.html">ktree.ktx.KtxManager</a></li>
 	
 	<li><a href="../symbols/ktree.World.html">ktree.World</a></li>
 	
@@ -219,7 +223,7 @@ ul.inheritsList
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/ktree_googleearth.js.html">googleearth.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/googleearth.js.html">googleearth.js</a>.
 				
 			</p>
 
@@ -250,26 +254,117 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
+
+<!-- ============================== methods summary ======================== -->
+			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class ktree.GoogleEarth.">
-					<caption>Field Summary</caption>
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class ktree.GoogleEarth.">
+					<caption>Method Summary</caption>
 					<thead>
 						<tr>
-							<th scope="col">Field Attributes</th>
-							<th scope="col">Field Name and Description</th>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
 						</tr>
 					</thead>
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/ktree.GoogleEarth.html#-that">that</a></b>
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#addKml">addKml</a></b>(kmlObject)
 								</div>
-								<div class="description">A temporary reference to this *particular* GoogleEarth object needed to 
-	allow the initialization callback chain to reach this object again.</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#apiReady">apiReady</a></b>()
+								</div>
+								<div class="description">Returns whether or not the Google Earth API is initialized and ready for commands</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#fetchKml">fetchKml</a></b>(kmlUrl)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#makeAnimTestButton">makeAnimTestButton</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#makeCameraButton">makeCameraButton</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#moveCameraRelative">moveCameraRelative</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#moveCameraTo">moveCameraTo</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#parseKml">parseKml</a></b>(kmlString)
+								</div>
+								<div class="description">Adds the features in an argument KML string to the GE instance.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#startAnimation">startAnimation</a></b>(newAnimationProvider)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#startAnimationCallback">startAnimationCallback</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#stopAnimation">stopAnimation</a></b>(tickProvider)
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -278,9 +373,6 @@ ul.inheritsList
 				
 				
 				
-			
-
-<!-- ============================== methods summary ======================== -->
 			
 <!-- ============================== events summary ======================== -->
 			
@@ -329,26 +421,345 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
+
+<!-- ============================== method details ========================= -->		
+			
 				<div class="sectionTitle">
-					Field Detail
+					Method Detail
 				</div>
 				
-					<a name="-that"> </a>
-					<div class="fixedFont">&lt;inner&gt; 
+					<a name="addKml"> </a>
+					<div class="fixedFont">
 					
 					
-					<b>that</b>
+					<b>addKml</b>(kmlObject)
 					
 					</div>
 					<div class="description">
-						A temporary reference to this *particular* GoogleEarth object needed to 
-	allow the initialization callback chain to reach this object again.
+						
 						
 						
 					</div>
 					
 					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>kmlObject</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
 
+					<hr />
+				
+					<a name="apiReady"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{boolean}</span>
+					<b>apiReady</b>()
+					
+					</div>
+					<div class="description">
+						Returns whether or not the Google Earth API is initialized and ready for commands
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{boolean}</span> </dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="fetchKml"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>fetchKml</b>(kmlUrl)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>kmlUrl</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="makeAnimTestButton"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>makeAnimTestButton</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="makeCameraButton"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>makeCameraButton</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="moveCameraRelative"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>moveCameraRelative</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="moveCameraTo"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>moveCameraTo</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="parseKml"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>parseKml</b>(kmlString)
+					
+					</div>
+					<div class="description">
+						Adds the features in an argument KML string to the GE instance. If the KML string defines
+	an AbstractView (e.g. a Camera or a LookAt), the GE instance's view is set to the
+	AbstractView
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>kmlString</b>
+									
+								</dt>
+								<dd>A string of valid KML</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="startAnimation"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>startAnimation</b>(newAnimationProvider)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/ktree.html#.AnimationProvider">ktree.AnimationProvider</a> | null}</span> <b>newAnimationProvider</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="startAnimationCallback"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>startAnimationCallback</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="stopAnimation"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>stopAnimation</b>(tickProvider)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>tickProvider</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
 						
 						
 						
@@ -356,9 +767,6 @@ ul.inheritsList
 
 					
 				
-			
-
-<!-- ============================== method details ========================= -->		
 			
 			
 <!-- ============================== event details ========================= -->		
@@ -371,7 +779,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.3 on Thu Nov 12 2009 16:33:13 GMT-0800 (PST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.3 on Tue Dec 08 2009 17:59:22 GMT-0800 (PST)
 		</div>
 	</body>
 </html>
