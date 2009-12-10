@@ -9,6 +9,16 @@ goog.require('goog.ds.LoadState');
 goog.require('goog.async.ConditionalDelay');
 
 /**
+*	@fileoverview
+*	The KtxManager class implements the logic needed to load KTX (.xml) files from remote addresses,
+*	and manage the goog.ds.XmlHttpDataSource objects which are used to locally represent and manipulate
+*	the contents of the files. The KtxManager does not itself know how to actually interpret the KTX files
+*	that it loads and manages; for that functionality see the KtxInterpreter
+*	@see {ktree.ktx.KtxInterpreter}
+*/
+
+/**
+*	A KtxManager
 *	@constructor
 */
 ktree.ktx.KtxManager = function(world) {
@@ -21,6 +31,8 @@ ktree.ktx.KtxManager = function(world) {
 	this.dm_ = goog.ds.DataManager.getInstance();
 	
 	/**
+	*	A reference to the World object that will eventually display
+	*	the contents of the KTX files
 	*	@private
 	*	@type {ktree.GoogleEarth}
 	*/
@@ -37,10 +49,12 @@ ktree.ktx.KtxManager = function(world) {
 
 
 /**
-*	Load a remote KTX file and render the results in the World.
+*	Load a remote KTX (.xml) file and pass it to the KtxInterpreter for
+*	parsing and interpretation.
 *	@public 
 *	@param {string} uri 				The URI for the KTX (.xml) file to load
-*	@param {string} dsName 				A string identifier by which the newly created KtxDataSource will be referenced
+*	@param {string} dsName 				A string identifier by which the goog.ds.XmlHttpDataSource corresponding
+*										to the input file will be referenced
 */
 ktree.ktx.KtxManager.prototype.loadKtx = function(uri, dsName) {
 	ktree.debug.logInfo('Creating new KTX XmlHttpDataSource <' + dsName + '> with data from URI <' + uri + '>...');
@@ -62,63 +76,4 @@ ktree.ktx.KtxManager.prototype.loadKtx = function(uri, dsName) {
 		target.interpreter_.parse(dataSource);
 	}
 	conditionalDelay.start(100, 5000);
-}
-
-/**
-*	Parse KTX from an argument KtxDataSource. If the World is ready, transmit the results for rendering.
-*	If the world is not yet ready, cache the results and retry transmission later
-*	@private
-*	@param {ktree.ktx.KtxDataSource} ktxDataSource The source of the KTX data to be parsed/transmitted
-*/
-ktree.ktx.KtxManager.prototype.parseKtx_ = function(ktxDataSource) {
-	if(this.world_.apiReady()) {
-		alert('GE is ready for data');
-	}
-	else {
-		alert('GE is not yet ready for data');
-	}
-}
-
-
-ktree.ktx.KtxManager.prototype.waitToGetKtxDataSource = function(dsName) {
-	
-	var target = this;
-	var foundDataSource;
-	
-	var conditionalDelay = new goog.async.ConditionalDelay(
-		function() {
-			var dataSource = target.dm_.getDataSource(dsName);
-			if (goog.isNull(dataSource)) {
-				if (goog.array.contains(target.failedDataSources_, dsName)) {
-					foundDataSource = false;
-					return true;
-				}
-				else return false;
-			}
-			else {
-				foundDataSource = true;
-				return true;
-			}	
-		}
-	);
-
-	conditionalDelay.onFailure = function() {
-		ktree.debug.logError('Timed out while trying to retrieve KTX DataSource <' + dsName + '> from the DataManager');
-		goog.array.insert(target.failedDataSources_, dsName);
-	}
-	conditionalDelay.onSuccess = function() {
-		ktree.debug.logInfo('KTX DataSource <' + dsName + '> has finished loading succesfully');
-		target.dm_.addDataSource(dataSource);
-		target.currentDsName_ = dsName;
-	}
-	conditionalDelay.start(100, 5000);
-	
-	var dataSource = this.dm_.getDataSource(dsName);
-	if (goog.isNull(dataSource)) {
-		ktree.debug.logError('KTX DataSource <' + dsName + '> could not be retrieved from the DataManager');
-	}
-	else {
-		ktree.debug.logFine('Retrieving KTX DataSource <' + dsName + '> from DataManager');
-	}
-	return dataSource;
 }

@@ -1,6 +1,28 @@
 goog.provide('ktree.ktx');
 
+/**
+*	@fileoverview
+*	Defines constants in the ktree.ktx namespace which are used by the KtxInterpreter to make
+*	sense of KTX commands
+*	@see {ktree.ktx.KtxInterpreter}
+*/
+
+/**
+*	The prefix string used to identify the root of a KTX (.xml) file in the context
+*	of a goog.ds.XmlDataSource
+*	@type {string}
+*/
 ktree.ktx.KTX_ROOT_PREFIX = "$";
+
+/**
+*	The prefix string used to identify KTX commands embedded within a KTX (.xml) file
+*	@type {string}
+*/
 ktree.ktx.KTX_NODE_PREFIX = "ktx:";
 
+/**
+*	Constant used to request a flyTo speed of "teleport" (e.g. instant travel) from
+*	the World object
+*	@type {number}
+*/
 ktree.ktx.SPEED_TELEPORT = 6;

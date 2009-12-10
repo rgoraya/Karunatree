@@ -9,11 +9,38 @@ goog.require('goog.dom.xml');
 goog.require('goog.string');
 
 /**
+*	@fileoverview
+*	The KTXInterpreter is responsible for converting a KTX (.xml) file, represented
+*	internally as a goog.ds.XmlDataSource, into a series of KTX commands and KML strings
+*	for the World to render
+*/
+
+/**
+*	A KTX interpreter
 *	@constructor
 */
 ktree.ktx.KtxInterpreter = function(world) {
+	/**
+	*	The World object to which the Interpreter should direct
+	*	its output
+	*	@private
+	*	@type {ktree.World}
+	*/
 	this.world_ = world;
+	
+	/**
+	*	A list of KTX commands (represented as goog.ds.DataNodes)
+	*	awaiting transmission to the World
+	*	@private
+	*	@type {goog.ds.BasicNodeList}
+	*/
 	this.ktxQueue_;
+	
+	/**
+	*	A string of KML awaiting transmission to the World
+	*	@private
+	*	@type {string}
+	*/
 	this.kmlString_;
 }
 
@@ -21,10 +48,11 @@ ktree.ktx.KtxInterpreter = function(world) {
 /**
 *	//TODO Should the transmission to the World object happen here or in the KtxManager?
 *	
-*	Parse KTX from an argument goog.ds.XmlDataSource. If the World is ready, transmit the results for rendering.
+*	Parse KTX from an argument goog.ds.XmlDataSource. If the World is ready, transmit the results 
+*	(i.e. interpreted KTX commands and a KML string) for rendering.
 *	If the world is not yet ready, cache the results and retry transmission later
 *	@private
-*	@param {goog.ds.XmlDataSource} dataSource The source of the KTX data to be parsed/transmitted
+*	@param {goog.ds.XmlDataSource} dataSource The source of the KTX data to be parsed
 */
 ktree.ktx.KtxInterpreter.prototype.parse = function(dataSource) {	
 	// The KTX command queue and KML string are cleared at the start of each parsing run
@@ -80,6 +108,14 @@ ktree.ktx.KtxInterpreter.prototype.findKtxNodes_ = function(node) {
 	}
 }
 
+/**
+*	Returns whether argument Node DataName is one that the parser should look
+*	inside for nested KTX commands.
+*	@private
+*	@param {string}		nodeDataName	DataName for the current Node
+*	@return {boolean}	Should the parser recur into a Node with the given
+*						nodeDataName to find nested KTX commands?
+*/
 ktree.ktx.KtxInterpreter.prototype.shouldStepIntoNode_ = function(nodeDataName) {
 	if (goog.string.startsWith(nodeDataName, ktree.ktx.KTX_ROOT_PREFIX)) {
 		return true;
@@ -94,12 +130,24 @@ ktree.ktx.KtxInterpreter.prototype.shouldStepIntoNode_ = function(nodeDataName) 
 	}
 }
 
+/**
+*	Send commands to the World. Two messages are sent: first, a sequence of
+*	interpreted KTX commands are dispatched (as function calls on the World object);
+*	second, a string of KML is sent to be rendered by the World. Note that this
+* 	method does NOT check to see whether the World object's API is actually ready
+*	to receive commands. For that functionality, delaySendCommands_() should be used.
+*	@see {ktree.ktx.KtxInterpreter#delayedSendCommands_}
+*	@private
+*/
 ktree.ktx.KtxInterpreter.prototype.sendCommands_ = function() {
 	this.interpretKtxCommands_();
 	this.world_.parseKml(this.kmlString_);
 }
 
 /**
+*	Uses a goog.async.ConditionalDelay to delay transmission of commands until the
+*	World object reports that its API is ready to receive them
+*	@see {ktree.ktx.KtxInterpreter#sendCommands_}
 *	@private
 */
 ktree.ktx.KtxInterpreter.prototype.delayedSendCommands_ = function() {
@@ -120,6 +168,11 @@ ktree.ktx.KtxInterpreter.prototype.delayedSendCommands_ = function() {
 	conditionalDelay.start(100, 5000);
 }
 
+/**
+*	Interpret a sequence of KTX commands (drawn from the Interpreter's KTX Queue), 
+*	transforming them into appropriate function calls on the World object.
+*	@private
+*/
 ktree.ktx.KtxInterpreter.prototype.interpretKtxCommands_ = function() {
 	ktree.debug.logGroup('KtxInterpreter is issuing KTX commands...');
 	var numCommands = this.ktxQueue_.getCount();
@@ -139,35 +192,3 @@ ktree.ktx.KtxInterpreter.prototype.interpretKtxCommands_ = function() {
 		}
 	}
 }
-
-ktree.ktx.KtxInterpreter.prototype.testParse = function(dataSource) {
-	if (goog.isNull(dataSource)) {
-		ktree.Utils.logError('KTXInterpreter received a null DataSource!');
-		return;
-	}
-
-		var s = dataSource.getDataName();
-		ktree.debug.logInfo('Top level getDataName(): ' + dataSource.getDataName());
-		ktree.debug.logInfo('Top level getDataPath(): ' + dataSource.getDataPath());
-		ktree.debug.logInfo('Top level get(): ' + dataSource.get());
-		ktree.debug.logInfo('Top level node number of children: ' + dataSource.getChildNodes().getCount());
-		var child = dataSource.getChildNode('node');
-		ktree.debug.logInfo('Child node getDataName(): ' + child.getDataName());
-		ktree.debug.logInfo('Child node getDataPath(): ' + child.getDataPath());
-		ktree.debug.logInfo('Child node number of attributes: ' + child.getChildNodes('@*').getCount());
-		ktree.debug.logInfo('Child node get(): ' + child.get());
-		var child2 = child.getChildNode('anothernode');
-		ktree.debug.logInfo('Child2 node getDataName(): ' + child2.getDataName());
-		ktree.debug.logInfo('Child2 node getDataPath(): ' + child2.getDataPath());
-		ktree.debug.logInfo('Child2 node get(): ' + child2.get());
-		
-		var rootElement = dataSource.getRootElement();
-		ktree.debug.logGroup('After walking the XML, here is what I have:');
-		ktree.debug.logInfo('The root node is: ');
-		ktree.debug.logElement(rootElement);
-		ktree.debug.logGroupEnd();
-		
-		alert('Starting transmission to GE');
-		var rootElementString = goog.dom.xml.serialize(rootElement);
-}
-
