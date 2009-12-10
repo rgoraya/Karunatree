@@ -1,6 +1,7 @@
 goog.provide('ktree.GoogleEarth');
 
 goog.require('ktree.debug');
+goog.require('ktree.ktx');
 goog.require('ktree.AnimationProvider');
 
 goog.require('goog.dom');
@@ -81,7 +82,7 @@ ktree.GoogleEarth = function(identifier) {
 		target_.ge_.getWindow().setVisibility(true);
 		target_.ge_.getSun().setVisibility(false);
 		target_.ge_.getOptions().setAtmosphereVisibility(true);
-		target_.ge_.getNavigationControl().setVisibility(target_.ge_.VISIBILITY_AUTO);
+		target_.ge_.getNavigationControl().setVisibility(target_.ge_.VISIBILITY_AUTO);		
 	};
 
 	/**
@@ -150,6 +151,13 @@ ktree.GoogleEarth.prototype.addKml = function(kmlObject) {
 		this.ge_.getFeatures().appendChild(kmlObject);
 	}
 	
+}
+
+ktree.GoogleEarth.prototype.setFlyToSpeed = function(speed) {
+	if (speed == ktree.ktx.SPEED_TELEPORT) {
+		speed = this.ge_.SPEED_TELEPORT;
+	}
+	this.ge_.getOptions().setFlyToSpeed(speed);
 }
 
 ktree.GoogleEarth.prototype.moveCameraTo = function() {

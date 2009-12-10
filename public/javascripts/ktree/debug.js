@@ -49,9 +49,14 @@ ktree.debug.logWarning = function(message) {
 	ktree.debug.mainLogger_.warning(message);
 }
 
-ktree.debug.logError = function(message) {
-	//console.error(message)
-	ktree.debug.mainLogger_.error(message);
+ktree.debug.logShout = function(message) {
+	//console.error(message);
+	ktree.debug.mainLogger_.shout(message);
+}
+
+ktree.debug.logError= function(message) {
+	//console.error(message);
+	ktree.debug.mainLogger_.severe(message);
 }
 
 ktree.debug.logElement = function(element, message) {

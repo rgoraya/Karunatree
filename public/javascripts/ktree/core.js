@@ -26,7 +26,7 @@ ktree.Core = function(debugOn) {
 
 ktree.Core.prototype.debugTemp = function() {
 	var target = this;
-	var name = 'http://localhost:3000/kml/ktree-1-1.xml';
+	var name = 'http://localhost:3000/kml/1-1.ktx.xml';
 	
 	success = function(dataSource) {
 

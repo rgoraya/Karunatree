@@ -1,7 +1,6 @@
 goog.provide('ktree.ktx.KtxManager');
 
 goog.require('ktree.debug');
-goog.require('ktree.ktx.KtxDataSource');
 goog.require('ktree.ktx.KtxInterpreter');
 
 goog.require('goog.ds.DataManager');
@@ -44,8 +43,8 @@ ktree.ktx.KtxManager = function(world) {
 *	@param {string} dsName 				A string identifier by which the newly created KtxDataSource will be referenced
 */
 ktree.ktx.KtxManager.prototype.loadKtx = function(uri, dsName) {
-	ktree.debug.logInfo('Creating new KtxDataSource <' + dsName + '> with data from URI <' + uri + '>...');
-	var dataSource = new ktree.ktx.KtxDataSource(uri, dsName);	
+	ktree.debug.logInfo('Creating new KTX XmlHttpDataSource <' + dsName + '> with data from URI <' + uri + '>...');
+	var dataSource = new goog.ds.XmlHttpDataSource(uri, dsName);	
 	dataSource.load();
 	
 	var conditionalDelay = new goog.async.ConditionalDelay(
@@ -55,12 +54,12 @@ ktree.ktx.KtxManager.prototype.loadKtx = function(uri, dsName) {
 	);
 	var target = this;
 	conditionalDelay.onFailure = function() {
-		ktree.debug.logError('KtxDataSource <' + dsName + '> could not load data from URI <' + uri + '>');
+		ktree.debug.logError('KTX XmlHttpDataSource <' + dsName + '> could not load data from URI <' + uri + '>');
 	}
 	conditionalDelay.onSuccess = function() {
-		ktree.debug.logInfo('KtxDataSource <' + dsName + '> has finished loading succesfully');
+		ktree.debug.logInfo('KTX XmlHttpDataSource <' + dsName + '> has finished loading succesfully');
 		target.dm_.addDataSource(dataSource);
-		target.interpreter_.parseKtx(dataSource);
+		target.interpreter_.parse(dataSource);
 	}
 	conditionalDelay.start(100, 5000);
 }
