@@ -1,0 +1,111 @@
+/* @override http://localhost:3000/stylesheets/main.css?1254527802 */
+
+
+/* @group Page Structure */
+
+body {
+	font-family: sans-serif;
+	background:gray;
+	margin: 0;
+}
+
+/*
+#page {
+	width: 55 em;
+	margin: auto;
+	padding: 0;
+	text-align: left;
+	border-width: 60px;
+	border-color: black;
+	border-style: solid;
+}
+*/
+
+#header {
+	color: gold;
+	background: forestgreen;
+	font-size: 2.5em;
+	padding: 0.3em;
+}
+
+#nav {
+	color: lightgoldenrodyellow;
+	font-size: 1.0em;
+	background: darkgreen;
+	padding: 0.7em;
+}
+
+#content {
+	background: white;
+	padding: 1.0em;
+}
+
+/* @end */
+
+
+/* @group Typography */
+
+#nav a, #nav a:visited {
+	color: chartreuse;
+	text-decoration: none;
+}
+
+#nav a:hover {
+	border-bottom: 2px dotted chartreuse;
+}
+
+#content h1 {
+	font-size: 1.5em
+}
+
+/* @end */
+
+
+/* @group Rails */
+
+#notice {
+	border: 2px solid green;
+	padding: 1em;
+	background-color: lightgrey;
+	font-size: 0.8em;
+	font-weight: bold;
+}
+
+/* @end */
+
+
+/* @group Development */
+
+#debug {
+	margin-top: 1em;
+	margin-left: auto;
+	text-align: center;
+}
+
+#debug p {
+	text-align: center;
+}
+
+#debug a, #debug a.visited {
+	text-decoration: none;
+	color: chartreuse;
+}
+
+#debug a:hover {
+	border-bottom: 2px dotted chartreuse;
+}
+
+fieldset.debug_info {
+	text-align: left;
+	margin: 1em;
+	background: #eee;
+}
+
+.debug_dump {
+	text-align: left;
+	background: #ccc;
+	margin: 0;
+	padding: 0.5em;
+}
+
+/* @end */

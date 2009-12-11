@@ -1,5 +1,5 @@
 <% content_for(:include_custom_stylesheet) do %>
-  <%= stylesheet_link_tag "storybook" %>
+  <%= stylesheet_link_tag "ktree-earth" %>
 <% end %>
 
 <% content_for(:include_custom_javascript_head) do %>
@@ -16,7 +16,7 @@
   </script>
 <% end %>
 
-<% content_for(:include_custom_javascript_footer) do %>
+<% content_for(:include_custom_javascript_end) do %>
   <script type = "text/javascript">
     // Invoke the ktree js library
     var karunaTree = new ktree.Core(true);

@@ -1,10 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   
   <head>
     <title><%= @title %></title>
-    <%= stylesheet_link_tag "main" %>
+    <%= stylesheet_link_tag "ktree-main" %>
     <%= yield :include_custom_stylesheet %>
     <%= yield :include_custom_javascript_head %>
   </head>
@@ -59,6 +58,6 @@
       </div>
     <% end %>
     </div>
-    <%= yield :include_custom_javascript_footer %>
+    <%= yield :include_custom_javascript_end %>
   </body>
 </html>

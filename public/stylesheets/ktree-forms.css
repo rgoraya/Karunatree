@@ -1,0 +1,93 @@
+/* @group Basic Forms */
+
+fieldset {
+	background: beige;
+}
+
+legend {
+	color: white;
+	background: forestgreen;
+	padding: .4em 1em;
+	margin: 0.3em 0em;
+}
+
+label {
+	width: 10em;
+	float: left;
+	text-align: right;
+	margin-right: 0.2em;
+	display: block;
+}
+
+.form-row {
+	white-space: nowrap;
+	padding-bottom: 0.5em;
+}
+
+.submit {
+	margin-left: 15em;
+}
+
+/* @end */
+
+
+/* @group Error Reporting */
+
+.fieldWithErrors {
+	margin: 2px;
+	padding: 2px;
+	background-color: deeppink;
+	display: table;
+}
+
+#errorExplanation {
+	border: 2px solid deeppink;
+	padding: 7px;
+	padding-bottom: 12px;
+	margin-bottom: 20px;
+	background-color: navajowhite;
+}
+
+#errorExplanation h2 {
+	text-align: left;
+	font-weight: bold;
+	padding: 5px 5px 5px 15px;
+	font-size: 12pt;
+	margin: -7px;
+	background-color: palevioletred;
+	color: #fff;
+}
+
+#errorExplanation p {
+	color: #333;
+	margin-bottom: 0;
+	padding: 5px;
+}
+
+#errorExplanation ul li {
+	font-size: 11pt;
+	list-style: square;
+}
+
+/* @end */
+
+
+/* @group Hacks (IE) */
+html fieldset {
+	position: relative;
+}
+
+html legend {
+	position: absolute;
+	top: -1em;
+	left: 0.5 em;
+}
+
+html fieldset {
+	position: relative;
+	margin-top: 1em;
+	padding-top: 2em;
+	padding-bottom: 2em;
+}
+
+/* @end */
