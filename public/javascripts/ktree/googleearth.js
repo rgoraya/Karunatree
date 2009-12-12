@@ -91,7 +91,7 @@ ktree.GoogleEarth = function(identifier) {
 	*	@param errorCode An error message from the Earth API
 	*/
 	var apiInitFailure_ = function(errorCode) {
-		alert("Oops! There was a problem initializing the Google Earth API.");
+		//alert("Oops! There was a problem initializing the Google Earth API.");
 		ktree.debug.logError('GoogleEarth <' + target_.identifier_ + '> reports that Earth API initialization failed.');
 		ktree.debug.logError('API error code as follows:' + errorCode);
 	};

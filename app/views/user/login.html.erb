@@ -2,6 +2,10 @@
   <%= stylesheet_link_tag "ktree-forms" %>
 <% end %>
 
+<% content_for(:include_header) do %>
+  <div id="header">KarunaTree</div>
+<% end %>
+
 <h1>Log In</h1>
 <% form_for :user do |form| %>
   <fieldset>

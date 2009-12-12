@@ -3,29 +3,26 @@
 
 /* @group Page Structure */
 
-body {
-	font-family: sans-serif;
-	background:gray;
-	margin: 0;
+html {
+	height: 100%;
 }
 
-/*
-#page {
-	width: 55 em;
-	margin: auto;
+body {
+	background:gray;
+	height: 100%;
+	width: 100%;
+	min-width: 450px;			/* Minimum width of layout. Note does not work in old IE */
+	margin: 0;
 	padding: 0;
-	text-align: left;
-	border-width: 60px;
-	border-color: black;
-	border-style: solid;
+	border: 0;					/* Removes border around viewport in old versions of IE */
+	font-family: sans-serif;
 }
-*/
 
 #header {
-	color: gold;
 	background: forestgreen;
-	font-size: 2.5em;
+	color: gold;
 	padding: 0.3em;
+	font-size: 2.5em;
 }
 
 #nav {
@@ -33,12 +30,22 @@ body {
 	font-size: 1.0em;
 	background: darkgreen;
 	padding: 0.7em;
+	height: 1.5%;				/* TODO Provisional solution -- seems to yield a reasonable liquid vertical layout if height isn't too small */
 }
 
-#content {
+.content-container {		/* == colmask */
+	position:relative;		/* This fixes the IE7 overflow hidden bug */
+	clear:both;
+	float: left;
+	width:100%;				/* Width of the whole page */
+	overflow:hidden;		/* This chops off any overhanging child divs */
+}
+
+.content-main {				/* Will extend to become like colleft in column layouts */
 	background: white;
 	padding: 1.0em;
 }
+
 
 /* @end */
 

@@ -51,6 +51,7 @@ class UserController < ApplicationController
   def index
     @title = "KarunaTree User Hub"
     @user = User.get_current_user(session)
+    render :layout => "two-column"
   end
   
     

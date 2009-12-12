@@ -1,6 +1,47 @@
-#earth {
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 700px;
+.content-container {
+	height: 94%;			/* TODO Not sure why this has to be less than 100% - nav bar height in order to avoid vertical scrollbars. May be something to do with vertical padding on other elements not being taken into account? */
 }
+
+.left-column-content,						/* == col1, col2 */
+.right-column-content {					
+	float:left;
+	position:relative;
+	padding:0 0 0 0;
+	overflow:hidden;		/* keeps long content (e.g. URLs) from breaking layout in IE */ 
+}
+
+.two-column {						/* == .rightmenu */
+	background: gainsboro;	/* RIGHT column background color */
+}
+
+/* Overrides ktree-main.css to format the main content area as the left column
+in a two column layout  */
+.two-column .content-main {			/* == .rightmenu .colleft */
+	float: left;
+	width: 100%;
+	position: relative;
+	padding: 0;
+	
+	right: 25%;				/* RIGHT column width */
+							/*    content-main (and children) shift 25% of parent (content-container) width to the right, 
+							      revealing content-container bg */
+	background: lightblue; 		/* left column background color */
+	height: 100%;
+}
+
+.two-column .left-column-content {
+	width: 75%;			/* left column CONTENT width (left column width minus left/right padding) */
+	left: 25%;			/* (right column width) + (left column left padding) */
+						/*    shift the left column's CONTENT back to the right (without moving left column BACKGROUND), which
+						      is defined by main-left.content-main */
+	height: 100%;
+}						/* if all padding values are x, values should sum to 100% - x (I think) */
+
+.two-column .right-column-content {
+	width: 23%;			/* right column CONTENT width (right column width minus left/right padding) */
+	left: 26%;			/* (right column width) + (left column left/right padding) + (right column left padding) */
+						/*    shift the right column's CONTENT back to the right (without moving right column BACKGROUND, which
+						      is defined by main-left */
+	height: 100%;
+	overflow: auto;
+}						/* if all padding values are x, values should sum to 50% + x (I think) */

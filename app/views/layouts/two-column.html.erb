@@ -27,7 +27,7 @@
         <%= nav_link "Help",      "site", "help" %> |
       </div>
       
-      <div class="content-container">
+      <div class="content-container two-column">
         <div class="content-main">
           <% if flash[:notice] -%>
             <div id="notice"><%= flash[:notice] %></div>
@@ -36,7 +36,7 @@
         </div>
       </div>
       
-    <% if ENV["RAILS_ENV"] == "development" %>
+    <% if ENV["RAILS_ENV"] == "false" %>
       <div id="debug">
            <a href="#" onclick="Element.toggle('params_debug_info');return false">Params</a> | 
            <a href="#" onclick="Element.toggle('session_debug_info');return false">Session</a> | 

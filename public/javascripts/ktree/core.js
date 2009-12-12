@@ -35,6 +35,6 @@ ktree.Core.prototype.debugTemp = function() {
 	failure = function() {
 		alert('Failed to load KtxDataSource')
 	}
-	this.world_.makeAnimTestButton();
+	//this.world_.makeAnimTestButton();
 	this.ktxManager_.loadKtx(name, 'KTXTest', success, failure);
 }
