@@ -22,9 +22,9 @@
             <%= nav_link "Login",     "user", "login" %>
           <% end -%>
         </span>
-        <%= nav_link "Home",      "site" %> |
-        <%= nav_link "About",     "site", "about" %> |
-        <%= nav_link "Help",      "site", "help" %> |
+        <%= nav_link "Home",      "root" %> |
+        <%= nav_link "About",     "root", "about" %> |
+        <%= nav_link "Help",      "root", "help" %> |
       </div>
       
       <div class="content-container">
@@ -35,7 +35,7 @@
           <%= @content_for_layout %>
         </div>
       </div>
-      
+     
     <% if ENV["RAILS_ENV"] == "development" %>
       <div id="debug">
            <a href="#" onclick="Element.toggle('params_debug_info');return false">Params</a> | 
@@ -59,8 +59,9 @@
           <%= debug(request) %>
         </fieldset>
       </div>
+      
     <% end %>
-    </div>
+    
     <%= yield :include_custom_javascript_end %>
   </body>
 </html>

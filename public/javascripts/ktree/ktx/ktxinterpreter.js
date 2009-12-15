@@ -2,6 +2,8 @@ goog.provide('ktree.ktx.KtxInterpreter');
 
 goog.require('ktree.debug');
 goog.require('ktree.ktx');
+goog.require('ktree.World');
+goog.require('ktree.script.ScriptManager');
 
 goog.require('goog.ds.BasicNodeList');
 goog.require('goog.ds.XmlDataSource');
@@ -27,6 +29,8 @@ ktree.ktx.KtxInterpreter = function(world) {
 	*	@type {ktree.World}
 	*/
 	this.world_ = world;
+	
+	this.sm_ = new ktree.script.ScriptManager();
 	
 	/**
 	*	A list of KTX commands (represented as goog.ds.DataNodes)
@@ -81,6 +85,7 @@ ktree.ktx.KtxInterpreter.prototype.parse = function(dataSource) {
 *	Recurrent function which walks through an goog.ds.XmlDataSource tree looking 
 *	for KTX commands to execute. When KTX commands are found, they are cached
 *	for transmission to the World object and removed from the DataSource tree.
+*	@private
 *	@param {goog.ds.XmlDataSource} node	The node from which to begin walking
 */
 ktree.ktx.KtxInterpreter.prototype.findKtxNodes_ = function(node) {
@@ -178,11 +183,15 @@ ktree.ktx.KtxInterpreter.prototype.interpretKtxCommands_ = function() {
 	var numCommands = this.ktxQueue_.getCount();
 	for (var i = 0; i < numCommands; i++) {
 		var command = this.ktxQueue_.getByIndex(i);
-		// Strip the KTX prefix from the command type
 		var commandType = command.getDataName();
 		var commandValue = command.get();
 		
 		switch(commandType) {
+			case 'ktx:script':
+				ktree.debug.logInfo('Rendering script text to HTML');
+				ktree.debug.logInfo(commandValue);
+				this.sm_.renderText(commandValue);
+				break;
 			case 'ktx:flyToSpeed':
 				ktree.debug.logInfo('Setting flyToSpeed to: <' + commandValue + '>');
 				this.world_.setFlyToSpeed(goog.string.toNumber(commandValue));

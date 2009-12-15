@@ -1,9 +1,9 @@
 require 'test_helper'
 
 # Re-raise errors caught by the controller.
-class SiteController; def rescue_action(e) raise e end; end
+class RootController; def rescue_action(e) raise e end; end
 
-class SiteControllerTest < ActionController::TestCase
+class RootControllerTest < ActionController::TestCase
   def test_index
     get :index
     title = assigns(:title)
@@ -23,8 +23,7 @@ class SiteControllerTest < ActionController::TestCase
   def test_help
     get :help
     title = assigns(:title)
-    assert_equal "KarunaTree
-     Help", title
+    assert_equal "KarunaTree Help", title
     assert_response :success
     assert_template "help"
   end

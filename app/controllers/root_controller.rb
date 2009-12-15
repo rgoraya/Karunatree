@@ -1,4 +1,4 @@
-class SiteController < ApplicationController
+class RootController < ApplicationController
   def index
     @title = "Welcome to KarunaTree -- Environmental Literacy for Kids"
   end

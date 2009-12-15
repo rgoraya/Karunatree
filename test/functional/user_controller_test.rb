@@ -38,7 +38,7 @@ class UserControllerTest < ActionController::TestCase
                                           :size => User::PASSWORD_SIZE,
                                           :maxlength => User::PASSWORD_MAX_LENGTH }
     assert_tag "input", :attributes => {  :type => "submit",
-                                          :value => "Dive in!"}
+                                          :value => "Jump in!"}
   end
   
   # Test a valid signup
@@ -116,7 +116,7 @@ class UserControllerTest < ActionController::TestCase
     assert_tag "input", :attributes => {  :name => "user[remember_me]",
                                           :type => "checkbox"}
     assert_tag "input", :attributes => {  :type => "submit",
-                                          :value => "Dive in!" }
+                                          :value => "Jump in!" }
   end
   
   # Test a valid login
@@ -243,7 +243,7 @@ class UserControllerTest < ActionController::TestCase
     assert_not_nil cookie_value(:authorization_token)
     get :logout
     assert_response :redirect
-    assert_redirected_to :action => "index", :controller => "site"
+    assert_redirected_to :action => "index", :controller => "root"
     assert_equal "You are logged out. Come back soon!", flash[:notice]
     assert !logged_in?
     assert_nil cookie_value(:authorization_token)

@@ -7,9 +7,9 @@ goog.addDependency('javascripts/ktree/googleearth.js', ['ktree.GoogleEarth'], ['
 goog.addDependency('javascripts/ktree/sound.js', ['ktree.Sound'], []);
 goog.addDependency('javascripts/ktree/world.js', ['ktree.World'], ['ktree.GoogleEarth']);
 goog.addDependency('javascripts/ktree/ktx/ktx.js', ['ktree.ktx'], []);
-goog.addDependency('javascripts/ktree/ktx/ktxdatasource.js', ['ktree.ktx.KtxDataSource'], ['goog.ds.XmlHttpDataSource']);
-goog.addDependency('javascripts/ktree/ktx/ktxinterpreter.js', ['ktree.ktx.KtxInterpreter'], ['ktree.debug', 'ktree.ktx', 'goog.ds.BasicNodeList', 'goog.ds.XmlDataSource', 'goog.dom.xml', 'goog.string']);
+goog.addDependency('javascripts/ktree/ktx/ktxinterpreter.js', ['ktree.ktx.KtxInterpreter'], ['ktree.debug', 'ktree.ktx', 'ktree.World', 'ktree.script.ScriptManager', 'goog.ds.BasicNodeList', 'goog.ds.XmlDataSource', 'goog.dom.xml', 'goog.string']);
 goog.addDependency('javascripts/ktree/ktx/ktxmanager.js', ['ktree.ktx.KtxManager'], ['ktree.debug', 'ktree.ktx.KtxInterpreter', 'goog.ds.DataManager', 'goog.ds.XmlHttpDataSource', 'goog.ds.LoadState', 'goog.async.ConditionalDelay']);
+goog.addDependency('javascripts/ktree/script/scriptmanager.js', ['ktree.script.ScriptManager'], ['goog.dom']);
 goog.addDependency('javascripts/closure/goog/base.js', [], []);
 goog.addDependency('javascripts/closure/goog/deps.js', [], []);
 goog.addDependency('javascripts/closure/goog/array/array.js', ['goog.array'], []);

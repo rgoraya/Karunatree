@@ -44,7 +44,7 @@ class UserController < ApplicationController
   def logout
     User.logout!(session, cookies)
     flash[:notice] = "You are logged out. Come back soon!"
-    redirect_to :action => "index", :controller => "site"
+    redirect_to :action => "index", :controller => "root"
   end
   
   
