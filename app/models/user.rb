@@ -1,7 +1,6 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
-  has_one :habitat
-  has_one :kml_bundle
+  has_one :character
   
   attr_accessor :remember_me
   
@@ -85,16 +84,6 @@ class User < ActiveRecord::Base
     @user = self.find_by_id(session[:user_id])
     logger.debug "Retrieving current user: #{@user.username}"
     return @user
-  end
-  
-  # Check whether the current session's user has a habitat assigned
-  def self.has_habitat?(session)
-    @user = self.find_by_id(session[:user_id])
-    if @user.habitat_id
-      return true
-    else
-      return false
-    end
   end
   
 end

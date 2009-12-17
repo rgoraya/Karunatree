@@ -1,0 +1,20 @@
+!!!
+%html
+  %head
+    %title= @title
+    = stylesheet_link_tag "ktree-main"
+    = yield :include_custom_stylesheet
+    = javascript_include_tag "prototype.js"
+    = javascript_include_tag "effects.js"
+    = yield :include_custom_javascript_head
+  
+  %body
+    = render :partial => "shared/navigation"
+    .content-container.two-column
+      .content-main
+        -if flash[:notice]
+          #notice= flash[:notice]
+        = @content_for_layout
+     
+    = render :partial => "shared/debug"
+    = yield :include_custom_javascript_end

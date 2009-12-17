@@ -9,7 +9,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091215014204) do
+ActiveRecord::Schema.define(:version => 20091215204713) do
+
+  create_table "characters", :force => true do |t|
+    t.integer  "current_scene", :default => 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "scenes", :force => true do |t|
+    t.integer  "scene_number", :null => false
+    t.text     "name"
+    t.text     "script"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -28,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20091215014204) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "authorization_token"
+    t.integer  "character_id"
   end
 
 end

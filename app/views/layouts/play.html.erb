@@ -10,10 +10,9 @@
   </head>
   
   <body>
-    <div id="header">KarunaTree</div>
-    <%= render(:partial => "shared/navigation") %>
+    <%= render(:partial => "shared/navigation") -%>
       
-    <div class="content-container">
+    <div class="content-container two-column">
       <div class="content-main">
         <% if flash[:notice] -%>
           <div id="notice"><%= flash[:notice] -%></div>

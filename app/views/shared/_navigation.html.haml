@@ -1,0 +1,8 @@
+#nav
+  #{nav_link "Home", "root"} | #{nav_link "About", "root", "about"} | #{nav_link "Help", "root", "help"} |
+  %span{"style" => "float: right"}
+    -if logged_in?
+      #{nav_link "Play", "play", "index"} | |
+      #{nav_link "Logout", "user", "logout"} |
+    -else
+      #{nav_link "Sign Up!", "user", "signup"} | #{nav_link "Login", "user", "login"}

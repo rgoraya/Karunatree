@@ -11,7 +11,7 @@ class UserController < ApplicationController
       
       if @user.save
         @user.login!(session)
-        flash[:notice] = "User #{@user.username} created successfully!"
+        # flash[:notice] = "User #{@user.username} created successfully!"
         redirect_to_requested_url
       else
         @user.clear_password
@@ -31,7 +31,7 @@ class UserController < ApplicationController
       if user
         user.login!(session)
         @user.remember_me? ? user.remember!(cookies) : user.forget!(cookies)
-        flash[:notice] = "Welcome back, #{user.username}!"
+        # flash[:notice] = "Welcome back, #{user.username}!"
         redirect_to_requested_url
       else
         @user.clear_password
@@ -51,7 +51,6 @@ class UserController < ApplicationController
   def index
     @title = "KarunaTree User Hub"
     @user = User.get_current_user(session)
-    render :layout => "two-column"
   end
   
     
@@ -86,7 +85,7 @@ class UserController < ApplicationController
       session[:protected_page] = nil
       redirect_to redirect_url
     else
-      redirect_to :action => "index"
+      redirect_to :controller => "play", :action => "index"
     end
   end
 

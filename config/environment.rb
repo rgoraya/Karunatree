@@ -42,3 +42,6 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 end
+
+# Haml Options (can only be set after Rails::Initializer.run is complete)
+# Haml::Template.options[:ugly] = true

@@ -1,0 +1,16 @@
+- if ENV["RAILS_ENV"] == "development"
+  #debug
+    %a{:href => "#", :onclick => "Element.toggle('params_debug_info');return false"} Params |
+    |
+    %a{:href => "#", :onclick => "Element.toggle('env_debug_info');return false"} Env |
+    |
+    %a{:href => "#", :onclick => "Element.toggle('request_debug_info');return false"} Request |
+    %fieldset.debug_info#params_debug_info{:style => "display:none"}
+      =debug(params)
+    %fieldset.debug_info#env_debug_info{:style => "display:none"}
+      =debug(request.env)
+    %fieldset.debug_info#request_debug_info{:style => "display:none"}
+      =debug(request)
+      
+      
+      

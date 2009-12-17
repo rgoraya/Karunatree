@@ -1,5 +1,8 @@
-/* @override http://localhost:3000/stylesheets/main.css?1254527802 */
-
+/* @override 
+	http://localhost:3000/stylesheets/main.css?1254527802
+	http://localhost:3000/stylesheets/ktree-main.css?1260571289
+	http://localhost:3000/stylesheets/ktree-main.css?1261078630
+*/
 
 /* @group Page Structure */
 
@@ -110,7 +113,6 @@ fieldset.debug_info {
 
 .debug_dump {
 	text-align: left;
-	background: #ccc;
 	margin: 0;
 	padding: 0.5em;
 }

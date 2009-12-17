@@ -60,8 +60,8 @@ class UserControllerTest < ActionController::TestCase
     assert_equal user.id, session[:user_id]
     
     #Test flash and redirect
-    assert_equal "User #{new_user.username} created successfully!", flash[:notice]
-    assert_redirected_to :action => "index"
+    # assert_equal "User #{new_user.username} created successfully!", flash[:notice]
+    assert_redirected_to :controller => "play", :action => "index"
   end
   
   # Test an invalid signup
@@ -124,9 +124,9 @@ class UserControllerTest < ActionController::TestCase
     try_to_login @valid_user, :remember_me => "0"
     assert logged_in?
     assert_equal @valid_user.id, session[:user_id]
-    assert_equal "Welcome back, #{@valid_user.username}!", flash[:notice]
+    # assert_equal "Welcome back, #{@valid_user.username}!", flash[:notice]
     assert_response :redirect
-    assert_redirected_to :action => "index"
+    assert_redirected_to :controller => "play", :action => "index"
     
     # Verify that we're not remembering the user
     user = assigns(:user)
@@ -142,9 +142,9 @@ class UserControllerTest < ActionController::TestCase
     test_time = Time.now
     assert logged_in?
     assert_equal @valid_user.id, session[:user_id]
-    assert_equal "Welcome back, #{@valid_user.username}!", flash[:notice]
+    # assert_equal "Welcome back, #{@valid_user.username}!", flash[:notice]
     assert_response :redirect
-    assert_redirected_to :action => "index"
+    assert_redirected_to :controller => "play", :action => "index"
     
     # Check cookies and expiration dates
     user = User.find(@valid_user.id)
