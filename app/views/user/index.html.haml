@@ -1,2 +1,10 @@
 %h1 KarunaTree User Hub
-%p (Work in progress)
+%h2 Welcome back, #{@user.username}!
+%p Let's resume, shall we?
+#scene
+  #title
+    %h3 #{@scene.name}
+  #script
+    = @scene.script
+= button_to_remote "Back", :url => {:action => "back", :controller => "user"}
+= button_to_remote "Next", :url => {:action => "next", :controller => "user"}

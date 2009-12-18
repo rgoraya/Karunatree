@@ -1,0 +1,28 @@
+- content_for :include_custom_stylesheet do
+  = stylesheet_link_tag "ktree-earth"
+  
+- content_for :include_custom_javascript_head do
+  %script{:type => "text/javascript"}
+    :plain
+      var CLOSURE_NO_DEPS = true;
+      var CLOSURE_BASE_PATH = "/"; //The path where calcdeps.py was run
+  = javascript_include_tag "closure/goog/base.js"
+  = javascript_include_tag "ktree/deps.js"
+  %script{:type => "text/javascript", :src => "http://www.google.com/jsapi?key=ABQIAAAALuMnM-_PZBAC0jiiDlxy2xRGQdiD-hjaSRiclgqKLFtYALqY5BStWXbW2ka15MNHBzunqwVPJAJ65A"}
+  %script{:type => "text/javascript"}
+    :plain
+      goog.require('ktree.Core');
+
+- content_for :include_custom_javascript_end do
+  %script{:type => "text/javascript"}
+    :plain
+      var karunaTree = new ktree.Core(true);
+
+.left-column-content#earth
+.right-column-content
+  #title
+    %h3 #{@scene.name}
+  #script
+    = @scene.script
+  = button_to_remote "Back", :url => {:action => "back", :controller => "play"}
+  = button_to_remote "Next", :url => {:action => "next", :controller => "play"}

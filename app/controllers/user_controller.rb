@@ -7,8 +7,8 @@ class UserController < ApplicationController
     @title = "Sign Up for KarunaTree" 
     
     if param_posted?(:user)
-      @user = User.new(params[:user]) 
-      
+      @user = User.new(params[:user])
+      @user.build_character
       if @user.save
         @user.login!(session)
         # flash[:notice] = "User #{@user.username} created successfully!"
@@ -51,6 +51,24 @@ class UserController < ApplicationController
   def index
     @title = "KarunaTree User Hub"
     @user = User.get_current_user(session)
+    @scene = Scene.find_by_scene_number(@user.character.current_scene)
+  end
+  
+  
+  def next
+    @character = User.get_current_user(session).character
+    @character.current_scene += 1
+    @scene = Scene.find_by_scene_number(@character.current_scene)
+    @character.save
+    render :update_view
+  end
+  
+  def back
+    @character = User.get_current_user(session).character
+    @character.current_scene -= 1
+    @scene = Scene.find_by_scene_number(@character.current_scene)
+    @character.save
+    render :update_view
   end
   
     

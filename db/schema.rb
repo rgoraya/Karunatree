@@ -9,12 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091215204713) do
+ActiveRecord::Schema.define(:version => 20091218045709) do
 
   create_table "characters", :force => true do |t|
     t.integer  "current_scene", :default => 1
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id",                      :null => false
   end
 
   create_table "scenes", :force => true do |t|
@@ -42,7 +43,6 @@ ActiveRecord::Schema.define(:version => 20091215204713) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "authorization_token"
-    t.integer  "character_id"
   end
 
 end

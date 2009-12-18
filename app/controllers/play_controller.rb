@@ -6,6 +6,23 @@ class PlayController < ApplicationController
   def index
     @title = "Play KarunaTree"
     @user = User.get_current_user(session)
+    @scene = Scene.find_by_scene_number(@user.character.current_scene)
+  end
+  
+  def next
+    @character = User.get_current_user(session).character
+    @character.current_scene += 1
+    @scene = Scene.find_by_scene_number(@character.current_scene)
+    @character.save
+    render :update_view
+  end
+  
+  def back
+    @character = User.get_current_user(session).character
+    @character.current_scene -= 1
+    @scene = Scene.find_by_scene_number(@character.current_scene)
+    @character.save
+    render :update_view
   end
   
   private
