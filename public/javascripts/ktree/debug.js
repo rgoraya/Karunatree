@@ -73,6 +73,10 @@ ktree.debug.logGroup = function(message) {
 	console.group(message);
 }
 
+ktree.debug.logGroupHidden = function(message) {
+	console.groupCollapsed(message);
+}
+
 ktree.debug.logGroupEnd = function() {
 	console.groupEnd();
 }

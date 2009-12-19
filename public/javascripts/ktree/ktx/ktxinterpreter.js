@@ -63,15 +63,16 @@ ktree.ktx.KtxInterpreter.prototype.parse = function(dataSource) {
 	this.ktxQueue_ = new goog.ds.BasicNodeList();
 	this.kmlString_ = null;
 	
-	ktree.debug.logGroup('KtxInterpreter is starting to walk the XML tree...');
+	ktree.debug.logGroupHidden('KtxInterpreter is parsing the XML tree...');
 	this.findKtxNodes_(dataSource);
-	ktree.debug.logGroupEnd();
 	
 	var remainingKml = dataSource.getElement();
-	ktree.debug.logElement(remainingKml, 'KtxInterpreter has finished walking the XML tree. <' 
+	ktree.debug.logElement(remainingKml, 'KtxInterpreter has finished parsing the XML tree. <' 
 										+ this.ktxQueue_.getCount() + '> KTX command(s) found. '
 										+ 'The remaining KML object is:');
 	this.kmlString_ = goog.dom.xml.serialize(remainingKml);
+	ktree.debug.logGroupEnd();
+	
 	var apiReady = this.world_.apiReady();
 	if(apiReady) {
 		this.sendCommands_();
@@ -179,7 +180,7 @@ ktree.ktx.KtxInterpreter.prototype.delayedSendCommands_ = function() {
 *	@private
 */
 ktree.ktx.KtxInterpreter.prototype.interpretKtxCommands_ = function() {
-	ktree.debug.logGroup('KtxInterpreter is issuing KTX commands...');
+	ktree.debug.logGroupHidden('KtxInterpreter is issuing KTX commands...');
 	var numCommands = this.ktxQueue_.getCount();
 	for (var i = 0; i < numCommands; i++) {
 		var command = this.ktxQueue_.getByIndex(i);
@@ -187,11 +188,6 @@ ktree.ktx.KtxInterpreter.prototype.interpretKtxCommands_ = function() {
 		var commandValue = command.get();
 		
 		switch(commandType) {
-			case 'ktx:script':
-				ktree.debug.logInfo('Rendering script text to HTML');
-				ktree.debug.logInfo(commandValue);
-				this.sm_.renderText(commandValue);
-				break;
 			case 'ktx:flyToSpeed':
 				ktree.debug.logInfo('Setting flyToSpeed to: <' + commandValue + '>');
 				this.world_.setFlyToSpeed(goog.string.toNumber(commandValue));
@@ -200,4 +196,5 @@ ktree.ktx.KtxInterpreter.prototype.interpretKtxCommands_ = function() {
 				ktree.debug.logError('KtxInterpreter did not recognize KTX command <' + commandType + '> with value <' + commandValue + '>');
 		}
 	}
+	ktree.debug.logGroupEnd();
 }

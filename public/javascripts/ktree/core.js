@@ -24,9 +24,13 @@ ktree.Core = function(debugOn) {
 	this.ktxManager_ = new ktree.ktx.KtxManager(this.world_);
 }
 
+ktree.Core.prototype.ktx = function(uri, dsName) {
+	this.ktxManager_.loadKtx(uri, dsName);
+}
+
 ktree.Core.prototype.debugTemp = function() {
 	var target = this;
-	var name = 'http://localhost:3000/kml/1-1.ktx.xml';
+	var name = 'http://localhost:3000/ktx/1-1.ktx.xml';
 	
 	success = function(dataSource) {
 
