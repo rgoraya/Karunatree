@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091218045709) do
+ActiveRecord::Schema.define(:version => 20091226185520) do
 
   create_table "characters", :force => true do |t|
     t.integer  "current_scene", :default => 1
@@ -19,11 +19,12 @@ ActiveRecord::Schema.define(:version => 20091218045709) do
   end
 
   create_table "scenes", :force => true do |t|
-    t.integer  "scene_number", :null => false
+    t.integer  "scene_number",                    :null => false
     t.text     "name"
     t.text     "script"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "has_ktx",      :default => false, :null => false
   end
 
   create_table "sessions", :force => true do |t|

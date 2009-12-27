@@ -3,6 +3,7 @@ goog.provide('ktree.ktx.KtxInterpreter');
 goog.require('ktree.debug');
 goog.require('ktree.ktx');
 goog.require('ktree.World');
+goog.require('ktree.ktx.KtxCache');
 goog.require('ktree.script.ScriptManager');
 
 goog.require('goog.ds.BasicNodeList');
@@ -15,13 +16,15 @@ goog.require('goog.string');
 *	The KTXInterpreter is responsible for converting a KTX (.xml) file, represented
 *	internally as a goog.ds.XmlDataSource, into a series of KTX commands and KML strings
 *	for the World to render
+*
+*	@version 0.2
 */
 
 /**
 *	A KTX interpreter
 *	@constructor
 */
-ktree.ktx.KtxInterpreter = function(world) {
+ktree.ktx.KtxInterpreter = function(world, cache) {
 	/**
 	*	The World object to which the Interpreter should direct
 	*	its output
@@ -29,6 +32,11 @@ ktree.ktx.KtxInterpreter = function(world) {
 	*	@type {ktree.World}
 	*/
 	this.world_ = world;
+	
+	/**
+	*	@type {ktree.ktx.KtxCache}
+	*/
+	this.cache_ = cache;
 	
 	this.sm_ = new ktree.script.ScriptManager();
 	
@@ -58,10 +66,12 @@ ktree.ktx.KtxInterpreter = function(world) {
 *	@private
 *	@param {goog.ds.XmlDataSource} dataSource The source of the KTX data to be parsed
 */
-ktree.ktx.KtxInterpreter.prototype.parse = function(dataSource) {	
+ktree.ktx.KtxInterpreter.prototype.parse = function(dsName, dataSource) {	
 	// The KTX command queue and KML string are cleared at the start of each parsing run
 	this.ktxQueue_ = new goog.ds.BasicNodeList();
 	this.kmlString_ = null;
+	
+	this.cache_.openCacheForScene(dsName);
 	
 	ktree.debug.logGroupHidden('KtxInterpreter is parsing the XML tree...');
 	this.findKtxNodes_(dataSource);
@@ -80,6 +90,8 @@ ktree.ktx.KtxInterpreter.prototype.parse = function(dataSource) {
 	else {
 		this.delayedSendCommands_();
 	}
+	
+	this.cache_.closeCacheForScene();
 }
 
 /**
@@ -105,12 +117,20 @@ ktree.ktx.KtxInterpreter.prototype.findKtxNodes_ = function(node) {
 	}
 	
 	// Note that the 'else' here means we do not recur through KTX nodes.
-	else if (goog.string.startsWith(nodeDataName, ktree.ktx.KTX_NODE_PREFIX)) {
-		ktree.debug.logInfo('Found a KTX node of type: <' + nodeDataName + '>');
-		// Remove the KTX node from its parent, effectively stripping
-		// it from the underlying XML file
-		goog.dom.removeNode(node.getElement());
-		this.ktxQueue_.add(node);
+	else {
+		
+		//TODO Temporary! Caching criteria needs work as KTX schema is refined
+		if (nodeDataName=="Camera" || nodeDataName == "LookAt") {
+			this.cache_.cacheNode(node);
+		}
+		
+		if (goog.string.startsWith(nodeDataName, ktree.ktx.KTX_NODE_PREFIX)) {
+			ktree.debug.logInfo('Found a KTX node of type: <' + nodeDataName + '>');
+			// Remove the KTX node from its parent, effectively stripping
+			// it from the underlying XML file
+			goog.dom.removeNode(node.getElement());
+			this.ktxQueue_.add(node);
+		}
 	}
 }
 

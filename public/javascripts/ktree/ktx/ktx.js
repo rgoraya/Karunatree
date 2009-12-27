@@ -26,3 +26,9 @@ ktree.ktx.KTX_NODE_PREFIX = "ktx:";
 *	@type {number}
 */
 ktree.ktx.SPEED_TELEPORT = 6;
+
+ktree.ktx.KML_HEADER = '<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:ktx="http://www.karunatree.com/kml/ext/2.2">\n<Document>\n';
+
+ktree.ktx.KML_FOOTER = '\n</Document>\n</kml>';
+
+ktree.ktx.KML_NAMESPACE_DECLARATION = ' xmlns="http://www.opengis.net/kml/2.2"'

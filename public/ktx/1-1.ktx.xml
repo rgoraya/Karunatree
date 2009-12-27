@@ -23,13 +23,5 @@
   		</Point>
   	</Placemark>
   	
-  	<Placemark>
-  		<name>Excavation Site 2</name>
-  		<open>1</open>
-  		<Point>
-  			<coordinates>-109.7841368831581,38.68527824559933,0</coordinates>
-  		</Point>
-  	</Placemark>
-  	
 	</Document>
 </kml>

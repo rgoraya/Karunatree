@@ -9,6 +9,12 @@ class PlayController < ApplicationController
     @scene = Scene.find_by_scene_number(@user.character.current_scene)
   end
   
+  def earth_ready
+    @character = User.get_current_user(session).character
+    @scene = Scene.find_by_scene_number(@character.current_scene)
+    render :update_view
+  end
+  
   def next
     @character = User.get_current_user(session).character
     @character.current_scene += 1

@@ -1,2 +1,32 @@
 module PlayHelper
+  
+  def story_nav_back
+    if (@scene.has_back)
+      button_to_remote "Back", :url => {:action => "back", :controller => "play"}
+    end
+  end
+  
+  def story_nav_next
+    if (@scene.has_next)
+      button_to_remote "Next", :url => {:action => "next", :controller => "play"}
+    end
+  end
+  
+  def nav_back_display
+    if (@scene.has_back)
+      return "display:inline"
+    else
+      return "display:none"
+    end
+  end
+  
+  def nav_next_display
+    if (@scene.has_next)
+      return "display:inline"
+    else
+      return "display:none"
+    end
+  end
+    
+  
 end

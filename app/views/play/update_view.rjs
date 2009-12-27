@@ -1,5 +1,23 @@
+# Update scene title and script
 page.replace_html 'title', content_tag('h3', @scene.name)
 page.replace_html 'script', @scene.script
+page << "goog.dom.getElement('story').scrollTop = 0;"
 page.visual_effect :highlight, 'title', :duration => 2
 
-page.call 'karunaTree.ktx', @scene.path_to_ktx, @scene.name
+# Show/Hide navigation buttons as appropriate
+if (@scene.has_back)
+  page.show('nav_back')
+else
+  page.hide('nav_back')
+end
+
+if (@scene.has_next)
+  page.show('nav_next')
+else
+  page.hide('nav_next')
+end
+
+# Load KTX for the new scene if available
+if (@scene.has_ktx?)
+  page.call 'karunaTree.ktx', @scene.path_to_ktx, @scene.name
+end

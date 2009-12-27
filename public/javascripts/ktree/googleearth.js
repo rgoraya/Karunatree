@@ -16,6 +16,8 @@ goog.require('goog.ui.Button');
 *	Implements the bridge between KarunaTree and the Google Earth API.
 *	This is the only place in the system where direct calls to the
 *	Earth API should be issued.
+*
+*	@version 0.7
 */
 
 /**
@@ -82,7 +84,7 @@ ktree.GoogleEarth = function(identifier) {
 		target_.ge_.getWindow().setVisibility(true);
 		target_.ge_.getSun().setVisibility(false);
 		target_.ge_.getOptions().setAtmosphereVisibility(true);
-		target_.ge_.getNavigationControl().setVisibility(target_.ge_.VISIBILITY_AUTO);		
+		target_.ge_.getNavigationControl().setVisibility(target_.ge_.VISIBILITY_AUTO);
 	};
 
 	/**

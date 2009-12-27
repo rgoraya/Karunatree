@@ -2,7 +2,9 @@ goog.provide('ktree.ktx.KtxManager');
 
 goog.require('ktree.debug');
 goog.require('ktree.ktx.KtxInterpreter');
+goog.require('ktree.ktx.KtxCache');
 
+goog.require('goog.structs.Set');
 goog.require('goog.ds.DataManager');
 goog.require('goog.ds.XmlHttpDataSource');
 goog.require('goog.ds.LoadState');
@@ -38,13 +40,26 @@ ktree.ktx.KtxManager = function(world) {
 	*/
 	this.world_ = world;
 	
+	this.cache_ = new ktree.ktx.KtxCache(this.world_);
+	
 	/**
 	*	The KtxInterpreter object that the Manager uses to parse
 	*	and interpret KTX files
 	*	@private
 	*	@type {ktree.ktx.KtxInterpreter}
 	*/
-	this.interpreter_ = new ktree.ktx.KtxInterpreter(this.world_);
+	this.interpreter_ = new ktree.ktx.KtxInterpreter(this.world_, this.cache_);
+	
+	this.loadedDsNames_ = new goog.structs.Set();
+}
+
+ktree.ktx.KtxManager.prototype.ktx = function(dsName, uri) {
+	if (this.cache_.hasCacheForScene(dsName)) {
+		this.cache_.retrieveCacheForScene(dsName);
+	}
+	else {
+		this.loadKtx_(uri, dsName);
+	}
 }
 
 
@@ -56,7 +71,8 @@ ktree.ktx.KtxManager = function(world) {
 *	@param {string} dsName 				A string identifier by which the goog.ds.XmlHttpDataSource corresponding
 *										to the input file will be referenced
 */
-ktree.ktx.KtxManager.prototype.loadKtx = function(uri, dsName) {
+ktree.ktx.KtxManager.prototype.loadKtx_ = function(uri, dsName) {
+	
 	ktree.debug.logInfo('Creating new KTX XmlHttpDataSource <' + dsName + '> with data from URI <' + uri + '>...');
 	var dataSource = new goog.ds.XmlHttpDataSource(uri, dsName);	
 	dataSource.load();
@@ -73,7 +89,8 @@ ktree.ktx.KtxManager.prototype.loadKtx = function(uri, dsName) {
 	conditionalDelay.onSuccess = function() {
 		ktree.debug.logInfo('KTX XmlHttpDataSource <' + dsName + '> has finished loading succesfully');
 		target.dm_.addDataSource(dataSource);
-		target.interpreter_.parse(dataSource);
+		target.loadedDsNames_.add(dsName);
+		target.interpreter_.parse(dsName, dataSource);
 	}
 	conditionalDelay.start(100, 5000);
 }

@@ -1,0 +1,6 @@
+** Revision 19 **
+- Improved Play Controller's handling of story display on login. Current scene now loads script and GE view.
+- Improved Play Controller's handling of back/next navigation. Buttons now display only when content is available.
+- Scenes now know whether they have associated KTX, and KTX load calls are made appropriately
+- Story div snaps back to the top when script is refreshed
+- First pass at simple caching with KtxCache version 0.1: top-level Camera/LookAt for each scene is locally cached, then redisplayed if user goes back to a previously viewed scene

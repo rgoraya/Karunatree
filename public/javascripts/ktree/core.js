@@ -25,7 +25,7 @@ ktree.Core = function(debugOn) {
 }
 
 ktree.Core.prototype.ktx = function(uri, dsName) {
-	this.ktxManager_.loadKtx(uri, dsName);
+	this.ktxManager_.ktx(dsName, uri);
 }
 
 ktree.Core.prototype.debugTemp = function() {
