@@ -17,6 +17,7 @@ class PlayController < ApplicationController
   
   def next
     @character = User.get_current_user(session).character
+    @last_scene = Scene.find_by_scene_number(@character.current_scene)
     @character.current_scene += 1
     @scene = Scene.find_by_scene_number(@character.current_scene)
     @character.save
@@ -25,6 +26,7 @@ class PlayController < ApplicationController
   
   def back
     @character = User.get_current_user(session).character
+    @last_scene = Scene.find_by_scene_number(@character.current_scene)
     @character.current_scene -= 1
     @scene = Scene.find_by_scene_number(@character.current_scene)
     @character.save

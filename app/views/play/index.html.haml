@@ -8,27 +8,39 @@
       var CLOSURE_BASE_PATH = "/"; //The path where calcdeps.py was run
   = javascript_include_tag "closure/goog/base.js"
   = javascript_include_tag "ktree/deps.js"
+  = javascript_include_tag "sm2/soundmanager2.js"
   %script{:type => "text/javascript", :src => "http://www.google.com/jsapi?key=ABQIAAAALuMnM-_PZBAC0jiiDlxy2xRGQdiD-hjaSRiclgqKLFtYALqY5BStWXbW2ka15MNHBzunqwVPJAJ65A"}
+  %script{:type => "text/javascript", :src => "http://use.typekit.com/wsn0ttv.js"}
   %script{:type => "text/javascript"}
     :plain
       goog.require('ktree.Core');
       goog.require('goog.dom');
+      try{Typekit.load();}catch(e){}
 
 - content_for :include_custom_javascript_end do
   %script{:type => "text/javascript"}
     :plain
-      var karunaTree = new ktree.Core(true);
+      var kt = new ktree.Core(true);
       if (#{@scene.has_ktx?}) {
-        karunaTree.ktx('#{@scene.path_to_ktx}', '#{@scene.name}');
+        kt.ktx('#{@scene.path_to_ktx}', '#{@scene.name}');
+      }
+      if (#{@scene.has_soundtrack}) {
+          kt.soundscape().whenReady(
+            function() {
+              kt.soundscape().fadeIn('#{@scene.soundtrack}', 5000);
+            }
+          );
       }
 
-.left-column-content#earth
-.right-column-content#story
+.goog-splitpane-first-container#earth
+.goog-splitpane-second-container#story
   #title
-    %h3 #{@scene.name}
+    %h3 #{fancy_title}
+  %br
   #script
     %p #{@scene.script}
   #nav_back{:style => "float:left; #{nav_back_display}"}
     = button_to_remote "Back", :url => {:action => "back", :controller => "play"}
   #nav_next{:style => "#{nav_next_display}"}
     = button_to_remote "Next", :url => {:action => "next", :controller => "play"}
+.goog-splitpane-handle

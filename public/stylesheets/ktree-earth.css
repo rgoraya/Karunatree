@@ -1,13 +1,54 @@
-.content-container {
-	height: 94%;			/* TODO Not sure why this has to be less than 100% - nav bar height in order to avoid vertical scrollbars. May be something to do with vertical padding on other elements not being taken into account? */
+/* @override 
+	http://localhost:3000/stylesheets/ktree-earth.css?1262024730
+	http://localhost:3000/stylesheets/ktree-earth.css?1262043925
+	http://localhost:3000/stylesheets/ktree-earth.css?1262049177
+*/
+
+/* @group Story Typography */
+
+.two-column p, h3 {
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
-.left-column-content,						/* == col1, col2 */
-.right-column-content {					
+#script {
+	font-size: 1.2em;
+}
+
+#title {
+	font-size: 2em;
+}
+
+#title img {
+	position: relative;
+	bottom: 10px;
+	margin-right: -5px;
+}
+
+/* @end */
+
+
+embed {
+	cursor: pointer;		/* The GE Plugin dynamically generates this div. Here I'm trying to force it's cursor style. Works in WebKit (e.g. CSSEdit), but does not work in Firefox ver. 3.5.6. */
+}
+
+.content-container {
+	height: 92%;			/* TODO Not sure why this has to be less than 100% - nav bar height in order to avoid vertical scrollbars. May be something to do with vertical padding on other elements not being taken into account? */
+}
+
+.goog-splitpane-first-container,						/* == col1, col2 */
+.goog-splitpane-second-container {					
 	float:left;
 	position:relative;
 	padding:0 0 0 0;
 	overflow:hidden;		/* keeps long content (e.g. URLs) from breaking layout in IE */ 
+}
+
+.goog-splitpane-handle {
+	border-left: 1px solid gray;
+	border-right: 1px solid gray;
+	background: #ccc;
+	position: absolute;
 }
 
 .two-column {						/* == .rightmenu */
@@ -29,7 +70,7 @@ in a two column layout  */
 	height: 100%;
 }
 
-.two-column .left-column-content {
+.two-column .goog-splitpane-first-container {
 	width: 75%;			/* left column CONTENT width (left column width minus left/right padding) */
 	left: 25%;			/* (right column width) + (left column left padding) */
 						/*    shift the left column's CONTENT back to the right (without moving left column BACKGROUND), which
@@ -37,11 +78,13 @@ in a two column layout  */
 	height: 100%;
 }						/* if all padding values are x, values should sum to 100% - x (I think) */
 
-.two-column .right-column-content {
+.two-column .goog-splitpane-second-container {
 	width: 23%;			/* right column CONTENT width (right column width minus left/right padding) */
 	left: 26%;			/* (right column width) + (left column left/right padding) + (right column left padding) */
 						/*    shift the right column's CONTENT back to the right (without moving right column BACKGROUND, which
 						      is defined by main-left */
 	height: 100%;
 	overflow: auto;
+	background: url(../images/ivorytile.gif) repeat;
 }						/* if all padding values are x, values should sum to 50% + x (I think) */
+

@@ -2,6 +2,8 @@
 	http://localhost:3000/stylesheets/main.css?1254527802
 	http://localhost:3000/stylesheets/ktree-main.css?1260571289
 	http://localhost:3000/stylesheets/ktree-main.css?1261078630
+	http://localhost:3000/stylesheets/ktree-main.css?1262043879
+	http://localhost:3000/stylesheets/ktree-main.css?1262044105
 */
 
 /* @group Page Structure */
@@ -54,6 +56,11 @@ body {
 
 
 /* @group Typography */
+
+body p {
+	font-size: 100%;			/* Helps text sized in ems resize propertly in IE. See http://bit.ly/5u4Drl */
+	line-height: 1.125em;
+}
 
 #nav a, #nav a:visited {
 	color: chartreuse;

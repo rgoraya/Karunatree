@@ -1,4 +1,16 @@
+** Revision 20 **
+(Begun 12.27.2009 -- Committed 1.5.10)
+- Converted Play controller's view to use goog.ui.SplitPanel
+- Added TypeKit fonts
+- Added support for Jessica Hische's dropcaps in scene titles
+- Added soundtracks to Scenes.
+- Removed unused script subdirectory
+- First checkin of sound subdirectory, including ktree.Soundscape ver. 0.1
+--- Support for background music and fade in/out
+
+
 ** Revision 19 **
+(Begun 12.25.2009 -- Committed 12.27.2009)
 - Improved Play Controller's handling of story display on login. Current scene now loads script and GE view.
 - Improved Play Controller's handling of back/next navigation. Buttons now display only when content is available.
 - Scenes now know whether they have associated KTX, and KTX load calls are made appropriately

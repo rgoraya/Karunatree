@@ -11,7 +11,7 @@
   %body
     = render :partial => "shared/navigation"
     .content-container.two-column
-      .content-main
+      .goog-splitpane#splitter
         -if flash[:notice]
           #notice= flash[:notice]
         = @content_for_layout

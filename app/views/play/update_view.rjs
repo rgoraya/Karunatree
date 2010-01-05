@@ -1,5 +1,5 @@
 # Update scene title and script
-page.replace_html 'title', content_tag('h3', @scene.name)
+page.replace_html 'title', content_tag('h3', fancy_title)
 page.replace_html 'script', @scene.script
 page << "goog.dom.getElement('story').scrollTop = 0;"
 page.visual_effect :highlight, 'title', :duration => 2
@@ -17,7 +17,15 @@ else
   page.hide('nav_next')
 end
 
+# Fade in the music for the new scene
+if (@last_scene.has_soundtrack)
+  page.call 'kt.soundscape().fadeOut', @last_scene.soundtrack, 7000
+end
+if (@scene.has_soundtrack)
+  page.call 'kt.soundscape().fadeIn', @scene.soundtrack, 3000
+end
+
 # Load KTX for the new scene if available
 if (@scene.has_ktx?)
-  page.call 'karunaTree.ktx', @scene.path_to_ktx, @scene.name
+  page.call 'kt.ktx', @scene.path_to_ktx, @scene.name
 end

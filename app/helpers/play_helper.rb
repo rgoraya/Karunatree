@@ -27,6 +27,16 @@ module PlayHelper
       return "display:none"
     end
   end
+  
+  def fancy_title
+    title = @scene.name.dup
+    first_char = title.slice!(0).chr
+    return '<img src="http://jhische.com/dailydropcap/' +
+            first_char + '-' + @scene.dropcap +
+            '-cap.png" title="Daily Drop Cap by Jessica Hische"' +
+            ' alt="' + first_char + '" align="left"/>' + title
+  end
+    
     
   
 end

@@ -24,4 +24,12 @@ class Scene < ActiveRecord::Base
     end
   end
   
+  def has_soundtrack
+    if (self.soundtrack)
+      return true;
+    else
+      return false;
+    end
+  end
+  
 end
