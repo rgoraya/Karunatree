@@ -5,6 +5,8 @@ goog.provide('ktree.ktx');
 *	Defines constants in the ktree.ktx namespace which are used by the KtxInterpreter to make
 *	sense of KTX commands
 *	@see {ktree.ktx.KtxInterpreter}
+*
+*	@version 0.2
 */
 
 /**

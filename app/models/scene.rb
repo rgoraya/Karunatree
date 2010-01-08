@@ -32,4 +32,16 @@ class Scene < ActiveRecord::Base
     end
   end
   
+  def has_ambient_sound
+    if (self.ambient_sound)
+      return true;
+    else
+      return false;
+    end
+  end
+  
+  def has_sound
+    return (self.has_soundtrack || self.has_ambient_sound)
+  end
+  
 end

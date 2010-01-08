@@ -24,10 +24,15 @@
       if (#{@scene.has_ktx?}) {
         kt.ktx('#{@scene.path_to_ktx}', '#{@scene.name}');
       }
-      if (#{@scene.has_soundtrack}) {
+      if (#{@scene.has_sound}) {
           kt.soundscape().whenReady(
             function() {
-              kt.soundscape().fadeIn('#{@scene.soundtrack}', 5000);
+              if (#{@scene.has_soundtrack}) {
+                kt.soundscape().fadeIn('#{@scene.soundtrack}', #{Sound.find_by_name(@scene.soundtrack).to_json(:except => id)});
+              }
+              if (#{@scene.has_ambient_sound}) {
+                kt.soundscape().fadeIn('#{@scene.ambient_sound}', #{Sound.find_by_name(@scene.ambient_sound).to_json(:except => id)});
+              }
             }
           );
       }

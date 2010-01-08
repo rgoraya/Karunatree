@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100105171714) do
+ActiveRecord::Schema.define(:version => 20100106191122) do
 
   create_table "characters", :force => true do |t|
     t.integer  "current_scene", :default => 1
@@ -19,14 +19,15 @@ ActiveRecord::Schema.define(:version => 20100105171714) do
   end
 
   create_table "scenes", :force => true do |t|
-    t.integer  "scene_number",                    :null => false
+    t.integer  "scene_number",                     :null => false
     t.text     "name"
     t.text     "script"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "has_ktx",      :default => false, :null => false
-    t.string   "dropcap",      :default => "1"
+    t.boolean  "has_ktx",       :default => false, :null => false
+    t.string   "dropcap",       :default => "1"
     t.string   "soundtrack"
+    t.string   "ambient_sound"
   end
 
   create_table "sessions", :force => true do |t|
@@ -38,6 +39,21 @@ ActiveRecord::Schema.define(:version => 20100105171714) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "sounds", :force => true do |t|
+    t.string   "name",                                  :null => false
+    t.string   "path",                                  :null => false
+    t.integer  "volume"
+    t.integer  "start_position"
+    t.integer  "fade_in_delay"
+    t.integer  "fade_in_duration"
+    t.integer  "fade_down_delay"
+    t.integer  "fade_down_duration"
+    t.integer  "fade_down_volume"
+    t.boolean  "loop",               :default => false, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "username"

@@ -1,0 +1,39 @@
+** Version 0.5d2 **
+Begun: 1.5.10
+Committed: 1.7.10
+Corresponding SVN Revisions: 21
+
+* Added Sound models to the Rails side to help specify details of how music, ambient sounds, and effects should playback
+* Play controller now uses JSON to transmit Sound models to Soundscape
+* Soundscape.fadeIn blends incoming JSON Sound objects with default parameters to manage sound playback
+* Music and ambient sound can now persist across scenes when appropriate without interruption
+* New music and ambient tracks added to the sound content directory
+* A first, highly unprincipled and temporary pass at attaching illustrations to Placemarks (see ktree.GoogleEarth.postProcessFeatures_())
+* Illustration content directory added
+* Added file and system version numbering
+
+
+** Version 0.5d1 **
+Begun: 12.27.2009
+Committed: 1.5.10
+Corresponding SVN Revisions: 20
+
+* Converted Play controller's view to use goog.ui.SplitPanel
+* Added TypeKit fonts
+* Added support for Jessica Hische's dropcaps in scene titles
+* Added soundtracks to Scenes.
+* Removed unused script subdirectory
+* First checkin of sound subdirectory, including ktree.Soundscape ver. 0.1
+* Support for background music and fade in/out
+
+
+** Version 0.4d3 **
+Begun: 12.25.2009
+Committed: 12.27.2009
+Corresponding SVN Revisions: 19
+
+* Improved Play Controller's handling of story display on login. Current scene now loads script and GE view.
+* Improved Play Controller's handling of back/next navigation. Buttons now display only when content is available.
+* Scenes now know whether they have associated KTX, and KTX load calls are made appropriately
+* Story div snaps back to the top when script is refreshed
+* First pass at simple caching with KtxCache version 0.1: top*level Camera/LookAt for each scene is locally cached, then redisplayed if user goes back to a previously viewed scene

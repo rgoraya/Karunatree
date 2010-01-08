@@ -4,7 +4,11 @@ goog.provide('ktree.sound');
 *	@fileoverview
 *	Defines constants in the ktree.sound namespace.
 *	@see {ktree.sound.Soundscape}
+*
+*	@version 0.1
 */
+
+ktree.sound.SOUND_ROOT = "sound/";
 
 /**
 *	Relative server directory in which music files are stored
@@ -12,15 +16,15 @@ goog.provide('ktree.sound');
 ktree.sound.MUSIC_DIR = "sound/music/";
 
 /**
-*	Relative server directory in which sound effects files are stored
+*	Relative server directory in which ambient sound files are stored
 */
-ktree.sound.FX_DIR = "sound/fx/";
+ktree.sound.AMBIENT_DIR = "sound/ambient/";
 
 /**
 *	Default target volume assigned to sounds which do not specify an
 *	alternative
 */
-ktree.sound.DEFAULT_TARGET_VOLUME = 100;
+ktree.sound.DEFAULT_VOLUME = 100;
 
 /**
 *	Duration, in milliseconds, of a default fade effect

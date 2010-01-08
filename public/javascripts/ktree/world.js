@@ -6,6 +6,8 @@ goog.require('ktree.GoogleEarth');
 *	@fileoverview
 *	Implements functionality for the geographical visualization in which
 *	KT stories are set.
+*
+*	@version 0.1
 */
 
 /**

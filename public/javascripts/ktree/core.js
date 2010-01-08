@@ -15,7 +15,9 @@ goog.require('goog.ui.SplitPane.Orientation');
 
 /**
 *	@fileoverview
-*	The launch point for KarunaTree javascript. 
+*	The launch point for KarunaTree javascript.
+*
+*	@version 0.2
 */
 
 /**

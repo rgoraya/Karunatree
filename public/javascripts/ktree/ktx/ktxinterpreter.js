@@ -4,10 +4,10 @@ goog.require('ktree.debug');
 goog.require('ktree.ktx');
 goog.require('ktree.World');
 goog.require('ktree.ktx.KtxCache');
-goog.require('ktree.script.ScriptManager');
 
 goog.require('goog.ds.BasicNodeList');
 goog.require('goog.ds.XmlDataSource');
+goog.require('goog.async.Delay');
 goog.require('goog.dom.xml');
 goog.require('goog.string');
 
@@ -17,7 +17,7 @@ goog.require('goog.string');
 *	internally as a goog.ds.XmlDataSource, into a series of KTX commands and KML strings
 *	for the World to render
 *
-*	@version 0.2
+*	@version 0.3
 */
 
 /**
@@ -37,9 +37,7 @@ ktree.ktx.KtxInterpreter = function(world, cache) {
 	*	@type {ktree.ktx.KtxCache}
 	*/
 	this.cache_ = cache;
-	
-	this.sm_ = new ktree.script.ScriptManager();
-	
+		
 	/**
 	*	A list of KTX commands (represented as goog.ds.DataNodes)
 	*	awaiting transmission to the World

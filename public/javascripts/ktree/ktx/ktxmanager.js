@@ -17,6 +17,8 @@ goog.require('goog.async.ConditionalDelay');
 *	the contents of the files. The KtxManager does not itself know how to actually interpret the KTX files
 *	that it loads and manages; for that functionality see the KtxInterpreter
 *	@see {ktree.ktx.KtxInterpreter}
+*
+*	@version 0.2
 */
 
 /**

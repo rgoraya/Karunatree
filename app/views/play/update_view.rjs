@@ -17,14 +17,30 @@ else
   page.hide('nav_next')
 end
 
-# Fade in the music for the new scene
-if (@last_scene.has_soundtrack)
-  page.call 'kt.soundscape().fadeOut', @last_scene.soundtrack, 7000
-end
-if (@scene.has_soundtrack)
-  page.call 'kt.soundscape().fadeIn', @scene.soundtrack, 3000
+# Transition soundtracks for the new scene
+if (@last_scene.has_soundtrack && @scene.has_soundtrack && @last_scene.soundtrack == @scene.soundtrack)
+  # Allow soundtrack to continue
+else
+  if (@last_scene.has_soundtrack)
+    page << "kt.soundscape().fadeOut('#{@last_scene.soundtrack}', 3000);"
+  end
+  if (@scene.has_soundtrack)
+    page << "kt.soundscape().fadeIn('#{@scene.soundtrack}', #{Sound.find_by_name(@scene.soundtrack).to_json(:except => id)});"
+  end
 end
 
+# Transition ambient sound for the new scene
+if (@last_scene.has_ambient_sound && @scene.has_ambient_sound && @last_scene.ambient_sound == @scene.ambient_sound)
+  # Allow ambient sound to continue
+else
+  if (@last_scene.has_ambient_sound)
+    page << "kt.soundscape().fadeOut('#{@last_scene.ambient_sound}', 3000);"
+  end
+  if (@scene.has_ambient_sound)
+    page << "kt.soundscape().fadeIn('#{@scene.ambient_sound}', #{Sound.find_by_name(@scene.ambient_sound).to_json(:except => id)});"
+  end
+end
+  
 # Load KTX for the new scene if available
 if (@scene.has_ktx?)
   page.call 'kt.ktx', @scene.path_to_ktx, @scene.name

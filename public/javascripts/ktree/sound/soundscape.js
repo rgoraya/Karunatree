@@ -2,6 +2,7 @@ goog.provide('ktree.Soundscape');
 
 goog.require('ktree.debug');
 goog.require('ktree.sound');
+goog.require('ktree.utils');
 
 goog.require('goog.string');
 goog.require('goog.async.ConditionalDelay');
@@ -15,7 +16,7 @@ goog.require('goog.structs.Map');
 *	Target SoundManager2 version: 2.95a.20090717 (November 2009)
 *	@see <a href="http://www.schillmania.com/projects/soundmanager2/doc/">SoundManager2 API Documentation</a>
 *
-*	@version 0.1
+*	@version 0.2
 */
 
 
@@ -24,6 +25,8 @@ goog.require('goog.structs.Map');
 */
 ktree.Soundscape = function() {
 	this.targetVolumes_ = new goog.structs.Map();
+	
+	//this.testButtons();
 }
 
 /**
@@ -31,31 +34,29 @@ ktree.Soundscape = function() {
 *	have been previously loaded; requests to fade in unloaded sounds will result in attempt
 *	to load them.
 *	@param {string} soundID			The ID string of the sound to fade
+*	@param {string} relativePath	Path to the sound file, relative to the public root
 *	@param {integer} fadeDuration	(Optional) The duration of the fade in milliseconds
 */
-ktree.Soundscape.prototype.fadeIn = function(soundID, fadeDuration) {
-	var sound = this.getSound(soundID);
+ktree.Soundscape.prototype.fadeIn = function(soundID, jsonParams) {
+	var params = this.mergeParamsWithDefaults_(jsonParams);
+	var sound = this.getSound_(soundID, params);
 	if (!sound) {
 		ktree.debug.logError('Soundscape.fadeIn could not find a sound with ID <' + soundID + '>');
 		return;
 	}
-	if (!fadeDuration) {
-		fadeDuration = ktree.sound.DEFAULT_FADE_DURATION;
-	}	
-	var desiredVolume = this.targetVolumes_.get(soundID);
 	
 	ktree.debug.logGroup('Soundscape.fadeIn is fading in sound <' + soundID + '>');
 	var fadeCounter = 0;
 	var fadeDelay = new goog.async.ConditionalDelay(
 		function() {
-			if (fadeCounter < fadeDuration) {
+			if (fadeCounter < params.fade_in_duration) {
 				fadeCounter += ktree.sound.FADE_TIMESTEP;
-				sound.setVolume(100*fadeCounter/fadeDuration);
+				sound.setVolume(params.volume*fadeCounter/params.fade_in_duration);
 				//ktree.debug.logInfo('Fade step <' + fadeCounter + '> : Sound volume: <' + sound.volume + '>');
 				return false;
 			}
-			if (fadeCounter >= fadeDuration) {
-				sound.setVolume(desiredVolume)
+			if (fadeCounter >= params.fade_in_duration) {
+				sound.setVolume(params.volume)
 				//ktree.debug.logInfo('Fade step <' + fadeCounter + '> : Sound volume: <' + sound.volume + '>');
 				return true;
 			}
@@ -63,7 +64,7 @@ ktree.Soundscape.prototype.fadeIn = function(soundID, fadeDuration) {
 	);
 	fadeDelay.onFailure = function() {
 		ktree.debug.logWarning('Soundscape.fadeIn failed to reach the end of the fade succesfully.');
-		sound.setVolume(desiredVolume);
+		sound.setVolume(params.volume);
 	}
 	fadeDelay.onSuccess = function() {
 		ktree.debug.logInfo('Fade in complete! Sound volume is: <' + sound.volume + '>');
@@ -71,7 +72,7 @@ ktree.Soundscape.prototype.fadeIn = function(soundID, fadeDuration) {
 	}
 	
 	soundManager.play(soundID);
-	fadeDelay.start(ktree.sound.FADE_TIMESTEP, fadeDuration + ktree.sound.FADE_DURATION_ERROR);
+	fadeDelay.start(ktree.sound.FADE_TIMESTEP, params.fade_in_duration + ktree.sound.FADE_DURATION_ERROR);
 }
 
 /**
@@ -159,12 +160,13 @@ ktree.Soundscape.prototype.whenReady = function(callback) {
 *	directory. May return null if no sound could be matched to the ID.
 *	@private
 *	@param {string}		soundID		String identifier for the desired sound
+*	@param {string} relativePath	Path to the sound file, relative to ktree.sound.SOUND_ROOT
 *	@return {SMSound} 	sound		May be null if no sound could be matched to the argument ID
 */
-ktree.Soundscape.prototype.getSound_ = function(soundID) {
+ktree.Soundscape.prototype.getSound_ = function(soundID, params) {
 	var sound = soundManager.getSoundById(soundID);
 	if (!sound) {
-		sound = this.findAndLoadSound_(soundID);
+		sound = this.loadSound(soundID, params);
 		if (!sound) {
 			ktree.debug.logError('Soundscape.getSound could not find a sound with ID <' + soundID + '>');
 			return null;
@@ -174,6 +176,41 @@ ktree.Soundscape.prototype.getSound_ = function(soundID) {
 }
 
 /**
+*	TODO: Not yet supported
+*			fade_in_delay
+*			fade_in_duration
+*			fade_down_delay
+*			fade_down_volume
+*			fade_down_duration
+*			loop
+*/
+ktree.Soundscape.prototype.loadSound = function(soundID, params) {
+	var smParams = {
+		id: params.name,
+		url: goog.string.buildString(ktree.sound.SOUND_ROOT, params.path),
+		volume: params.volume,
+		onload: function() {
+			this.setPosition(params.start_position);
+		}
+	};
+	return soundManager.createSound(smParams);
+}
+
+ktree.Soundscape.prototype.mergeParamsWithDefaults_ = function(jsonParams) {
+	var params = jsonParams.sound;
+	if (!params.volume) {
+		params.volume = ktree.sound.DEFAULT_VOLUME;
+	}
+	if (!params.fade_in_duration) {
+		params.fade_in_duration = ktree.sound.DEFAULT_FADE_DURATION;
+	}
+	return params;	
+}
+
+/**
+*	TODO: This function is not currently working! soundManager.canPlayURL does not actually check for the existence
+*	of a file at the URL -- it just checks that the URL is of valid format and file type.
+*
 *	Given an argument sound ID string, attempt to find and load a "matching" (i.e. named soundID.mp3) in the
 *	server's default sound directory.
 *	@private
@@ -181,7 +218,7 @@ ktree.Soundscape.prototype.getSound_ = function(soundID) {
 *	@return {SMSound} 	sound		The sound matching the argument ID string. May be null if no match is found.
 */
 ktree.Soundscape.prototype.findAndLoadSound_ = function(soundID, targetVolume) {
-	if (targetVolume) {
+	if (!targetVolume) {
 		targetVolume = ktree.sound.DEFAULT_TARGET_VOLUME;
 	}
 	var music_url = goog.string.buildString(ktree.sound.MUSIC_DIR, soundID, '.mp3');
@@ -190,10 +227,10 @@ ktree.Soundscape.prototype.findAndLoadSound_ = function(soundID, targetVolume) {
 		return soundManager.createSound(soundID, music_url);
 	}
 	else {
-		var fx_url = goog.string.buildString(ktree.sound.FX_DIR, soundID, '.mp3');
-		if (soundManager.canPlayURL(fx_url)) {
+		var ambient_url = goog.string.buildString(ktree.sound.AMBIENT_DIR, soundID, '.mp3');
+		if (soundManager.canPlayURL(ambient_url)) {
 			this.targetVolumes_.set(soundID, targetVolume);
-			return soundManager.createSound(soundID, fx_url);
+			return soundManager.createSound(soundID, ambient_url);
 		}
 		else {
 			ktree.debug.logError('Soundscape.findAndLoadSound could not locate a sound named <' + 
@@ -223,22 +260,22 @@ ktree.Soundscape.disableSound_ = function() {
 	alert('TODO: Disable sound');
 }
 
-ktree.Soundscape.testButton = function() {
+ktree.Soundscape.prototype.testButtons = function() {
 	var b1 = new goog.ui.Button('Test Fade Out');
 	b1.render(goog.dom.$('button-fade-out'));
-	goog.events.listen(b1, goog.ui.Component.EventType.ACTION, ktree.Soundscape.fadeOutTest, false, this);
+	goog.events.listen(b1, goog.ui.Component.EventType.ACTION, this.fadeOutTest, false, this);
 	
 	var b2 = new goog.ui.Button('Test Fade In');
 	b2.render(goog.dom.$('button-fade-in'));
-	goog.events.listen(b2, goog.ui.Component.EventType.ACTION, ktree.Soundscape.fadeInTest, false, this);
+	goog.events.listen(b2, goog.ui.Component.EventType.ACTION, this.fadeInTest, false, this);
 }
 
-ktree.Soundscape.fadeOutTest = function() {
-	ktree.Soundscape.fadeOut('hidden-sky-free', 8000);
+ktree.Soundscape.prototype.fadeOutTest = function() {
+	this.fadeOut('hidden-sky-free', 8000);
 }
 
-ktree.Soundscape.fadeInTest = function() {
-	ktree.Soundscape.fadeIn('the-rainy-season', 8000);
+ktree.Soundscape.prototype.fadeInTest = function() {
+	this.fadeIn('desert-wind', 5000);
 }
 
 
@@ -268,6 +305,10 @@ soundManager.debugMode = false;
 */
 soundManager.onload = function() {
 	ktree.debug.logInfo('SoundManager2 has initialized successfully.');
+	//soundManager.createSound('floating-bamboo-free', 'sound/music/floating-bamboo-free.mp3');
+	//soundManager.createSound('the-dimpled-cheek-free', 'sound/music/the-dimpled-cheek-free.mp3');
+	//soundManager.createSound('triosante-allegro-free', 'sound/music/triosante-allegro-free.mp3');
+	//soundManager.createSound('desert-wind', 'sound/ambient/desert-wind.mp3');
 }
 
 /**

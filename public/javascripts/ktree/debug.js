@@ -10,6 +10,8 @@ goog.require('goog.debug.Logger');
 *	Provides debug utility functions for the rest of the system.
 *	Note that this file should not require any other ktree
 *	resources.
+*
+*	@version 0.2
 */
 
 

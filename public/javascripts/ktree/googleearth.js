@@ -17,7 +17,7 @@ goog.require('goog.ui.Button');
 *	This is the only place in the system where direct calls to the
 *	Earth API should be issued.
 *
-*	@version 0.7
+*	@version 0.3
 */
 
 /**
@@ -111,6 +111,10 @@ ktree.GoogleEarth.prototype.apiReady = function() {
 	return this.geReady_;
 }
 
+ktree.GoogleEarth.prototype.getPlugin = function() {
+	return this.ge_;
+}
+
 /**
 *	Adds the features in an argument KML string to the GE instance. If the KML string defines
 *	an AbstractView (e.g. a Camera or a LookAt), the GE instance's view is set to the
@@ -123,6 +127,59 @@ ktree.GoogleEarth.prototype.parseKml = function(kmlString) {
 		this.ge_.getView().setAbstractView(kmlObject.getAbstractView());
 	}
 	this.ge_.getFeatures().appendChild(kmlObject);
+	
+	// TODO Temporary -- see method
+	this.postProcessFeatures_();
+}
+
+/**
+*	TODO !!!
+*	This is strictly a temporary hack. Just an initial experiment in how to get our illustrations attached to Placemarks.
+*/
+ktree.GoogleEarth.prototype.postProcessFeatures_ = function() {
+	//First, pull out the KMLDocument object
+	var target = this;
+	var featureContainer = this.ge_.getFeatures();
+	var kmlObjectList = featureContainer.getChildNodes();
+	for (var i = 0; i < kmlObjectList.getLength(); i++) {
+		var kmlObject = kmlObjectList.item(i);
+		
+		//Find the KML Document nodes
+		if (kmlObject.getType() == "KmlDocument") {
+			var currentKmlDocString = kmlObject.getKml();
+			var docKmlObjectList = kmlObject.getFeatures().getChildNodes();
+			for (var j = 0; j < docKmlObjectList.getLength(); j++) {
+				var kmlDocChild = docKmlObjectList.item(j);
+				
+				//Within each KML document, find the Placemark nodes
+				if (kmlDocChild.getType() == "KmlPlacemark") {
+					var kmlString = kmlDocChild.getKml();
+					
+					//The image that we'll display for the placemark depends on its name
+					var imageName;
+					if (kmlDocChild.getName() == "Excavation Site") {
+						imageName = "dreams.jpg";
+					}
+					else if (kmlDocChild.getName() == "Sam's House") {
+						imageName = "awakening-wip.jpg";
+					}
+					else {
+						imageName = "wip.jpg";
+					}
+
+					//Now capture clicks on the Placemark and display an HTMLStringBalloon with
+					//the desired image
+					google.earth.addEventListener(kmlDocChild, 'click', function(event) {
+						event.preventDefault();
+						var balloon = target.ge_.createHtmlStringBalloon('');
+						var contentString = '<img width="768px" height="576px" src="images/illustrations/' + imageName + '>';
+						balloon.setContentString(contentString);
+						target.ge_.setBalloon(balloon);
+					});
+				}
+			}
+		}
+	}	
 }
 
 ktree.GoogleEarth.prototype.fetchKml = function(kmlUrl) {
