@@ -2,25 +2,25 @@
 <kml xmlns="http://www.opengis.net/kml/2.2" 
   xmlns:ktx="http://www.karunatree.com/kml/ext/2.2">
   
-  <Document>
+  <Document id="Dreams">
       
-    <Camera>
+    <Camera id="Dreams-Camera">
   		<longitude>-109.7682022044922</longitude>
   		<latitude>38.69656556160413</latitude>
   		<altitude>1118.397465993844</altitude>
   		<heading>151.8242721814273</heading>
   		<tilt>40.30685159553708</tilt>
   		<roll>1.772759250744586e-06</roll>
+  		<ktx:flyToSpeed>0.1</ktx:flyToSpeed>
   	</Camera>
-  	
-  	<ktx:flyToSpeed>0.1</ktx:flyToSpeed>
-  
+  	  
   	<Placemark>
   		<name>Excavation Site</name>
   		<open>1</open>  		
   		<Point>
   			<coordinates>-109.7641368831581,38.68527824559933,0</coordinates>
   		</Point>
+  	  <ktx:illustration>dreams</ktx:illustration>
   	</Placemark>
   	
 	</Document>

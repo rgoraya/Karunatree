@@ -2,11 +2,10 @@ goog.provide('ktree.Soundscape');
 
 goog.require('ktree.debug');
 goog.require('ktree.sound');
-goog.require('ktree.utils');
 
 goog.require('goog.string');
-goog.require('goog.async.ConditionalDelay');
 goog.require('goog.structs.Map');
+goog.require('goog.async.ConditionalDelay');
 
 /**
 *	@fileoverview
@@ -17,6 +16,7 @@ goog.require('goog.structs.Map');
 *	@see <a href="http://www.schillmania.com/projects/soundmanager2/doc/">SoundManager2 API Documentation</a>
 *
 *	@version 0.2
+*	@author Derek Lyons
 */
 
 

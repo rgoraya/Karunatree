@@ -195,11 +195,13 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ktree.GoogleEarth.html">ktree.GoogleEarth</a></li>
 	
-	<li><a href="../symbols/ktree.ktx.KtxDataSource.html">ktree.ktx.KtxDataSource</a></li>
+	<li><a href="../symbols/ktree.kml.KmlManager.html">ktree.kml.KmlManager</a></li>
+	
+	<li><a href="../symbols/ktree.kml.KtxCache.html">ktree.kml.KtxCache</a></li>
 	
 	<li><a href="../symbols/ktree.ktx.KtxInterpreter.html">ktree.ktx.KtxInterpreter</a></li>
 	
-	<li><a href="../symbols/ktree.ktx.KtxManager.html">ktree.ktx.KtxManager</a></li>
+	<li><a href="../symbols/ktree.Soundscape.html">ktree.Soundscape</a></li>
 	
 	<li><a href="../symbols/ktree.World.html">ktree.World</a></li>
 	
@@ -223,7 +225,7 @@ ul.inheritsList
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/ktx_ktxinterpreter.js.html">ktxinterpreter.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/kml_ktxinterpreter.js.html">ktxinterpreter.js</a>.
 				
 			</p>
 
@@ -242,9 +244,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/ktree.ktx.KtxInterpreter.html#constructor">ktree.ktx.KtxInterpreter</a></b>(world)
+								<b><a href="../symbols/ktree.ktx.KtxInterpreter.html#constructor">ktree.ktx.KtxInterpreter</a></b>(world, cache)
 							</div>
-							<div class="description"></div>
+							<div class="description">A KTX interpreter</div>
 						</td>
 					</tr>
 				</tbody>
@@ -252,6 +254,35 @@ ul.inheritsList
 			
 
 <!-- ============================== properties summary ===================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class ktree.ktx.KtxInterpreter.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ktree.ktx.KtxInterpreter.html#world_">world_</a></b>
+								</div>
+								<div class="description">The World object to which the Interpreter should direct
+	its output</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
 			
 
 <!-- ============================== methods summary ======================== -->
@@ -269,11 +300,42 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/ktree.ktx.KtxInterpreter.html#testParse">testParse</a></b>(dataSource)
+								<div class="fixedFont"><b><a href="../symbols/ktree.ktx.KtxInterpreter.html#delayedSendCommands_">delayedSendCommands_</a></b>(parentName)
 								</div>
-								<div class="description"></div>
+								<div class="description">Uses a goog.async.ConditionalDelay to delay transmission of commands until the
+	World object reports that its API is ready to receive them</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.ktx.KtxInterpreter.html#interpretKtxCommands_">interpretKtxCommands_</a></b>()
+								</div>
+								<div class="description">Interpret a sequence of KTX commands (drawn from the Interpreter's KTX Queue), 
+	transforming them into appropriate function calls on the World object.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.ktx.KtxInterpreter.html#processKml">processKml</a></b>(dataSource, dataSource, parentName)
+								</div>
+								<div class="description">//TODO Should the transmission to the World object happen here or in the KtxManager?
+	
+	Parse KTX from an argument goog.ds.XmlDataSource.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.ktx.KtxInterpreter.html#sendCommands_">sendCommands_</a></b>(parentName)
+								</div>
+								<div class="description">Send commands to the World.</div>
 							</td>
 						</tr>
 					
@@ -294,11 +356,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>ktree.ktx.KtxInterpreter</b>(world)
+						<b>ktree.ktx.KtxInterpreter</b>(world, cache)
 				</div>
 				
 				<div class="description">
-					
+					A KTX interpreter
 					
 				</div>
 				
@@ -311,6 +373,12 @@ ul.inheritsList
 						
 							<dt>
 								 <b>world</b>
+								
+							</dt>
+								<dd></dd>
+						
+							<dt>
+								 <b>cache</b>
 								
 							</dt>
 								<dd></dd>
@@ -329,6 +397,34 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name="world_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					
+					<b>world_</b>
+					
+					</div>
+					<div class="description">
+						The World object to which the Interpreter should direct
+	its output
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
+			
 
 <!-- ============================== method details ========================= -->		
 			
@@ -336,15 +432,16 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="testParse"> </a>
-					<div class="fixedFont">
+					<a name="delayedSendCommands_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
 					
 					
-					<b>testParse</b>(dataSource)
+					<b>delayedSendCommands_</b>(parentName)
 					
 					</div>
 					<div class="description">
-						
+						Uses a goog.async.ConditionalDelay to delay transmission of commands until the
+	World object reports that its API is ready to receive them
 						
 						
 					</div>
@@ -356,7 +453,7 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>dataSource</b>
+									<b>parentName</b>
 									
 								</dt>
 								<dd></dd>
@@ -368,6 +465,138 @@ ul.inheritsList
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd></dd>
+							
+							</dl>
+						
+
+					<hr />
+				
+					<a name="interpretKtxCommands_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					
+					<b>interpretKtxCommands_</b>()
+					
+					</div>
+					<div class="description">
+						Interpret a sequence of KTX commands (drawn from the Interpreter's KTX Queue), 
+	transforming them into appropriate function calls on the World object.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="processKml"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					
+					<b>processKml</b>(dataSource, dataSource, parentName)
+					
+					</div>
+					<div class="description">
+						//TODO Should the transmission to the World object happen here or in the KtxManager?
+	
+	Parse KTX from an argument goog.ds.XmlDataSource. If the World is ready, transmit the results 
+	(i.e. interpreted KTX commands and a KML string) for rendering.
+	If the world is not yet ready, cache the results and retry transmission later
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{goog.ds.XmlDataSource}</span> <b>dataSource</b>
+									
+								</dt>
+								<dd>The source of the KTX data to be parsed</dd>
+							
+								<dt>
+									<b>dataSource</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>parentName</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="sendCommands_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					
+					<b>sendCommands_</b>(parentName)
+					
+					</div>
+					<div class="description">
+						Send commands to the World. Two messages are sent: first, a sequence of
+	interpreted KTX commands are dispatched (as function calls on the World object);
+	second, a string of KML is sent to be rendered by the World. Note that this
+	method does NOT check to see whether the World object's API is actually ready
+	to receive commands. For that functionality, delaySendCommands_() should be used.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>parentName</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd></dd>
+							
+							</dl>
 						
 
 					
@@ -383,8 +612,8 @@ ul.inheritsList
 		
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
-			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.3 on Tue Dec 08 2009 17:59:22 GMT-0800 (PST)
+			&copy;2010<br />
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.3 on Mon Mar 01 2010 11:21:26 GMT-0800 (PST)
 		</div>
 	</body>
 </html>

@@ -12,6 +12,7 @@ goog.require('goog.debug.Logger');
 *	resources.
 *
 *	@version 0.2
+*	@author Derek Lyons
 */
 
 
@@ -63,6 +64,11 @@ ktree.debug.logError= function(message) {
 
 ktree.debug.logElement = function(element, message) {
 	if(message) ktree.debug.mainLogger_.info(message);
+	console.dirxml(element);
+}
+
+ktree.debug.logElementError = function(element, message) {
+	if(message) ktree.debug.mainLogger_.severe(message);
 	console.dirxml(element);
 }
 

@@ -1,3 +1,21 @@
+** Version 0.5.1d1 **
+Begun: 2.16.10
+Committed: 3.1.10
+Corresponding SVN Revisions: 35
+
+* Greatly improved logic for adding/retrieving KML data to/from the plugin. Plugin now handles caching of AbstractViews
+* KtxCache has been streamlined, as this class now only needs to store KTX command values and not entire nodes (i.e. Cameras or LookAts)
+* Significant refinements throughout the KML loading pipeline
+* GoogleEarth now handles interpretation of KTX commands retrieved from KtxCache itself (rather than relying on KtxInterpreter)
+* KtxInterpreter has been deprecated. Functionality distributed to KmlManager (formerly KtxManager) and GoogleEarth
+* Significant refactoring of ktree.ktx package (now ktree.kml)
+* Illustration display bugs that formerly arose with repeated forward/back navigation have been resolved
+* First pass at persistent story state!
+* GoogleEarth automatically serializes plugin's KML state to server on each update; saved KML state is restored when user returns, including re-initialization of all KTX commands
+* Added new illustration assets
+* Updated JsDocs; added JsDoc configuration file to docs subdirectory
+
+
 ** Version 0.5d2 **
 Begun: 1.5.10
 Committed: 1.7.10

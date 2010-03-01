@@ -195,11 +195,13 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ktree.GoogleEarth.html">ktree.GoogleEarth</a></li>
 	
-	<li><a href="../symbols/ktree.ktx.KtxDataSource.html">ktree.ktx.KtxDataSource</a></li>
+	<li><a href="../symbols/ktree.kml.KmlManager.html">ktree.kml.KmlManager</a></li>
+	
+	<li><a href="../symbols/ktree.kml.KtxCache.html">ktree.kml.KtxCache</a></li>
 	
 	<li><a href="../symbols/ktree.ktx.KtxInterpreter.html">ktree.ktx.KtxInterpreter</a></li>
 	
-	<li><a href="../symbols/ktree.ktx.KtxManager.html">ktree.ktx.KtxManager</a></li>
+	<li><a href="../symbols/ktree.Soundscape.html">ktree.Soundscape</a></li>
 	
 	<li><a href="../symbols/ktree.World.html">ktree.World</a></li>
 	
@@ -254,6 +256,76 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class ktree.GoogleEarth.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ktree.GoogleEarth.html#geReady_">geReady_</a></b>
+								</div>
+								<div class="description">Flag indicating whether or not the Google Earth API instance is
+	initialized and ready for commands</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ktree.GoogleEarth.html#identifier_">identifier_</a></b>
+								</div>
+								<div class="description">A string to uniquely identify this GoogleEarth object</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ktree.GoogleEarth.html#ignoreFlyToSpeed_">ignoreFlyToSpeed_</a></b>
+								</div>
+								<div class="description">Used to disable fly-to-speed commands during debugging</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ktree.GoogleEarth.html#-target_">target_</a></b>
+								</div>
+								<div class="description">A temporary reference to this *particular* GoogleEarth object needed to 
+	allow the initialization callback chain to reach this object again.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ktree.GoogleEarth.html#xhr_">xhr_</a></b>
+								</div>
+								<div class="description">Object used to send XHR requests back to the KarunaTree server</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
 
 <!-- ============================== methods summary ======================== -->
 			
@@ -272,9 +344,30 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#addKml">addKml</a></b>(kmlObject)
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#addKml">addKml</a></b>(kmlString, parentName)
 								</div>
-								<div class="description"></div>
+								<div class="description">TODO Need to remove hard-coded reference to Chapter 1
+
+	Adds the contents of a KML string to a specified parent KmlContainer within
+	the GE plugin.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#-apiInitFailure_">apiInitFailure_</a></b>(errorCode)
+								</div>
+								<div class="description">If the API fails to initialize, provide an error message</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#-apiInitSuccess_">apiInitSuccess_</a></b>(instance)
+								</div>
+								<div class="description">If the API initializes successfully, set up its basic parameters</div>
 							</td>
 						</tr>
 					
@@ -288,83 +381,153 @@ ul.inheritsList
 						</tr>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#fetchKml">fetchKml</a></b>(kmlUrl)
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#createIllustrationClickHandler_">createIllustrationClickHandler_</a></b>(kmlObject, illustrationName)
 								</div>
-								<div class="description"></div>
+								<div class="description">Installs a new click handler that will display a specified illustration when a clickable
+	KmlObject is clicked on.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#createKmlFolder_">createKmlFolder_</a></b>(folderName, parentName)
+								</div>
+								<div class="description">Adds a new KmlFolder object to the GoogleEarth plugin's internal data store and
+	returns a reference to it</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#makeAnimTestButton">makeAnimTestButton</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#getPlugin">getPlugin</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">TODO This method should be removed to enforce encapsulation
+
+	Returns a pointer to the GoogleEarth plugin</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#-initializeAPI_">initializeAPI_</a></b>()
+								</div>
+								<div class="description">Callback to begin initialization of the Google Earth API instance,
+	providing further callbacks for success and failure</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#makeCameraButton">makeCameraButton</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#installKtxCache">installKtxCache</a></b>(ktxCache)
 								</div>
-								<div class="description"></div>
+								<div class="description">Installs a KTX cache for the World.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#kmlStringToObject_">kmlStringToObject_</a></b>(kmlString)
+								</div>
+								<div class="description">Safe method for attempting to convert a KML string to a KmlObject.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#retrieveKmlFeature_">retrieveKmlFeature_</a></b>(featureName, rootContainer)
+								</div>
+								<div class="description">Retrieve a KmlFeature object from the plugin.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#runKtxCommandsForObject_">runKtxCommandsForObject_</a></b>(kmlObject, shouldUpdateView)
+								</div>
+								<div class="description">Recurrent function parses through a KmlObject and all of its children, running any KTX commands
+	that have been cached for any of the nodes.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#serializeKmlToServer_">serializeKmlToServer_</a></b>()
+								</div>
+								<div class="description">TODO First pass.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#moveCameraRelative">moveCameraRelative</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#setFlyToSpeed">setFlyToSpeed</a></b>(speed)
 								</div>
-								<div class="description"></div>
+								<div class="description">Set the camera's fly-to speed</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#moveCameraTo">moveCameraTo</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#tryLoadingKmlForScene">tryLoadingKmlForScene</a></b>(sceneName)
 								</div>
-								<div class="description"></div>
+								<div class="description">Attempts to load KML data for the specified scene by retrieving it from the plugin's
+	internal cache.</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#parseKml">parseKml</a></b>(kmlString)
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#tryRetrievingKmlFeature_">tryRetrievingKmlFeature_</a></b>(featureName, rootContainer)
 								</div>
-								<div class="description">Adds the features in an argument KML string to the GE instance.</div>
+								<div class="description">Attempt to retrieve a KmlFeature object from the plugin.</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#startAnimation">startAnimation</a></b>(newAnimationProvider)
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#typeIsAbstractView_">typeIsAbstractView_</a></b>(kmlType)
 								</div>
-								<div class="description"></div>
+								<div class="description">Returns whether the argument KML type is an absract view</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#startAnimationCallback">startAnimationCallback</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#typeIsClickable_">typeIsClickable_</a></b>(kmlType)
 								</div>
-								<div class="description"></div>
+								<div class="description">Returns whether the argument KML type is clickable</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#stopAnimation">stopAnimation</a></b>(tickProvider)
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#typeIsContainer_">typeIsContainer_</a></b>(kmlType)
 								</div>
-								<div class="description"></div>
+								<div class="description">Returns whether the argument KML type is a container (e.g.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/ktree.GoogleEarth.html#updateView_">updateView_</a></b>(abstractView)
+								</div>
+								<div class="description">Updates the plugin's current view using an argument abstract view.</div>
 							</td>
 						</tr>
 					
@@ -421,6 +584,123 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name="geReady_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					
+					<b>geReady_</b>
+					
+					</div>
+					<div class="description">
+						Flag indicating whether or not the Google Earth API instance is
+	initialized and ready for commands
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="identifier_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					
+					<b>identifier_</b>
+					
+					</div>
+					<div class="description">
+						A string to uniquely identify this GoogleEarth object
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="ignoreFlyToSpeed_"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>ignoreFlyToSpeed_</b>
+					
+					</div>
+					<div class="description">
+						Used to disable fly-to-speed commands during debugging
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-target_"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;inner&gt; 
+					
+					
+					<b>target_</b>
+					
+					</div>
+					<div class="description">
+						A temporary reference to this *particular* GoogleEarth object needed to 
+	allow the initialization callback chain to reach this object again.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="xhr_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					
+					<b>xhr_</b>
+					
+					</div>
+					<div class="description">
+						Object used to send XHR requests back to the KarunaTree server
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
+			
 
 <!-- ============================== method details ========================= -->		
 			
@@ -432,11 +712,16 @@ ul.inheritsList
 					<div class="fixedFont">
 					
 					
-					<b>addKml</b>(kmlObject)
+					<b>addKml</b>(kmlString, parentName)
 					
 					</div>
 					<div class="description">
-						
+						TODO Need to remove hard-coded reference to Chapter 1
+
+	Adds the contents of a KML string to a specified parent KmlContainer within
+	the GE plugin. If no parent is specified, the KML is added to the top-level
+	of the plugin itself. Note that if the KML string defines a Camera or a LookAt, 
+	the plugin's current view is set accordingly.
 						
 						
 					</div>
@@ -448,10 +733,88 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>kmlObject</b>
+									<span class="light fixedFont">{string}</span> <b>kmlString</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>A string of valid KML</dd>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>parentName</b>
+									
+								</dt>
+								<dd>Optional. The name of a KmlContainer to which the new KML should be parented</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-apiInitFailure_"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;inner&gt; 
+					
+					
+					<b>apiInitFailure_</b>(errorCode)
+					
+					</div>
+					<div class="description">
+						If the API fails to initialize, provide an error message
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>errorCode</b>
+									
+								</dt>
+								<dd>An error message from the Earth API</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-apiInitSuccess_"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;inner&gt; 
+					
+					
+					<b>apiInitSuccess_</b>(instance)
+					
+					</div>
+					<div class="description">
+						If the API initializes successfully, set up its basic parameters
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>instance</b>
+									
+								</dt>
+								<dd>The initialized earth API instance</dd>
 							
 							</dl>
 						
@@ -496,15 +859,16 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="fetchKml"> </a>
-					<div class="fixedFont">
+					<a name="createIllustrationClickHandler_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
 					
 					
-					<b>fetchKml</b>(kmlUrl)
+					<b>createIllustrationClickHandler_</b>(kmlObject, illustrationName)
 					
 					</div>
 					<div class="description">
-						
+						Installs a new click handler that will display a specified illustration when a clickable
+	KmlObject is clicked on.
 						
 						
 					</div>
@@ -516,7 +880,153 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>kmlUrl</b>
+									<span class="light fixedFont">{KmlObject}</span> <b>kmlObject</b>
+									
+								</dt>
+								<dd>The clickable KmlObject to install the handler for</dd>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>illustrationName</b>
+									
+								</dt>
+								<dd>The name of the illustration to display when clicked</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="createKmlFolder_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					<span class="light">{KmlFolder}</span>
+					<b>createKmlFolder_</b>(folderName, parentName)
+					
+					</div>
+					<div class="description">
+						Adds a new KmlFolder object to the GoogleEarth plugin's internal data store and
+	returns a reference to it
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>folderName</b>
+									
+								</dt>
+								<dd>The string ID of the new KmlFolder</dd>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>parentName</b>
+									
+								</dt>
+								<dd>The string ID of the intended parent container. If null, the new folder is 
+									added to the top-level of the plugin.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{KmlFolder}</span> A pointer to the created KmlFolder</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getPlugin"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>getPlugin</b>()
+					
+					</div>
+					<div class="description">
+						TODO This method should be removed to enforce encapsulation
+
+	Returns a pointer to the GoogleEarth plugin
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="-initializeAPI_"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;inner&gt; 
+					
+					
+					<b>initializeAPI_</b>()
+					
+					</div>
+					<div class="description">
+						Callback to begin initialization of the Google Earth API instance,
+	providing further callbacks for success and failure
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="installKtxCache"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>installKtxCache</b>(ktxCache)
+					
+					</div>
+					<div class="description">
+						Installs a KTX cache for the World. Should only be called by the KmlManager.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>ktxCache</b>
 									
 								</dt>
 								<dd></dd>
@@ -532,117 +1042,16 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="makeAnimTestButton"> </a>
-					<div class="fixedFont">
+					<a name="kmlStringToObject_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
 					
-					
-					<b>makeAnimTestButton</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="makeCameraButton"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>makeCameraButton</b>()
+					<span class="light">{KmlObject}</span>
+					<b>kmlStringToObject_</b>(kmlString)
 					
 					</div>
 					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="moveCameraRelative"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>moveCameraRelative</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="moveCameraTo"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>moveCameraTo</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="parseKml"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>parseKml</b>(kmlString)
-					
-					</div>
-					<div class="description">
-						Adds the features in an argument KML string to the GE instance. If the KML string defines
-	an AbstractView (e.g. a Camera or a LookAt), the GE instance's view is set to the
-	AbstractView
+						Safe method for attempting to convert a KML string to a KmlObject. If the KML string is
+	well-formed, the resulting KmlObject is returned; otherwise an error is raised.
 						
 						
 					</div>
@@ -654,10 +1063,120 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{string}</span> <b>kmlString</b>
+									<b>kmlString</b>
 									
 								</dt>
-								<dd>A string of valid KML</dd>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{KmlObject}</span> </dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="retrieveKmlFeature_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					<span class="light">{KmlFeature}</span>
+					<b>retrieveKmlFeature_</b>(featureName, rootContainer)
+					
+					</div>
+					<div class="description">
+						Retrieve a KmlFeature object from the plugin. Raises an error if the requested feature cannot
+	be found. For situations where this error is undesirable, use the alternative method 
+	tryRetrievingKmlFeature_().
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>featureName</b>
+									
+								</dt>
+								<dd>The name (ID) of the KmlFeature to retrieve</dd>
+							
+								<dt>
+									<span class="light fixedFont">{KmlContainer}</span> <b>rootContainer</b>
+									
+								</dt>
+								<dd>Optional. The KmlContainer to use as the root of the search. If no argument is specified, the plugin root is used.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{KmlFeature}</span> The named KmlFeature. Guaranteed not be null.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd></dd>
+							
+							</dl>
+						
+
+					<hr />
+				
+					<a name="runKtxCommandsForObject_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					
+					<b>runKtxCommandsForObject_</b>(kmlObject, shouldUpdateView)
+					
+					</div>
+					<div class="description">
+						Recurrent function parses through a KmlObject and all of its children, running any KTX commands
+	that have been cached for any of the nodes. Optionally uses the abstract view associated
+	with the argument KmlObject to update the current view.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{KmlObject}</span> <b>kmlObject</b>
+									
+								</dt>
+								<dd>The KmlObject to process</dd>
+							
+								<dt>
+									<span class="light fixedFont">{boolean}</span> <b>shouldUpdateView</b>
+									
+								</dt>
+								<dd>If true, attempts to use the abstract view associated with
+										kmlObject to update the plugin's view</dd>
 							
 							</dl>
 						
@@ -670,15 +1189,43 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="startAnimation"> </a>
-					<div class="fixedFont">
+					<a name="serializeKmlToServer_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
 					
 					
-					<b>startAnimation</b>(newAnimationProvider)
+					<b>serializeKmlToServer_</b>()
 					
 					</div>
 					<div class="description">
+						TODO First pass. this is currently inefficient because it passes all of the plugin's KML
+	repeatedly to the server.
+
+	Uses an XHR request to asynchronously post the plugin's KML state back to the KarunaTree server
 						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setFlyToSpeed"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setFlyToSpeed</b>(speed)
+					
+					</div>
+					<div class="description">
+						Set the camera's fly-to speed
 						
 						
 					</div>
@@ -690,10 +1237,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{<a href="../symbols/ktree.html#.AnimationProvider">ktree.AnimationProvider</a> | null}</span> <b>newAnimationProvider</b>
+									<span class="light fixedFont">{float}</span> <b>speed</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The desired fly-to speed. Accepts a float from 0.0 to 5.0, inclusive.</dd>
 							
 							</dl>
 						
@@ -706,40 +1253,17 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="startAnimationCallback"> </a>
-					<div class="fixedFont">
+					<a name="tryLoadingKmlForScene"> </a>
+					<div class="fixedFont">&lt;private&gt; 
 					
-					
-					<b>startAnimationCallback</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="stopAnimation"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>stopAnimation</b>(tickProvider)
+					<span class="light">{boolean}</span>
+					<b>tryLoadingKmlForScene</b>(sceneName)
 					
 					</div>
 					<div class="description">
-						
+						Attempts to load KML data for the specified scene by retrieving it from the plugin's
+	internal cache. If successful, will also update the plugin's view using the retrieved
+	KML.
 						
 						
 					</div>
@@ -751,10 +1275,243 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>tickProvider</b>
+									<span class="light fixedFont">{string}</span> <b>sceneName</b>
 									
 								</dt>
+								<dd>The name of the scene to try and load</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{boolean}</span> Could KML for the specified scene be retrieved from the plugin?</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="tryRetrievingKmlFeature_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					<span class="light">{KmlFeature}</span>
+					<b>tryRetrievingKmlFeature_</b>(featureName, rootContainer)
+					
+					</div>
+					<div class="description">
+						Attempt to retrieve a KmlFeature object from the plugin. May return a null result if the feature
+	cannot be found. For situations where a null result would be undesirable, use the alternative method
+	retrieveKmlFeature_().
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>featureName</b>
+									
+								</dt>
+								<dd>The name (ID) of the KmlFeature to retrieve</dd>
+							
+								<dt>
+									<span class="light fixedFont">{KmlContainer}</span> <b>rootContainer</b>
+									
+								</dt>
+								<dd>Optional. The KmlContainer to use as the root of the search. If no argument is 
+											specified, the plugin root is used.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{KmlFeature}</span> The named KmlFeature. May be null if no matching feature can be found.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
 								<dd></dd>
+							
+							</dl>
+						
+
+					<hr />
+				
+					<a name="typeIsAbstractView_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					<span class="light">{bool}</span>
+					<b>typeIsAbstractView_</b>(kmlType)
+					
+					</div>
+					<div class="description">
+						Returns whether the argument KML type is an absract view
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>kmlType</b>
+									
+								</dt>
+								<dd>The name of the KmlType to examine</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{bool}</span> Is this KmlType an abstract view?</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="typeIsClickable_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					<span class="light">{bool}</span>
+					<b>typeIsClickable_</b>(kmlType)
+					
+					</div>
+					<div class="description">
+						Returns whether the argument KML type is clickable
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>kmlType</b>
+									
+								</dt>
+								<dd>The name of the KmlType to examine</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{bool}</span> Is this KmlType clickable?</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="typeIsContainer_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					<span class="light">{bool}</span>
+					<b>typeIsContainer_</b>(kmlType)
+					
+					</div>
+					<div class="description">
+						Returns whether the argument KML type is a container (e.g. a KmlDocument
+	or a KmlFolder).
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>kmlType</b>
+									
+								</dt>
+								<dd>The name of the KmlType to examine</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{bool}</span> Is this KmlType a container?</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="updateView_"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					
+					<b>updateView_</b>(abstractView)
+					
+					</div>
+					<div class="description">
+						Updates the plugin's current view using an argument abstract view. Will also set the camera
+	fly-to speed appropriately if there is a KTX parameter cached for the view.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{KmlAbstractView}</span> <b>abstractView</b>
+									
+								</dt>
+								<dd>The abstract view to use for updating</dd>
 							
 							</dl>
 						
@@ -778,8 +1535,8 @@ ul.inheritsList
 		
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
-			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.3 on Tue Dec 08 2009 17:59:22 GMT-0800 (PST)
+			&copy;2010<br />
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.3 on Mon Mar 01 2010 11:21:26 GMT-0800 (PST)
 		</div>
 	</body>
 </html>

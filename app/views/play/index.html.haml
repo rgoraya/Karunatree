@@ -21,8 +21,12 @@
   %script{:type => "text/javascript"}
     :plain
       var kt = new ktree.Core(true);
-      if (#{@scene.has_ktx?}) {
-        kt.ktx('#{@scene.path_to_ktx}', '#{@scene.name}');
+      if (#{!@character.saved_kml.blank?}) {
+        kt.restoreKml('#{@character.saved_kml.to_json}');
+      }
+      else if (#{@scene.has_ktx?}) {
+        alert('Loading fresh');
+        kt.loadKml('#{@scene.path_to_ktx}', '#{@scene.name}');
       }
       if (#{@scene.has_sound}) {
           kt.soundscape().whenReady(

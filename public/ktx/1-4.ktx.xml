@@ -2,7 +2,7 @@
 <kml xmlns="http://www.opengis.net/kml/2.2" 
   xmlns:ktx="http://www.karunatree.com/kml/ext/2.2">
   
-  <Document>
+  <Document id="Good Samaritan">
     
     <ktx:flyToSpeed>0.1</ktx:flyToSpeed>
     

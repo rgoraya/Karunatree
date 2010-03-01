@@ -195,11 +195,13 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ktree.GoogleEarth.html">ktree.GoogleEarth</a></li>
 	
-	<li><a href="../symbols/ktree.ktx.KtxDataSource.html">ktree.ktx.KtxDataSource</a></li>
+	<li><a href="../symbols/ktree.kml.KmlManager.html">ktree.kml.KmlManager</a></li>
+	
+	<li><a href="../symbols/ktree.kml.KtxCache.html">ktree.kml.KtxCache</a></li>
 	
 	<li><a href="../symbols/ktree.ktx.KtxInterpreter.html">ktree.ktx.KtxInterpreter</a></li>
 	
-	<li><a href="../symbols/ktree.ktx.KtxManager.html">ktree.ktx.KtxManager</a></li>
+	<li><a href="../symbols/ktree.Soundscape.html">ktree.Soundscape</a></li>
 	
 	<li><a href="../symbols/ktree.World.html">ktree.World</a></li>
 	
@@ -257,9 +259,72 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#include">include</a></b>(path)
+								</div>
+								<div class="description">Pull in the contents of an external file at the given path.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#makeSignature">makeSignature</a></b>(params)
+								</div>
+								<div class="description">Build output for displaying function parameters.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#makeSortby">makeSortby</a></b>(attribute)
+								</div>
+								<div class="description">Make a symbol sorter by some attribute.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#makeSrcFile">makeSrcFile</a></b>(path, srcDir, name)
+								</div>
+								<div class="description">Turn a raw source file into a code-hilited page in the docs.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#publish">publish</a></b>(symbolSet)
+								</div>
+								<div class="description">Called automatically by JsDoc Toolkit.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#resolveLinks">resolveLinks</a></b>(str, from)
+								</div>
+								<div class="description">Find symbol {@link .</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/_global_.html#success">success</a></b>(dataSource)
 								</div>
 								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#summarize">summarize</a></b>(desc)
+								</div>
+								<div class="description">Just the first sentence (up to a full stop).</div>
 							</td>
 						</tr>
 					
@@ -312,6 +377,258 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="include"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>include</b>(path)
+					
+					</div>
+					<div class="description">
+						Pull in the contents of an external file at the given path.
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/docs_jsdoc_templates_jsdoc_publish.js.html">publish.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>path</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="makeSignature"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>makeSignature</b>(params)
+					
+					</div>
+					<div class="description">
+						Build output for displaying function parameters.
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/docs_jsdoc_templates_jsdoc_publish.js.html">publish.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>params</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="makeSortby"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>makeSortby</b>(attribute)
+					
+					</div>
+					<div class="description">
+						Make a symbol sorter by some attribute.
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/docs_jsdoc_templates_jsdoc_publish.js.html">publish.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>attribute</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="makeSrcFile"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>makeSrcFile</b>(path, srcDir, name)
+					
+					</div>
+					<div class="description">
+						Turn a raw source file into a code-hilited page in the docs.
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/docs_jsdoc_templates_jsdoc_publish.js.html">publish.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>path</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>srcDir</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>name</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="publish"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>publish</b>(symbolSet)
+					
+					</div>
+					<div class="description">
+						Called automatically by JsDoc Toolkit.
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/docs_jsdoc_templates_jsdoc_publish.js.html">publish.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>symbolSet</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="resolveLinks"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>resolveLinks</b>(str, from)
+					
+					</div>
+					<div class="description">
+						Find symbol ... strings in text and turn into html links
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/docs_jsdoc_templates_jsdoc_publish.js.html">publish.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>str</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>from</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="success"> </a>
 					<div class="fixedFont">
 					
@@ -349,6 +666,45 @@ ul.inheritsList
 						
 						
 
+					<hr />
+				
+					<a name="summarize"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>summarize</b>(desc)
+					
+					</div>
+					<div class="description">
+						Just the first sentence (up to a full stop). Should not break on dotted variable names.
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/docs_jsdoc_templates_jsdoc_publish.js.html">publish.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>desc</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
 					
 				
 			
@@ -362,8 +718,8 @@ ul.inheritsList
 		
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
-			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.3 on Tue Dec 08 2009 17:59:22 GMT-0800 (PST)
+			&copy;2010<br />
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.3 on Mon Mar 01 2010 11:21:25 GMT-0800 (PST)
 		</div>
 	</body>
 </html>

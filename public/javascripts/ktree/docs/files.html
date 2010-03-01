@@ -190,11 +190,13 @@ ul.inheritsList
 	
 	<li><a href="symbols/ktree.GoogleEarth.html">ktree.GoogleEarth</a></li>
 	
-	<li><a href="symbols/ktree.ktx.KtxDataSource.html">ktree.ktx.KtxDataSource</a></li>
+	<li><a href="symbols/ktree.kml.KmlManager.html">ktree.kml.KmlManager</a></li>
+	
+	<li><a href="symbols/ktree.kml.KtxCache.html">ktree.kml.KtxCache</a></li>
 	
 	<li><a href="symbols/ktree.ktx.KtxInterpreter.html">ktree.ktx.KtxInterpreter</a></li>
 	
-	<li><a href="symbols/ktree.ktx.KtxManager.html">ktree.ktx.KtxManager</a></li>
+	<li><a href="symbols/ktree.Soundscape.html">ktree.Soundscape</a></li>
 	
 	<li><a href="symbols/ktree.World.html">ktree.World</a></li>
 	
@@ -207,25 +209,20 @@ ul.inheritsList
 			
 			
 			<div>
-				<h2><a href="symbols/src/world.js.html">world.js</a></h2>
+				<h2><a href="symbols/src/sound_soundscape.js.html">soundscape.js</a></h2>
 				
-Implements functionality for the geographical visualization in which
-	KT stories are set.
+Soundscape provides sound management utilities for KarunaTree. Built as a wrapper around the SoundManager2 API.
+	In addition to the Soundscape object, this file also contains several pieces of configuration code for SoundManager2 itself.
+
+	Target SoundManager2 version: 2.95a.20090717 (November 2009)
 				<dl>
 					
+						<dt class="heading">Author:</dt>
+						<dd>Derek Lyons</dd>
 					
 					
-					
-				</dl>
-			</div>
-			<hr />
-			
-			<div>
-				<h2><a href="symbols/src/core.js.html">core.js</a></h2>
-				
-The launch point for KarunaTree javascript.
-				<dl>
-					
+						<dt class="heading">Version:</dt>
+							<dd>0.2</dd>
 					
 					
 					
@@ -242,6 +239,45 @@ Provides debug utility functions for the rest of the system.
 				<dl>
 					
 					
+						<dt class="heading">Version:</dt>
+							<dd>0.2</dd>
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/world.js.html">world.js</a></h2>
+				
+Implements functionality for the geographical visualization in which
+	KT stories are set.
+				<dl>
+					
+					
+						<dt class="heading">Version:</dt>
+							<dd>0.1</dd>
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/core.js.html">core.js</a></h2>
+				
+The launch point for KarunaTree javascript.
+				<dl>
+					
+						<dt class="heading">Author:</dt>
+						<dd>Derek Lyons</dd>
+					
+					
+						<dt class="heading">Version:</dt>
+							<dd>0.2</dd>
+					
 					
 					
 				</dl>
@@ -254,8 +290,149 @@ Provides debug utility functions for the rest of the system.
 Implements the bridge between KarunaTree and the Google Earth API.
 	This is the only place in the system where direct calls to the
 	Earth API should be issued.
+
+	Last version update: 02.26.10
 				<dl>
 					
+						<dt class="heading">Author:</dt>
+						<dd>Derek Lyons</dd>
+					
+					
+						<dt class="heading">Version:</dt>
+							<dd>0.4</dd>
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/kml_kmlconstants.js.html">kmlconstants.js</a></h2>
+				
+Defines constants used in the ktree.kml package, including labels for KarunaTree's 
+	KML namespace extension KTX.
+
+	Last version update: 02.26.10
+				<dl>
+					
+						<dt class="heading">Author:</dt>
+						<dd>Derek Lyons</dd>
+					
+					
+						<dt class="heading">Version:</dt>
+							<dd>0.3</dd>
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/kml_kmlmanager.js.html">kmlmanager.js</a></h2>
+				
+The KmlManager class is responsible for loading KML data, pre-processing it to identify KarunaTree extension (KTX)
+	commands for caching, and transmitting serialized KML to the World for display.
+
+	KML data can be loaded from remote .xml files, from strings, or from an automatically updated cache of previously
+	loaded data.
+
+	Note that while the KmlManager class knows how to parse KTX commands out of KML, it does not know how to do anything
+	with those commands other than cache them. See ktree.kml.KtxCache for details on how KTX commands are eventually
+	communicated to the World.
+
+	Last version update: 02.26.10
+				<dl>
+					
+						<dt class="heading">Author:</dt>
+						<dd>Derek Lyons</dd>
+					
+					
+						<dt class="heading">Version:</dt>
+							<dd>0.3</dd>
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/kml_ktx.js.html">ktx.js</a></h2>
+				
+Defines constants used in the ktree.kml package, including labels for KarunaTree's 
+	KML namespace extension KTX.
+
+	Last version update: 02.26.10
+				<dl>
+					
+						<dt class="heading">Author:</dt>
+						<dd>Derek Lyons</dd>
+					
+					
+						<dt class="heading">Version:</dt>
+							<dd>0.3</dd>
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/kml_ktxcache.js.html">ktxcache.js</a></h2>
+				
+The KTXCache is responsible for storing a subset of the KTX/KML commands that KTXInterpreter
+	extracts from remote KTX (.xml) files. Caching allows the Earth view to refresh appropriately when
+	the user navigates between scenes without repeatedly reloading the same data sources from the server.
+	
+	Last version 02.26.10
+				<dl>
+					
+						<dt class="heading">Author:</dt>
+						<dd>Derek Lyons</dd>
+					
+					
+						<dt class="heading">Version:</dt>
+							<dd>0.2</dd>
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/kml_ktxinterpreter.js.html">ktxinterpreter.js</a></h2>
+				
+The KTXInterpreter is responsible for converting a KTX (.xml) file, represented
+	internally as a goog.ds.XmlDataSource, into a series of KTX commands and KML strings
+	for the World to render
+				<dl>
+					
+						<dt class="heading">Author:</dt>
+						<dd>Derek Lyons</dd>
+					
+					
+						<dt class="heading">Version:</dt>
+							<dd>0.3</dd>
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/sound_sound.js.html">sound.js</a></h2>
+				
+Defines constants in the ktree.sound namespace.
+				<dl>
+					
+					
+						<dt class="heading">Version:</dt>
+							<dd>0.1</dd>
 					
 					
 					
@@ -288,43 +465,7 @@ Implements the bridge between KarunaTree and the Google Earth API.
 			<hr />
 			
 			<div>
-				<h2><a href="symbols/src/ktx_ktxdatasource.js.html">./ktx/ktxdatasource.js</a></h2>
-				
-				<dl>
-					
-					
-					
-					
-				</dl>
-			</div>
-			<hr />
-			
-			<div>
-				<h2><a href="symbols/src/ktx_ktxinterpreter.js.html">./ktx/ktxinterpreter.js</a></h2>
-				
-				<dl>
-					
-					
-					
-					
-				</dl>
-			</div>
-			<hr />
-			
-			<div>
-				<h2><a href="symbols/src/ktx_ktxmanager.js.html">./ktx/ktxmanager.js</a></h2>
-				
-				<dl>
-					
-					
-					
-					
-				</dl>
-			</div>
-			<hr />
-			
-			<div>
-				<h2><a href="symbols/src/sound.js.html">./sound.js</a></h2>
+				<h2><a href="symbols/src/docs_jsdoc_templates_jsdoc_publish.js.html">./docs/jsdoc/templates/jsdoc/publish.js</a></h2>
 				
 				<dl>
 					
@@ -338,8 +479,8 @@ Implements the bridge between KarunaTree and the Google Earth API.
 			
 		</div>
 		<div class="fineprint" style="clear:both">
-			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blankt">JsDoc Toolkit</a> 2.3.3 on Tue Dec 08 2009 17:59:23 GMT-0800 (PST)
+			&copy;2010<br />
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blankt">JsDoc Toolkit</a> 2.3.3 on Mon Mar 01 2010 11:21:26 GMT-0800 (PST)
 		</div>
 	</body>
 </html>

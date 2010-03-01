@@ -9,13 +9,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100106191122) do
+ActiveRecord::Schema.define(:version => 20100226181729) do
 
   create_table "characters", :force => true do |t|
     t.integer  "current_scene", :default => 1
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id",                      :null => false
+    t.text     "saved_kml"
   end
 
   create_table "scenes", :force => true do |t|
