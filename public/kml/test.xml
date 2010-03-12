@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<test>
+  <node attr1="5" attr2="bump">
+    <anothernode value="foo">bar</anothernode>
+  </node>
+  <sibling>
+    <anothernode value="bee">buz</anothernode>
+  </sibling>
+</test>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2" 
+  xmlns:ktx="http://www.karunatree.com/kml/ext/2.2">
+  
+  <Document id="Dreams-2">
+    <LookAt>
+			<longitude>-109.7641245330653</longitude>
+			<latitude>38.68522370004037</latitude>
+			<altitude>0</altitude>
+			<range>498.2822620166826</range>
+			<tilt>41.95717257003105</tilt>
+			<heading>143.8678711502016</heading>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+	</Document>
+</kml>

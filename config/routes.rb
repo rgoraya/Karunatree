@@ -1,4 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :characters, :collection => { :add_to_inventory => :put, :bind_behavior => :put }
+
+  map.resources :behaviors
+
+  map.resources :features, :member => { :behavior => :get }
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

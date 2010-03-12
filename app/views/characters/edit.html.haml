@@ -1,0 +1,8 @@
+- title "Edit Character"
+
+= render :partial => 'form'
+
+%p
+  = link_to "Show", character_path(@character)
+  |
+  = link_to "View All", characters_path

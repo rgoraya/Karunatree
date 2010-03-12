@@ -1,0 +1,15 @@
+one:
+  locator: MyString
+  description: MyText
+  look_response: MyText
+  look_trigger: MyString
+  interact_response: MyText
+  interact_trigger: MyString
+
+two:
+  locator: MyString
+  description: MyText
+  look_response: MyText
+  look_trigger: MyString
+  interact_response: MyText
+  interact_trigger: MyString

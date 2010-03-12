@@ -1,8 +1,18 @@
+# Notify the client that we are loading a new scene
+page.call "kt.sceneIsLoading", @scene.name, @scene.subscene
+
 # Update scene title and script
-page.replace_html 'title', content_tag('h3', fancy_title)
+if (@scene.dropcap != 0)
+  page.replace_html 'title', content_tag('h3', fancy_title)
+else
+  page.replace_html 'title', ""
+end
 page.replace_html 'script', @scene.script
 page << "goog.dom.getElement('story').scrollTop = 0;"
-page.visual_effect :highlight, 'title', :duration => 2
+page.visual_effect  :highlight, 
+                    'script', 
+                    { :duration => 1,
+                      :endcolor => '#f3f1bf'}
 
 # Show/Hide navigation buttons as appropriate
 if (@scene.has_back)
@@ -42,6 +52,6 @@ else
 end
   
 # Load KTX for the new scene if available
-if (@scene.has_ktx?)
-  page.call 'kt.loadKml', @scene.path_to_ktx, @scene.name
+if (@scene.has_kml?)
+  page.call 'kt.loadKml', @scene.path_to_kml, @scene.full_name
 end

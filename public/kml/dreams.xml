@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2" 
+  xmlns:ktx="http://www.karunatree.com/kml/ext/2.2">
+  
+  <Document id="Dreams-0">
+      
+    <Camera id="Dreams-Camera">
+  		<longitude>-109.7682022044922</longitude>
+  		<latitude>38.69656556160413</latitude>
+  		<altitude>1118.397465993844</altitude>
+  		<heading>151.8242721814273</heading>
+  		<tilt>40.30685159553708</tilt>
+  		<roll>1.772759250744586e-06</roll>
+  		<ktx:flyToSpeed>0.1</ktx:flyToSpeed>
+  	</Camera>
+  	  
+  	<Placemark>
+  		<name>Sam</name>
+  		<open>1</open>
+  		<styleUrl>#Sam-Stylemap</styleUrl>  		
+  		<Point>
+  			<coordinates>-109.7644253091196,38.68530818172319,0</coordinates>
+  		</Point>
+  	  <ktx:illustration>dreams</ktx:illustration>
+  	</Placemark>
+  	
+  	<Placemark>
+    	<name>Sam&#8217;s Mom</name>
+    	<visibility>0</visibility>
+    	<ktx:appear>{"scene":"Dreams", "subscene":"1"}</ktx:appear>
+    	<styleUrl>#Mom-Stylemap</styleUrl>
+    	<LookAt>
+  			<longitude>-109.7632412947822</longitude>
+  			<latitude>38.68491703333542</latitude>
+  			<altitude>0</altitude>
+  			<range>374.2459577976646</range>
+  			<tilt>52.87644732995756</tilt>
+  			<heading>143.8684232004404</heading>
+  			<altitudeMode>relativeToGround</altitudeMode>
+  		</LookAt>
+    	<Point>
+  			<coordinates>-109.7649005146943,38.684918,0</coordinates>
+    	</Point>
+    </Placemark>
+  	
+    <Placemark>
+    	<name>Camp</name>
+    	<visibility>0</visibility>
+    	<ktx:appear>{"scene":"Dreams", "subscene":"2"}</ktx:appear>
+    	<Point>
+  			<coordinates>-109.7640884169067,38.68641415540701,0</coordinates>
+      </Point>
+    </Placemark>
+    
+    
+    
+    
+    <Style id="Sam-Normal">
+      <IconStyle>
+        <scale>1.3</scale>
+        <Icon>
+          <href>http://localhost:3000/images/icons/sam-icon.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+        
+     <Style id="Sam-Highlight">
+        <IconStyle>
+          <scale>1.5</scale>
+          <Icon>
+            <href>http://localhost:3000/images/icons/sam-icon.png</href>
+          </Icon>
+        </IconStyle>
+      </Style>
+    
+    <StyleMap id="Sam-Stylemap">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#Sam-Normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#Sam-Highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    
+    <Style id="Mom-Normal">
+      <IconStyle>
+        <scale>1.7</scale>
+        <Icon>
+          <href>http://localhost:3000/images/icons/mom-icon.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+        
+     <Style id="Mom-Highlight">
+        <IconStyle>
+          <scale>1.9</scale>
+          <Icon>
+            <href>http://localhost:3000/images/icons/mom-icon.png</href>
+          </Icon>
+        </IconStyle>
+      </Style>
+    
+    <StyleMap id="Mom-Stylemap">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#Mom-Normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#Mom-Highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+        
+    
+	</Document>
+</kml>

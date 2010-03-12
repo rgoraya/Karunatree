@@ -324,8 +324,9 @@ soundManager.onerror = function() {
 *	we use it to connect ktree.Soundscape initialization code with the SoundManager2 library initialization
 *	(the soundManager.onload and soundManager.onerror methods are both called with window scope).
 */
-soundManager.onready(function(status) {
-		ktree.Soundscape.onReady_();
-	}, 
-	ktree.Soundscape.target_
-);
+soundManager.onready(
+	function(status) {
+			ktree.Soundscape.onReady_();
+		}, 
+		ktree.Soundscape.target_
+	);

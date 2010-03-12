@@ -1,0 +1,23 @@
+- title "Responders"
+
+%table
+  %tr
+    %th Locator
+    %th Description
+    %th Look response
+    %th Look trigger
+    %th Interact response
+    %th Interact trigger
+  - for responder in @responders
+    %tr
+      %td= h responder.locator
+      %td= h responder.description
+      %td= h responder.look_response
+      %td= h responder.look_trigger
+      %td= h responder.interact_response
+      %td= h responder.interact_trigger
+      %td= link_to 'Show', responder
+      %td= link_to 'Edit', edit_responder_path(responder)
+      %td= link_to 'Destroy', responder, :confirm => 'Are you sure?', :method => :delete
+
+%p= link_to "New Responder", new_responder_path

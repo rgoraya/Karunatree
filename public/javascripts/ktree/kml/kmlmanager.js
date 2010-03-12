@@ -64,6 +64,10 @@ ktree.kml.KmlManager = function(world) {
 	this.world_.installKtxCache(this.ktxCache_);
 }
 
+ktree.kml.KmlManager.prototype.sceneIsLoading = function(sceneName, subscene) {
+	this.world_.sceneIsLoading(sceneName, subscene);
+}
+
 
 /**
 *	Loads KML for the specified data source. If the data source has been previously

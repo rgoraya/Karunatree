@@ -1,0 +1,23 @@
+- title "Behaviors"
+
+%table
+  %tr
+    %th Locator
+    %th Description
+    %th Look response
+    %th Look trigger
+    %th Interact response
+    %th Interact trigger
+  - for behavior in @behaviors
+    %tr
+      %td= h behavior.locator
+      %td= h behavior.description
+      %td= h behavior.look_response
+      %td= h behavior.look_trigger
+      %td= h behavior.interact_response
+      %td= h behavior.interact_trigger
+      %td= link_to 'Show', behavior
+      %td= link_to 'Edit', edit_behavior_path(behavior)
+      %td= link_to 'Destroy', behavior, :confirm => 'Are you sure?', :method => :delete
+
+%p= link_to "New Behavior", new_behavior_path

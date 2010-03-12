@@ -1,0 +1,9 @@
+one:
+  locator: MyString
+  name: MyString
+  description: MyText
+
+two:
+  locator: MyString
+  name: MyString
+  description: MyText

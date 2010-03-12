@@ -1,0 +1,28 @@
+- form_for @responder do |f|
+  = f.error_messages
+  %p
+    = f.label :locator
+    %br
+    = f.text_field :locator
+  %p
+    = f.label :description
+    %br
+    = f.text_area :description
+  %p
+    = f.label :look_response
+    %br
+    = f.text_area :look_response
+  %p
+    = f.label :look_trigger
+    %br
+    = f.text_field :look_trigger
+  %p
+    = f.label :interact_response
+    %br
+    = f.text_area :interact_response
+  %p
+    = f.label :interact_trigger
+    %br
+    = f.text_field :interact_trigger
+  %p
+    = f.submit "Submit"

@@ -24,9 +24,10 @@
       if (#{!@character.saved_kml.blank?}) {
         kt.restoreKml('#{@character.saved_kml.to_json}');
       }
-      else if (#{@scene.has_ktx?}) {
-        alert('Loading fresh');
-        kt.loadKml('#{@scene.path_to_ktx}', '#{@scene.name}');
+      else if (#{@scene.has_kml?}) {
+        ktree.debug.logInfo('Loading from scratch');
+        kt.sceneIsLoading('#{@scene.name}', '#{@scene.subscene}');
+        kt.loadKml('#{@scene.path_to_kml}', '#{@scene.full_name}');
       }
       if (#{@scene.has_sound}) {
           kt.soundscape().whenReady(
@@ -43,9 +44,10 @@
 
 .goog-splitpane-first-container#earth
 .goog-splitpane-second-container#story
-  #title
-    %h3 #{fancy_title}
-  %br
+  - if (@scene.dropcap != 0)
+    #title
+      %h3 #{fancy_title}
+    %br
   #script
     %p #{@scene.script}
   #nav_back{:style => "float:left; #{nav_back_display}"}

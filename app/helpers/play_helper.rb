@@ -32,7 +32,7 @@ module PlayHelper
     title = @scene.name.dup
     first_char = title.slice!(0).chr
     return '<img src="http://jhische.com/dailydropcap/' +
-            first_char + '-' + @scene.dropcap +
+            first_char + '-' + @scene.dropcap.to_s +
             '-cap.png" title="Daily Drop Cap by Jessica Hische"' +
             ' alt="' + first_char + '" align="left"/>' + title
   end

@@ -1,7 +1,30 @@
+** Version 0.6d1 **
+Begun: 3.1.10
+Committed: 3.12.10
+Corresponding SVN Revisions: 38-40
+
+New Features:
+* Reworked Scene and Character models to support sub-scenes:smaller atoms of narrative that allow for a greater degree of interactivity.
+* Added Feature and Behavior models to represent interactive elements (NPCs, objects, regions) and their responses to the player.
+* EventManager class added to coordinate responses to player input
+* Added "verb" to player state; players can choose to "inspect" or "act on" interactive features
+* Gamepad-style control buttons added to select desired verb
+* Players now have inventories, i.e. collections of item-type features which they have obtained in the story
+* Added support for ktx:appear and ktx:hide commands to give scenes control over the visibility property of KML features
+* Scenes now support "triggers": JSON-formatted game state change commands that are processed when the scene is loaded (e.g. adding or subtracting features, changing feature behavior, modifying inventory, etc.)
+* RESTful controllers and routing for Character, Behavior, and Feature models
+* BehaviorBindings model added to facilitate customizing feature behaviors on a per-character basis
+* LatLon class added with utility methods for doing latitude/longitude computations (i.e. determining distances, bearings between points)
+
+Updates and Bug Fixes:
+* Fixed a headache-inducing bug in the GoogleEarth.tryRetrievingKmlFeature_ method
+* Fixed a bug that caused non-logged in users to be circularly redirected when requesting play/index.html
+
+
 ** Version 0.5.1d1 **
 Begun: 2.16.10
 Committed: 3.1.10
-Corresponding SVN Revisions: 35
+Corresponding SVN Revisions: 35-37
 
 * Greatly improved logic for adding/retrieving KML data to/from the plugin. Plugin now handles caching of AbstractViews
 * KtxCache has been streamlined, as this class now only needs to store KTX command values and not entire nodes (i.e. Cameras or LookAts)

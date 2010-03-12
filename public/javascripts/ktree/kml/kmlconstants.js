@@ -35,6 +35,13 @@ ktree.kml.constants.FLY_TO_SPEED = "ktx:flyToSpeed";
 ktree.kml.constants.ILLUSTRATION = "ktx:illustration";
 
 /**
+*	
+*/
+ktree.kml.constants.APPEAR = "ktx:appear"
+
+ktree.kml.constants.HIDE = "ktx:hide"
+
+/**
 *	Constant used to request a flyTo speed of "teleport" (e.g. instant travel) from
 *	the World object
 *	@type {number}

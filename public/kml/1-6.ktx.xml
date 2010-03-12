@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2" 
+  xmlns:ktx="http://www.karunatree.com/kml/ext/2.2">
+  
+  <Document>
+    
+    <ktx:flyToSpeed>0.1</ktx:flyToSpeed>
+    
+    <LookAt>
+			<longitude>-124.1277399503976</longitude>
+			<latitude>44.13570741579774</latitude>
+			<altitude>0</altitude>
+			<range>370.6644415130617</range>
+			<tilt>42.07951082282807</tilt>
+			<heading>46.21119348232778</heading>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+
+  	<Placemark>
+  		<name>The Sea Mount</name>
+  		<open>1</open>  		
+  		<Point>
+  			<coordinates>-124.1283925770853,44.13542129420077,0</coordinates>
+  		</Point>
+  	</Placemark>
+  	
+	</Document>
+</kml>
+

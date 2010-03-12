@@ -1,15 +1,27 @@
 class Scene < ActiveRecord::Base
-  STATIC_KTX_ROOT_PATH = 'http://localhost:3000/ktx/1-'
-  KTX_EXTENSION = '.ktx.xml'
   
-  FINAL_SCENE_NUMBER = 8
+  # Constants
+  KML_ROOT_PATH = 'http://localhost:3000/kml/'
+  KTX_EXTENSION = '.xml'
   
-  def path_to_ktx
-    return STATIC_KTX_ROOT_PATH + self.scene_number.to_s + KTX_EXTENSION
+  FIRST_SCENE = 'Dreams'
+  
+  
+  def path_to_kml
+    filename = self.name.downcase
+    if (self.subscene != 0)
+      filename = filename + '-' + self.subscene.to_s
+    end
+    return KML_ROOT_PATH + filename + KTX_EXTENSION
   end
+      
+  def full_name
+    return self.name + "-" + self.subscene.to_s
+  end
+    
   
   def has_back
-    if (self.scene_number > 1) 
+    if (self.prev_scene_name) 
       return true;
     else
       return false;
@@ -17,7 +29,7 @@ class Scene < ActiveRecord::Base
   end
   
   def has_next
-    if (self.scene_number < FINAL_SCENE_NUMBER) 
+    if (self.next_scene_name)
       return true;
     else 
       return false;
@@ -25,7 +37,7 @@ class Scene < ActiveRecord::Base
   end
   
   def has_soundtrack
-    if (self.soundtrack)
+    if (self.soundtrack != "<>")
       return true;
     else
       return false;
@@ -33,7 +45,7 @@ class Scene < ActiveRecord::Base
   end
   
   def has_ambient_sound
-    if (self.ambient_sound)
+    if (self.ambient_sound != "<>")
       return true;
     else
       return false;

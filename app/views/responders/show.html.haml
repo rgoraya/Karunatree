@@ -1,0 +1,27 @@
+- title "Responder"
+
+%p
+  %strong Locator:
+  =h @responder.locator
+%p
+  %strong Description:
+  =h @responder.description
+%p
+  %strong Look Response:
+  =h @responder.look_response
+%p
+  %strong Look Trigger:
+  =h @responder.look_trigger
+%p
+  %strong Interact Response:
+  =h @responder.interact_response
+%p
+  %strong Interact Trigger:
+  =h @responder.interact_trigger
+
+%p
+  = link_to "Edit", edit_responder_path(@responder)
+  |
+  = link_to "Destroy", @responder, :confirm => 'Are you sure?', :method => :delete
+  |
+  = link_to "View All", responders_path

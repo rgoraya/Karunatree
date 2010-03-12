@@ -73,6 +73,10 @@ ktree.Core.prototype.restoreKml = function(kmlString) {
 	this.kmlManager_.loadKmlFromString("Restored KML", kmlString);
 }
 
+ktree.Core.prototype.sceneIsLoading = function(scene, subscene) {
+	this.kmlManager_.sceneIsLoading(scene, subscene);
+}
+
 ktree.Core.prototype.debugTemp = function() {
 	var target = this;
 	var name = 'http://localhost:3000/ktx/1-1.ktx.xml';

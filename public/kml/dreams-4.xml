@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2" 
+  xmlns:ktx="http://www.karunatree.com/kml/ext/2.2">
+  <Document id="Dreams-4">
+  	
+  	<LookAt>
+			<longitude>-109.7644606142474</longitude>
+			<latitude>38.68465586769658</latitude>
+			<altitude>0</altitude>
+			<range>238.9716007366939</range>
+			<tilt>46.24762471972379</tilt>
+			<heading>-143.4848389296615</heading>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		
+  	<Style id="sh_grn-stars">
+  		<IconStyle>
+  			<scale>1.3</scale>
+  			<Icon>
+  				<href>http://maps.google.com/mapfiles/kml/paddle/grn-stars.png</href>
+  			</Icon>
+  			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+  		</IconStyle>
+  		<ListStyle>
+  			<ItemIcon>
+  				<href>http://maps.google.com/mapfiles/kml/paddle/grn-stars-lv.png</href>
+  			</ItemIcon>
+  		</ListStyle>
+  	</Style>
+  	<Style id="sn_grn-stars">
+  		<IconStyle>
+  			<scale>1.1</scale>
+  			<Icon>
+  				<href>http://maps.google.com/mapfiles/kml/paddle/grn-stars.png</href>
+  			</Icon>
+  			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+  		</IconStyle>
+  		<ListStyle>
+  			<ItemIcon>
+  				<href>http://maps.google.com/mapfiles/kml/paddle/grn-stars-lv.png</href>
+  			</ItemIcon>
+  		</ListStyle>
+  	</Style>
+  	<StyleMap id="msn_grn-stars">
+  		<Pair>
+  			<key>normal</key>
+  			<styleUrl>#sn_grn-stars</styleUrl>
+  		</Pair>
+  		<Pair>
+  			<key>highlight</key>
+  			<styleUrl>#sh_grn-stars</styleUrl>
+  		</Pair>
+  	</StyleMap>
+  	
+  	<Placemark>
+  		<name>Excavation Site</name>
+  		<styleUrl>#msn_grn-stars</styleUrl>
+  		<Point>
+  			<coordinates>-109.7648845444691,38.68502707311348,0</coordinates>
+  		</Point>
+  		<ktx:illustration>dreams</ktx:illustration>
+  	</Placemark>
+  	
+  </Document>
+</kml>

@@ -3,7 +3,9 @@ goog.provide('ktree.kml.KtxCache');
 goog.require('ktree.debug');
 goog.require('ktree.kml.constants');
 
+goog.require('goog.array');
 goog.require('goog.dom.xml');
+goog.require('goog.json');
 goog.require('goog.structs.Map');
 goog.require('goog.ds.XmlDataSource');
 
@@ -35,11 +37,27 @@ ktree.kml.KtxCache = function() {
 	this.viewCacheMap_ = new goog.structs.Map();
 	
 	/**
-	*	Storage for placemark-related KTX commands
+	*	Cache of illustrations associated with KML features
+	*	Key {string}: KML feature name
+	*	Value {string}: Illustration file name 
 	*	@private
 	*	@type {goog.structs.Map}
 	*/
-	this.placemarkCacheMap_ = new goog.structs.Map();
+	this.illustrationCacheMap_ = new goog.structs.Map();
+	
+	/**
+	*	Cache of appearance cues (scene/subscene) for KML features
+	*	Key {string}: KML feature name
+	*	Value {Object}: scene {string} and subscene {integer} for appearance
+	*/
+	this.appearCacheMap_ = new goog.structs.Map();
+	
+	/**
+	*	Cache if hiding cues (scene/subscene) for KML features
+	*/
+	this.hideCacheMap_ = new goog.structs.Map();
+	
+	this.coordsCacheMap_ = new goog.structs.Map();
 }
 
 
@@ -96,8 +114,49 @@ ktree.kml.KtxCache.prototype.flyToSpeedForView = function(viewId) {
 *										has been specified.
 */
 ktree.kml.KtxCache.prototype.illustrationForPlacemark = function(placemarkName) {
-	return this.placemarkCacheMap_.get(placemarkName);
+	return this.illustrationCacheMap_.get(placemarkName);
 }
+
+/**
+*	@returns {array} Names of features to appear for this scene; may be null.
+*/
+ktree.kml.KtxCache.prototype.featuresToAppearForScene = function(sceneName, subscene) {
+	return this.featuresToChangeVisibilityForScene_(this.appearCacheMap_, sceneName, subscene);
+}
+
+/**
+*	@returns {array} Names of features to hide for this scene; may be null
+*/
+ktree.kml.KtxCache.prototype.featuresToHideForScene = function(sceneName, subscene) {
+	return this.featuresToChangeVisibilityForScene_(this.hideCacheMap_, sceneName, subscene);
+}
+
+ktree.kml.KtxCache.prototype.coordinatesForPlacemark = function(placemarkName) {
+	return this.coordsCacheMap_.get(placemarkName);
+}
+
+ktree.kml.KtxCache.prototype.updateCoordinatesForPlacemark = function(placemarkName, lat, lon) {
+	var coords = this.coordsCacheMap_.get(placemarkName);
+	if (coords) {
+		coords.set("latitude", lat);
+		coords.set("longitude", lon);
+	}
+	this.coordsCacheMap_.set(placemarkName, coords);
+}
+
+
+/**
+*	@private
+*/
+ktree.kml.KtxCache.prototype.featuresToChangeVisibilityForScene_ = function(cacheMap, sceneName, subscene) {
+	var arrayForSubscene = null;
+	var mapForScene = cacheMap.get(sceneName);
+	if (mapForScene) {
+		var arrayForSubscene = mapForScene.get(subscene);
+	}
+	return arrayForSubscene;
+}
+
 
 
 /**
@@ -114,10 +173,9 @@ ktree.kml.KtxCache.prototype.shouldStepIntoNode_ = function(nodeDataName) {
 	}
 	else {
 		switch(nodeDataName) {
-			case "#document":	return true;
-			case "kml": 		return true; 
+			case "kml": 		return true;
+			case "Folder": 		return true; 
 			case "Document": 	return true;
-			case "Folder": 		return true;
 			default: 			return false;
 		}
 	}
@@ -151,14 +209,80 @@ ktree.kml.KtxCache.prototype.cacheViewNode_ = function(node) {
 */
 ktree.kml.KtxCache.prototype.cachePlacemarkNode_ = function(node) {
 	var illustration = node.getChildNodeValue(ktree.kml.constants.ILLUSTRATION);
-	if (illustration) {
+	var appearJsonString = node.getChildNodeValue(ktree.kml.constants.APPEAR);
+	var hideJsonString = node.getChildNodeValue(ktree.kml.constants.HIDE);
+	var coords = node.getChildNode("Point").getChildNodeValue("coordinates");
+	
+	if (illustration || appearJsonString || hideJsonString) {
 		var nodeName = node.getChildNodeValue("name");
 		if (nodeName) {
-			ktree.debug.logFine("KtxCache is caching placemark <" + nodeName + "> with illustration <" + illustration + ">");
-			this.placemarkCacheMap_.set(nodeName, illustration);
+			if (illustration) {
+				ktree.debug.logFine("KtxCache is caching illustration <" + illustration + "> for placemark <" + nodeName + ">");
+				this.illustrationCacheMap_.set(nodeName, illustration);
+			}
+			if (appearJsonString) {
+				ktree.debug.logFine("KtxCache is caching an appear cue for placemark <" + nodeName + ">");
+				var appearObject = goog.json.parse(appearJsonString);
+				this.cacheVisibilityDataForFeature_(nodeName, this.appearCacheMap_, appearObject);
+			}
+			if (hideJsonString) {
+				ktree.debug.logFine("KtxCache is caching a hide cue for placemark <" + nodeName + ">");
+				var hideObject = goog.json.parse(hideJsonString);
+				this.cacheVisibilityDataForFeature_(nodeName, this.hideCacheMap_, hideObject)
+			}
+			if (coords) {
+				ktree.debug.logFine("KtxCache is caching coordinates for placemark <" + nodeName + ">");
+				var coordsArray = coords.split(",");
+				var coordsMap = new goog.structs.Map();
+				// FIXME
+				coordsMap.set("longitude", parseFloat(coordsArray[0]));
+				coordsMap.set("latitude", parseFloat(coordsArray[1]));
+				coordsMap.set("altitude", parseFloat(coordsArray[2]));
+				this.coordsCacheMap_.set(nodeName, coordsMap);
+			}
 		}
 		else {
 			ktree.debug.logError("KtxCache can't cache placemarks with no ID specified.");
+		}
+	}
+}
+
+
+ktree.kml.KtxCache.prototype.cacheVisibilityDataForFeature_ = function(featureName, cacheMap, visibilityObject) {
+	// Try to retrieve a map for the scene
+	var mapForScene = cacheMap.get(visibilityObject.scene);
+	
+	// If there IS NOT a map for this scene...
+	if (!mapForScene) {
+		// Start an array of features that will appear or disappear for this scene/subscene
+		var featureArray = [];
+		goog.array.insert(featureArray, featureName);
+		
+		// Use the subscene as a key to put the array into a new map
+		var subsceneMap = new goog.structs.Map();
+		subsceneMap.set(visibilityObject.subscene, featureArray);
+		
+		// Use the scene as a key to put the subscene map into a new map
+		cacheMap.set(visibilityObject.scene, subsceneMap);
+	}
+	
+	// If there IS a map for the scene...
+	else {
+		var arrayForSubscene = mapForScene.get(visibilityObject.subscene);
+		
+		// If there IS NOT an array for the subscene...
+		if (!arrayForSubscene) {
+			// Start an array of features to appear for this subscene
+			var featureArray = [];
+			goog.array.insert(featureArray, featureName);
+
+			// Use the subscene as a key to put the array into the scene's map
+			mapForScene.set(visibilityObject.subscene, featureArray);
+		}
+		
+		// If there IS an array for the subscene...
+		else {
+			goog.array.insert(arrayForSubscene, featureName);
 		}
 	}
 }

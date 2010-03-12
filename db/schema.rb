@@ -9,26 +9,66 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100226181729) do
+ActiveRecord::Schema.define(:version => 20100310002805) do
 
-  create_table "characters", :force => true do |t|
-    t.integer  "current_scene", :default => 1
+  create_table "behavior_bindings", :force => true do |t|
+    t.string   "locator",      :null => false
+    t.integer  "character_id", :null => false
+    t.integer  "behavior_id",  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id",                      :null => false
+  end
+
+  create_table "behaviors", :force => true do |t|
+    t.string   "locator",           :null => false
+    t.text     "description"
+    t.text     "look_response"
+    t.string   "look_trigger"
+    t.text     "interact_response"
+    t.string   "interact_trigger"
+    t.integer  "feature_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "characters", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id",                        :null => false
     t.text     "saved_kml"
+    t.string   "scene_name", :default => "None", :null => false
+    t.integer  "subscene",   :default => 0,      :null => false
+    t.integer  "feature_id"
+  end
+
+  create_table "characters_features", :id => false, :force => true do |t|
+    t.integer "character_id"
+    t.integer "feature_id"
+  end
+
+  create_table "features", :force => true do |t|
+    t.string   "locator",      :null => false
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "character_id"
   end
 
   create_table "scenes", :force => true do |t|
-    t.integer  "scene_number",                     :null => false
-    t.text     "name"
+    t.text     "name",                               :null => false
     t.text     "script"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "has_ktx",       :default => false, :null => false
-    t.string   "dropcap",       :default => "1"
+    t.boolean  "has_kml",         :default => false, :null => false
+    t.integer  "dropcap",         :default => 0,     :null => false
     t.string   "soundtrack"
     t.string   "ambient_sound"
+    t.integer  "subscene",        :default => 0,     :null => false
+    t.string   "next_scene_name"
+    t.integer  "next_subscene"
+    t.string   "prev_scene_name"
+    t.string   "prev_subscene"
   end
 
   create_table "sessions", :force => true do |t|

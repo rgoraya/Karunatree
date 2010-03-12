@@ -1,9 +1,14 @@
 goog.provide('ktree.GoogleEarth');
 
 goog.require('ktree.debug');
+goog.require('ktree.earth.Gamepad');
+goog.require('ktree.earth.LatLon');
+goog.require('ktree.event.EventManager');
+goog.require('ktree.event.BehaviorDelegate');
 goog.require('ktree.kml.constants');
 goog.require('ktree.kml.KtxCache');
 
+goog.require('goog.array');
 goog.require('goog.dom');
 goog.require('goog.structs.Map');
 goog.require('goog.events');
@@ -33,12 +38,7 @@ goog.require('goog.ui.Button');
 *	@constructor
 */
 ktree.GoogleEarth = function(identifier) {
-	
-	/**
-	*	Used to disable fly-to-speed commands during debugging
-	*/
-	this.ignoreFlyToSpeed_ = false;
-	
+		
 	/**
 	*	A string to uniquely identify this GoogleEarth object
 	*	@private
@@ -65,9 +65,24 @@ ktree.GoogleEarth = function(identifier) {
 	*	@private
 	*	@type {goog.net.XhrIo}
 	*/
-	
 	this.xhr_ = new goog.net.XhrIo();
-
+	
+	this.eventManager_ = new ktree.event.EventManager();
+	this.eventManager_.addDelegate(this);
+	
+	this.gamepad_ = null;
+	// FIXME Move to repository for Earth constants
+	this.currentVerb_ = "none";
+	
+	
+	// FIXME These keys should be defined somewhere central
+	// Keep track of Sam's position
+	this.LAT_KEY = "latitude";
+	this.LON_KEY = "longitude";
+	this.ALT_KEY = "altitude"
+	
+	this.dragInfo_ = null;
+	
 	/**
 	*	A temporary reference to this *particular* GoogleEarth object needed to 
 	*	allow the initialization callback chain to reach this object again.
@@ -97,7 +112,64 @@ ktree.GoogleEarth = function(identifier) {
 		target_.ge_.getWindow().setVisibility(true);
 		target_.ge_.getSun().setVisibility(false);
 		target_.ge_.getOptions().setAtmosphereVisibility(true);
+		target_.ge_.getNavigationControl().getScreenXY().setXUnits(target_.ge_.UNITS_PIXELS);
+		target_.ge_.getNavigationControl().getScreenXY().setYUnits(target_.ge_.UNITS_PIXELS);
 		target_.ge_.getNavigationControl().setVisibility(target_.ge_.VISIBILITY_AUTO);
+		target_.gamepad_ = new ktree.earth.Gamepad(target_.ge_);
+		//target_.gamepad_.delegate_ = target_;
+		target_.gamepad_.setDelegate(target_);
+		google.earth.addEventListener(target_.ge_.getWindow(), 'mousedown', function(event) {
+			if (event.getTarget().getName() == "Sam") {
+				target_.dragInfo_ = {
+					target: event.getTarget(),
+					dragged: false
+				};
+			}
+		});
+		
+		google.earth.addEventListener(target_.ge_.getGlobe(), 'mousemove', function(event) {
+			if (target_.dragInfo_) {
+				event.preventDefault();
+				var point = target_.dragInfo_.target.getGeometry();
+				point.setLatitude(event.getLatitude());
+				point.setLongitude(event.getLongitude());
+				target_.dragInfo_.dragged = true;
+			}
+		});
+		
+		google.earth.addEventListener(target_.ge_.getWindow(), 'mouseup', function(event) {
+			if (target_.dragInfo_) {
+				if (target_.dragInfo_.dragged) {
+					event.preventDefault();
+				}
+				target_.dragInfo_ = null;
+			}
+		});
+		// FIXME First pass at walking animation
+		/*
+		google.earth.addEventListener(target_.ge_.getGlobe(), 'click', function(event) {
+			if (event.getButton() != 0) return;
+			//var x = event.getClientX();
+			//var y = event.getClientY();
+			//alert();
+			var hitTestResult = target_.ge_.getView().hitTest(event.getClientX(), target_.ge_.UNITS_PIXELS, event.getClientY(), target_.ge_.UNITS_INSET_PIXELS, target_.ge_.HIT_TEST_GLOBE);
+			if (hitTestResult) {
+				// Get a LatLon for the click location
+				var clickLocation = new ktree.earth.LatLon(hitTestResult.getLatitude(), hitTestResult.getLongitude());
+				ktree.debug.logInfo("Got a click: (" + hitTestResult.getLatitude() + "     ,     " + hitTestResult.getLongitude() + ")");
+
+				// Get a LatLon for Sam's location
+				var samCoords = target_.ktxCache_.coordinatesForPlacemark("Sam");
+				var samLocation = new ktree.earth.LatLon(samCoords.get(target_.LAT_KEY), samCoords.get(target_.LON_KEY));
+				ktree.debug.logInfo("Sam's location: (" + samLocation._lat + "     ,     " + samLocation._lon + ")");
+				var distance = samLocation.rhumbDistanceTo(clickLocation);
+				ktree.debug.logInfo("Distance to click: " + distance);
+				
+				// Send an animation call to move Sam towards the click
+				target_.moveSamToClick(samLocation, clickLocation);
+			}
+		});
+		*/
 	};
 
 	/**
@@ -125,6 +197,57 @@ ktree.GoogleEarth.prototype.apiReady = function() {
 	return this.geReady_;
 }
 
+ktree.GoogleEarth.prototype.moveSamToClick = function(samLocation, clickLocation) {
+	// Calculate the initial bearing to the click
+	var bearingTo = samLocation.rhumbBearingTo(clickLocation);
+	ktree.debug.logInfo("Bearing to click: " + bearingTo);
+	
+	// Pick an intermediate point along that bearing
+	var moveLocation = samLocation.rhumbDestinationPoint(bearingTo, 0.1);
+	var sam = this.retrieveKmlFeature_("Sam");
+	var geom = sam.getGeometry();
+	geom.setLatLng(moveLocation._lat, moveLocation._lon);
+	this.ktxCache_.updateCoordinatesForPlacemark("Sam", moveLocation._lat, moveLocation._lon);
+}
+	/*	
+		event.preventDefault();
+		
+		// FIXME (clean up and move to a function)
+		
+		// Get Sam's lat and lon
+		var samCoords = target.ktxCache_.coordinatesForPlacemark("Sam");
+		var samLat = samCoords.get(target.LAT_KEY);
+		var samLon = samCoords.get(target.LON_KEY);
+		var samLatLon = new ktree.earth.LatLon(parseFloat(samLat), parseFloat(samLon));
+		
+		// Get the lat and lon of the clicked object (this is much more accurate than calculating coordinates from
+		// the screen (X,Y) of the click)
+		var clickCoords = target.ktxCache_.coordinatesForPlacemark(kmlObject.getName());
+		var clickLat = clickCoords.get(target.LAT_KEY);
+		var clickLon = clickCoords.get(target.LON_KEY);
+		var clickLatLon = new ktree.earth.LatLon(parseFloat(clickLat), parseFloat(clickLon));
+			
+		// Calculate the distance between them (in km)
+		var distance = samLatLon.distanceTo(clickLatLon);
+		ktree.debug.logInfo("Selected feature is <" + distance + "> km from the player.")
+		
+		// If it's an interact action at a great distance...
+		var result;
+		if (target.getCurrentVerb() == "interact" && distance > 0.055) {
+			var result = "<p>That's too far away for Sam to inspect. Try getting closer.</p>"
+		}
+		
+		else {
+			var result = target.eventManager_.handleEvent(kmlObject.getName(), target.getCurrentVerb());
+		}
+		
+		var balloon = target.ge_.createHtmlStringBalloon('');
+		balloon.setContentString(result);
+		balloon.setFeature(kmlObject);
+		target.ge_.setBalloon(balloon);		
+	});
+}
+*/
 
 /**
 *	Installs a KTX cache for the World. Should only be called by the KmlManager.
@@ -144,6 +267,30 @@ ktree.GoogleEarth.prototype.installKtxCache = function(ktxCache) {
 */
 ktree.GoogleEarth.prototype.getPlugin = function() {
 	return this.ge_;
+}
+
+ktree.GoogleEarth.prototype.getCurrentVerb = function() {
+	return this.currentVerb_;
+}
+
+ktree.GoogleEarth.prototype.setCurrentVerb = function(verb) {
+	this.currentVerb_ = verb;
+}
+
+/**
+*	Implements Delegate interface for ktree.earth.Gamepad
+*/
+ktree.GoogleEarth.prototype.activeButtonDidChange = function(newActiveButton) {
+	// FIXME Get these constants from somewhere
+	
+	// A = Act
+	if (newActiveButton == "button_a") {
+		this.setCurrentVerb("interact");
+	}
+	// X = eXamine
+	else if (newActiveButton == "button_x") {
+		this.setCurrentVerb("look");
+	}
 }
 
 
@@ -181,7 +328,22 @@ ktree.GoogleEarth.prototype.addKml = function(kmlString, parentName) {
 		this.updateView_(objectView);
 	}
 	
-	this.serializeKmlToServer_();
+	if (ktree.config.ENABLE_SERIALIZATION) this.serializeKmlToServer_();
+}
+
+ktree.GoogleEarth.prototype.removeKmlFeature = function(featureName) {
+	var feature = this.tryRetrievingKmlFeature_(featureName);
+	if (feature) {
+		var parent = feature.getParentNode();
+		// This will only work if parent is a KmlContainer
+		if (this.typeIsContainer_(parent.getType())) {
+			parent.getFeatures().removeChild(feature);
+		}
+		else {
+			ktree.debug.logError("Can't remove a feature from parent object of type <" + parent.getType() + ">.\n" +
+									"Feature to be removed was <" + featureName + ">, with parent <" + parent.getName() + ">");
+		}
+	}
 }
 
 
@@ -191,7 +353,7 @@ ktree.GoogleEarth.prototype.addKml = function(kmlString, parentName) {
 *	@param {float} speed	The desired fly-to speed. Accepts a float from 0.0 to 5.0, inclusive.
 */
 ktree.GoogleEarth.prototype.setFlyToSpeed = function(speed) {
-	if (this.ignoreFlyToSpeed_) {
+	if (!ktree.config.ENABLE_FLY_TO_SPEED) {
 		return;
 	}
 	if (speed == ktree.kml.constants.SPEED_TELEPORT) {
@@ -247,8 +409,10 @@ ktree.GoogleEarth.prototype.runKtxCommandsForObject_ = function(kmlObject, shoul
 	
 	// Placemarks need to have click handlers installed
 	else if (this.typeIsClickable_(objectType)) {
-		var illustrationName = this.ktxCache_.illustrationForPlacemark(kmlObject.getName());
-		this.createIllustrationClickHandler_(kmlObject, illustrationName);
+		//var illustrationName = this.ktxCache_.illustrationForPlacemark(kmlObject.getName());
+		//this.createIllustrationClickHandler_(kmlObject, illustrationName);
+		//this.createClickHandler_(kmlObject, illustrationName);
+		this.installEventHandler_(kmlObject);
 	}
 }
 
@@ -288,34 +452,66 @@ ktree.GoogleEarth.prototype.tryRetrievingKmlFeature_ = function(featureName, roo
 	ktree.debug.logFine("Searching for KmlFeature <" + featureName + ">...");
 	if (!rootContainer) {
 		rootContainer = this.ge_;
-		ktree.debug.logFine("...Starting search in <Plugin Root>.");
+		//ktree.debug.logFine("...in <Plugin Root>.");
 	}
 	else {
-		ktree.debug.logFine("...Starting search in <" + rootContainer.getId() + ">");
+		ktree.debug.logFine("...in <" + rootContainer.getId() + ">");
 	}
 	
 	var kmlObjectList = rootContainer.getFeatures().getChildNodes();
-	ktree.debug.logFine("...<" + kmlObjectList.getLength() + "> child nodes to search...");
+	//ktree.debug.logFine("...<" + kmlObjectList.getLength() + "> child nodes to search...");
 	
 	for (var i = 0; i < kmlObjectList.getLength(); i++) {
 		var kmlObject = kmlObjectList.item(i);
 		
-		if (kmlObject.getId() == featureName) {
+		if (kmlObject.getId() == featureName || kmlObject.getName() == featureName) {
 			ktree.debug.logFine("...Found KmlFeature <" + featureName + ">.");
 			return kmlObject;
 		}
 		
-		if (kmlObject.getType() == "KmlFolder") {
-			ktree.debug.logFine("...Recurring into KmlFolder <" + kmlObject.getId() + ">");
-			return this.tryRetrievingKmlFeature_(featureName, kmlObject)
+		if (this.typeIsContainer_(kmlObject.getType())) {
+			//ktree.debug.logFine("...Recurring into KmlContainer <" + kmlObject.getId() + ">");
+			
+			// Check the children of this container
+			var foo = this.tryRetrievingKmlFeature_(featureName, kmlObject);
+			
+			// If one of the children had the target, we're done
+			if (foo) {
+				return foo;
+			}
+			
+			// else, go back to the for loop to look at remaining siblings
 		}
 	}
 	
-	// If we reach this point, the desired KmlFeature was not found
-	ktree.debug.logFine("...Couldn't find any KmlFeature named <" + featureName + ">.")
+	ktree.debug.logFine("...Couldn't find KmlFeature <" + featureName + "> in this branch. Returning to parent.")
 	return null;
 }
 
+ktree.GoogleEarth.prototype.sceneIsLoading = function(sceneName, subscene) {
+	ktree.debug.logInfo("GoogleEarth is preapring to load Scene <" + sceneName + ">, Subscene <" + subscene + ">");
+	var featuresToAppear = this.ktxCache_.featuresToAppearForScene(sceneName, subscene);
+	var featuresToHide = this.ktxCache_.featuresToHideForScene(sceneName, subscene);
+	
+	if (featuresToAppear) {
+		goog.array.forEach(featuresToAppear, function(featureName, index, array) {
+			this.changeFeatureVisibility(featureName, true);
+		},
+		this);
+	}
+	
+	if (featuresToHide) {
+		goog.array.forEach(featuresToHide, function(featureName, index, array) {
+			this.changeFeatureVisibility(featureName, false);
+		},
+		this);
+	}
+}
+
+ktree.GoogleEarth.prototype.changeFeatureVisibility = function(featureName, shouldShowFeature) {
+	var feature = this.retrieveKmlFeature_(featureName);
+	feature.setVisibility(shouldShowFeature);
+}
 
 /**
 *	Attempts to load KML data for the specified scene by retrieving it from the plugin's
@@ -357,6 +553,94 @@ ktree.GoogleEarth.prototype.createIllustrationClickHandler_ = function(kmlObject
 	});
 }
 
+
+/**
+*	
+*/
+ktree.GoogleEarth.prototype.installEventHandler_ = function(kmlObject) {
+	var target = this;
+	
+	// FIXME This is a bit ugly. Sam should probably be made a different case 
+	// from the start so that we don't have to pick him out at this late stage of processing
+	if (kmlObject.getName() == "Sam") {
+		google.earth.addEventListener(kmlObject, 'click', function(event) {
+			event.preventDefault();
+		});		
+		return;
+	}
+	
+	//First, we ask the event manager to create a handler for this object
+	this.eventManager_.getHandlerForObject(kmlObject.getName());
+	
+	// Now we install a generic entry point into the event manager as a way
+	// of delegating responsibility for future events
+	google.earth.addEventListener(kmlObject, 'click', function(event) {
+		var result = null;
+		event.preventDefault();
+	
+		// If it's an interact action, we need to check the distance to the target
+		if (target.getCurrentVerb() == "interact") {
+		
+			// FIXME (clean up and move to a function)	
+			// Get Sam's lat and lon
+			var sam = target.retrieveKmlFeature_("Sam");
+			var point = sam.getGeometry();
+			var samLat = point.getLatitude();
+			var samLon = point.getLongitude();
+			var samLatLon = new ktree.earth.LatLon(samLat, samLon);
+		
+			// Get the lat and lon of the clicked object (this is much more accurate than calculating coordinates from
+			// the screen (X,Y) of the click)
+			//var clickCoords = target.ktxCache_.coordinatesForPlacemark(kmlObject.getName());
+			var clickedFeature = target.retrieveKmlFeature_(kmlObject.getName());
+			var clickedPoint = clickedFeature.getGeometry();
+			//var clickLat = clickCoords.get(target.LAT_KEY);
+			//var clickLon = clickCoords.get(target.LON_KEY);
+			var clickLat = clickedPoint.getLatitude();
+			var clickLon = clickedPoint.getLongitude();
+			var clickLatLon = new ktree.earth.LatLon(clickLat, clickLon);
+			
+			// Calculate the distance between them (in km)
+			var distance = samLatLon.distanceTo(clickLatLon);
+			ktree.debug.logInfo("Selected feature is <" + distance + "> km from the player.")
+		
+			// If it's an interact action at a great distance...
+			if (distance > 0.055) {
+				result = "<p>That's too far away for Sam to interact with. Try getting closer.</p>"
+			}
+		}
+		
+		// If we haven't set the response at this point, we need to retrieve it from the event manager
+		if(!result) {
+			var result = target.eventManager_.handleEvent(kmlObject.getName(), target.getCurrentVerb());
+		}
+		
+		var balloon = target.ge_.createHtmlStringBalloon('');
+		balloon.setContentString(result);
+		balloon.setFeature(kmlObject);
+		target.ge_.setBalloon(balloon);		
+	});
+}
+
+
+/**
+*	This version of the function installs a generic event handler, which only loads
+*	the appropriate content from the server when the object is actually clicked.
+*/
+/*
+ktree.GoogleEarth.prototype.installEventHandler_ = function(kmlObject) {
+	var target = this;
+	google.earth.addEventListener(kmlObject, 'click', function(event) {
+		event.preventDefault();
+		var name = kmlObject.getName();
+		var verb = target.getCurrentVerb();
+		var balloon = target.ge_.createHtmlStringBalloon('');
+		//balloon.setContentString("Getting response...");
+		//target.ge_.setBalloon(balloon);
+		target.eventManager_.handleEvent(event, name, verb, balloon);
+	});	
+}
+*/
 
 /**
 *	Updates the plugin's current view using an argument abstract view. Will also set the camera

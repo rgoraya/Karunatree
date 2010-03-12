@@ -1,0 +1,27 @@
+- title "Behavior"
+
+%p
+  %strong Locator:
+  =h @behavior.locator
+%p
+  %strong Description:
+  =h @behavior.description
+%p
+  %strong Look Response:
+  =h @behavior.look_response
+%p
+  %strong Look Trigger:
+  =h @behavior.look_trigger
+%p
+  %strong Interact Response:
+  =h @behavior.interact_response
+%p
+  %strong Interact Trigger:
+  =h @behavior.interact_trigger
+
+%p
+  = link_to "Edit", edit_behavior_path(@behavior)
+  |
+  = link_to "Destroy", @behavior, :confirm => 'Are you sure?', :method => :delete
+  |
+  = link_to "View All", behaviors_path

@@ -1,0 +1,18 @@
+- title "Feature"
+
+%p
+  %strong Locator:
+  =h @feature.locator
+%p
+  %strong Name:
+  =h @feature.name
+%p
+  %strong Description:
+  =h @feature.description
+
+%p
+  = link_to "Edit", edit_feature_path(@feature)
+  |
+  = link_to "Destroy", @feature, :confirm => 'Are you sure?', :method => :delete
+  |
+  = link_to "View All", features_path

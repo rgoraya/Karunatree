@@ -1,0 +1,24 @@
+- title "Character"
+
+%p
+  %strong User:
+  =h @character.user_id
+%p
+  %strong Saved Kml:
+  =h @character.saved_kml
+%p
+  %strong Scene Name:
+  =h @character.scene_name
+%p
+  %strong Subscene:
+  =h @character.subscene
+%p
+  %strong Feature:
+  =h @character.feature_id
+
+%p
+  = link_to "Edit", edit_character_path(@character)
+  |
+  = link_to "Destroy", @character, :confirm => 'Are you sure?', :method => :delete
+  |
+  = link_to "View All", characters_path
