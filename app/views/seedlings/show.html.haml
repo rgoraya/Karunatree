@@ -1,0 +1,17 @@
+%script{:language => "Javascript", :src => "/javascripts/ajax/update_picture.js"}
+
+%h2 #{@seedling.title} by #{link_to(@seedling.user.login, user_path(@seedling.user)) if @seedling.user}
+%p
+	%b
+		Description:
+	= @seedling.description
+
+%center
+	#picture_sizes
+		#{link_to "Thumb", seedling_path(@seedling, :main_image => :thumb)}
+		#{link_to "Medium", seedling_path(@seedling, :main_image => :medium)}
+		#{link_to "Large", seedling_path(@seedling, :main_image => :large)}
+		#{link_to "Regular", seedling_path(@seedling)}
+
+	#picture
+		#{render 'picture'}

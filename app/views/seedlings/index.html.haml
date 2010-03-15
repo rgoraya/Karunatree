@@ -1,0 +1,12 @@
+%h2 Listing Seedlings
+
+#new_seedling{:style => 'clear:both;'}
+	%a{:href => new_seedling_path} new seedling
+
+#seedling_list
+	- @seedlings.each do |seedling|
+		.seedling
+			%p
+				by #{link_to(seedling.user.login, user_path(seedling.user)) if seedling.user}
+			%a{:href => seedling_path(seedling)}
+				%img{:src => seedling.picture.url(:thumb)}

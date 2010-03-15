@@ -1,0 +1,25 @@
+- content_for(:include_custom_stylesheet) do
+  = stylesheet_link_tag "ktree-forms"
+  
+%h1 Sign up
+- form_for @user, :url => account_path do |form|
+  %fieldset
+    %legend Please enter your details...
+    = error_messages_for "user"
+    .form-row
+      %label{:for => "email"} Email &nbsp;
+      = form.text_field :email, :size => User::EMAIL_SIZE, :maxlength => User::EMAIL_MAX_LENGTH
+    .form-row
+      %label{:for => "login"} Username &nbsp;
+      = form.text_field :login, :size => User::USERNAME_SIZE, :maxlength => User::USERNAME_MAX_LENGTH
+    .form-row
+      %label{:for => "password"} Password &nbsp;
+      = form.password_field :password, :size => User::PASSWORD_SIZE, :maxlength => User::PASSWORD_MAX_LENGTH
+    .form-row
+      %label{:for => "password_confirmation"} Confirm Password &nbsp;
+      = form.password_field :password_confirmation, :size => User::PASSWORD_SIZE, :maxlength => User::PASSWORD_MAX_LENGTH
+    .form-row
+      %label{:for => "account_type"} Account Type &nbsp;
+      = form.select "account_type", "<option value=\"Adult\">Adult</option><option value=\"Parent\">Parent</option><option value=\"Child\">Child</option>"
+    .form-row
+      = form.submit "Jump in!", :class => "submit"

@@ -1,0 +1,13 @@
+%h2
+	= @user.login
+
+%p
+	%b Account Type:
+	= @user.account_type
+
+%p #{@user.login}'s seedlings
+
+#user_seedlings
+	- @user.seedlings.each do |seedling|
+		%a{:href => seedling_path(seedling)}
+			%img{:src => seedling.picture.url(:thumb)}/
