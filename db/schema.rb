@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(:version => 20100310002805) do
   create_table "characters", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id",                        :null => false
     t.text     "saved_kml"
     t.string   "scene_name", :default => "None", :null => false
     t.integer  "subscene",   :default => 0,      :null => false
@@ -55,6 +54,14 @@ ActiveRecord::Schema.define(:version => 20100310002805) do
     t.integer  "character_id"
   end
 
+  create_table "pages", :force => true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.string   "permalink"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "scenes", :force => true do |t|
     t.text     "name",                               :null => false
     t.text     "script"
@@ -69,6 +76,20 @@ ActiveRecord::Schema.define(:version => 20100310002805) do
     t.integer  "next_subscene"
     t.string   "prev_scene_name"
     t.string   "prev_subscene"
+  end
+
+  create_table "seedlings", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title",                :default => "", :null => false
+    t.string   "description",          :default => "", :null => false
+    t.integer  "votes",                :default => 0,  :null => false
+    t.integer  "transplanted_count",   :default => 0,  :null => false
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sessions", :force => true do |t|
@@ -97,12 +118,14 @@ ActiveRecord::Schema.define(:version => 20100310002805) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "username"
-    t.string   "email"
-    t.string   "password"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "authorization_token"
+    t.string  "login",             :null => false
+    t.string  "email",             :null => false
+    t.string  "account_type",      :null => false
+    t.string  "crypted_password",  :null => false
+    t.string  "password_salt",     :null => false
+    t.string  "persistence_token", :null => false
+    t.string  "perishable_token",  :null => false
+    t.integer "character_id"
   end
 
 end

@@ -1,4 +1,14 @@
 ActionController::Routing::Routes.draw do |map|
+  map.static_page 'page/:permalink', :controller => 'pages', :action => 'show', :permalink => nil
+  map.resources :pages
+
+  map.resources :seedlings
+
+  map.resource :user_session
+  
+  map.resource :account, :controller => "users"
+  map.resources :users, :member => {:home => :get}
+  
   map.resources :characters, :collection => { :add_to_inventory => :put, :bind_behavior => :put }
 
   map.resources :behaviors

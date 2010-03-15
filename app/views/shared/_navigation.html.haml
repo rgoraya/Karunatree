@@ -1,8 +1,9 @@
 #nav
-  #{nav_link "Home", "root"} | #{nav_link "About", "root", "about"} | #{nav_link "Help", "root", "help"} |
-  %span{"style" => "float: right"}
-    -if logged_in?
-      #{nav_link "Play", "play", "index"} | |
-      #{nav_link "Logout", "user", "logout"} |
-    -else
-      #{nav_link "Sign Up!", "user", "signup"} | #{nav_link "Login", "user", "login"}
+	#{link_to 'Home', static_page_path(:permalink => 'index')} | #{link_to 'About', static_page_path(:permalink => 'about')} | #{link_to 'Help', static_page_path(:permalink => 'help')} | #{link_to "Seedlings", seedlings_path}
+	%span{"style" => "float: right"}
+		-if current_user
+			#{link_to "Profile", user_path(current_user)} | |
+			#{nav_link "Play", "play", "index"} | |
+			#{link_to "Logout", user_session_path, :method => :delete}
+		-else
+			#{nav_link "Sign Up!", "users", "new"} | #{nav_link "Login", "user_session", "new"}

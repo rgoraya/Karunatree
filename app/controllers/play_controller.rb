@@ -5,11 +5,11 @@ class PlayController < ApplicationController
   # This is to get the save method to work
   protect_from_forgery :only => [:create, :update, :destroy]
   
-  before_filter :protect
+  before_filter :require_user
   
   def index
     @title = "Play KarunaTree"
-    @user = User.get_current_user(session)
+    @user = current_user
     @character = @user.character
     @scene = Scene.find_by_name_and_subscene(@user.character.scene_name, @user.character.subscene)
   end
@@ -22,7 +22,7 @@ class PlayController < ApplicationController
   
   # Should be moved to a Scene controller
   def next
-    @character = User.get_current_user(session).character    
+    @character = current_user.character    
     @last_scene = Scene.find_by_name_and_subscene(@character.scene_name, @character.subscene)
     @scene = Scene.find_by_name_and_subscene(@last_scene.next_scene_name, @last_scene.next_subscene)
     @character.scene_name = @scene.name
@@ -33,7 +33,7 @@ class PlayController < ApplicationController
   
   # Should be moved to a Scene controller
   def back
-    @character = User.get_current_user(session).character
+    @character = current_user.character
     @last_scene = Scene.find_by_name_and_subscene(@character.scene_name, @character.subscene)
     @scene = Scene.find_by_name_and_subscene(@last_scene.prev_scene_name, @last_scene.prev_subscene)
     @character.scene_name = @scene.name
@@ -50,7 +50,7 @@ class PlayController < ApplicationController
       subscene = request.headers["subscene"]
       Rails.logger.info("Processing request for: Scene <" + scene_name + ">, Subscene <" + subscene + ">")
       
-      @character = User.get_current_user(session).character
+      @character = current_user.character
       @last_scene = Scene.find_by_name_and_subscene(@character.scene_name, @character.subscene)
       @scene = Scene.find_by_name_and_subscene(scene_name, subscene)
       @character.scene_name = scene_name
@@ -66,7 +66,7 @@ class PlayController < ApplicationController
   # this should probably live in a separate controller
   def save
     if (request.post?)
-      @character = User.get_current_user(session).character
+      @character = current_user.character
       @character.saved_kml = params[:kml]
       @character.save
       render :text => "Updated character with KML: " + params[:kml]
@@ -77,18 +77,6 @@ class PlayController < ApplicationController
   
   def test
     render :text => "And so our story continues, for the feature " + params[:obj]
-  end
-  
-  private
-  
-  # Invoke from before_filter to keep non-logged-in users from seeing protected pages
-  def protect
-    unless logged_in?
-      session[:protected_page] = request.request_uri
-      flash[:notice] = "Please log in first."
-      redirect_to :action => "login", :controller => "user"
-      return false
-    end
   end
 
 end
