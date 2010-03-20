@@ -17,7 +17,10 @@ class UsersController < ApplicationController
   end
   
   def show
-    @user = User.find(params[:id])
+    # @user = User.find(params[:id])
+    # Note that we find by username here to be consistent with the way User models generate URLs
+    # (see User::to_param)
+    @user = User.find_by_username(params[:id])
   end
  
   def edit

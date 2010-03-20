@@ -1,14 +1,9 @@
 class RootController < ApplicationController
   def index
-    @title = "Welcome to KarunaTree -- Environmental Literacy for Kids"
+    # Render the landing page
   end
 
-  def about
-    @title = "About KarunaTree"
+  def show
+    render :action => params[:page]
   end
-
-  def help
-    @title = "KarunaTree Help"
-  end
-
 end

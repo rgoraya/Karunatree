@@ -1,13 +1,20 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
+  
   # include all authlogic "features"
   acts_as_authentic
+  
   before_create :create_character
   
   has_one :character
   has_many :seedlings
   
-  #attr_accessor :remember_me, :password
+  # By overriding this method, we specify that when behaviors are
+  # converted to corresponding URLs, the locator attribute should
+  # be used (rather than id)
+  def to_param
+    username
+  end
   
   # Max and min lengths for all fields
   USERNAME_MIN_LENGTH = 3
@@ -25,12 +32,12 @@ class User < ActiveRecord::Base
   
   ## Model validation
   
-  # Username
-  validates_uniqueness_of :login
-  validates_length_of :login, :within => USERNAME_LENGTH_RANGE
-  validates_format_of :login,
-                      :with => /^[A-Z0-9._-]*$/i,
-                      :message => "may contain only letters, numbers, underscores, hyphens, and periods."
+  # Login
+  validates_uniqueness_of :username
+  validates_length_of :username, :within => USERNAME_LENGTH_RANGE
+  validates_format_of :username,
+                      :with => /^[A-Z0-9_-]*$/i,
+                      :message => "may contain only letters, numbers, underscores, and hyphens."
   # Email
   validates_uniqueness_of :email
   validates_length_of :email, :maximum => EMAIL_MAX_LENGTH              

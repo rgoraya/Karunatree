@@ -1,6 +1,6 @@
 %script{:language => "Javascript", :src => "/javascripts/ajax/update_picture.js"}
 
-%h2 #{@seedling.title} by #{link_to(@seedling.user.login, user_path(@seedling.user)) if @seedling.user}
+%h2 #{@seedling.title} by #{link_to(@seedling.user.username, user_path(@seedling.user)) if @seedling.user}
 %p
 	%b
 		Description:

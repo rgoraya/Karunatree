@@ -1,20 +1,23 @@
 ActionController::Routing::Routes.draw do |map|
-  map.static_page 'page/:permalink', :controller => 'pages', :action => 'show', :permalink => nil
-  map.resources :pages
 
   map.resources :seedlings
 
   map.resource :user_session
+  map.login "login", :controller => "user_sessions", :action => "new"
+  map.logout "logout", :controller => "user_sessions", :action => "destroy"
   
-  map.resource :account, :controller => "users"
+  # I think omitting this helps to make the routing less complex
+  #map.resource :account, :controller => "users"
+  
   map.resources :users, :member => {:home => :get}
+  map.signup "signup", :controller => "users",  :action => "new"
   
   map.resources :characters, :collection => { :add_to_inventory => :put, :bind_behavior => :put }
 
   map.resources :behaviors
 
   map.resources :features, :member => { :behavior => :get }
-
+  
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
@@ -48,6 +51,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => "root"
+  map.static ':page', :controller => "root", :action => "show", :page => /about|help/
 
   # See how all your routes lay out with "rake routes"
 

@@ -7,6 +7,6 @@
 	- @seedlings.each do |seedling|
 		.seedling
 			%p
-				by #{link_to(seedling.user.login, user_path(seedling.user)) if seedling.user}
+				by #{link_to(seedling.user.username, user_path(seedling.user)) if seedling.user}
 			%a{:href => seedling_path(seedling)}
 				%img{:src => seedling.picture.url(:thumb)}

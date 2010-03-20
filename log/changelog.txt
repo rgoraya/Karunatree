@@ -1,7 +1,22 @@
+** Version 0.6.1d1 **
+Begun: 3.19.10
+Committed: 3.19.10
+Corresponding SVN Revisions: 42
+
+* Finished incorporating Mike's winter quarter changes
+** Authentication is now handled with the authlogic plugin
+** First pass at support for seedlings
+* Removed the pages resource. Static pages are now once again handled by the Root Controller, but with a tidier semi-RESTful action scheme
+* Rolled back edits to old migrations. Created a new migration to make changes to the User model for authlogic
+* Refactored User model to use 'username' rather than 'login' as the key login field
+* Moved pre-authlogic versions of User controller and views to 'old_user' file/directories.
+* Minor changes to config files (i.e. requiring the mini-magick gem)
+
+
 ** Version 0.6d1 **
 Begun: 3.1.10
 Committed: 3.12.10
-Corresponding SVN Revisions: 38-40
+Corresponding SVN Revisions: 39
 
 New Features:
 * Reworked Scene and Character models to support sub-scenes:smaller atoms of narrative that allow for a greater degree of interactivity.

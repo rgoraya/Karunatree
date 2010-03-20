@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100310002805) do
+ActiveRecord::Schema.define(:version => 20100319210321) do
 
   create_table "behavior_bindings", :force => true do |t|
     t.string   "locator",      :null => false
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20100310002805) do
   end
 
   create_table "characters", :force => true do |t|
+    t.integer  "user_id",                        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "saved_kml"
@@ -52,14 +53,6 @@ ActiveRecord::Schema.define(:version => 20100310002805) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "character_id"
-  end
-
-  create_table "pages", :force => true do |t|
-    t.string   "title"
-    t.text     "content"
-    t.string   "permalink"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "scenes", :force => true do |t|
@@ -118,14 +111,16 @@ ActiveRecord::Schema.define(:version => 20100310002805) do
   end
 
   create_table "users", :force => true do |t|
-    t.string  "login",             :null => false
-    t.string  "email",             :null => false
-    t.string  "account_type",      :null => false
-    t.string  "crypted_password",  :null => false
-    t.string  "password_salt",     :null => false
-    t.string  "persistence_token", :null => false
-    t.string  "perishable_token",  :null => false
-    t.integer "character_id"
+    t.string   "username",            :null => false
+    t.string   "email",               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "authorization_token"
+    t.string   "crypted_password",    :null => false
+    t.string   "password_salt",       :null => false
+    t.string   "persistence_token",   :null => false
+    t.string   "perishable_token",    :null => false
+    t.string   "account_type",        :null => false
   end
 
 end

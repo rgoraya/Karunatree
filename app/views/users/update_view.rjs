@@ -1,3 +1,0 @@
-page.replace_html 'title', content_tag('h3', @scene.name)
-page.replace_html 'script', @scene.script
-page.visual_effect :highlight, 'title', :duration => 2
