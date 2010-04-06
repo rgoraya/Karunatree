@@ -6,7 +6,7 @@ class CharactersController < ApplicationController
   
   # Todo: This is a fairly inelegant approach to accomplishing this.
   def add_to_inventory
-    @character = User.get_current_user(session).character
+    @character = current_user.character
     locator = request.headers["locator"]
     if (@character.inventory.find_by_locator(locator))
       render :text => 'Feature <' + locator + '> is already in the inventory.'
@@ -24,7 +24,7 @@ class CharactersController < ApplicationController
       @binding = BehaviorBinding.new
       @binding.locator = request.headers["feature_locator"]
       @binding.behavior = @behavior
-      @binding.character = @character = User.get_current_user(session).character
+      @binding.character = current_user.character
       @binding.save
       
       render :json => @behavior
