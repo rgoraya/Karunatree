@@ -8,7 +8,7 @@ legend {
 	color: white;
 	background: forestgreen;
 	padding: .4em 1em;
-	margin: 0.3em 0em;
+	margin: 0.3em 0.3em;
 }
 
 label {
@@ -78,9 +78,7 @@ html fieldset {
 }
 
 html legend {
-	position: absolute;
-	top: -1em;
-	left: 0.5 em;
+	position: relative;
 }
 
 html fieldset {

@@ -1,6 +1,7 @@
 goog.provide('ktree.Core');
 
 goog.require('ktree.debug');
+goog.require('ktree.config');
 goog.require('ktree.Soundscape')
 goog.require('ktree.World');
 goog.require('ktree.kml.KmlManager');
@@ -26,9 +27,9 @@ goog.require('goog.ui.SplitPane.Orientation');
 *	from HTML to setup the JS portion of our system.
 * 	@constructor
 */
-ktree.Core = function(debugOn) {
+ktree.Core = function() {
 	
-	if(debugOn) {
+	if(ktree.config.DEBUG_ON) {
 		ktree.debug.startDebugger();
 	}
 
@@ -75,19 +76,4 @@ ktree.Core.prototype.restoreKml = function(kmlString) {
 
 ktree.Core.prototype.sceneIsLoading = function(scene, subscene) {
 	this.kmlManager_.sceneIsLoading(scene, subscene);
-}
-
-ktree.Core.prototype.debugTemp = function() {
-	var target = this;
-	var name = 'http://localhost:3000/ktx/1-1.ktx.xml';
-	
-	success = function(dataSource) {
-
-	}
-	
-	failure = function() {
-		alert('Failed to load KtxDataSource')
-	}
-	ktree.Soundscape.testButton();
-	this.kmlManager_.loadKml(name, 'KTXTest', success, failure);
 }

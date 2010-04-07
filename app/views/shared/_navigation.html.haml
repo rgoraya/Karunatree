@@ -1,9 +1,13 @@
 #nav
-	#{link_to_unless_current 'Home', root_path} | #{link_to_unless_current 'About', static_path("about")} | #{link_to_unless_current 'Help', static_path("help")} | #{link_to_unless_current "Seedlings", seedlings_path}
+	#{link_to_unless_current 'Home', root_path} | #{link_to_unless_current 'About', static_path("about")} | #{link_to_unless_current 'Help', static_path("help")}
+	-if current_user
+		| #{link_to_unless_current "Seedlings", seedlings_path}
 	%span{"style" => "float: right"}
 		-if current_user
 			#{link_to_unless_current "Profile", user_path(current_user)} | |
 			#{nav_link "Play", "play", "index"} | |
 			#{link_to_unless_current "Logout", user_session_path, :method => :delete}
 		-else
-			#{link_to_unless_current "Sign Up!", signup_path} | #{link_to_unless_current 'Login', login_path}
+			-if REGISTRY[:allow_signups]
+				#{link_to_unless_current "Sign Up!", signup_path} | |
+			#{link_to_unless_current 'Login', login_path}

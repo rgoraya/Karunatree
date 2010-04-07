@@ -16,4 +16,9 @@
       = form.check_box :remember_me
     .form-row
       = form.submit "Jump in!", :class => "submit"
-%p Not a member yet? You can #{link_to "sign up now", :controller => "users", :action => "new"} for free!
+-if REGISTRY[:allow_signups]
+  %h3 Not a member yet?
+  %p You can #{link_to "sign up now", signup_path} for free!
+-else
+  %h3 Trying to figure out how to sign up?
+  %p We're currently closed for development and testing, but you can #{link_to "sign up to be notified", :controller => "root", :action => "about"} about our upcoming public beta!

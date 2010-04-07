@@ -1,5 +1,6 @@
 goog.provide('ktree.GoogleEarth');
 
+goog.require('ktree.config');
 goog.require('ktree.debug');
 goog.require('ktree.earth.Gamepad');
 goog.require('ktree.earth.LatLon');
@@ -10,6 +11,7 @@ goog.require('ktree.kml.KtxCache');
 
 goog.require('goog.array');
 goog.require('goog.dom');
+goog.require('goog.string');
 goog.require('goog.structs.Map');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
@@ -376,7 +378,8 @@ ktree.GoogleEarth.prototype.setFlyToSpeed = function(speed) {
 */
 ktree.GoogleEarth.prototype.serializeKmlToServer_ = function() {
 	var kmlString = this.retrieveKmlFeature_("Chapter 1").getKml();
-	this.xhr_.send("http://localhost:3000/play/save", "POST", "kml=" + kmlString);
+	var saveUrl = goog.string.buildString(ktree.config.URL_BASE, ktree.config.URL_COMPONENT_SAVE_KML_TO_SERVER);
+	this.xhr_.send(saveUrl, "POST", "kml=" + kmlString);
 	
 	//TODO This can be used to send the KML as XML rather than as a string.
 	//Could we save this to the database using a RESTful controller?

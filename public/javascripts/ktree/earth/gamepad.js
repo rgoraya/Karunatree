@@ -64,7 +64,7 @@ ktree.earth.Gamepad.prototype.createButton_ = function(name, x, y, width, height
 	
 	for (i = 0; i <= 2; i++) {
 		var icon = this.ge_.createIcon('');
-		icon.setHref(ktree.config.BASE_URI + ktree.config.ICON_PATH + name + this.STATES[i] + '.png');
+		icon.setHref(ktree.config.URL_BASE + ktree.config.URL_COMPONENT_ICON_PATH + name + this.STATES[i] + '.png');
 		
 		var overlay = this.ge_.createScreenOverlay('');
 		overlay.setDrawOrder(i + 1);

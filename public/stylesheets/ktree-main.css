@@ -1,9 +1,7 @@
 /* @override 
-	http://localhost:3000/stylesheets/main.css?1254527802
-	http://localhost:3000/stylesheets/ktree-main.css?1260571289
-	http://localhost:3000/stylesheets/ktree-main.css?1261078630
-	http://localhost:3000/stylesheets/ktree-main.css?1262043879
-	http://localhost:3000/stylesheets/ktree-main.css?1262044105
+	http://localhost:3000/stylesheets/ktree-main.css?1270607370
+	http://localhost:3000/stylesheets/ktree-main.css?1270677087
+	http://localhost:3000/stylesheets/ktree-main.css?1270679840
 */
 
 /* @group Page Structure */
@@ -13,7 +11,7 @@ html {
 }
 
 body {
-	background:gray;
+	background: #4C4C4C;
 	height: 100%;
 	width: 100%;
 	min-width: 450px;			/* Minimum width of layout. Note does not work in old IE */
@@ -24,8 +22,8 @@ body {
 }
 
 #header {
-	background: forestgreen;
-	color: gold;
+	background: #5D9405;
+	color: #fef165;
 	padding: 0.3em;
 	font-size: 2.5em;
 }
@@ -33,7 +31,7 @@ body {
 #nav {
 	color: lightgoldenrodyellow;
 	font-size: 1.0em;
-	background: darkgreen;
+	background: #055c93;
 	padding: 0.7em;
 	height: 1.5%;				/* TODO Provisional solution -- seems to yield a reasonable liquid vertical layout if height isn't too small */
 }
@@ -63,7 +61,7 @@ body p {
 }
 
 #nav a, #nav a:visited {
-	color: chartreuse;
+	color: #9AF608;
 	text-decoration: none;
 }
 

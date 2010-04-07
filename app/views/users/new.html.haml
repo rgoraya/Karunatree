@@ -20,6 +20,6 @@
       = form.password_field :password_confirmation, :size => User::PASSWORD_SIZE, :maxlength => User::PASSWORD_MAX_LENGTH
     .form-row
       %label{:for => "account_type"} Account Type &nbsp;
-      = form.select "account_type", "<option value=\"Adult\">Adult</option><option value=\"Parent\">Parent</option><option value=\"Child\">Child</option>"
+      = form.select "account_type", "<option value=\"Kid\">Kid</option><option value=\"Parent\">Parent</option><option value=\"Non-Parent Adult\">Non-Parent Adult</option>"
     .form-row
       = form.submit "Jump in!", :class => "submit"

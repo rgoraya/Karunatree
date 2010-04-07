@@ -1,0 +1,49 @@
+/* @override 
+	http://localhost:3000/stylesheets/ktree-frontpage.css?1270677592
+	http://localhost:3000/stylesheets/ktree-frontpage.css?1270679944
+*/
+
+#front-page-wrapper {
+	width: 800px;
+	margin-top: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: ;
+}
+
+#float-left {
+	float: left;
+	margin-right: 40px;
+}
+
+.gray-outline {
+	background-color: #01385d;
+	padding: 10px;
+	margin-bottom: 100px;
+}
+
+a {
+	color: #055c93;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+.yellow-highlight {
+	background-color: #fef6bd;
+}
+
+.bright-highlight {
+	background-color: #feef63;
+}
+
+#headline {
+	border: 3px solid #3da21b;
+	padding: 10px;
+	background: #e9f7de;
+}
+
+body p {
+	font-size: 1.2em;
+	line-height: 1.3em;
+}

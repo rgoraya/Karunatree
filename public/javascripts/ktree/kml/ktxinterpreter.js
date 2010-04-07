@@ -1,5 +1,6 @@
 goog.provide('ktree.ktx.KtxInterpreter');
 
+goog.require('ktree.config');
 goog.require('ktree.debug');
 goog.require('ktree.ktx');
 goog.require('ktree.World');
@@ -119,7 +120,7 @@ ktree.ktx.KtxInterpreter.prototype.delayedSendCommands_ = function(parentName) {
 		ktree.debug.logInfo('The KtxInterpreter reports that GoogleEarth has finished initializing. Sending delayed commands...');
 		target.sendCommands_(parentName);
 	}
-	conditionalDelay.start(100, 5000);
+	conditionalDelay.start(100, ktree.config.GE_API_INIT_TIMEOUT);
 }
 
 /**

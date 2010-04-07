@@ -9,7 +9,8 @@
   = javascript_include_tag "closure/goog/base.js"
   = javascript_include_tag "ktree/deps.js"
   = javascript_include_tag "sm2/soundmanager2.js"
-  %script{:type => "text/javascript", :src => "http://www.google.com/jsapi?key=ABQIAAAALuMnM-_PZBAC0jiiDlxy2xRGQdiD-hjaSRiclgqKLFtYALqY5BStWXbW2ka15MNHBzunqwVPJAJ65A"}
+  
+  %script{:type => "text/javascript", :src => "http://www.google.com/jsapi?key=#{REGISTRY[:api_key]}"}
   %script{:type => "text/javascript", :src => "http://use.typekit.com/wsn0ttv.js"}
   %script{:type => "text/javascript"}
     :plain
@@ -20,7 +21,7 @@
 - content_for :include_custom_javascript_end do
   %script{:type => "text/javascript"}
     :plain
-      var kt = new ktree.Core(true);
+      var kt = new ktree.Core();
       if (#{!@character.saved_kml.blank?}) {
         kt.restoreKml('#{@character.saved_kml.to_json}');
       }

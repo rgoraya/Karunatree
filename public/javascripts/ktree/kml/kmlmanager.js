@@ -1,6 +1,7 @@
 goog.provide('ktree.kml.KmlManager');
 
 goog.require('ktree.debug');
+goog.require('ktree.config');
 
 goog.require('goog.string');
 goog.require('goog.dom.xml');
@@ -203,5 +204,5 @@ ktree.kml.KmlManager.prototype.delayedSendKmlToWorld_ = function(kmlString, pare
 		ktree.debug.logInfo('The KmlManager reports that GoogleEarth has finished initializing. Sending delayed commands...');
 		target.sendKmlToWorld_(kmlString, parentName);
 	}
-	conditionalDelay.start(100, 5000);
+	conditionalDelay.start(100, ktree.config.GE_API_INIT_TIMEOUT);
 }

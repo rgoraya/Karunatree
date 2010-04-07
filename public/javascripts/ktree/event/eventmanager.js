@@ -35,7 +35,7 @@ ktree.event.EventManager.prototype.getHandlerForObject = function(objectName) {
 		var xhrCallback = goog.bind(this.xhrStateListener, this, objectLocator);
 		this.xhrPool_.getObject(function(xhr) {
 			goog.events.listen(xhr, goog.net.EventType.READY_STATE_CHANGE, xhrCallback);
-			xhr.send(ktree.config.BASE_URI + ktree.config.URI_COMPONENT_FOR_FEATURE_BEHAVIOR + objectLocator + ".json", "GET");
+			xhr.send(ktree.config.URL_BASE + ktree.config.URL_COMPONENT_FEATURE_BEHAVIOR + objectLocator + ".json", "GET");
 		});
 	}
 }
@@ -115,7 +115,7 @@ ktree.event.EventManager.prototype.addToInventory = function(itemLocator) {
 	this.xhrPool_.getObject(function(xhr) {
 		// Note we send the key-value pair in the headers rather than the body because headers are easily
 		// accessed as a hash map on the Rails side
-		xhr.send(ktree.config.BASE_URI + ktree.config.URI_COMPONENT_FOR_ADD_TO_INVENTORY, "PUT", null, {"locator": itemLocator});
+		xhr.send(ktree.config.URL_BASE + ktree.config.URL_COMPONENT_ADD_TO_INVENTORY, "PUT", null, {"locator": itemLocator});
 	});
 }
 
@@ -136,7 +136,7 @@ ktree.event.EventManager.prototype.bindBehavior = function(jsonBinding) {
 	var xhrCallback = goog.bind(this.xhrStateListener, this, jsonBinding.feature_locator);
 	this.xhrPool_.getObject(function(xhr) {
 		goog.events.listen(xhr, goog.net.EventType.READY_STATE_CHANGE, xhrCallback);
-		xhr.send(ktree.config.BASE_URI + ktree.config.URI_COMPONENT_FOR_BIND_BEHAVIOR, "PUT", null, jsonBinding);
+		xhr.send(ktree.config.URL_BASE + ktree.config.URL_COMPONENT_BIND_BEHAVIOR, "PUT", null, jsonBinding);
 	});
 }
 
@@ -144,7 +144,7 @@ ktree.event.EventManager.prototype.requestScene = function(scene, subscene) {
 	var xhrCallback = goog.bind(this.evaluateResponseScript, this);
 	this.xhrPool_.getObject(function(xhr) {
 		goog.events.listen(xhr, goog.net.EventType.SUCCESS, xhrCallback)
-		xhr.send(ktree.config.BASE_URI + ktree.config.URI_COMPONENT_FOR_REQUEST_SCENE, "PUT", null, {"scene": scene, "subscene": subscene});
+		xhr.send(ktree.config.URL_BASE + ktree.config.URL_COMPONENT_REQUEST_SCENE, "PUT", null, {"scene": scene, "subscene": subscene});
 	});
 }
 

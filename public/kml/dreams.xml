@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <kml xmlns="http://www.opengis.net/kml/2.2" 
+  xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:ktx="http://www.karunatree.com/kml/ext/2.2">
   
   <Document id="Dreams-0">
@@ -60,6 +61,7 @@
         <scale>1.3</scale>
         <Icon>
           <href>http://localhost:3000/images/icons/sam-icon.png</href>
+          <ktx:href>http://ec2-184-72-52-139.us-west-1.compute.amazonaws.com/images/icons/sam-icon.png</ktx:href>
         </Icon>
       </IconStyle>
     </Style>
@@ -69,6 +71,7 @@
           <scale>1.5</scale>
           <Icon>
             <href>http://localhost:3000/images/icons/sam-icon.png</href>
+            <ktx:href>http://ec2-184-72-52-139.us-west-1.compute.amazonaws.com/icons/sam-icon.png</ktx:href>
           </Icon>
         </IconStyle>
       </Style>
@@ -89,6 +92,7 @@
         <scale>1.7</scale>
         <Icon>
           <href>http://localhost:3000/images/icons/mom-icon.png</href>
+          <ktx:href>http://ec2-184-72-52-139.us-west-1.compute.amazonaws.com/images/icons/mom-icon.png</ktx:href>
         </Icon>
       </IconStyle>
     </Style>
@@ -98,6 +102,7 @@
           <scale>1.9</scale>
           <Icon>
             <href>http://localhost:3000/images/icons/mom-icon.png</href>
+            <ktx:href>http://ec2-184-72-52-139.us-west-1.compute.amazonaws.com/images/icons/mom-icon.png</ktx:href>
           </Icon>
         </IconStyle>
       </Style>

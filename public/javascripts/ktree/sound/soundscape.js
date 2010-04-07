@@ -1,6 +1,7 @@
 goog.provide('ktree.Soundscape');
 
 goog.require('ktree.debug');
+goog.require('ktree.config');
 goog.require('ktree.sound');
 
 goog.require('goog.string');
@@ -150,7 +151,7 @@ ktree.Soundscape.prototype.whenReady = function(callback) {
 			ktree.debug.logInfo('SoundManager is ready! Soundscape.whenReady is firing its callback.');
 			callback();
 		}
-		readyDelay.start(100, 5000);
+		readyDelay.start(100, ktree.config.SM2_INIT_TIMEOUT);
 	}
 }
 

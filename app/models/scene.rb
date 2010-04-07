@@ -1,7 +1,7 @@
 class Scene < ActiveRecord::Base
   
   # Constants
-  KML_ROOT_PATH = 'http://localhost:3000/kml/'
+  KML_ROOT_PATH = REGISTRY[:kt_url] + '/kml/'
   KTX_EXTENSION = '.xml'
   
   FIRST_SCENE = 'Dreams'
