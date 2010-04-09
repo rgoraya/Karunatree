@@ -44,4 +44,4 @@ ktree.sound.FADE_TIMESTEP = 100;
 *	execute exactly 10 times during one clock second.
 */
 
-ktree.sound.FADE_DURATION_ERROR = 1000;
+ktree.sound.FADE_DURATION_ERROR = 5000;

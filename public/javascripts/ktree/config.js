@@ -22,9 +22,27 @@ ktree.config.DEPLOYED = false;
 ***********************************/
 
 /**
-*	Turn debug logging on/off.
+*	Debugging Constants
+*/
+ktree.config.DEBUG_OUTPUT_CONSOLE = 0;
+ktree.config.DEBUG_OUTPUT_WINDOW = 1;
+ktree.config.DEBUG_OUTPUT_ALERT_ALL = 2;
+ktree.config.DEBUG_OUTPUT_ALERT_WARNINGS = 3;
+
+/**
+*	Turn debug logging on/off
 */
 ktree.config.DEBUG_ON = (ktree.config.DEPLOYED) ? false : true;
+
+/**
+*	Set the destination for debug output:
+*		CONSOLE = output to Firebug console
+*		WINDOW = output to goog.debug.FancyWindow
+*		ALERT_ALL = output all debug messages to javascript alerts
+*		ALERT_WARNINGS = output debug messages of level 'warning' and above to javascript alerts
+*/
+ktree.config.DEBUG_OUTPUT = ktree.config.DEBUG_OUTPUT_ALERT_WARNINGS;
+
 
 /**
 *	If false, all ktx:flyToSpeed commands are ignored, and the camera

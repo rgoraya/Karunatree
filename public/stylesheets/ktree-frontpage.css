@@ -1,6 +1,7 @@
 /* @override 
 	http://localhost:3000/stylesheets/ktree-frontpage.css?1270677592
 	http://localhost:3000/stylesheets/ktree-frontpage.css?1270679944
+	http://localhost:3000/stylesheets/ktree-frontpage.css?1270680316
 */
 
 #front-page-wrapper {
@@ -19,7 +20,11 @@
 .gray-outline {
 	background-color: #01385d;
 	padding: 10px;
-	margin-bottom: 100px;
+}
+
+#float-left p {
+	font-size: 1.0em;
+	color: #79787f;
 }
 
 a {

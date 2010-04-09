@@ -44,7 +44,6 @@ class PlayController < ApplicationController
   
   # Should be moved to a Scene controller
   def request_scene
-    debugger
     if (request.put?)
       scene_name = request.headers["scene"]
       subscene = request.headers["subscene"]
@@ -73,6 +72,17 @@ class PlayController < ApplicationController
     else
       render :text => "You must be lost. This page should not be accessed directly."
     end
+  end
+  
+  # Debugging action. Used to return the character to the start of the chapter.
+  def restart
+    @character = current_user.character
+    @last_scene = Scene.find_by_name_and_subscene(@character.scene_name, @character.subscene)
+    @scene = Scene.find_by_name_and_subscene('Dreams', 0)
+    @character.scene_name = @scene.name
+    @character.subscene = @scene.subscene
+    @character.save
+    render :update_view
   end
   
   def test

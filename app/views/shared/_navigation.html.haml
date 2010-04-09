@@ -4,6 +4,7 @@
 		| #{link_to_unless_current "Seedlings", seedlings_path}
 	%span{"style" => "float: right"}
 		-if current_user
+			#{link_to_remote "Restart", :url => {:action => "restart", :controller => "play"} } | |
 			#{link_to_unless_current "Profile", user_path(current_user)} | |
 			#{nav_link "Play", "play", "index"} | |
 			#{link_to_unless_current "Logout", user_session_path, :method => :delete}

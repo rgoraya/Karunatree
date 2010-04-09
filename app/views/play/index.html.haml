@@ -26,7 +26,6 @@
         kt.restoreKml('#{@character.saved_kml.to_json}');
       }
       else if (#{@scene.has_kml?}) {
-        ktree.debug.logInfo('Loading from scratch');
         kt.sceneIsLoading('#{@scene.name}', '#{@scene.subscene}');
         kt.loadKml('#{@scene.path_to_kml}', '#{@scene.full_name}');
       }

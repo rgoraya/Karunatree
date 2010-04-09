@@ -1,0 +1,18 @@
+KarunaTree's javascript library needs this directory to contain a symbolic link to the
+Google closure library.
+
+Here's how to download the library and prepare the link:
+
+1. In a terminal, cd into the directory in which you'd like to checkout the library.
+   We'll call this directory CHECKOUT_DIR.
+
+2. Checkout the closure library: svn checkout http://closure-library.googlecode.com/svn/trunk/ closure
+	 This will create a directory named 'closure' inside CHECKOUT_DIR, and put the library inside it.
+	
+3. Now create the link: ln -s CHECKOUT_DIR/closure/closure/goog KT_ROOT/public/javascripts/closure/goog
+   Here KT_ROOT should be replaced by the full path to the root of your KT checkout.
+	 Be sure to note the repetition of 'closure' after CHECKOUT_DIR.
+	
+4. To make sure it worked, cd to KT_ROOT/public/javascripts/closure, and use ls -l to get a directory listing.
+   You should see an item named goog whose listing looks like this:
+			goog -> CHECKOUT_DIR/closure/closure/goog

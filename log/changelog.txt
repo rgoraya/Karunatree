@@ -1,3 +1,26 @@
+** Version 0.6.2d2 **
+Begun: 4.8.10
+Committed 4.8.10
+Corresponding SVN Revisions: 48
+
+* Revamped ktree.debug to allow for selection of multiple debug output displays; console, external window, and javascript alerts are all now possible
+* ktree.debug now degrades smoothly if it was configured for console output but Firebug is not available
+* KarunaTree now compatible with Safari!
+* Added a 'Restart' link to the storybook view; allows user to reset his/her character to the start of the chapter without accessing having to access the MySQL database
+* Removed the symbolic link to the closure library from the /public/javascripts/closure directory. Directions for creating this link after checkout are now included in a README file.
+* Removed development and test log files from the repository
+
+** Version 0.6.2d1 **
+Begun: 4.5.10
+Committed 4.7.10
+Corresponding SVN Revisions: 47
+
+* Added Capistrano deployment configuration files for EC2
+* Refined Rails specification of production environment for real deployment
+* Removed hard links to localhost in Javascript
+* Some aesthetic tweaks to frontpage for public deployment
+
+
 ** Version 0.6.1d1 **
 Begun: 3.19.10
 Committed: 3.19.10
