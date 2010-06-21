@@ -21,6 +21,11 @@ ktree.sound.MUSIC_DIR = "sound/music/";
 ktree.sound.AMBIENT_DIR = "sound/ambient/";
 
 /**
+*	Relative server directory in which sound effects files are stored
+*/
+ktree.sound.FX_DIR = "sound/fx/"
+
+/**
 *	Default target volume assigned to sounds which do not specify an
 *	alternative
 */

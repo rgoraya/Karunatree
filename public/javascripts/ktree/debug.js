@@ -85,7 +85,7 @@ ktree.debug.startDebugger = function() {
 			break;
 	}
 
-	if (ktree.config.DEBUG_OUTPUT != ktree.config.DEBUT_OUTPUT_ALERT) {
+	if (ktree.config.DEBUG_OUTPUT != ktree.config.DEBUG_OUTPUT_ALERT_ALL && ktree.config.DEBUG_OUTPUT != ktree.config.DEBUG_OUTPUT_ALERT_WARNINGS) {
 		ktree.debug.mainLogger_ = goog.debug.Logger.getLogger('KTree');
 		ktree.debug.mainLogger_.setLevel(goog.debug.Logger.Level.FINE);
 	}
@@ -125,6 +125,8 @@ ktree.debug.logError= function(message) {
 /**
 *	Advanced logging functions. These are meant to work with the Firebug console,
 *	and will diminish in usefuleness when other debug displays are used.
+*	@param element
+*	@param {string} [message]
 */
 
 ktree.debug.logElement = function(element, message) {
@@ -137,6 +139,10 @@ ktree.debug.logElement = function(element, message) {
 	}
 }
 
+/**
+*	@param object
+*	@param {string} [message]
+*/
 ktree.debug.logProperties = function(object, message) {
 	if(message) ktree.debug.mainLogger_.info(message);
 	if (ktree.config.DEBUG_OUTPUT == ktree.config.DEBUG_OUTPUT_CONSOLE) {

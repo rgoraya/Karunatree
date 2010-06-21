@@ -3,11 +3,14 @@ goog.provide('ktree.GoogleEarth');
 goog.require('ktree.config');
 goog.require('ktree.debug');
 goog.require('ktree.earth.Gamepad');
+goog.require('ktree.earth.MouseMinder');
 goog.require('ktree.earth.LatLon');
+goog.require('ktree.earth.google.Clock');
 goog.require('ktree.event.EventManager');
 goog.require('ktree.event.BehaviorDelegate');
 goog.require('ktree.kml.constants');
 goog.require('ktree.kml.KtxCache');
+goog.require('ktree.AnimationProvider');
 
 goog.require('goog.array');
 goog.require('goog.dom');
@@ -83,8 +86,9 @@ ktree.GoogleEarth = function(identifier) {
 	this.LON_KEY = "longitude";
 	this.ALT_KEY = "altitude"
 	
-	this.dragInfo_ = null;
-	
+	this.mouseMinder_ = new ktree.earth.MouseMinder();
+	this.clock_ = null;
+		
 	/**
 	*	A temporary reference to this *particular* GoogleEarth object needed to 
 	*	allow the initialization callback chain to reach this object again.
@@ -110,43 +114,29 @@ ktree.GoogleEarth = function(identifier) {
 	var apiInitSuccess_ = function(instance) {
 		ktree.debug.logFine('GoogleEarth <' + target_.identifier_ + '> reports successful Earth API initialization.');
 		target_.ge_ = instance;
-		target_.geReady_ = true;
+		target_.clock_ = new ktree.earth.google.Clock(target_.ge_);
+		
+		// Basic plugin configuration
 		target_.ge_.getWindow().setVisibility(true);
-		target_.ge_.getSun().setVisibility(false);
 		target_.ge_.getOptions().setAtmosphereVisibility(true);
+		target_.ge_.getSun().setVisibility(true);
 		target_.ge_.getNavigationControl().getScreenXY().setXUnits(target_.ge_.UNITS_PIXELS);
 		target_.ge_.getNavigationControl().getScreenXY().setYUnits(target_.ge_.UNITS_PIXELS);
 		target_.ge_.getNavigationControl().setVisibility(target_.ge_.VISIBILITY_AUTO);
+		
+		// Signal that the plugin is all finished loading
+		target_.geReady_ = true;
+		//target_.createPlacemark_('WorldClock');
+
 		target_.gamepad_ = new ktree.earth.Gamepad(target_.ge_);
 		//target_.gamepad_.delegate_ = target_;
 		target_.gamepad_.setDelegate(target_);
-		google.earth.addEventListener(target_.ge_.getWindow(), 'mousedown', function(event) {
-			if (event.getTarget().getName() == "Sam") {
-				target_.dragInfo_ = {
-					target: event.getTarget(),
-					dragged: false
-				};
-			}
-		});
-		
-		google.earth.addEventListener(target_.ge_.getGlobe(), 'mousemove', function(event) {
-			if (target_.dragInfo_) {
-				event.preventDefault();
-				var point = target_.dragInfo_.target.getGeometry();
-				point.setLatitude(event.getLatitude());
-				point.setLongitude(event.getLongitude());
-				target_.dragInfo_.dragged = true;
-			}
-		});
-		
-		google.earth.addEventListener(target_.ge_.getWindow(), 'mouseup', function(event) {
-			if (target_.dragInfo_) {
-				if (target_.dragInfo_.dragged) {
-					event.preventDefault();
-				}
-				target_.dragInfo_ = null;
-			}
-		});
+        
+		// Handle click and drag events for Sam's placemark
+		google.earth.addEventListener(target_.ge_.getWindow(), 'mousedown', target_.mouseMinder_.mouseDownEventCallback);
+		google.earth.addEventListener(target_.ge_.getGlobe(), 'mousemove', target_.mouseMinder_.mouseMoveEventCallback);		
+		google.earth.addEventListener(target_.ge_.getWindow(), 'mouseup', target_.mouseMinder_.mouseUpEventCallback);
+        
 		// FIXME First pass at walking animation
 		/*
 		google.earth.addEventListener(target_.ge_.getGlobe(), 'click', function(event) {
@@ -198,6 +188,7 @@ ktree.GoogleEarth = function(identifier) {
 ktree.GoogleEarth.prototype.apiReady = function() {
 	return this.geReady_;
 }
+
 
 ktree.GoogleEarth.prototype.moveSamToClick = function(samLocation, clickLocation) {
 	// Calculate the initial bearing to the click
@@ -305,7 +296,7 @@ ktree.GoogleEarth.prototype.activeButtonDidChange = function(newActiveButton) {
 *	the plugin's current view is set accordingly.
 *	@public
 *	@param {string} kmlString		A string of valid KML
-*	@param {string} parentName		Optional. The name of a KmlContainer to which the new KML should be parented
+*	@param {string} [parentName]	Optional. The name of a KmlContainer to which the new KML should be parented
 */
 ktree.GoogleEarth.prototype.addKml = function(kmlString, parentName) {
 	var kmlObject = this.kmlStringToObject_(kmlString);
@@ -314,11 +305,12 @@ ktree.GoogleEarth.prototype.addKml = function(kmlString, parentName) {
 	if (parentName) {
 		parentContainer = this.tryRetrievingKmlFeature_(parentName);
 		if (!parentContainer) {
-			parentContainer = this.createKmlFolder_("Chapter 1");
+			this.createKmlFolder_(parentName);
+			parentContainer = this.tryRetrievingKmlFeature_(parentName);
 		}
 	}
 	else {
-		// If no parent container is specified, parent the new KML to the top-level of the plugin
+		// If no parent name is specified, parent the new KML to the top-level of the plugin
 		parentContainer = this.ge_;
 	}
 	
@@ -352,7 +344,7 @@ ktree.GoogleEarth.prototype.removeKmlFeature = function(featureName) {
 /**
 *	Set the camera's fly-to speed
 *	@public
-*	@param {float} speed	The desired fly-to speed. Accepts a float from 0.0 to 5.0, inclusive.
+*	@param {number} speed	The desired fly-to speed. Accepts a float from 0.0 to 5.0, inclusive.
 */
 ktree.GoogleEarth.prototype.setFlyToSpeed = function(speed) {
 	if (!ktree.config.ENABLE_FLY_TO_SPEED) {
@@ -415,7 +407,15 @@ ktree.GoogleEarth.prototype.runKtxCommandsForObject_ = function(kmlObject, shoul
 		//var illustrationName = this.ktxCache_.illustrationForPlacemark(kmlObject.getName());
 		//this.createIllustrationClickHandler_(kmlObject, illustrationName);
 		//this.createClickHandler_(kmlObject, illustrationName);
-		this.installEventHandler_(kmlObject);
+		
+		// Sequoia
+		//this.numberHandler_(kmlObject);
+	}
+}
+
+ktree.GoogleEarth.prototype.update = function() {
+	if (this.clock_) {
+		this.clock_.increment({mins: 1})
 	}
 }
 
@@ -427,7 +427,7 @@ ktree.GoogleEarth.prototype.runKtxCommandsForObject_ = function(kmlObject, shoul
 *	@see {ktree.GoogleEarth#tryRetrievingKmlFeature_}
 *	@private
 *	@param {string} featureName				The name (ID) of the KmlFeature to retrieve
-*	@param {KmlContainer} rootContainer		Optional. The KmlContainer to use as the root of the search. If no argument is specified, the plugin root is used.
+*	@param {KmlContainer} [rootContainer]	Optional. The KmlContainer to use as the root of the search. If no argument is specified, the plugin root is used.
 *	@returns {KmlFeature}					The named KmlFeature. Guaranteed not be null.
 */
 ktree.GoogleEarth.prototype.retrieveKmlFeature_ = function(featureName, rootContainer) {
@@ -446,7 +446,7 @@ ktree.GoogleEarth.prototype.retrieveKmlFeature_ = function(featureName, rootCont
 *	@see {ktree.GoogleEarth#retrieveKmlFeature_}
 *	@private
 *	@param {string} featureName				The name (ID) of the KmlFeature to retrieve
-*	@param {KmlContainer} rootContainer		Optional. The KmlContainer to use as the root of the search. If no argument is 
+*	@param {KmlContainer} [rootContainer]	Optional. The KmlContainer to use as the root of the search. If no argument is 
 *											specified, the plugin root is used.
 *	@return {KmlFeature}					The named KmlFeature. May be null if no matching feature can be found.
 */
@@ -560,7 +560,7 @@ ktree.GoogleEarth.prototype.createIllustrationClickHandler_ = function(kmlObject
 /**
 *	
 */
-ktree.GoogleEarth.prototype.installEventHandler_ = function(kmlObject) {
+ktree.GoogleEarth.prototype.numberHandler_ = function(kmlObject) {
 	var target = this;
 	
 	// FIXME This is a bit ugly. Sam should probably be made a different case 
@@ -577,7 +577,7 @@ ktree.GoogleEarth.prototype.installEventHandler_ = function(kmlObject) {
 	
 	// Now we install a generic entry point into the event manager as a way
 	// of delegating responsibility for future events
-	google.earth.addEventListener(kmlObject, 'click', function(event) {
+	this.addEventListener(kmlObject, 'click', function(event) {
 		var result = null;
 		event.preventDefault();
 	
@@ -615,7 +615,7 @@ ktree.GoogleEarth.prototype.installEventHandler_ = function(kmlObject) {
 		
 		// If we haven't set the response at this point, we need to retrieve it from the event manager
 		if(!result) {
-			var result = target.eventManager_.handleEvent(kmlObject.getName(), target.getCurrentVerb());
+			result = target.eventManager_.handleEvent(kmlObject.getName(), target.getCurrentVerb());
 		}
 		
 		var balloon = target.ge_.createHtmlStringBalloon('');
@@ -631,7 +631,7 @@ ktree.GoogleEarth.prototype.installEventHandler_ = function(kmlObject) {
 *	the appropriate content from the server when the object is actually clicked.
 */
 /*
-ktree.GoogleEarth.prototype.installEventHandler_ = function(kmlObject) {
+ktree.GoogleEarth.prototype.numberHandler_ = function(kmlObject) {
 	var target = this;
 	google.earth.addEventListener(kmlObject, 'click', function(event) {
 		event.preventDefault();
@@ -683,8 +683,8 @@ ktree.GoogleEarth.prototype.kmlStringToObject_ = function(kmlString) {
 *	returns a reference to it
 *	@private
 *	@param {string} folderName		The string ID of the new KmlFolder
-*	@param {string} parentName		The string ID of the intended parent container. If null, the new folder is 
-*									added to the top-level of the plugin.
+*	@param {string} [parentName]	Optional. The string ID of the intended parent container. If 
+*									unspecified, the new folder is added to the top-level of the plugin.
 *	@return {KmlFolder}				A pointer to the created KmlFolder
 */
 ktree.GoogleEarth.prototype.createKmlFolder_ = function(folderName, parentName) {
@@ -704,13 +704,32 @@ ktree.GoogleEarth.prototype.createKmlFolder_ = function(folderName, parentName) 
 	return folder;
 }
 
+ktree.GoogleEarth.prototype.createPlacemark_ = function(placemarkName) {
+	this.placemark = this.ge_.createPlacemark(placemarkName);
+	
+	var icon = this.ge_.createIcon('');
+	icon.setHref('http://maps.google.com/mapfiles/kml/paddle/red-circle.png');
+	var style = this.ge_.createStyle('');
+	style.getIconStyle().setIcon(icon);
+	placemark.setStyleSelector(style);
+	
+	// Create point
+	var la = this.ge_.getView().copyAsLookAt(this.ge_.ALTITUDE_RELATIVE_TO_GROUND);
+	var point = this.ge_.createPoint('');
+	point.setLatitude(la.getLatitude());
+	point.setLongitude(la.getLongitude());
+	placemark.setGeometry(point);
+	
+	this.ge_.getFeatures().appendChild(placemark);
+}
+
 
 /**
 *	Returns whether the argument KML type is a container (e.g. a KmlDocument
 *	or a KmlFolder).
 *	@private
 *	@param {string} kmlType		The name of the KmlType to examine
-*	@return {bool}				Is this KmlType a container?
+*	@return {boolean}			Is this KmlType a container?
 */
 ktree.GoogleEarth.prototype.typeIsContainer_ = function(kmlType) {
 	return (kmlType == "KmlFolder" || kmlType == "KmlDocument");
@@ -721,7 +740,7 @@ ktree.GoogleEarth.prototype.typeIsContainer_ = function(kmlType) {
 *	Returns whether the argument KML type is an absract view
 *	@private
 *	@param {string} kmlType		The name of the KmlType to examine
-*	@return {bool}				Is this KmlType an abstract view?
+*	@return {boolean}			Is this KmlType an abstract view?
 */
 ktree.GoogleEarth.prototype.typeIsAbstractView_ = function(kmlType) {
 	return (kmlType == "KmlLookAt" || kmlType == "KmlCamera");
@@ -732,10 +751,16 @@ ktree.GoogleEarth.prototype.typeIsAbstractView_ = function(kmlType) {
 *	Returns whether the argument KML type is clickable
 *	@private
 *	@param {string} kmlType		The name of the KmlType to examine
-*	@return {bool}				Is this KmlType clickable?
+*	@return {boolean}			Is this KmlType clickable?
 */
 ktree.GoogleEarth.prototype.typeIsClickable_ = function(kmlType) {
 	return (kmlType == "KmlPlacemark");
+}
+
+ktree.GoogleEarth.prototype.unload = function() {
+	google.earth.removeEventListener(this.ge_.getWindow(), 'mousedown', this.mouseMinder_.mouseDownEventCallback);
+    google.earth.removeEventListener(this.ge_.getGlobe(), 'mousemove', this.mouseMinder_.mouseMoveEventCallback);		
+    google.earth.removeEventListener(this.ge_.getWindow(), 'mouseup', this.mouseMinder_.mouseUpEventCallback);
 }
 
 
@@ -779,7 +804,7 @@ ktree.GoogleEarth.prototype.moveCameraRelative = function() {
 
 /**
 *	@ignore
-*	@param {ktree.AnimationProvider | null} newAnimationProvider
+*	@param {ktree.AnimationProvider} [newAnimationProvider]
 */
 ktree.GoogleEarth.prototype.startAnimation = function(newAnimationProvider) {
 	if(!this.animationRunning_) {
@@ -827,7 +852,7 @@ ktree.GoogleEarth.prototype.stopAnimation = function(tickProvider) {
 
 /**
 *	@ignore
-*	@param {ktree.AnimationProvider} newAnimationProvider
+*	@param {ktree.AnimationProvider|Object} newAnimationProvider
 *	@private
 */
 ktree.GoogleEarth.prototype.setAnimationProvider = function(newAnimationProvider) {

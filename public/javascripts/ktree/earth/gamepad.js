@@ -2,6 +2,9 @@ goog.provide('ktree.earth.Gamepad');
 
 goog.require('ktree.config');
 
+/**
+*	@constructor
+*/
 ktree.earth.Gamepad = function(ge) {
 	// Pointer to the GE plugin
 	this.ge_ = ge;
@@ -62,7 +65,7 @@ ktree.earth.Gamepad = function(ge) {
 ktree.earth.Gamepad.prototype.createButton_ = function(name, x, y, width, height) {
 	var overlayMap = new goog.structs.Map();
 	
-	for (i = 0; i <= 2; i++) {
+	for (var i = 0; i <= 2; i++) {
 		var icon = this.ge_.createIcon('');
 		icon.setHref(ktree.config.URL_BASE + ktree.config.URL_COMPONENT_ICON_PATH + name + this.STATES[i] + '.png');
 		

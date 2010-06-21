@@ -53,5 +53,5 @@ end
   
 # Load KTX for the new scene if available
 if (@scene.has_kml?)
-  page.call 'kt.loadKml', @scene.path_to_kml, @scene.full_name
+  page.call 'kt.loadKmlForScene', @scene.path_to_kml, @scene.full_name
 end

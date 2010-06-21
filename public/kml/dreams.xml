@@ -71,7 +71,7 @@
           <scale>1.5</scale>
           <Icon>
             <href>http://localhost:3000/images/icons/sam-icon.png</href>
-            <ktx:href>http://ec2-184-72-52-139.us-west-1.compute.amazonaws.com/icons/sam-icon.png</ktx:href>
+            <ktx:href>http://ec2-184-72-52-139.us-west-1.compute.amazonaws.com/images/icons/sam-icon.png</ktx:href>
           </Icon>
         </IconStyle>
       </Style>

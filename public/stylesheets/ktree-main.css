@@ -2,6 +2,7 @@
 	http://localhost:3000/stylesheets/ktree-main.css?1270607370
 	http://localhost:3000/stylesheets/ktree-main.css?1270677087
 	http://localhost:3000/stylesheets/ktree-main.css?1270679840
+	http://localhost:3000/stylesheets/ktree-main.css?1270680213
 */
 
 /* @group Page Structure */
@@ -28,12 +29,23 @@ body {
 	font-size: 2.5em;
 }
 
+/* Thanks to Mike Rundle (@flyosity) for the sample CSS: http://pastie.org/947656 */
 #nav {
 	color: lightgoldenrodyellow;
-	font-size: 1.0em;
-	background: #055c93;
-	padding: 0.7em;
-	height: 1.5%;				/* TODO Provisional solution -- seems to yield a reasonable liquid vertical layout if height isn't too small */
+	border-top: 1px solid #96d1f8;
+	background: #3e779d;
+	background: -webkit-gradient(linear, left top, left bottom, from(#65a9d7), to(#3e779d));
+	background: -moz-linear-gradient(top,  #65a9d7,  #3e779d);
+	height: 18px;
+	padding: 0 10px;
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	font: bold 14px/18px "Lucida Grande", "Verdana", sans-serif;
+	color: rgba(255,255,255,.85);
+	text-decoration: none;
+	padding: 0.5em;
 }
 
 .content-container {		/* == colmask */

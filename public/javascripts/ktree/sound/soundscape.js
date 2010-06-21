@@ -35,8 +35,7 @@ ktree.Soundscape = function() {
 *	have been previously loaded; requests to fade in unloaded sounds will result in attempt
 *	to load them.
 *	@param {string} soundID			The ID string of the sound to fade
-*	@param {string} relativePath	Path to the sound file, relative to the public root
-*	@param {integer} fadeDuration	(Optional) The duration of the fade in milliseconds
+*	@param {Object} jsonParams		
 */
 ktree.Soundscape.prototype.fadeIn = function(soundID, jsonParams) {
 	var params = this.mergeParamsWithDefaults_(jsonParams);
@@ -80,7 +79,7 @@ ktree.Soundscape.prototype.fadeIn = function(soundID, jsonParams) {
 *	Fade out a specified sound over a specified period of time. Yields an error if the specified
 *	sound has not already been loaded.
 *	@param {string} soundID			The ID string of the sound to fade
-*	@param {integer} fadeDuration	(Optional) The duration of the fade in milliseconds
+*	@param {number} fadeDuration	(Optional) The duration of the fade in milliseconds
 */
 ktree.Soundscape.prototype.fadeOut = function(soundID, fadeDuration) {
 	var sound = soundManager.getSoundById(soundID);
@@ -131,7 +130,7 @@ ktree.Soundscape.prototype.fadeOut = function(soundID, fadeDuration) {
 *	the SoundManager is fully initialized. The getSound request will be delayed (for up to five seconds)
 *	until the SoundManager is ready to respond.
 *	@public
-*	@param {function} callback	The function that should be executed when the SoundManager is initialized.
+*	@param {Function} callback	The function that should be executed when the SoundManager is initialized.
 */
 ktree.Soundscape.prototype.whenReady = function(callback) {
 	if (soundManager.supported()) {
@@ -161,7 +160,7 @@ ktree.Soundscape.prototype.whenReady = function(callback) {
 *	directory. May return null if no sound could be matched to the ID.
 *	@private
 *	@param {string}		soundID		String identifier for the desired sound
-*	@param {string} relativePath	Path to the sound file, relative to ktree.sound.SOUND_ROOT
+*	@param {Object} params
 *	@return {SMSound} 	sound		May be null if no sound could be matched to the argument ID
 */
 ktree.Soundscape.prototype.getSound_ = function(soundID, params) {
@@ -216,11 +215,12 @@ ktree.Soundscape.prototype.mergeParamsWithDefaults_ = function(jsonParams) {
 *	server's default sound directory.
 *	@private
 *	@param {string}		soundID		ID string identifying the desired sound
-*	@return {SMSound} 	sound		The sound matching the argument ID string. May be null if no match is found.
+*	@param {number} [targetVolume]	Target volume for the sound
+*	@return {?SMSound} 	sound		The sound matching the argument ID string. May be null if no match is found.
 */
 ktree.Soundscape.prototype.findAndLoadSound_ = function(soundID, targetVolume) {
 	if (!targetVolume) {
-		targetVolume = ktree.sound.DEFAULT_TARGET_VOLUME;
+		targetVolume = ktree.sound.DEFAULT_VOLUME;
 	}
 	var music_url = goog.string.buildString(ktree.sound.MUSIC_DIR, soundID, '.mp3');
 	if (soundManager.canPlayURL(music_url)) {
@@ -259,24 +259,6 @@ ktree.Soundscape.onReady_ = function() {
 */
 ktree.Soundscape.disableSound_ = function() {
 	alert('TODO: Disable sound');
-}
-
-ktree.Soundscape.prototype.testButtons = function() {
-	var b1 = new goog.ui.Button('Test Fade Out');
-	b1.render(goog.dom.$('button-fade-out'));
-	goog.events.listen(b1, goog.ui.Component.EventType.ACTION, this.fadeOutTest, false, this);
-	
-	var b2 = new goog.ui.Button('Test Fade In');
-	b2.render(goog.dom.$('button-fade-in'));
-	goog.events.listen(b2, goog.ui.Component.EventType.ACTION, this.fadeInTest, false, this);
-}
-
-ktree.Soundscape.prototype.fadeOutTest = function() {
-	this.fadeOut('hidden-sky-free', 8000);
-}
-
-ktree.Soundscape.prototype.fadeInTest = function() {
-	this.fadeIn('desert-wind', 5000);
 }
 
 

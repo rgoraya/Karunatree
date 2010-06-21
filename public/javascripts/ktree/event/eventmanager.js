@@ -211,38 +211,10 @@ ktree.event.EventManager.prototype.storeBehaviorJson_ = function(objectLocator, 
 }
 
 
-ktree.event.EventManager.prototype.getDefaultBehavior_ = function(verb) {
+ktree.event.EventManager.prototype.getDefaultBehavior_ = function() {
 	var response = "<h2>Oops!</h2>\n<p>The server is taking an unusually long time to respond. Please try this action again in a moment...</p>";
 	var verbMap = new goog.structs.Map();
 	verbMap.set("look", response);
 	verbMap.set("interact", response);
 	return verbMap;
-}
-
-
-ktree.event.EventManager.prototype.foo = function() {
-	return 'bar';
-}
-
-/**
-*	@param {string} featureName
-*/
-ktree.event.EventManager.prototype.installEventHandlersForFeature = function(featureName) {
-	var defaultHandler = function(event) {
-		var lookEvent_ = function() {
-			var response = '<img width="768px" height="576px" src="images/illustrations/' + 'dreams' + '.jpg>';
-			return response;
-		};
-		
-		var interactEvent_ = function() {
-			
-		};
-		
-		event.preventDefault();
-		var verb = world.getCurrentVerb();
-		switch(verb) {
-			case "LOOK": 	return lookEvent_();
-			default: 		alert('Unexpected verb type');
-		}
-	};
 }

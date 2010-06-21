@@ -67,7 +67,7 @@ ktree.kml.KtxCache = function() {
 *	for later recall.
 *	@private
 *	@param {string} dataSourceName			A unique identifier for this XML data source
-*	@param {goog.ds.XmlDataSource} node		The XML node from which to begin walking
+*	@param {goog.ds.XmlDataSource|goog.ds.DataNode} node	The XML node from which to begin walking
 */
 ktree.kml.KtxCache.prototype.buildCacheForXmlDataSource = function(dataSourceName, node) {
 	ktree.debug.logInfo('KtxCache is building a cache for data source <' + dataSourceName + '>'); 
@@ -99,7 +99,7 @@ ktree.kml.KtxCache.prototype.buildCacheForXmlDataSource = function(dataSourceNam
 *	Retrieve the fly-to-speed specified for a particular view
 *	@public
 *	@param {string} viewId		A unique identifier for the requested view
-*	@returns {float}			The fly-to-speed for the specified view. May be null if no speed has been specified.
+*	@returns {number}			The fly-to-speed for the specified view. May be null if no speed has been specified.
 */
 ktree.kml.KtxCache.prototype.flyToSpeedForView = function(viewId) {
 	return parseFloat(this.viewCacheMap_.get(viewId));
@@ -110,22 +110,29 @@ ktree.kml.KtxCache.prototype.flyToSpeedForView = function(viewId) {
 *	Retrieve the name of the illustration corresponding to a particular placemark
 *	@public
 *	@param {string} placemarkName		The name of the requested placemark
-*	@returns {string}					The name of the illustration for the placemark. May be null if no illustration 
+*	@returns {?string}					The name of the illustration for the placemark. May be null if no illustration 
 *										has been specified.
 */
 ktree.kml.KtxCache.prototype.illustrationForPlacemark = function(placemarkName) {
-	return this.illustrationCacheMap_.get(placemarkName);
+	var illustration = this.illustrationCacheMap_.get(placemarkName);
+	if(goog.isString(illustration)) {
+		return illustration;
+	}
+	else {
+		ktree.debug.logError('KtxCache reports that it retrieved an unexpected result type (non-string) while trying to retrieve the illustration for a placemark.')
+		return null;
+	}
 }
 
 /**
-*	@returns {array} Names of features to appear for this scene; may be null.
+*	@returns {Array} Names of features to appear for this scene; may be null.
 */
 ktree.kml.KtxCache.prototype.featuresToAppearForScene = function(sceneName, subscene) {
 	return this.featuresToChangeVisibilityForScene_(this.appearCacheMap_, sceneName, subscene);
 }
 
 /**
-*	@returns {array} Names of features to hide for this scene; may be null
+*	@returns {Array} Names of features to hide for this scene; may be null
 */
 ktree.kml.KtxCache.prototype.featuresToHideForScene = function(sceneName, subscene) {
 	return this.featuresToChangeVisibilityForScene_(this.hideCacheMap_, sceneName, subscene);
@@ -152,7 +159,7 @@ ktree.kml.KtxCache.prototype.featuresToChangeVisibilityForScene_ = function(cach
 	var arrayForSubscene = null;
 	var mapForScene = cacheMap.get(sceneName);
 	if (mapForScene) {
-		var arrayForSubscene = mapForScene.get(subscene);
+		arrayForSubscene = mapForScene.get(subscene);
 	}
 	return arrayForSubscene;
 }
@@ -185,7 +192,7 @@ ktree.kml.KtxCache.prototype.shouldStepIntoNode_ = function(nodeDataName) {
 /**
 *	Cache KTX commands associated with a view node (if present)
 *	@private
-*	@param {goog.ds.XmlDataSource} node		The view node to examine
+*	@param {goog.ds.DataNode} node		The view node to examine
 */
 ktree.kml.KtxCache.prototype.cacheViewNode_ = function(node) {
 	var flyToSpeed = node.getChildNodeValue(ktree.kml.constants.FLY_TO_SPEED);
@@ -205,7 +212,7 @@ ktree.kml.KtxCache.prototype.cacheViewNode_ = function(node) {
 /**
 *	Cache KTX commands associated with a placemark node (if present)
 *	@private
-*	@param {goog.ds.XmlDataSource} node		The placemark node to examine
+*	@param {goog.ds.DataNode} node		The placemark node to examine
 */
 ktree.kml.KtxCache.prototype.cachePlacemarkNode_ = function(node) {
 	var illustration = node.getChildNodeValue(ktree.kml.constants.ILLUSTRATION);

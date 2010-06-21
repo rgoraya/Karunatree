@@ -1,3 +1,9 @@
+/* @override 
+	http://localhost:3000/stylesheets/ktree-earth.css?1270607344
+	http://localhost:3000/stylesheets/ktree-earth.css?1273362317
+	http://localhost:3000/stylesheets/ktree-earth.css?1273362671
+*/
+
 /* @group Story Typography */
 
 .two-column p, h3 {
@@ -50,9 +56,9 @@ embed {
 }
 
 .goog-splitpane-handle {
-	border-left: 1px solid gray;
-	border-right: 1px solid gray;
-	background: #ccc;
+	border-left: 1px solid #d5d5d5;
+	border-right: 1px solid #d5d5d5;
+	background: #e5e5e5;
 	position: absolute;
 }
 
@@ -93,3 +99,36 @@ in a two column layout  */
 	background: url(../images/ivorytile.gif) repeat;
 }						/* if all padding values are x, values should sum to 50% + x (I think) */
 
+#media-panel {
+	height: 50%;
+	border-top: 1px solid #b5b5b6;
+	background: #3e779d;
+	background: -webkit-gradient(linear, left top, left bottom, from(#c8c8ca), to(#b2b2b9));
+	background: -moz-linear-gradient(top,  #c8c8ca,  #b2b2b9);
+	padding: 0 10px;
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	color: #fffeff;
+}
+
+}
+
+#vertical-panel-divider {
+	background: red;
+}
+
+#control-panel {
+	height: 50%;
+	border-top: 1px solid #b5b5b6;
+	background: #3e779d;
+	background: -webkit-gradient(linear, left top, left bottom, from(#c8c8ca), to(#b2b2b9));
+	background: -moz-linear-gradient(top,  #c8c8ca,  #b2b2b9);
+	padding: 0 10px;
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	color: #fffeff;
+}

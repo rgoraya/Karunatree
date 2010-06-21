@@ -1,0 +1,57 @@
+- content_for :include_custom_stylesheet do
+  = stylesheet_link_tag "ktree-earth"
+  
+- content_for :include_custom_javascript_head do
+  %script{:type => "text/javascript"}
+    :plain
+      var CLOSURE_NO_DEPS = true;
+      var CLOSURE_BASE_PATH = "/"; //The path where calcdeps.py was run
+  = javascript_include_tag "closure/goog/base.js"
+  = javascript_include_tag "ktree/deps.js"
+  = javascript_include_tag "sm2/soundmanager2.js"
+  
+  %script{:type => "text/javascript", :src => "http://www.google.com/jsapi?key=#{REGISTRY[:api_key]}"}
+  %script{:type => "text/javascript", :src => "http://use.typekit.com/wsn0ttv.js"}
+  %script{:type => "text/javascript"}
+    :plain
+      goog.require('ktree.Core');
+      goog.require('goog.dom');
+      try{Typekit.load();}catch(e){}
+
+- content_for :include_custom_javascript_end do
+  %script{:type => "text/javascript"}
+    :plain
+      var kt = new ktree.Core();
+      if (#{!@character.saved_kml.blank?}) {
+        kt.restoreKml('#{@character.saved_kml.to_json}');
+      }
+      else if (#{@scene.has_kml?}) {
+        kt.sceneIsLoading('#{@scene.name}', '#{@scene.subscene}');
+        kt.loadKml('#{@scene.path_to_kml}', '#{@scene.full_name}');
+      }
+      if (#{@scene.has_sound}) {
+          kt.soundscape().whenReady(
+            function() {
+              if (#{@scene.has_soundtrack}) {
+                kt.soundscape().fadeIn('#{@scene.soundtrack}', #{Sound.find_by_name(@scene.soundtrack).to_json(:except => id)});
+              }
+              if (#{@scene.has_ambient_sound}) {
+                kt.soundscape().fadeIn('#{@scene.ambient_sound}', #{Sound.find_by_name(@scene.ambient_sound).to_json(:except => id)});
+              }
+            }
+          );
+      }
+
+.goog-splitpane-first-container#earth
+.goog-splitpane-second-container#story
+  - if (@scene.dropcap != 0)
+    #title
+      %h3 #{fancy_title}
+    %br
+  #script
+    %p #{@scene.script}
+  #nav_back{:style => "float:left; #{nav_back_display}"}
+    = button_to_remote "Back", :url => {:action => "back", :controller => "play"}
+  #nav_next{:style => "#{nav_next_display}"}
+    = button_to_remote "Next", :url => {:action => "next", :controller => "play"}
+.goog-splitpane-handle

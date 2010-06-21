@@ -8,8 +8,9 @@
     = javascript_include_tag "effects.js"
     = yield :include_custom_javascript_head
   
-  %body
+  %body{ :onUnload => "kt.unload();"}
     = render :partial => "shared/navigation"
+    = render :partial => "shared/toolbar"
     .content-container.two-column
       .goog-splitpane#splitter
         -if flash[:notice]

@@ -2,8 +2,10 @@ goog.provide('ktree.Core');
 
 goog.require('ktree.debug');
 goog.require('ktree.config');
-goog.require('ktree.Soundscape')
-goog.require('ktree.World');
+goog.require('ktree.engine.Sequoia');
+goog.require('ktree.ui.Toolbar');
+goog.require('ktree.Soundscape');
+goog.require('ktree.earth.Earth');
 goog.require('ktree.kml.KmlManager');
 
 goog.require('goog.dom');
@@ -27,17 +29,29 @@ goog.require('goog.ui.SplitPane.Orientation');
 *	from HTML to setup the JS portion of our system.
 * 	@constructor
 */
-ktree.Core = function() {
-	
+ktree.Core = function() {	
 	if(ktree.config.DEBUG_ON) {
 		ktree.debug.startDebugger();
 	}
 
-	this.world_ = new ktree.GoogleEarth('Main');
-	this.kmlManager_ = new ktree.kml.KmlManager(this.world_);
+	this.world_ = new ktree.earth.Earth();
+	
+	// FIX: KmlManager should not know about the internal model
+	this.kmlManager_ = new ktree.kml.KmlManager(this.world_.getModel());
 	
 	this.soundscape_ = new ktree.Soundscape();
 	
+	this.toolbar_ = new ktree.ui.Toolbar();
+	this.engine_ = new ktree.engine.Sequoia(this.world_.getModel(), this.kmlManager_, this.toolbar_);
+	
+	this.initializeSplitPaneViewport();
+}
+
+ktree.Core.prototype.getEngine = function() {
+	return this.engine_;
+}
+
+ktree.Core.prototype.initializeSplitPaneViewport = function() {
 	this.viewportSizeMonitor_ = new goog.dom.ViewportSizeMonitor();
 	goog.events.listen(this.viewportSizeMonitor_, goog.events.EventType.RESIZE, this.viewportResize_, false, this);
 	
@@ -66,7 +80,7 @@ ktree.Core.prototype.soundscape = function() {
 	return this.soundscape_;
 }
 
-ktree.Core.prototype.loadKml = function(uri, dsName) {
+ktree.Core.prototype.loadKmlForScene = function(dsName, uri) {
 	this.kmlManager_.findAndLoadKml(dsName, uri);
 }
 
@@ -76,4 +90,13 @@ ktree.Core.prototype.restoreKml = function(kmlString) {
 
 ktree.Core.prototype.sceneIsLoading = function(scene, subscene) {
 	this.kmlManager_.sceneIsLoading(scene, subscene);
+}
+
+ktree.Core.prototype.uriForSceneName = function(sceneName) {
+	// Improve
+	return goog.string.buildString('http://localhost:3000/kml/', sceneName.toLowerCase(), '.xml');
+}
+
+ktree.Core.prototype.unload = function() {
+	this.world_.unload();
 }

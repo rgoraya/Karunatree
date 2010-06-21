@@ -41,14 +41,14 @@ ktree.config.DEBUG_ON = (ktree.config.DEPLOYED) ? false : true;
 *		ALERT_ALL = output all debug messages to javascript alerts
 *		ALERT_WARNINGS = output debug messages of level 'warning' and above to javascript alerts
 */
-ktree.config.DEBUG_OUTPUT = ktree.config.DEBUG_OUTPUT_ALERT_WARNINGS;
+ktree.config.DEBUG_OUTPUT = ktree.config.DEBUG_OUTPUT_CONSOLE;
 
 
 /**
 *	If false, all ktx:flyToSpeed commands are ignored, and the camera
 *	moves between positions at its maximum speed.
 */
-ktree.config.ENABLE_FLY_TO_SPEED = (ktree.config.DEPLOYED) ? true : false;
+ktree.config.ENABLE_FLY_TO_SPEED = (ktree.config.DEPLOYED) ? true : true;
 
 /**
 *	Turn sound on/off. This doesn't work yet.
@@ -70,6 +70,8 @@ ktree.config.ENABLE_SERIALIZATION = false;
 
 ktree.config.URL_BASE = (ktree.config.DEPLOYED) ? "http://ec2-184-72-52-139.us-west-1.compute.amazonaws.com" : "http://localhost:3000"
 
+ktree.config.URL_COMPONENT_KML_PATH = "/kml/"
+
 ktree.config.URL_COMPONENT_ICON_PATH = "/images/icons/"
 
 ktree.config.URL_COMPONENT_SAVE_KML_TO_SERVER = "/play/save"
@@ -82,16 +84,28 @@ ktree.config.URL_COMPONENT_REQUEST_SCENE = "/play/request_scene"
 
 ktree.config.URL_COMPONENT_BIND_BEHAVIOR = "/characters/bind_behavior"
 
+ktree.config.URL_KML_PATH = ktree.config.URL_BASE + ktree.config.URL_COMPONENT_KML_PATH;
+
+
+
+/***********************************
+ *	  GOOGLE EARTH CONFIGURATION
+ ***********************************/
+
+ktree.config.GE_PLUGIN_ROOT_FOLDER = "KarunaTree"
+
+/**
+ *	Maximum amount of time the system will wait for the GE API to initialize before assuming
+ *	that something has gone wrong. Expressed in msec.
+ */
+ktree.config.GE_API_INIT_TIMEOUT = 20000;
+
 
 
 /**********************************
 *	 EXTERNAL API CONFIGURATION
 ***********************************/
-/**
-*	Maximum amount of time the system will wait for the GE API to initialize before assuming
-*	that something has gone wrong. Expressed in msec.
-*/
-ktree.config.GE_API_INIT_TIMEOUT = 20000;
+
 
 /**
 *	Maximum amount of time the system will wait for the SoundManager2 API to initialize before 

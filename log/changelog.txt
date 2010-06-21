@@ -1,3 +1,17 @@
+** Version 0.7d1 **
+Begun: 5.3.10
+Committed 5.6.10
+Corresponding SVN Revisions: 49
+
+* Added the beginnings of the Sequoia engine
+* Revamped launch code to transfer control to Sequoia rather than reading Scenes off the server
+* Added an initial Sumatra KML file
+* Added preliminary support for Growl-style notifications
+* Updated dependency files to be consistent with new version of Closure's calcdeps.py
+* Assorted bug fixes and JSDoc tweaks needed to compile successfully with Closure
+* Added a stub Toolbar using goog.ui utilities.
+
+
 ** Version 0.6.2d2 **
 Begun: 4.8.10
 Committed 4.8.10
@@ -5,6 +19,7 @@ Corresponding SVN Revisions: 48
 
 * Revamped ktree.debug to allow for selection of multiple debug output displays; console, external window, and javascript alerts are all now possible
 * ktree.debug now degrades smoothly if it was configured for console output but Firebug is not available
+* Fixed post-deployment Capistrano script that creates links from shared/config to the current release directory
 * KarunaTree now compatible with Safari!
 * Added a 'Restart' link to the storybook view; allows user to reset his/her character to the start of the chapter without accessing having to access the MySQL database
 * Removed the symbolic link to the closure library from the /public/javascripts/closure directory. Directions for creating this link after checkout are now included in a README file.

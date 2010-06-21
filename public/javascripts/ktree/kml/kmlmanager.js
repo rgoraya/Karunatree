@@ -63,10 +63,14 @@ ktree.kml.KmlManager = function(world) {
 	this.ktxCache_ = new ktree.kml.KtxCache();
 	
 	this.world_.installKtxCache(this.ktxCache_);
+	//this.findAndLoadKml('Clock', goog.string.buildString(ktree.config.URL_KML_PATH, 'clock.xml'));
 }
 
 ktree.kml.KmlManager.prototype.sceneIsLoading = function(sceneName, subscene) {
 	this.world_.sceneIsLoading(sceneName, subscene);
+}
+
+ktree.kml.KmlManager.prototype.loadConfigurationKml = function() {
 }
 
 
@@ -132,7 +136,7 @@ ktree.kml.KmlManager.prototype.loadKmlFromUri_ = function(datasourceName, uri) {
 	conditionalDelay.onSuccess = function() {
 		ktree.debug.logInfo('KML XmlHttpDataSource <' + datasourceName + '> successfully created from URI <' + uri + '>');
 		target.dm_.addDataSource(dataSource);
-		target.cacheKtxCommands_(datasourceName, dataSource, "Chapter 1");
+		target.cacheKtxCommands_(datasourceName, dataSource);
 	}
 	conditionalDelay.start(100, 5000);
 }
@@ -147,10 +151,10 @@ ktree.kml.KmlManager.prototype.loadKmlFromUri_ = function(datasourceName, uri) {
 *	@private
 *	@param {string} dataSourceName				A unique identifier for the KML data source being processed
 *	@param {goog.ds.XmlDataSource} dataSource 	The KML data source to extract KTX commands from
-*	@param {string} parentName					Optional. An identifier for the KML data source to which the
+*	@param {string} [parentName]				Optional. An identifier for the KML data source to which the
 *												argument data source should be parented
 */
-ktree.kml.KmlManager.prototype.cacheKtxCommands_ = function(dataSourceName, dataSource, parentName) {	
+ktree.kml.KmlManager.prototype.cacheKtxCommands_ = function(dataSourceName, dataSource) {	
 	ktree.debug.logGroupHidden('KmlManager is caching KTX commands from KML data source <' + dataSourceName + '>...');
 	ktree.debug.logElement(dataSource.getElement());
 	this.ktxCache_.buildCacheForXmlDataSource(dataSourceName, dataSource);
@@ -158,10 +162,10 @@ ktree.kml.KmlManager.prototype.cacheKtxCommands_ = function(dataSourceName, data
 	ktree.debug.logGroupEnd();
 	
 	if(this.world_.apiReady()) {
-		this.sendKmlToWorld_(kmlString, parentName);
+		this.sendKmlToWorld_(kmlString);
 	}
 	else {
-		this.delayedSendKmlToWorld_(kmlString, parentName);
+		this.delayedSendKmlToWorld_(kmlString);
 	}
 }
 
@@ -173,7 +177,7 @@ ktree.kml.KmlManager.prototype.cacheKtxCommands_ = function(dataSourceName, data
 *	@see {ktree.kml.KmlManager#delayedSendKmlToWorld_}
 *	@private
 *	@param {string} kmlString				The string of KML to transmit to the World
-*	@param {string} parentName				Optional. An identifier for the KML node to which the
+*	@param {string} [parentName]			Optional. An identifier for the KML node to which the
 *											argument KML data should be parented
 */
 ktree.kml.KmlManager.prototype.sendKmlToWorld_ = function(kmlString, parentName) {
@@ -186,7 +190,7 @@ ktree.kml.KmlManager.prototype.sendKmlToWorld_ = function(kmlString, parentName)
 *	@see {ktree.ktx.KtxInterpreter#sendKmlToWorld_}
 *	@private
 *	@param {string} kmlString				The string of KML to transmit to the World
-*	@param {string} parentName				Optional. An identifier for the KML node to which the
+*	@param {string} [parentName]			Optional. An identifier for the KML node to which the
 *											argument KML data should be parented
 */
 ktree.kml.KmlManager.prototype.delayedSendKmlToWorld_ = function(kmlString, parentName) {
