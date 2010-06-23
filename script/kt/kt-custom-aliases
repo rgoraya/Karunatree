@@ -1,0 +1,7 @@
+# Closure compiler aliases
+alias ls='ls -G'
+alias calcdeps='python $CLOSURE_LIBRARY_PATH/bin/calcdeps.py'
+
+# Karunatree/Closure aliases
+alias calcdeps-gc="python $CLOSURE_LIBRARY_PATH/bin/calcdeps.py -p $CLOSURE_LIBRARY_PATH/goog -o deps > $KT_PATH/public/javascripts/closure/deps/deps.js"
+alias calcdeps-ktree="python $CLOSURE_LIBRARY_PATH/bin/calcdeps.py -d $KT_PATH/public/javascripts/closure/goog -p $KT_PATH/public/javascripts/ktree -o deps > $KT_PATH/public/javascripts/closure/deps/ktree_deps.js"

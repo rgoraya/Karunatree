@@ -1,0 +1,9 @@
+# Closure environment variables
+#
+# Change <CLOSURE-ROOT> to the path of your closure root directory
+export CLOSURE_LIBRARY_PATH="<CLOSURE-ROOT>/closure/closure"
+
+#Karunatree environment variables
+#
+# Change <KT-ROOT> to the path of your Karunatree codebase
+export KT_PATH="<KT-ROOT>"
