@@ -1,11 +1,5 @@
-%h2 New Seedling
-- form_for @seedling, :html => { :multipart => true } do |f|
-	= f.error_messages
-	%p
-		= f.text_field :title
-	%p
-		= f.text_area :description
-	%p
-		= f.file_field :picture
-	%p
-		= f.submit 'Create'
+- title "New Seedling"
+
+= render :partial => 'form'
+
+%p= link_to "Back to List", seedlings_path

@@ -1,0 +1,28 @@
+- form_for @seedling do |f|
+  = f.error_messages
+  %p
+    = f.label :user_id
+    %br
+    = f.text_field :user_id
+  %p
+    = f.label :title
+    %br
+    = f.text_field :title
+  %p
+    = f.label :description
+    %br
+    = f.text_area :description
+  %p
+    = f.label :lat
+    %br
+    = f.text_field :lat
+  %p
+    = f.label :lon
+    %br
+    = f.text_field :lon
+  %p
+    = f.label :alt
+    %br
+    = f.text_field :alt
+  %p
+    = f.submit "Submit"

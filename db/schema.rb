@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100319210321) do
+ActiveRecord::Schema.define(:version => 20100715183339) do
 
   create_table "behavior_bindings", :force => true do |t|
     t.string   "locator",      :null => false
@@ -73,14 +73,11 @@ ActiveRecord::Schema.define(:version => 20100319210321) do
 
   create_table "seedlings", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title",                :default => "", :null => false
-    t.string   "description",          :default => "", :null => false
-    t.integer  "votes",                :default => 0,  :null => false
-    t.integer  "transplanted_count",   :default => 0,  :null => false
-    t.string   "picture_file_name"
-    t.string   "picture_content_type"
-    t.integer  "picture_file_size"
-    t.datetime "picture_updated_at"
+    t.string   "title",                                     :null => false
+    t.text     "description"
+    t.decimal  "lat",         :precision => 9, :scale => 6, :null => false
+    t.decimal  "lon",         :precision => 9, :scale => 6, :null => false
+    t.integer  "alt"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,12 +1,23 @@
-%h2 Listing Seedlings
+- title "Seedlings"
 
-#new_seedling{:style => 'clear:both;'}
-	%a{:href => new_seedling_path} new seedling
+%table
+  %tr
+    %th User
+    %th Title
+    %th Description
+    %th Lat
+    %th Lon
+    %th Alt
+  - for seedling in @seedlings
+    %tr
+      %td= h seedling.user_id
+      %td= h seedling.title
+      %td= h seedling.description
+      %td= h seedling.lat
+      %td= h seedling.lon
+      %td= h seedling.alt
+      %td= link_to 'Show', seedling
+      %td= link_to 'Edit', edit_seedling_path(seedling)
+      %td= link_to 'Destroy', seedling, :confirm => 'Are you sure?', :method => :delete
 
-#seedling_list
-	- @seedlings.each do |seedling|
-		.seedling
-			%p
-				by #{link_to(seedling.user.username, user_path(seedling.user)) if seedling.user}
-			%a{:href => seedling_path(seedling)}
-				%img{:src => seedling.picture.url(:thumb)}
+%p= link_to "New Seedling", new_seedling_path

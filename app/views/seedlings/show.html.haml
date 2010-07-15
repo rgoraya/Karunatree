@@ -1,17 +1,27 @@
-%script{:language => "Javascript", :src => "/javascripts/ajax/update_picture.js"}
+- title "Seedling"
 
-%h2 #{@seedling.title} by #{link_to(@seedling.user.username, user_path(@seedling.user)) if @seedling.user}
 %p
-	%b
-		Description:
-	= @seedling.description
+  %strong User:
+  =h @seedling.user_id
+%p
+  %strong Title:
+  =h @seedling.title
+%p
+  %strong Description:
+  =h @seedling.description
+%p
+  %strong Lat:
+  =h @seedling.lat
+%p
+  %strong Lon:
+  =h @seedling.lon
+%p
+  %strong Alt:
+  =h @seedling.alt
 
-%center
-	#picture_sizes
-		#{link_to "Thumb", seedling_path(@seedling, :main_image => :thumb)}
-		#{link_to "Medium", seedling_path(@seedling, :main_image => :medium)}
-		#{link_to "Large", seedling_path(@seedling, :main_image => :large)}
-		#{link_to "Regular", seedling_path(@seedling)}
-
-	#picture
-		#{render 'picture'}
+%p
+  = link_to "Edit", edit_seedling_path(@seedling)
+  |
+  = link_to "Destroy", @seedling, :confirm => 'Are you sure?', :method => :delete
+  |
+  = link_to "View All", seedlings_path
