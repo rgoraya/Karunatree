@@ -1,0 +1,59 @@
+%script{:type => "text/javascript", :src => "http://www.google.com/jsapi?key=ABQIAAAAkTy_IFxK_2zZFslisZ2PwBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxTg80_k6JMQAGXUyaHQIuTdC0uomg"} 
+%script{:src => "http://earth-api-utility-library.googlecode.com/svn/trunk/extensions/dist/extensions.pack.js"}
+
+%script{:type => "text/javascript"}
+  var ge;
+  var gex;
+  google.load("earth", "1.x");
+  google.load("maps", "2.x");
+
+  
+  function init(){
+  google.earth.createInstance('map3d', initCB, failureCB);
+  
+  }
+  function initCB(instance){
+  ge = instance;
+  ge.getWindow().setVisibility(true);
+  gex = new GEarthExtensions(ge);
+  //gex.dom.addPointPlacemark(gex.util.getLookAt(), { name: 'Hello World!' });
+  ge.getNavigationControl().setVisibility(ge.VISIBILITY_SHOW);
+  ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true);
+  
+  // Icon Style for Seedling placemarks
+  var icon = ge.createIcon('');
+  icon.setHref('http://karunatree.com/seedgraphics/seedling.png');
+  var style = ge.createStyle('');
+  style.getIconStyle().setIcon(icon);
+  
+  var seeds = #{@seedlings.to_json};
+  for (var i = 0; i < seeds.length; i++){
+
+  placemark = ge.createPlacemark('');
+  var point = ge.createPoint('');
+  placemark.setStyleSelector(style);
+  point.setLatitude(seeds[i].seedling.lat);
+  point.setLongitude(seeds[i].seedling.lon);
+  placemark.setName(seeds[i].seedling.title);
+  
+  
+  function composeHref(link, id)
+  {
+  linkhref= 'seedlings/' + id + '/details.html' ;
+  link.href=linkhref;
+  return true; //IMPORTANT LINE
+  }
+  //'<a href="#" onclick="return composeHref(this, seeds[i].seedling.id);">Details</a>'
+  placemark.setDescription(seeds[i].seedling.description + '\n');
+  point.setAltitudeMode(13);
+  placemark.setGeometry(point);
+  ge.getFeatures().appendChild(placemark);
+
+  }
+  }
+  function failureCB(errorCode){
+  }
+
+  google.setOnLoadCallback(init);
+
+%div{:id => "map3d", :style => "height: 600px; width: 800px;"}

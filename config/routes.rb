@@ -1,6 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
 
+
   map.resources :seedlings
+  map.connect 'seedlings/:id/details', :controller=>'seedlings', :action=>'details'
 
   map.resource :user_session
   map.login "login", :controller => "user_sessions", :action => "new"

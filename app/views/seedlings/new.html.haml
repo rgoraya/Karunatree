@@ -1,5 +1,9 @@
-- title "New Seedling"
+- content_for(:include_custom_stylesheet) do
+  = stylesheet_link_tag "ktree-forms"
+  
+- title "New Seedling" 
 
 = render :partial => 'form'
 
 %p= link_to "Back to List", seedlings_path
+

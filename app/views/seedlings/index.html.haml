@@ -1,5 +1,4 @@
 - title "Seedlings"
-
 %table
   %tr
     %th User
@@ -8,6 +7,7 @@
     %th Lat
     %th Lon
     %th Alt
+
   - for seedling in @seedlings
     %tr
       %td= h seedling.user_id
@@ -19,5 +19,11 @@
       %td= link_to 'Show', seedling
       %td= link_to 'Edit', edit_seedling_path(seedling)
       %td= link_to 'Destroy', seedling, :confirm => 'Are you sure?', :method => :delete
-
+   
 %p= link_to "New Seedling", new_seedling_path
+//#{@seedlings.length}
+//#{@seedlings[0].title}
+
+//Google Earth Dispaly 
+
+= render :partial => 'index'

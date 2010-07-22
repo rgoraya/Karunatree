@@ -1,10 +1,28 @@
 class SeedlingsController < ApplicationController
   def index
-    @seedlings = Seedling.all
+    @seedlings = Seedling.find(:all)
+    respond_to do |format|
+      format.html {}
+      format.xml{
+        render :text=>@seedling.to_xml(:only=>[:title, :lat,:lon,:description], :root=>"name")
+      }
+      format.json{
+        render :text=>@seedling.to_json
+      }
+    end
   end
   
   def show
     @seedling = Seedling.find(params[:id])
+    respond_to do |format|
+      format.html {}
+      format.xml{
+        render :text=>@seedling.to_xml(:only=>[:title, :lat,:lon,:description], :root=>"name")
+      }
+      format.json{
+        render :text=>@seedling.to_json
+      }
+    end
   end
   
   def new
@@ -40,5 +58,10 @@ class SeedlingsController < ApplicationController
     @seedling.destroy
     flash[:notice] = "Successfully destroyed seedling."
     redirect_to seedlings_url
+  end
+  
+  def details
+    @seedling = Seedling.find(params[:id])
+    #redirect_to "/seedlings/#{@seedling.id}/details"
   end
 end

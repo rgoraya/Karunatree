@@ -1,28 +1,94 @@
-- form_for @seedling do |f|
-  = f.error_messages
-  %p
-    = f.label :user_id
-    %br
-    = f.text_field :user_id
-  %p
-    = f.label :title
-    %br
-    = f.text_field :title
-  %p
-    = f.label :description
-    %br
-    = f.text_area :description
-  %p
-    = f.label :lat
-    %br
-    = f.text_field :lat
-  %p
-    = f.label :lon
-    %br
-    = f.text_field :lon
-  %p
-    = f.label :alt
-    %br
-    = f.text_field :alt
-  %p
-    = f.submit "Submit"
+
+- form_for @seedling do |form|
+  %fieldset
+    %legend Please enter seedling details...
+    = error_messages_for "seedling"
+    .form-row
+      %label{:for => "user"} User &nbsp;
+      = form.text_field :user_id, :size => Seedling::USER_SIZE, :maxlength => Seedling::USER_SIZE
+    .form-row
+      %label{:for => "title"} Title &nbsp;
+      = form.text_field :title, :size => Seedling::TITLE_SIZE, :maxlength => Seedling::TITLE_MAX_LENGTH  
+    .form-row
+      %label{:for => "description"} Description &nbsp;
+      = form.text_area :description, :size => Seedling::DESCRIPTION_SIZE, :maxlength => Seedling::DESCRIPTION_MAX_LENGTH
+    .form-row
+      %label{:for => "latitude"} Latitude(Lat) &nbsp;
+      = form.text_field :lat, :size => Seedling::LAT_SIZE, :maxlength => Seedling::LAT_SIZE  
+    .form-row
+      %label{:for => "lon"} Longitude(Lon) &nbsp;
+      = form.text_field :lon, :size => Seedling::LON_SIZE, :maxlength => Seedling::LON_SIZE 
+    .form-row
+      %label{:for => "alt"} Altitude(Alt) &nbsp;
+      = form.text_field :alt, :size => Seedling::ALT_SIZE, :maxlength => Seedling::ALT_SIZE  
+      
+    .form-row
+      = form.submit "Submit", :class => "submit"
+
+      %div{:id => "map3d", :style => "height: 600px; width: 800px;"}
+
+//Google Earth Dispaly 
+%script{:type => "text/javascript", :src => "http://www.google.com/jsapi?key=ABQIAAAAkTy_IFxK_2zZFslisZ2PwBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxTg80_k6JMQAGXUyaHQIuTdC0uomg"} 
+//%script{:src => "http://earth-api-utility-library.googlecode.com/svn/trunk/extensions/dist/extensions.pack.js"}
+
+%script{:type => "text/javascript"}
+  var ge;
+  var globePlacemark = null;
+  var terrainPlacemark = null;
+  var buildingsPlacemark = null;
+  google.load("earth", "1.x");
+  google.load("maps", "2.x");
+  function init(){
+  google.earth.createInstance('map3d', initCB, failureCB);
+  }
+
+  function initCB(instance){
+  ge = instance;
+  ge.getWindow().setVisibility(true);
+  ge.getNavigationControl().setVisibility(ge.VISIBILITY_SHOW);
+  ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true);
+  
+  google.earth.addEventListener(ge.getGlobe(), 'click', function(evt) {
+  if (evt.getButton() != 0)
+  return;
+    
+  // remove old placemarks
+  if (globePlacemark)
+  ge.getFeatures().removeChild(globePlacemark);
+
+    
+  // hit test and create new placemarks
+  var hitTestResult = ge.getView().hitTest(evt.getClientX(), ge.UNITS_PIXELS, evt.getClientY(), ge.UNITS_PIXELS, ge.HIT_TEST_GLOBE);
+  if (hitTestResult) {
+  globePlacemark = makePlacemark(hitTestResult.getLatitude(), hitTestResult.getLongitude(),
+  hitTestResult.getAltitude(), ge.ALTITUDE_ABSOLUTE, 'S');
+  globePlacemark.setDescription('Latitude: ' + hitTestResult.getLatitude() + '\n' + 'Longitude: ' + hitTestResult.getLongitude()
+  + '\n' + 'Altitude: ' + hitTestResult.getAltitude());
+  ge.getFeatures().appendChild(globePlacemark);
+  }
+  });
+
+  function makePlacemark(lat, lng, alt, altMode, iconStr) {
+  var icon = ge.createIcon('');
+  icon.setHref('http://maps.google.com/mapfiles/kml/paddle/' + iconStr + '.png');
+    
+  var style = ge.createStyle('');
+  style.getIconStyle().setIcon(icon);
+  style.getIconStyle().getHotSpot().set(0.5, ge.UNITS_FRACTION, 0, ge.UNITS_FRACTION);
+    
+  var pt = ge.createPoint('');
+  pt.set(lat, lng, alt, altMode, false, false);
+  
+  var pm = ge.createPlacemark('');
+  pm.setGeometry(pt);
+  pm.setStyleSelector(style);
+  return pm;
+  } 
+
+  }
+  function failureCB(errorCode){
+  }
+  
+  google.setOnLoadCallback(init);
+  google.earth.save();
+  
