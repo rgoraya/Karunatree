@@ -1,3 +1,17 @@
+** Version 0.8d1 **
+Committed 7.26.10
+* Revamped Paperclip support for file uploads
+* Removed previous Paperclip post-processing files (tiff_formatter.rb)
+* Uploaded images integrate with scaffolded Seedling views
+
+** Version 0.7.1d1 **
+Committed 7.15.10
+SVN Rev: 51
+* Rewrote Seedlings model for Sequoia, overwriting prior ImageMagick implementation with simplified scaffolding.
+* (Temporarily) removed Seedling support for media files
+* Added a Location model to represent GPS coordinates of Seedlings
+* Re-generated scaffolded views for Seedlings
+
 ** Version 0.7d1 **
 Begun: 5.3.10
 Committed 6.21.10

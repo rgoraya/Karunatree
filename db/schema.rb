@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100715183339) do
+ActiveRecord::Schema.define(:version => 20100726162931) do
 
   create_table "behavior_bindings", :force => true do |t|
     t.string   "locator",      :null => false
@@ -73,13 +73,17 @@ ActiveRecord::Schema.define(:version => 20100715183339) do
 
   create_table "seedlings", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title",                                     :null => false
+    t.string   "title",                                              :null => false
     t.text     "description"
-    t.decimal  "lat",         :precision => 9, :scale => 6, :null => false
-    t.decimal  "lon",         :precision => 9, :scale => 6, :null => false
+    t.decimal  "lat",                  :precision => 9, :scale => 6, :null => false
+    t.decimal  "lon",                  :precision => 9, :scale => 6, :null => false
     t.integer  "alt"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "project_file_name"
+    t.string   "project_content_type"
+    t.integer  "project_file_size"
+    t.datetime "project_updated_at"
   end
 
   create_table "sessions", :force => true do |t|

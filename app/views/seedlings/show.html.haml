@@ -17,7 +17,12 @@
   =h @seedling.lon
 %p
   %strong Alt:
-  =h @seedling.alt
+  =h @seedling.alt 
+%p
+  %strong Project:
+  =h @seedling.project.url(:medium)
+%p
+  = image_tag @seedling.project.url(:medium)
 
 
 %p
@@ -28,4 +33,5 @@
   = link_to "View All", seedlings_path
 
 = render :partial => 'show'
+
 

@@ -3,6 +3,9 @@ class Seedling < ActiveRecord::Base
   
   belongs_to :user
   
+  has_attached_file :project, :styles => { :thumbnail => "100x100>", :small => "240x240>", :medium  => "500x500>", :large => "1024x1024>" },
+                    :whiny_thumbnails => true
+                      
   composed_of :location,
     :class_name => "Location",
     :mapping => 

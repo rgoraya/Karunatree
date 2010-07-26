@@ -1,5 +1,5 @@
 
-- form_for @seedling do |form|
+- form_for @seedling, :html => { :multipart  => true } do |form|
   %fieldset
     %legend Please enter seedling details...
     = error_messages_for "seedling"
@@ -20,7 +20,10 @@
       = form.text_field :lon, :size => Seedling::LON_SIZE, :maxlength => Seedling::LON_SIZE 
     .form-row
       %label{:for => "alt"} Altitude(Alt) &nbsp;
-      = form.text_field :alt, :size => Seedling::ALT_SIZE, :maxlength => Seedling::ALT_SIZE  
+      = form.text_field :alt, :size => Seedling::ALT_SIZE, :maxlength => Seedling::ALT_SIZE
+    .form-row
+      %label{ :for => "project" } Project &nbsp;
+      = form.file_field :project
       
     .form-row
       = form.submit "Submit", :class => "submit"
