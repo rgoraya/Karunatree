@@ -1,3 +1,10 @@
+** Version 0.8d2 **
+Committed 7.29.10
+* Customized routing and save path for project uploads via Paperclip
+* Added an audio_message attachment to the Seedling model for associating audio with projects
+* Added the friendly_id gem to generate URL slugs from model attributes
+* Seedling model now uses friendly_id-based URLs
+
 ** Version 0.8d1 **
 Committed 7.26.10
 * Revamped Paperclip support for file uploads

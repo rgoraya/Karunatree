@@ -60,8 +60,22 @@ class SeedlingsController < ApplicationController
     redirect_to seedlings_url
   end
   
+  def project
+    @seedling = Seedling.find(params[:id])
+    style = params[:style] ? params[:style] : 'original'
+    send_file REGISTRY[:data_dir]+"/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/project/'+@seedling.id.to_s()+'-'+style+'.jpg',
+              :disposition => 'inline'
+  end
+  
+  def audio_message
+    @seedling = Seedling.find(params[:id])
+    send_file REGISTRY[:data_dir]+"/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/'+@seedling.id.to_s()+'-audio-message.wma',
+              :disposition => 'inline'
+  end
+  
   def details
     @seedling = Seedling.find(params[:id])
     #redirect_to "/seedlings/#{@seedling.id}/details"
   end
+  
 end

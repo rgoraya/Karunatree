@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100726162931) do
+ActiveRecord::Schema.define(:version => 20100729220214) do
 
   create_table "behavior_bindings", :force => true do |t|
     t.string   "locator",      :null => false
@@ -73,10 +73,10 @@ ActiveRecord::Schema.define(:version => 20100726162931) do
 
   create_table "seedlings", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title",                                              :null => false
+    t.string   "title",                                                    :null => false
     t.text     "description"
-    t.decimal  "lat",                  :precision => 9, :scale => 6, :null => false
-    t.decimal  "lon",                  :precision => 9, :scale => 6, :null => false
+    t.decimal  "lat",                        :precision => 9, :scale => 6, :null => false
+    t.decimal  "lon",                        :precision => 9, :scale => 6, :null => false
     t.integer  "alt"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -84,6 +84,10 @@ ActiveRecord::Schema.define(:version => 20100726162931) do
     t.string   "project_content_type"
     t.integer  "project_file_size"
     t.datetime "project_updated_at"
+    t.string   "audio_message_file_name"
+    t.string   "audio_message_content_type"
+    t.integer  "audio_message_file_size"
+    t.datetime "audio_message_updated_at"
   end
 
   create_table "sessions", :force => true do |t|
@@ -95,6 +99,18 @@ ActiveRecord::Schema.define(:version => 20100726162931) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "slugs", :force => true do |t|
+    t.string   "name"
+    t.integer  "sluggable_id"
+    t.integer  "sequence",                     :default => 1, :null => false
+    t.string   "sluggable_type", :limit => 40
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "slugs", ["name", "sluggable_type", "sequence", "scope"], :name => "index_slugs_on_n_s_s_and_s", :unique => true
+  add_index "slugs", ["sluggable_id"], :name => "index_slugs_on_sluggable_id"
 
   create_table "sounds", :force => true do |t|
     t.string   "name",                                  :null => false

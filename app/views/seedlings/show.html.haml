@@ -19,6 +19,9 @@
   %strong Alt:
   =h @seedling.alt 
 %p
+  %strong Message:
+  %audio{ :src => @seedling.audio_message.url, :controls => true}
+%p
   %strong Project:
   =h @seedling.project.url(:medium)
 %p

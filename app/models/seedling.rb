@@ -3,8 +3,18 @@ class Seedling < ActiveRecord::Base
   
   belongs_to :user
   
+  has_friendly_id :title, :use_slug => true,
+                          :approximate_ascii => true,
+                          :max_length => 50
+  
   has_attached_file :project, :styles => { :thumbnail => "100x100>", :small => "240x240>", :medium  => "500x500>", :large => "1024x1024>" },
-                    :whiny_thumbnails => true
+                    :whiny_thumbnails => true,
+                    :path => REGISTRY[:data_dir]+"/:class/:id-:seedling_slug/project/:id-:style.:extension",
+                    :url => "/:class/:seedling_slug/project?style=:style"
+                    
+  has_attached_file :audio_message,
+                    :path => REGISTRY[:data_dir]+"/:class/:id-:seedling_slug/:id-audio-message.:extension",
+                    :url => "/:class/:seedling_slug/audio-message"
                       
   composed_of :location,
     :class_name => "Location",
@@ -14,6 +24,7 @@ class Seedling < ActiveRecord::Base
         %w[ lon   lon ],
         %w[ alt   alt ]
       ]
+      
       
   # Max and min lengths for all fields    
   TITLE_MIN_LENGTH = 1

@@ -24,6 +24,9 @@
     .form-row
       %label{ :for => "project" } Project &nbsp;
       = form.file_field :project
+    .form-row
+      %label{ :for => "audio_message" } Audio Message &nbsp;
+      = form.file_field :audio_message
       
     .form-row
       = form.submit "Submit", :class => "submit"
