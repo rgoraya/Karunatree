@@ -52,7 +52,7 @@
             %a{:id => "next", :Title => "Jump to Previous seedling", :href => "javascript:next()"}
         %tr
           %td{:colspan => "2", :align => "center"}    
-            %input{:id => "lblcurrent", :Size => "25", :type => "label", :disabled => true, :style => "border: 0px solid #000000;"}/
+            %input{:id => "lblcurrent", :Size => "30", :type => "label", :disabled => true, :style => "border: 0px solid #000000;"}/
 
 %br 
 
@@ -120,7 +120,7 @@
   {  
   // Icon Style for Seedling placemarks
   var icon = ge.createIcon('');
-  icon.setHref('http://karunatree.com/seedgraphics/seedling.png');
+  icon.setHref('http://karunatree.com/images/seedlings/seedicon.png');
   var style = ge.createStyle('');
   style.getIconStyle().setIcon(icon);
   gex = new GEarthExtensions(ge);
@@ -181,7 +181,10 @@
   else
   {document.getElementById("lblsearch").value =  "All"; }
   
-  document.getElementById("lblcurrent").value =  "Focused on seedling " + (currentseed + 1) + " of " + matchseeds.length;
+  var length = (matchseeds.length.toString());
+  
+  document.getElementById("lblcurrent").value =  "Vewing seedling " + (currentseed + 1) + " of " + (matchseeds.length);
+  
   // Look at the first seedling matching Search Critera
   lookat();
   }
@@ -223,7 +226,7 @@
   }  
 
   
-  //   F U N C T I O N       F O R         F L Y - T O        
+  //   F U N C T I O N        F O R         F L Y - T O        
   function FlytoClick() 
   {    
   var geocodeLocation = document.getElementById('txtflyto').value;
