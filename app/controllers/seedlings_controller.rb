@@ -71,7 +71,9 @@ class SeedlingsController < ApplicationController
   
   def audio_message
     @seedling = Seedling.find(params[:id])
-    send_file REGISTRY[:data_dir]+"/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/'+@seedling.id.to_s()+'-audio-message.wma',
+    send_file "/Users/derek/code/kt/public/data/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/'+@seedling.id.to_s()+'-audio-message.mp3',
+    #send_file REGISTRY[:data_dir]+"/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/'+@seedling.id.to_s()+'-audio-message.mp3',
+              :type => 'audio/mp3',
               :disposition => 'inline'
   end
   

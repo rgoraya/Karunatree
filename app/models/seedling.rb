@@ -13,8 +13,9 @@ class Seedling < ActiveRecord::Base
                     :url => "/:class/:seedling_slug/project?style=:style"
                     
   has_attached_file :audio_message,
-                    :path => REGISTRY[:data_dir]+"/:class/:id-:seedling_slug/:id-audio-message.:extension",
-                    :url => "/:class/:seedling_slug/audio-message"
+                    :path => ":rails_root/public/system/:class/:id-:seedling_slug/:id-audio-message.:extension",
+                    :url => "/system/:class/:id-:seedling_slug/:id-audio-message.:extension"
+                    #:url => "/:class/:seedling_slug/audio_message"
                       
   composed_of :location,
     :class_name => "Location",
