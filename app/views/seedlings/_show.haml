@@ -11,7 +11,7 @@
         %tr
           %td
             %p
-              = image_tag @seedling.project.url(:medium)
+              = image_tag @seedling.project.url
         %tr
           %td
             %p
@@ -41,12 +41,7 @@
           %td
             %p
               %strong Alt:
-              =h @seedling.alt
-        %tr
-          %td
-            %p
-              %strong Project:
-              =h @seedling.project.url(:medium)              
+              =h @seedling.alt             
         
 
 
