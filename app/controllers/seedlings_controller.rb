@@ -1,5 +1,6 @@
 class SeedlingsController < ApplicationController
   auto_complete_for :seedling, :title
+  
   def index
     @seedlings = Seedling.find(:all)
     respond_to do |format|
