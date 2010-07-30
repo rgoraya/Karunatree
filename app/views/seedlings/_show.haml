@@ -1,6 +1,63 @@
 //Google Earth Dispaly 
 - content_for(:include_custom_stylesheet) do
   = stylesheet_link_tag "seedlings"
+
+%table{:id => "tabseed"}
+  %tr
+    %td{:id => "globecolumn", :class => "show"}
+      %div{:id => "map3d"}
+    %td{:id => "formcolumn"}
+      %table{:id => "showseed"}
+        %tr
+          %td
+            %p
+              = image_tag @seedling.project.url(:medium)
+        %tr
+          %td
+            %p
+              %strong User:
+              =h @seedling.user_id
+        %tr
+          %td
+            %p
+              %strong Title:
+              =h @seedling.title
+        %tr
+          %td
+            %p
+              %strong Description:
+              =h @seedling.description
+        %tr
+          %td
+            %p
+              %strong Lat:
+              =h @seedling.lat
+        %tr
+          %td
+            %p
+              %strong Lon:
+              =h @seedling.lon
+        %tr
+          %td
+            %p
+              %strong Alt:
+              =h @seedling.alt
+        %tr
+          %td
+            %p
+              %strong Project:
+              =h @seedling.project.url(:medium)              
+        
+
+
+%p
+  = link_to "Edit", edit_seedling_path(@seedling)
+  |
+  = link_to "Destroy", @seedling, :confirm => 'Are you sure?', :method => :delete
+  |
+  = link_to "View All", seedlings_path
+
+
 %script{:type => "text/javascript", :src => "http://www.google.com/jsapi?key=ABQIAAAAkTy_IFxK_2zZFslisZ2PwBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxTg80_k6JMQAGXUyaHQIuTdC0uomg"} 
 %script{:src => "http://earth-api-utility-library.googlecode.com/svn/trunk/extensions/dist/extensions.pack.js"}
 %script{:type => "text/javascript"}
@@ -30,6 +87,7 @@
   var style = ge.createStyle('');
   style.getIconStyle().setIcon(icon);
 
+  // Create the Placemark  
   placemark = ge.createPlacemark('');
   placemark.setName('Starting Point');
   var point = ge.createPoint('');
@@ -42,25 +100,30 @@
   placemark.setGeometry(point);
   ge.getFeatures().appendChild(placemark);
   
+  // Look at the Placemark
+  var la = ge.createLookAt('');
+  la.set(#{@seedling.lat.to_json}, #{@seedling.lon.to_json}, 0, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 200000);
+  ge.getOptions().setFlyToSpeed(0.15);
+  ge.getView().setAbstractView(la);
+  
+  // Seedlin Balloon
   google.earth.addEventListener(placemark, 'click', function(event){
   // prevent the default balloon from popping up
   event.preventDefault();
   var balloon = ge.createHtmlDivBalloon('');
   balloon.setFeature(placemark); // optional
-  balloon.setMaxWidth(620);
-  balloon.setMaxHeight(620);
-  balloon.setBackgroundColor('black');
+  balloon.setMaxWidth(530);
+  balloon.setBackgroundColor('black');     
   // create the <div>
-  var div = document.createElement('DIV');
+  var div = document.createElement('DIV');   
   div.innerHTML = '<table id=tabseedlings>' +
-  '<tr> <td colspan="2"> <img id="imggrid" src="http://www.google.com/googlegulp/images/logo.gif" height = "450" width = "600"> </td> </tr>' +
+  '<tr> <td colspan="2"> <img id="imggrid" src=#{@seedling.project.url(:medium).to_json} > </td> </tr>' +
   '<tr> <td colspan="2"> <b>Title:</b> #{@seedling.title.to_json}</td></tr>' +
   '<tr> <td colspan="2"> <b>Message:</b> #{@seedling.description.to_json}</td></tr>' +
   '<tr> <td colspan="2"> <b>For:</b> NEED FOR ROW IN SEEDLING MIGRATION.</td></tr>' +
-  '<tr> <td colspan="2"> <b>Author:</b> USERNAME GOES HERE.</td></tr>' +
-  '<tr> <td> <a href="/seedlings/#{@seedling.id.to_json}/details">Details</a></td> <td align="right"><img src="http://karunatree.com/seedgraphics/seedling.jpg"></td></tr></table>';
-  
-  
+  '<tr> <td colspan="2"> <b>Author:</b> #{@seedling.user_id.to_json} </td></tr>' +
+  '<tr> <td> <a href="/seedlings/#{@seedling.id.to_json}/details">Details</a></td> <td align="right"><img src="http://karunatree.com/seedgraphics/seedling.jpg"></td></tr>' +
+  '<tr> <td> <a id="flyto" href="#">Details</a></td> <td align="right"><img src="http://karunatree.com/seedgraphics/seedling.jpg"></td></tr></table>';
   balloon.setContentDiv(div);
   ge.setBalloon(balloon);
   });
@@ -72,4 +135,3 @@
   google.setOnLoadCallback(init);
   
 
-%div{:id => "map3d", :style => "height: 800px; width: 1200px;"}

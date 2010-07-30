@@ -1,0 +1,210 @@
+
+#tabseed /*The table containing Globe and Form*/
+{
+border-collapse:collapse;
+width:100%;
+padding:0px;
+vertical-align:top;  
+}
+
+#map3d  /*Earth Plugin Div Styles*/
+{
+border-style:solid;
+border-color:#669900;
+border-width:1px;
+height: 100%; 
+width: 100%;
+padding:4px;
+}
+
+#map3d.show {
+	height: 50%;
+	width: 50%;
+	border: 4px solid #3e779d;
+	text-align: center;
+	margin: 0% 0% 0% 25%;
+}
+
+
+#globecolumn  /* The column containing map3d globe */
+{
+height:500px;
+width:60%;
+padding:5px;
+}
+
+#globecolumn.index  /* The column containing map3d globe */
+{
+width:75%;
+padding:0px;
+}
+
+#globe-column.show {
+	width: 20%;
+	height: 20%;
+	
+}
+#details-column {
+	width: 40%;
+	height: auto;
+	color: #fef165;
+	border: 4px solid #3e779d;
+	background-color: #5D9405;
+	text-align: center;
+}
+
+
+
+
+
+#formcolumn   
+{
+vertical-align:top;
+width:40%;
+padding:10px;
+}
+#formcolumn.index
+{width:25%;
+padding:10px;
+}
+
+
+#globecontrols
+{
+width:100%;
+padding:0px;
+Font-size:12px;
+color:#669900;
+}
+
+#showseed
+{
+vertical-align:top;
+width:100%;
+padding:20px;
+}
+
+#flyto{
+display: block; 	
+width:66px;
+height:25px;
+background:url('../images/seedlings/fly.jpg') -4px -4px;
+}
+#flyto:hover { 
+background:url('../images/seedlings/fly.jpg') -4px -30px;
+}
+#flyto:active { 
+background:url('../images/seedlings/fly.jpg') -4px -58px;
+}
+
+#reset{
+display: block; 	
+width:66px;
+height:25px;
+padding:0px;
+background:url('../images/seedlings/plant.jpg') -4px -4px;
+}
+#reset:hover { 
+background:url('../images/seedlings/plant.jpg') -4px -30px;
+}
+#reset:active { 
+background:url('../images/seedlings/plant.jpg') -4px -58px;
+}
+
+#search{
+display: block; 	
+width:66px;
+height:25px;
+padding:0px;
+background:url('../images/seedlings/search.jpg') -4px -4px;
+}
+#search:hover { 
+background:url('../images/seedlings/search.jpg') -4px -30px;
+}
+#search:active { 
+background:url('../images/seedlings/search.jpg') -4px -58px;
+}
+
+#next{
+display: block; 	
+width:66px;
+height:25px;
+padding:0px;
+background:url('../images/seedlings/next.jpg') -4px -4px;
+}
+#next:hover { 
+background:url('../images/seedlings/next.jpg') -4px -30px;
+}
+#next:active { 
+background:url('../images/seedlings/next.jpg') -4px -58px;
+}
+
+#prev{
+display: block; 	
+width:66px;
+height:25px;
+padding:0px;
+background:url('../images/seedlings/prev.jpg') -4px -4px;
+}
+#prev:hover { 
+background:url('../images/seedlings/prev.jpg') -4px -30px;
+}
+#prev:active { 
+background:url('../images/seedlings/prev.jpg') -4px -58px;
+}
+#prev:disabled { 
+background:url('../images/seedlings/prev.jpg') -4px -84px;
+}
+
+#imggrid
+{
+border: 1px solid #669900;
+padding: 4px;
+background-image: url('satgraphics/load.gif');
+background-repeat: no-repeat;
+background-position:center;
+}
+
+#tabseedlings /*tour Destinations Styles*/
+{
+border-collapse:collapse;
+width:100%;
+padding: 5px;
+font-family:Arial, Helvetica, sans-serif;
+font-size:13px;
+text-align:left;
+}
+
+#switchlist
+{
+list-style-type:none;
+padding:5px;
+margin:0px;
+}
+
+#switchlist li
+{
+padding:5px;
+}
+
+#switchlist a
+{
+text-decoration:none;
+color:#669900;
+padding:0px;
+font-family:Arial, Helvetica, sans-serif;
+font-size:14px;
+font-weight:bold;
+}
+
+#switchlist a:hover {background-color:#307BA0;color:#ffffff;}
+
+#seedling-details-image {
+	border: 4px solid #3e779d;
+	background-color: #5D9405;
+	text-align: center;
+}
+
+#table-main {
+    width: 100%;
+}

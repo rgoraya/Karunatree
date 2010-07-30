@@ -1,31 +1,43 @@
+- content_for(:include_custom_stylesheet) do
+  = stylesheet_link_tag "ktree-forms"
+  = javascript_include_tag :defaults
+  
 - title "Seedlings"
-%table
-  %tr
-    %th User
-    %th Title
-    %th Description
-    %th Lat
-    %th Lon
-    %th Alt
-    %th Project
+//Google Earth Dispaly 
 
-  - for seedling in @seedlings
+= render :partial => 'index'
+
+
+%div{:id => "list_c_excl_collapsed", :style => "display:block"}
+  %a{:href => "javascript:swap('list_c_excl',groupA)"} Expand All seedlings
+%div{:id => "list_c_excl_expanded", :style => "display:none"}
+  %a{:href => "javascript:swap('list_c_excl',groupA)"} Close seedlings
+  %table{:style => "border:1px solid #669900; width:100%; cellpadding:20px;"}
     %tr
-      %td= h seedling.user_id
-      %td= h seedling.title
-      %td= h seedling.description
-      %td= h seedling.lat
-      %td= h seedling.lon
-      %td= h seedling.alt
-      %td= image_tag seedling.project.url(:thumbnail)
-      %td= link_to 'Show', seedling
-      %td= link_to 'Edit', edit_seedling_path(seedling)
-      %td= link_to 'Destroy', seedling, :confirm => 'Are you sure?', :method => :delete
+      %th User
+      %th Title
+      %th Description
+      %th Lat
+      %th Lon
+      %th Alt
+      %th Project
+  
+    - for seedling in @seedlings
+      %tr
+        %td= h seedling.user_id
+        %td= h seedling.title
+        %td= h seedling.description
+        %td= h seedling.lat
+        %td= h seedling.lon
+        %td= h seedling.alt
+        %td= image_tag seedling.project.url(:thumbnail)
+        %td= link_to 'Show', seedling
+        %td= link_to 'Edit', edit_seedling_path(seedling)
+        %td= link_to 'Destroy', seedling, :confirm => 'Are you sure?', :method => :delete 
+
+
    
 %p= link_to "New Seedling", new_seedling_path
 //#{@seedlings.length}
 //#{@seedlings[0].title}
 
-//Google Earth Dispaly 
-
-= render :partial => 'index'

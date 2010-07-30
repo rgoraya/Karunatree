@@ -127,6 +127,17 @@ ActiveRecord::Schema.define(:version => 20100729220214) do
     t.datetime "updated_at"
   end
 
+  create_table "tickets", :force => true do |t|
+    t.string   "name"
+    t.string   "seat_id_seq"
+    t.text     "address"
+    t.integer  "price_paid",    :limit => 10, :precision => 10, :scale => 0
+    t.string   "email_address"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "Phone"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "username",            :null => false
     t.string   "email",               :null => false

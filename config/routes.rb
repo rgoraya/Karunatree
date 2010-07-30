@@ -1,9 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
 
 
-  map.resources :seedlings, :member => {  :project => :get,
+  map.resources :seedlings, :collection => {:auto_complete_for_seedling_title => :get},
+                            :member => {  :project => :get,
                                           :audio_message => :get }
-  map.connect 'seedlings/:id/details', :controller=>'seedlings', :action=>'details'
+  
+  map.connect 'seedlings/:id/details', :controller=>'seedlings', :action=>'show'
 
   map.resource :user_session
   map.login "login", :controller => "user_sessions", :action => "new"

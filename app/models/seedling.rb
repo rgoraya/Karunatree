@@ -55,8 +55,8 @@ class Seedling < ActiveRecord::Base
   USER_SIZE = 5   
   TITLE_SIZE = 20   
   DESCRIPTION_SIZE = 500
-  LAT_SIZE = 10
-  LON_SIZE = 10
-  ALT_SIZE = 10
+  LAT_SIZE = 11
+  LON_SIZE = 11
+  ALT_SIZE = 11
       
 end
