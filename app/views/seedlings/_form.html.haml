@@ -14,7 +14,10 @@
             = form.text_field :user_id, :size => Seedling::USER_SIZE, :maxlength => Seedling::USER_SIZE
           .form-row
             %label{:for => "title"} Title &nbsp;
-            = form.text_field :title, :size => Seedling::TITLE_SIZE, :maxlength => Seedling::TITLE_MAX_LENGTH  
+            = form.text_field :title, :size => Seedling::TITLE_SIZE, :maxlength => Seedling::TITLE_MAX_LENGTH
+          .form
+            %label{:for => "authors"} Authors &nbsp;
+            = form.text_field :authors
           .form-row
             %label{:for => "description"} Description &nbsp;
             = form.text_area :description, :size => Seedling::DESCRIPTION_SIZE, :maxlength => Seedling::DESCRIPTION_MAX_LENGTH
@@ -32,16 +35,14 @@
                   = form.text_field :alt, :size => Seedling::ALT_SIZE, :maxlength => Seedling::ALT_SIZE, :id => "frmalt"   
                 %td{:align => "right"}
                   %a{:id=>"reset", :Title => "Set the Seedling position", :href => "javascript:shiftplacemark()"}
-          
           .form-row
             %label{ :for => "project" } Project &nbsp;
             = form.file_field :project    
           .form-row
-            
+            %label{ :for => "audio_message" } Audio Message &nbsp;
+            = form.file_field :audio_message
+          .form-row
             = form.submit "Submit", :class => "submit"
-    .form-row
-      %label{ :for => "audio_message" } Audio Message &nbsp;
-      = form.file_field :audio_message
       
       %tr 
         %td{:colspan =>"2"}

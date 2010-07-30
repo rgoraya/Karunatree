@@ -4,6 +4,7 @@ Committed 7.29.10
 * Added an audio_message attachment to the Seedling model for associating audio with projects
 * Added the friendly_id gem to generate URL slugs from model attributes
 * Seedling model now uses friendly_id-based URLs
+* Updated deployment files to work with Thin server
 
 ** Version 0.8d1 **
 Committed 7.26.10

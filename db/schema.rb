@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100729220214) do
+ActiveRecord::Schema.define(:version => 20100730003349) do
 
   create_table "behavior_bindings", :force => true do |t|
     t.string   "locator",      :null => false
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20100729220214) do
     t.string   "audio_message_content_type"
     t.integer  "audio_message_file_size"
     t.datetime "audio_message_updated_at"
+    t.string   "authors"
   end
 
   create_table "sessions", :force => true do |t|
@@ -125,17 +126,6 @@ ActiveRecord::Schema.define(:version => 20100729220214) do
     t.boolean  "loop",               :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "tickets", :force => true do |t|
-    t.string   "name"
-    t.string   "seat_id_seq"
-    t.text     "address"
-    t.integer  "price_paid",    :limit => 10, :precision => 10, :scale => 0
-    t.string   "email_address"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "Phone"
   end
 
   create_table "users", :force => true do |t|
