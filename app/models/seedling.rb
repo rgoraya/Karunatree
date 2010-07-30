@@ -26,6 +26,13 @@ class Seedling < ActiveRecord::Base
         %w[ alt   alt ]
       ]
       
+  def self.get_friendly_ids(seedlings)
+    friendly_ids = Array.new
+    seedlings.each do |seedling|
+      friendly_ids.push(seedling.friendly_id)
+    end
+    return friendly_ids
+  end
       
   # Max and min lengths for all fields    
   TITLE_MIN_LENGTH = 1

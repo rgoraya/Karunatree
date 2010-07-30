@@ -63,6 +63,8 @@
     
   // Retrieve all seedlings into an Array
   var seeds = #{@seedlings.to_json};
+  var friendlyIdsString = #{Seedling.get_friendly_ids(@seedlings).to_json};
+  alert(friendlyIdsString);
   
   var ge;
   var gex;
