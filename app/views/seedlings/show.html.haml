@@ -7,7 +7,7 @@
   %tr
     %td{:id => "seedling-details-image"}  
       %p
-        = image_tag @seedling.project.url(:medium)
+        = image_tag @seedling.project.url(:large)
         
     %td{:id => "details-column", :align => "center"}
       %p
@@ -36,9 +36,6 @@
       %p
         %strong Message:
         %audio{ :src => @seedling.audio_message.url, :controls => true}
-      %p
-        %strong Project:
-        =h @seedling.project.url(:medium)
          
 %p
   = link_to "Edit", edit_seedling_path(@seedling)
