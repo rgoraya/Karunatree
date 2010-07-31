@@ -38,10 +38,10 @@
         %audio{ :src => @seedling.audio_message.url, :controls => true}
          
 %p
-  = link_to "Edit", edit_seedling_path(@seedling)
-  |
-  = link_to "Destroy", @seedling, :confirm => 'Are you sure?', :method => :delete
-  |
+  -#= link_to "Edit", edit_seedling_path(@seedling)
+  -#|
+  -#= link_to "Destroy", @seedling, :confirm => 'Are you sure?', :method => :delete
+  -#|
   = link_to "View All", seedlings_path
 
 
