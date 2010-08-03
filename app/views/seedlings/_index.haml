@@ -62,9 +62,13 @@
   
     
   // Retrieve all seedlings into an Array
-  var seeds = #{@seedlings.to_json};
+
   //var friendlyIdsString = #{Seedling.get_friendly_ids(@seedlings).to_json};
   //alert(friendlyIdsString);
+  // Retrieve all seedlings into an Array
+  var seeds = #{@seedlings.to_json};
+  // Retrieve all seedling friendly urls
+  var titles = #{Seedling.get_friendly_ids(@seedlings).to_json};
   
   var ge;
   var gex;
@@ -88,14 +92,7 @@
   ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true);
   
   plantseeds(tosearch);
-  
-  function composeHref(link, id)
-  {
-  linkhref= 'seedlings/' + id + '/details.html' ;
-  link.href=linkhref;
-  return true; //IMPORTANT LINE
-  }
-  //'<a href="#" onclick="return composeHref(this, seeds[i].seedling.id);">Details</a>'
+
 
   }
   function failureCB(errorCode){
@@ -154,8 +151,9 @@
   point.setLongitude(seeds[i].seedling.lon);
   placemark[count].setName(seeds[i].seedling.title);
 
-  var seedid = seeds[i].seedling.id;
-  var link = go_to_link(seedid);
+  var title = titles[i];
+  /var seedid = seeds[i].seedling.id;
+  var link = go_to_link(title);
   link_to_details = "Details";
   link_to_details = link_to_details.link(link);
 
@@ -243,11 +241,12 @@
   });
   }
   
-  //  Go to details page:
-  function go_to_link(symbol)
+  //  Go to details page, create friendly id link:
+  function go_to_link(symbol, seed)
   {
   part_of_link = symbol;
-  full_link = "/seedlings/" + part_of_link + "/details";
+  /full_link = "/seedlings/" + part_of_link + "/" + seed;
+  full_link = "/seedlings/" + part_of_link;
   return full_link;
   }
   

@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
                             :member => {  :project => :get,
                                           :audio_message => :get }
   
-  map.connect 'seedlings/:id/details', :controller=>'seedlings', :action=>'show'
+  
 
   map.resource :user_session
   map.login "login", :controller => "user_sessions", :action => "new"
