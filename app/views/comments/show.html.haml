@@ -1,0 +1,12 @@
+%h1 Comment on: 
+= @seedling.title
+
+%p 
+  %strong Commenter:
+  =h @comment.author
+%p 
+  %strong Comment:
+  =h @comment.body
+  
+= link_to 'Back', @seedling
+  

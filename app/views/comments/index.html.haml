@@ -1,0 +1,14 @@
+%h1 Seedling Comments
+%table
+  %tr
+    - for comment in @comments
+      %tr
+        %p= h comment.author
+        %p= h comment.body
+        %p= h comment.created_at
+        %p= link_to 'Show', seedling_comment_path(@seedling, comment)
+        %p= link_to 'Destroy', seedling_comment_path(@seedling, comment), :confirm => 'Are you sure?', :method => :destroy
+      
+%p  
+  = link_to "New Comment", new_seedling_comment_path(@seedling)
+  = link_to "Back", @seedling

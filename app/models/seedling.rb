@@ -2,6 +2,7 @@
 class Seedling < ActiveRecord::Base
   
   belongs_to :user
+  has_many :comments, :dependent => :destroy
   
   has_friendly_id :title, :use_slug => true,
                           :approximate_ascii => true,

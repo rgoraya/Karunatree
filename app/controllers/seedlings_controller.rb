@@ -55,11 +55,21 @@ class SeedlingsController < ApplicationController
     end
   end
   
+  def comment
+    Seedling.find(params[:id]).comments.create(params[:comment])
+    flash[:notice] = "Added your comment"
+    redirect_to :action => "show", :id => params[:id]
+  end
+  
   def destroy
     @seedling = Seedling.find(params[:id])
     @seedling.destroy
     flash[:notice] = "Successfully destroyed seedling."
     redirect_to seedlings_url
+  end
+  
+  def testCSS
+    @seedling = Seedling.find(params[:id])
   end
   
   def project

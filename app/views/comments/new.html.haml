@@ -1,0 +1,16 @@
+%h1 New Comment
+
+- form_for([@seedling, @comment]) do |f|
+  = error_messages_for "comment"
+  
+  %p
+    = f.label :author
+    = f.text_field :author
+  %p
+    = f.label :body
+    = f.text_area :body
+  %p
+    = f.submit "Submit"
+    
+%p= link_to "Back", @seedling
+		

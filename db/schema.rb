@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100730003349) do
+ActiveRecord::Schema.define(:version => 20100803175448) do
 
   create_table "behavior_bindings", :force => true do |t|
     t.string   "locator",      :null => false
@@ -44,6 +44,14 @@ ActiveRecord::Schema.define(:version => 20100730003349) do
   create_table "characters_features", :id => false, :force => true do |t|
     t.integer "character_id"
     t.integer "feature_id"
+  end
+
+  create_table "comments", :force => true do |t|
+    t.string   "author"
+    t.text     "body"
+    t.integer  "seedling_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "features", :force => true do |t|
