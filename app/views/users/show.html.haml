@@ -1,13 +1,15 @@
 %h2
-	= @user.username
+  = @user.username
 
 %p
-	%b Account Type:
-	= @user.account_type
+  %b Account Type:
+  = @user.account_type
+%p
+  = image_tag @user.avatar.url(:square)
 
 %p #{@user.username}'s seedlings
 
 #user_seedlings
-	- @user.seedlings.each do |seedling|
-		%a{:href => seedling_path(seedling)}
-			%img{:src => seedling.picture.url(:thumb)}/
+  - @user.seedlings.each do |seedling|
+    %a{:href => seedling_path(seedling)}
+    %img{:src => seedling.picture.url(:thumb)}/

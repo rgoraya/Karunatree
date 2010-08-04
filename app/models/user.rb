@@ -9,6 +9,12 @@ class User < ActiveRecord::Base
   has_one :character
   has_many :seedlings
   
+  has_attached_file :avatar, :styles => { :square => "80x80#", :thumbnail => "100x100>", :small => "240x240>", :medium  => "500x500>", :large => "1024x1024>" },
+                    :whiny_thumbnails => true,
+                    :path => REGISTRY[:data_dir]+"/:class/:username/avatar/:id-:style.:extension",
+                    :url => "/:class/:username/avatar?style=:style",
+                    :default_url => "/images/system/default-avatar/default-:style.jpg"
+  
   # By overriding this method, we specify that when behaviors are
   # converted to corresponding URLs, the locator attribute should
   # be used (rather than id)

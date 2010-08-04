@@ -1,10 +1,11 @@
 - content_for(:include_custom_stylesheet) do
   = stylesheet_link_tag "ktree-forms"
-  
-%h1 Sign up
+
+- title "Edit User"
+
 - form_for @user, :html => { :multipart  => true } do |form|
   %fieldset
-    %legend Please enter your details...
+    %legend Update your details...
     = error_messages_for "user"
     .form-row
       %label{:for => "email"} Email &nbsp;
@@ -25,4 +26,7 @@
       %label{ :for => "avatar" } Avatar &nbsp;
       = form.file_field :avatar
     .form-row
-      = form.submit "Jump in!", :class => "submit"
+      = form.submit "Update", :class => "submit"
+    .form-row
+      %p
+        = link_to "Cancel", user_path(@user)

@@ -16,7 +16,9 @@ ActionController::Routing::Routes.draw do |map|
   # I think omitting this helps to make the routing less complex
   #map.resource :account, :controller => "users"
   
-  map.resources :users, :member => {:home => :get}
+  map.resources :users, :member => {  :home => :get,
+                                      :avatar => :get }
+  
   map.signup "signup", :controller => "users",  :action => "new"
   
   map.resources :characters, :collection => { :add_to_inventory => :put, :bind_behavior => :put }

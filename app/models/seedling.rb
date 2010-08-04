@@ -28,6 +28,14 @@ class Seedling < ActiveRecord::Base
         %w[ alt   alt ]
       ]
       
+  # Uncomment this function to update Seedlings using a rake task,
+  # e.g. rake paperclip:refresh
+  #
+  #def readonly?
+  #  return false
+  #end
+  
+      
   def self.get_friendly_ids(seedlings)
     friendly_ids = Array.new
     seedlings.each do |seedling|

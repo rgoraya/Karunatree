@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100804164422) do
+ActiveRecord::Schema.define(:version => 20100804180148) do
 
   create_table "behavior_bindings", :force => true do |t|
     t.string   "locator",      :null => false
@@ -161,6 +161,11 @@ ActiveRecord::Schema.define(:version => 20100804164422) do
     t.string   "persistence_token",   :null => false
     t.string   "perishable_token",    :null => false
     t.string   "account_type",        :null => false
+    t.boolean  "girlsinc"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
 end

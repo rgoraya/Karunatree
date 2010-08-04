@@ -36,4 +36,11 @@ class UsersController < ApplicationController
       render :action => :edit
     end
   end
+  
+  def avatar
+    @user = User.find_by_username(params[:id])
+    style = params[:style] ? params[:style] : 'original'
+    send_file REGISTRY[:data_dir]+"/users/"+@user.username+'/avatar/'+@user.id.to_s()+'-'+style+'.jpg',
+              :disposition => 'inline'
+  end
 end

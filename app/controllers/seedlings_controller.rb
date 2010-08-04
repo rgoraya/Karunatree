@@ -46,7 +46,7 @@ class SeedlingsController < ApplicationController
   end
   
   def update
-    @seedling = Seedling.find(params[:id])
+    @seedling = Seedling.find(params[:id], :readonly => false)
     if @seedling.update_attributes(params[:seedling])
       flash[:notice] = "Successfully updated seedling."
       redirect_to @seedling
