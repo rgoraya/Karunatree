@@ -3,6 +3,7 @@ class Seedling < ActiveRecord::Base
   
   belongs_to :user
   has_many :comments, :dependent => :destroy
+  has_and_belongs_to_many :tags 
   
   has_friendly_id :title, :use_slug => true,
                           :approximate_ascii => true,
@@ -33,6 +34,11 @@ class Seedling < ActiveRecord::Base
       friendly_ids.push(seedling.friendly_id)
     end
     return friendly_ids
+  end
+  
+  def like
+    self.like += 1
+    self.save
   end
       
   # Max and min lengths for all fields    

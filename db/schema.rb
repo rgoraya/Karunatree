@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100803175448) do
+ActiveRecord::Schema.define(:version => 20100804164422) do
 
   create_table "behavior_bindings", :force => true do |t|
     t.string   "locator",      :null => false
@@ -81,10 +81,10 @@ ActiveRecord::Schema.define(:version => 20100803175448) do
 
   create_table "seedlings", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title",                                                    :null => false
+    t.string   "title",                                                                   :null => false
     t.text     "description"
-    t.decimal  "lat",                        :precision => 9, :scale => 6, :null => false
-    t.decimal  "lon",                        :precision => 9, :scale => 6, :null => false
+    t.decimal  "lat",                        :precision => 9, :scale => 6,                :null => false
+    t.decimal  "lon",                        :precision => 9, :scale => 6,                :null => false
     t.integer  "alt"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -97,6 +97,14 @@ ActiveRecord::Schema.define(:version => 20100803175448) do
     t.integer  "audio_message_file_size"
     t.datetime "audio_message_updated_at"
     t.string   "authors"
+    t.string   "short_url"
+    t.integer  "likes",                                                    :default => 0, :null => false
+    t.integer  "views",                                                    :default => 0, :null => false
+  end
+
+  create_table "seedlings_tags", :id => false, :force => true do |t|
+    t.integer "seedling_id"
+    t.integer "tag_id"
   end
 
   create_table "sessions", :force => true do |t|
@@ -132,6 +140,12 @@ ActiveRecord::Schema.define(:version => 20100803175448) do
     t.integer  "fade_down_duration"
     t.integer  "fade_down_volume"
     t.boolean  "loop",               :default => false, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tags", :force => true do |t|
+    t.string   "name",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
