@@ -1,6 +1,7 @@
 - content_for(:include_custom_stylesheet) do
   = stylesheet_link_tag "seedlings"
 - form_for @seedling, :html => { :multipart  => true } do |form|
+
   %fieldset
     %legend Please enter seedling details...
     = error_messages_for "seedling"
@@ -12,6 +13,7 @@
           .form-row
             %label{:for => "user"} User &nbsp;
             = form.text_field :user_id, :size => Seedling::USER_SIZE, :maxlength => Seedling::USER_SIZE
+            /= form.hidden_field :user_id, :value => @seedling.project.url
           .form-row
             %label{:for => "title"} Title &nbsp;
             = form.text_field :title, :size => Seedling::TITLE_SIZE, :maxlength => Seedling::TITLE_MAX_LENGTH
@@ -41,6 +43,11 @@
           .form-row
             %label{ :for => "audio_message" } Audio Message &nbsp;
             = form.file_field :audio_message
+            
+          .form-row
+            %label{ :for => "tag_names" } Tag &nbsp;
+            = form.text_field :tag_names
+                      
           .form-row
             = form.submit "Submit", :class => "submit"
       

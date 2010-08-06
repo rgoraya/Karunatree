@@ -1,3 +1,4 @@
 class Tag < ActiveRecord::Base
-  has_and_belongs_to_many :seedlings
+  has_many :taggings, :dependent => :destroy
+  has_many :seedlings, :through => :taggings
 end

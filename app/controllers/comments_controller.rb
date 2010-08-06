@@ -19,7 +19,12 @@ class CommentsController < ApplicationController
     @seedling = Seedling.find(params[:seedling_id])
     @comment = @seedling.comments.build(params[:comment])
     if @comment.save
-      redirect_to seedling_comment_url(@seedling, @comment)
+      respond_to do |format|
+        format.html { redirect_to seedling_path(@comment.seedling_id)}
+        format.js
+      end
+      #redirect_to seedling_comment_url(@seedling, @comment)
+      #redirect_to seedling_url
     else
       render :action => "new"
     end

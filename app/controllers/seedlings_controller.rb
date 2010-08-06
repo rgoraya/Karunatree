@@ -72,6 +72,23 @@ class SeedlingsController < ApplicationController
     @seedling = Seedling.find(params[:id])
   end
   
+  /#
+  def post_comment
+    
+    @comment =  @seedling.comments.build(
+      "author" => params[:author]['author'] 
+      "body" => params[:body]['body']
+      "created_at" => Time.now
+    )
+    if @comment.save
+      flash[:notice] = 'Comment was successfully added.'     
+      #redirect_to :action => 'show', :id => flash[:post_id]
+      @seedling = Post.find(flash[:post_id])
+      @seedling_comments = @seedling.comments.collect    
+      flash[:seedling_id] = @seedling.id  #Store the post.id back in the flash 
+    end    
+  end
+  #/
   def project
     @seedling = Seedling.find(params[:id])
     style = params[:style] ? params[:style] : 'original'

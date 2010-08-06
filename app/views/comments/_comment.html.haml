@@ -1,0 +1,12 @@
+%tr{:class => "three-column-description"}
+  - comments = @seedling.comments
+  - if comments.length > 0
+    %p
+      Commenter:
+      = comments.last.author
+      ,
+      Commented at:
+      = comments.last.created_at
+    %p
+      Comment:
+      = comments.last.body

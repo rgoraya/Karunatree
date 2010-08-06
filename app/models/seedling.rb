@@ -3,7 +3,12 @@ class Seedling < ActiveRecord::Base
   
   belongs_to :user
   has_many :comments, :dependent => :destroy
-  has_and_belongs_to_many :tags 
+  has_many :taggings, :dependent => :destroy
+  has_many :tags, :through => :taggings
+  attr_accessor :tag_names
+  after_save :assign_tags
+  
+  accepts_nested_attributes_for :tags, :allow_destroy => :true ,  :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } } 
   
   has_friendly_id :title, :use_slug => true,
                           :approximate_ascii => true,
@@ -35,6 +40,17 @@ class Seedling < ActiveRecord::Base
   #  return false
   #end
   
+
+  def self.get_tags(seedlings)
+    seedTags = Array.new
+    seedlings.each do |seedling|
+      for tag in seedling.tags
+        seedTags.push(tag.id)
+      end
+      #seedTags.push(seedling.tag_names)
+    end
+    return seedTags
+  end
       
   def self.get_friendly_ids(seedlings)
     friendly_ids = Array.new
@@ -43,10 +59,33 @@ class Seedling < ActiveRecord::Base
     end
     return friendly_ids
   end
+
+  def self.get_image_url(seedlings)
+    urls = Array.new
+    seedlings.each do |seedling|
+      urls.push(seedling.project.url)
+    end
+    return urls
+  end
+
   
   def like
     self.like += 1
     self.save
+  end
+
+  def tag_names
+    @tag_names || tags.map(&:name).join(' ')
+  end
+  
+  private
+  
+  def assign_tags
+    if @tag_names
+      self.tags = @tag_names.split(/\s+/).map do |name|
+        Tag.find_or_create_by_name(name)
+      end
+    end
   end
       
   # Max and min lengths for all fields    
