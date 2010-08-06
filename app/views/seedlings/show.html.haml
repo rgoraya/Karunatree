@@ -2,101 +2,221 @@
 - content_for(:include_custom_stylesheet) do
   = stylesheet_link_tag "seedlings"
 
+%body{:onload => "MapImg()"}/
+
 - title "Seedling"
-%table{:id => "tabseed"}
-  %tr
-    %td{:id => "seedling-details-image"}  
-      %p
-        = image_tag @seedling.project.url(:large)
+%div{:id => "maincontainer"}
+  %div{:id => "contentwrapper"}
+    // T H E      C O N T E N T       C O L U M N
+    %div{:id => "contentcolumn"}
+      .innertube
+        // Project Block
+        %div{:id => "imggridmore", :class => "styled"}
+          = image_tag @seedling.project.url(:large), :id => "proj-img"  
+        // Byline Block
+        %div{:id => "imggridclip", :class => "styled"} 
+          %strong 
+            %q{:class => "titlecolor"}#{@seedling.title}
+          by 
+          %strong=h @seedling.authors
+        %br
+        %div{:id => "contentwrapper", :class => "styled"}
+          // Segmented controls block (currently put in a random image sprites button)         
+          %div{:id => "btndiv"}
+            %a{:id=>"reset", :Title => "Set the Seedling position", :href => "javascript:shiftplacemark()"}
+        // Audio controls block
+        %div{:id => "audiodiv"}
+          %audio{ :src => @seedling.audio_message.url, :controls => true}      
+        %br
+        %br    
+        // Description block
+        %div{:id => "descrdiv", :class => "styled"}
+          %b{:class => "titlecolor"} Description
+          %p
+          =h @seedling.description      
+        %br
+        // Comments block
         
-    %td{:id => "details-column", :align => "center"}
-      %p
-        %div{:id => "map3d", :class => "show"}
-      %p
-        %strong User:
-        =h @seedling.user_id
-      %p
-        %strong Authors:
-        =h @seedling.authors
-      %p
-        %strong Title:
-        =h @seedling.title
-      %p
-        %strong Description:
-        =h @seedling.description
-      %p
-        %strong Lat:
-        =h @seedling.lat
-      %p
-        %strong Lon:
-        =h @seedling.lon
-      %p
-        %strong Alt:
-        =h @seedling.alt
-      %p
-        %strong Message:
-        %audio{ :src => @seedling.audio_message.url, :controls => true}
+        // Description block
+        %div{:id => "descrdiv", :class => "styled"}
+          %b{:class => "titlecolor"} Comments
+          %div{:id => "comment"}
+            - @comments = @seedling.comments
+            - iterations = @comments.length - 1
+            - iterations.times do |i|
+              %p
+                %b #{@comments[i].author},
+                when:
+                = @comments[i].created_at
+                %br
+                Says:
+                = @comments[i].body
+            = render :partial => "comments/comment", :object => @seedling.comments
+        %div{:id => "descrdiv", :class => "styled"}
+          
+          %p 
+            %b{:class => "titlecolor"} New Comment:       
+          - form_remote_for([@seedling, @seedling.comments.build]) do |f|
+            = error_messages_for "comment"
+            
+            %p
+              = f.label :author
+              = f.text_field :author
+            %p
+              = f.label :body
+              = f.text_area :body, :rows => 10
+            %p
+              = f.submit "Submit"      
+        %br  
+  
+  // T H E      S E C O N D       C O L U M N  ( C E N T E R )       
+  %div{:id => "leftcolumn"}
+    .innertube
+      // Hybrid Google Map block
+      %div{:id => "imggrid", :class => "styled"}
+        %img{:id => "map_canvas", :width => "180px", :src =>"", :alt => "thumbnail map"}
+        %br
+        %b{:class => "titlecolor"} Planted here 
+      // Block containing a table with Likes, Tweets and Friendly ids  
+      %br
+      %div{:class => "styled"}      
+        %table{:id => "globecontrols"}
+          %tr
+            %td
+              Likes
+            %td
+              
+          %tr
+            %td
+              Tweets
+            %td
+          %tr
+            %td{:colspan => "2"}
+              %strong
+                www.karunatree.com/seedlings/#{@seedling.friendly_id}
+                               
+      %br
+      // Tags block
+      %div{:class => "styled"}      
+        %b{:class => "titlecolor"} Tags:
+        %p
+        - for tag in @seedling.tags
+          =tag.name
+        %br
+      // Geo data block    
+      %div{:class => "styled"}
+        %ul#switchlist
+          %li
+            %div{:id => "list_a_excl_collapsed", :style => "display:block"}
+              %a{:href => "javascript:swap('list_a_excl',groupA)"} Geo Details
+            %div{:id =>"list_a_excl_expanded", :style => "display:none"}
+              %a{:href => "javascript:swap('list_a_excl',groupA)"} Hide Details
+              // The details table which switches open:        
+              %table{:id => "globecontrols"} 
+                %tr
+                  %td{:align => "left"}
+                    %strong Latitude
+                  %td{:align => "left"}  
+                    =h @seedling.lat
+                %tr
+                  %td{:align => "left"}
+                    %strong Longitude
+                  %td{:align => "left"}  
+                    =h @seedling.lon
+                %tr
+                  %td{:align => "left"}
+                    %strong Altitude
+                  %td{:align => "left"}  
+                    =h @seedling.alt        
+                    
+                    
+                    
+  // T H E      R I G H T       C O L U M N                        
+  %div{:id => "rightcolumn"}
+    .innertube
+      // More_by block
+      %div{:id => "imggridmore", :class => "styled"}      
+        More by
+        %strong=h @seedling.authors
+        %br
+        = link_to image_tag (@seedling.project.url(:thumbnail), :width => "60px", :id => "more-link") , @seedling
+      // Clippings block      
+      %div{:id => "imggridclip", :class => "styled"}      
+        This Seedling has "x" clippings
+        %br
+        %img{:id => "map_canvas_thumb", :width => "60px", :src =>"", :alt => "thumbnail map"}
+        %br
+      %br
+      // Contact us block   
+      %div{:class => "styled"}      
+        Contact Us!
+        %br
+        %br    
+      
+  %div{:id => "footer"}
+    Karunatree      
+
+%br
          
 %p
-  -#= link_to "Edit", edit_seedling_path(@seedling)
-  -#|
-  -#= link_to "Destroy", @seedling, :confirm => 'Are you sure?', :method => :delete
-  -#|
+  = link_to "Edit", edit_seedling_path(@seedling)
+  |
+  = link_to "Destroy", @seedling, :confirm => 'Are you sure?', :method => :delete
+  |
   = link_to "View All", seedlings_path
 
 
-//Google Earth Display
-%script{:type => "text/javascript", :src => "http://www.google.com/jsapi?key=#{REGISTRY[:api_key]}"} 
-%script{:src => "http://earth-api-utility-library.googlecode.com/svn/trunk/extensions/dist/extensions.pack.js"}
 %script{:type => "text/javascript"}
-//%link{:rel=>"stylesheet", :type=>"text/css", :href=>"seedlings.css", :media=>"all"}
-%script{:type => "text/javascript"}
-  var ge;
-  var gex;
-  google.load("earth", "1.x");
-  google.load("maps", "2.x");
+  
+  // Retrieve all image URLs
+  //var seeds = #{@seedling.user.seedlings.to_json};
+  
+  //alert(seeds);
+  
+  // Retrieve all seedling friendly urls
+  //var moreby = #{User.get_more_by(@seedling).to_json};
+    
+  // Get the URL of the static Google Map to be displayed in map_canvas Div
+  function MapImg() {
+  
+  var lat = #{@seedling.lat.to_json};
+  var lon = #{@seedling.lon.to_json};
 
+  var mapurl = "http://maps.google.com/maps/api/staticmap?" +
+  "center=" + lat + "," + lon +
+  "&zoom=2&size=200x160&maptype=hybrid" +
+  "&markers=icon:http://sites.google.com/site/rimxzphoto/files/seedicon.png|" + lat + "," + lon +
+  "&sensor=false";
   
-  function init(){
-  google.earth.createInstance('map3d', initCB, failureCB);
+  var mapurlthumb = "http://maps.google.com/maps/api/staticmap?" +
+  "center=" + lat + "," + lon +
+  "&zoom=1&size=300x250&maptype=hybrid" +
+  "&markers=icon:http://sites.google.com/site/rimxzphoto/files/seedicon.png|" + lat + "," + lon +
+  "&sensor=false";
   
+  document.getElementById("map_canvas").src= mapurl;
+  document.getElementById("map_canvas_thumb").src= mapurlthumb;
   }
-  function initCB(instance){
-  ge = instance;
-  ge.getWindow().setVisibility(true);
-  gex = new GEarthExtensions(ge);
   
-  ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true);
+  var groupA = new Array();
+  groupA[groupA.length] = "list_a_excl";
   
-  // Icon Style for Seedling placemarks
-  var icon = ge.createIcon('');
-  icon.setHref('http://karunatree.com/images/seedlings/seedicon.png');
-  var style = ge.createStyle('');
-  style.getIconStyle().setIcon(icon);
-
-  placemark = ge.createPlacemark('');
-  placemark.setName('Starting Point');
-  var point = ge.createPoint('');
-  point.setLatitude(#{@seedling.lat.to_json});
-  point.setLongitude(#{@seedling.lon.to_json});
-  placemark.setName(#{@seedling.title.to_json});
-  placemark.setDescription(#{@seedling.description.to_json});
-  placemark.setStyleSelector(style);
-  point.setAltitudeMode(13);
-  placemark.setGeometry(point);
-  ge.getFeatures().appendChild(placemark);
-
-  //sets the look at view to current seedling
-  var la = ge.createLookAt('');
-  la.set(#{@seedling.lat.to_json}, #{@seedling.lon.to_json}, 0, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 5000000);
-  ge.getOptions().setFlyToSpeed(0.25);
-  ge.getView().setAbstractView(la);
-                
-  
+  // Swapping the Lists
+  function swap(listIdPrefix, group) {
+  collapsedList = document.getElementById(listIdPrefix + "_collapsed");
+  expandedList = document.getElementById(listIdPrefix + "_expanded");
+  if (collapsedList.style.display == "block") 
+  {
+  collapsedList.style.display = "none";
+  expandedList.style.display = "block";
+  } 
+  else 
+  {
+  collapsedList.style.display = "block";
+  expandedList.style.display = "none";
   }
-  function failureCB(errorCode){
-  }
+  }  
 
-  google.setOnLoadCallback(init);
-  
+
+ 
 

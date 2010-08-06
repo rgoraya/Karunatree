@@ -2,11 +2,9 @@
   - comments = @seedling.comments
   - if comments.length > 0
     %p
-      Commenter:
-      = comments.last.author
-      ,
-      Commented at:
+      %b #{comments.last.author},
+      when:
       = comments.last.created_at
-    %p
-      Comment:
+      %br
+      Says:
       = comments.last.body

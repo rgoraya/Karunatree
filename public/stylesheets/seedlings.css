@@ -1,3 +1,4 @@
+require "set"
 
 #tabseed /*The table containing Globe and Form*/
 {
@@ -19,10 +20,10 @@ padding:4px;
 }
 
 #map3d.show {
-height: 200px;
-width: 90%;
-border: 2px solid #3e779d;
-padding:0px;
+height: 150px;
+width: 95%;
+border: 1px solid #669900;
+padding:4px;
 }
 
 
@@ -71,7 +72,8 @@ padding:10px;
 width:100%;
 padding:0px;
 Font-size:12px;
-color:#669900;
+color:#307BA0;
+word-break:break-all;
 }
 
 #showseed
@@ -156,11 +158,75 @@ background:url('../images/seedlings/prev.jpg') -4px -84px;
 
 #imggrid
 {
-border: 1px solid #669900;
 padding: 4px;
 background-image: url('satgraphics/load.gif');
 background-repeat: no-repeat;
 background-position:center;
+text-align: center;
+background-color:#E6E6E6;
+border:1px solid #83B0C6;
+
+-moz-border-radius: 3px;  
+-webkit-border-radius: 3px;  
+-khtml-border-radius: 3px;     
+border-radius: 3px;          
+}
+
+#balloongrid
+{
+margin-top:0px;
+padding:4px;
+background-color:#E6E6E6;
+border:1px solid #83B0C6;
+Font-size:13px;
+color:#307BA0;
+font-family:Arial, Helvetica, sans-serif;
+width:350px;
+min-height:100px;
+
+-moz-border-radius: 3px;  
+-webkit-border-radius: 3px;  
+-khtml-border-radius: 3px;     
+border-radius: 3px;          
+}
+
+
+#imggridmore
+{
+padding: 4px;
+text-align: center;
+background-color:#E6E6E6;
+border-left:1px solid #83B0C6;
+border-right:1px solid #83B0C6;
+border-top:1px solid #83B0C6;
+
+-moz-border-radius-topleft: 3px;  
+-moz-border-radius-topright: 3px;
+-webkit-border-top-left-radius: 3px;  
+-webkit-border-top-right-radius: 3px;
+-khtml-border-top-left-radius: 3px;     
+-khtml-border-top-right-radius: 3px;
+border-top-left-radius:3px;
+border-top-right-radius:3px;          
+}
+
+#imggridclip
+{
+padding: 4px;
+text-align: center;
+background-color:#E6E6E6;
+border-left:1px solid #83B0C6;
+border-right:1px solid #83B0C6;
+border-bottom:1px solid #83B0C6;
+
+-moz-border-radius-bottomleft: 3px;  
+-moz-border-radius-bottomright: 3px;
+-webkit-border-bottom-left-radius: 3px;  
+-webkit-border-bottom-right-radius: 3px;
+-khtml-border-bottom-left-radius: 3px;     
+-khtml-border-bottom-right-radius: 3px;
+border-bottom-left-radius:3px;
+border-bottom-right-radius:3px         
 }
 
 #tabseedlings /*tour Destinations Styles*/
@@ -188,10 +254,10 @@ padding:5px;
 #switchlist a
 {
 text-decoration:none;
-color:#669900;
+color:#307BA0;
 padding:0px;
 font-family:Arial, Helvetica, sans-serif;
-font-size:14px;
+font-size:13px;
 font-weight:bold;
 }
 
@@ -204,4 +270,141 @@ border: 2px solid #3e779d;
 background-color: #669900;
 padding:4px;
 }
+
+body{
+margin:0;
+padding:0;
+}
+
+#maincontainer{
+width: 1000px;    /*Width of main container*/
+margin: 0 auto;  /*Center container on page*/
+}
+
+#contentwrapper{
+float: left;
+width: 100%;
+min-height:30px;
+}
+
+#contentcolumn{
+margin-right: 360px;   /*Margin for content column. Should be (RightColumnWidth + LeftColumnWidth)*/
+color:#307BA0;
+}
+
+#leftcolumn{
+float: left;
+width: 200px;          /*Width of left column in pixel*/
+margin-left: -360px;   /*Set margin to -(LeftColumnWidth + RightColumnWidth)*/
+color:#307BA0;
+font-family:Arial, Helvetica, sans-serif;
+font-size:13px;
+}
+
+#rightcolumn{
+float: left;
+width: 160px;          /*Width of right column in pixels*/
+margin-left: -160px;   /*Set margin to -RightColumnWidth*/
+color:#307BA0;
+font-family:Arial, Helvetica, sans-serif;
+font-size:13px;
+}
+
+#footer{
+clear: left;
+width: 100%;
+padding: 4px;
+background-color:#E6E6E6;
+border:1px solid #83B0C6;
+font-family:Arial, Helvetica, sans-serif;
+font-size:16px;
+color:#669900;
+}
+
+#footer a{
+color: #FFFF80;
+}
+
+.innertube{
+margin-right: 10px;           /*Margins for inner DIV inside each column (to provide padding)*/
+margin-top: 0;
+}
+
+#textdiv{
+font-family:Arial, Helvetica, sans-serif;
+font-size:15px;
+vertical-align:bottom;
+padding-left:5px;
+min-height:30px;
+}
+
+#audiodiv{
+float: left;
+width: 320px;          /*Width of left column in pixel*/
+margin-left: -320px;   /*Set margin to -(LeftColumnWidth + RightColumnWidth)*/
+text-align:right;
+}
+
+#btndiv{
+float: left;
+width: 320px;   
+}
+
+
+#descrdiv{
+background-image: url('../images/seedlings/trans.png');
+background-repeat: no-repeat;
+background-position: right top;
+
+font-family:Arial, Helvetica, sans-serif;
+font-size:13px;
+padding:5px;
+}
+
+.styled 
+{
+/*    -moz-border-radius: 10px;  */
+/*    -webkit-border-radius: 10px;  */
+/*    -khtml-border-radius: 10px;   */  
+/*    border-radius: 10px;          */
+
+-moz-box-shadow: 2px 2px 3px #CCCCCC;
+-webkit-box-shadow: 2px 2px 3px #CCCCCC;
+box-shadow: 2px 2px 3px #CCCCCC;
+/* For IE 8 */
+-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
+/* For IE 5.5 - 7 */
+filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+}
+
+.titlecolor
+{
+color:#669900;	
+}
+
+q:lang(en)
+{
+quotes: "«" "»" "'" "'";
+}
+
+#proj-img
+{
+max-width:620px;	
+max-height:500px;
+}
+
+#more-link
+{
+border:3px solid #CCCCCC;	
+margin:3px;
+max-width:150px;	
+max-height:100px;
+}
+
+#more-link:hover 
+{
+border:3px solid #ffffff;	
+}
+
+
 

@@ -62,14 +62,13 @@
   
     
   // Retrieve all seedlings into an Array
-
-  //var friendlyIdsString = #{Seedling.get_friendly_ids(@seedlings).to_json};
-  //alert(friendlyIdsString);
-  // Retrieve all seedlings into an Array
   var seeds = #{@seedlings.to_json};
   // Retrieve all seedling friendly urls
   var titles = #{Seedling.get_friendly_ids(@seedlings).to_json};
-  
+  // Retrieve all image URLs
+  var imageurls = #{Seedling.get_image_url(@seedlings).to_json};
+
+    
   var ge;
   var gex;
   var tosearch = "";
@@ -150,21 +149,28 @@
   point.setLatitude(seeds[i].seedling.lat);
   point.setLongitude(seeds[i].seedling.lon);
   placemark[count].setName(seeds[i].seedling.title);
-
-  var title = titles[i];
-  /var seedid = seeds[i].seedling.id;
-  var link = go_to_link(title);
-  link_to_details = "Details";
+  
+  // Retireve Link to show page for this seedling
+  var link = go_to_link(titles[i]);
+  link_to_details = "here";
   link_to_details = link_to_details.link(link);
-
-  placemark[count].setDescription(seeds[i].seedling.description + '\n' + link_to_details);
+  // Retireve  Url of the thumbnail Image to be displayed
+  var imageurl = imageurls[i];
+  // Create an inner html 
+  var innerhtml = 
+  ' <div id="balloongrid">'  
+  + '<p><a href="' + link + '">'
+  + '<img id="more-link" src="' + imageurl + '" align="left" alt="Project image" /> </a> ' 
+  + seeds[i].seedling.description 
+  + '</p><p align="right"> <font size="-2"> click on the Image above or ' + link_to_details + ' to view details. </font></p></div>';
+  
+  // Use the above created inner HTML for placemark description
+  placemark[count].setDescription(innerhtml);
   point.setAltitudeMode(13);
   placemark[count].setGeometry(point);
-  
-
-  
-  
   ge.getFeatures().appendChild(placemark[count]);
+  
+  
   // Increment match count
   count = count+1;
   } // End of if structure
