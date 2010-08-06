@@ -14,7 +14,7 @@ class Seedling < ActiveRecord::Base
                           :approximate_ascii => true,
                           :max_length => 50
   
-  has_attached_file :project, :styles => { :thumbnail => "100x100>", :small => "240x240>", :medium  => "500x500>", :large => "1024x1024>" },
+  has_attached_file :project, :styles => { :square => "80x80#", :thumbnail => "100x100>", :small => "240x240>", :medium  => "500x500>", :large => "1024x1024>" },
                     :whiny_thumbnails => true,
                     :path => REGISTRY[:data_dir]+"/:class/:id-:seedling_slug/project/:id-:style.:extension",
                     :url => "/:class/:seedling_slug/project?style=:style"

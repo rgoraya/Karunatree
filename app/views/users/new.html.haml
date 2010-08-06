@@ -13,6 +13,12 @@
       %label{:for => "username"} Username &nbsp;
       = form.text_field :username, :size => User::USERNAME_SIZE, :maxlength => User::USERNAME_MAX_LENGTH
     .form-row
+      %label{:for => "first_name"} First Name &nbsp;
+      = form.text_field :first_name
+    .form-row
+      %label{:for => "last_name"} Last Name &nbsp;
+      = form.text_field :last_name
+    .form-row
       %label{:for => "password"} Password &nbsp;
       = form.password_field :password, :size => User::PASSWORD_SIZE, :maxlength => User::PASSWORD_MAX_LENGTH
     .form-row
