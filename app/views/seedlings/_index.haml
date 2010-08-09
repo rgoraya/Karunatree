@@ -5,10 +5,13 @@
   %tr
     %td{:id => "globecolumn", :class => "index", :rowspan => "2"}
       %div{:id => "map3d", :style => "height:700px;"}
+      %div{:id => 'blue-marble-ui'}
+      %div{:id => 'border-ui'}
     %td{:id => "formcolumn", :class => "index"}
-      %div
+      %div{:id =>"index-background-column"}
         %ul#switchlist
-          %li
+          /collapsable link for Fly-to function
+          %li 
             %div{:id => "list_a_excl_collapsed", :style => "display:block"}
               %a{:href => "javascript:swap('list_a_excl',groupA)"} Fly to any destination on the globe
             %div{:id =>"list_a_excl_expanded", :style => "display:none"}
@@ -20,31 +23,41 @@
                     %input{:id => "txtflyto", :Size => "25", :type => "text", :value => "San Francisco, CA", :onkeydown => "if (event.keyCode == 13) javascript:FlytoClick()" }/              
                   %td{:align => "left"}  
                     %a{:id => "flyto", :Title => "Fly to the Entered Destination", :href => "javascript:FlytoClick()"}
-                
+          /collapsable link for search function    
           %li
             %div{:id => "list_b_excl_collapsed", :style => "display:block"}
               %a{:href => "javascript:swap('list_b_excl',groupA)"} Search for Seedlings
             %div{:id => "list_b_excl_expanded", :style => "display:none"}
               %a{:href => "javascript:swap('list_b_excl',groupA)"} Close Search
-              %table{:id => "globecontrols"} 
-                %tr
-                  %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:seedling, :title, {:id =>'txtsearch', :onkeydown => "if (event.keyCode == 13) javascript:seedsearch()" })
-                    
+              %table
+                %tr     
+                  %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:seedling, :title, {:id =>'txtsearch',:size => "25", :onkeydown => "if (event.keyCode == 13) javascript:seedsearch()" })  
                                         
                   %td{:align => "left"}  
                     %a{:id => "search", :Title => "Seach for the Seedlings", :href => "javascript:seedsearch()"}
-                
+                  %td
+                    by Title
+              %table
+                %tr  
+                  %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:tag, :name, {:id =>'tagsearch',:size => "25", :onkeydown => "if (event.keyCode == 13) javascript:tagsearch()" })
+                   
+                  %td{:align => "left"}  
+                    %a{:id => "search", :Title => "Seach for the Seedlings", :href => "javascript:tagsearch()"}
+                  %td
+                    by Tag          
+  
+  //Seedling navigation functions on the bottom right hand column              
   %tr
     %td{:id => "formcolumn", :style => "vertical-align:bottom;"}
       %table{:id => "globecontrols",}
         %tr
           %td{:align => "right"}Showing seedlings:       
           %td
-            %div{:id => "lblsearch"}
+            %input{:id => "lblsearch", :Size => "20", :type => "label", :disabled => true, :style => "border: 0px solid #000000;"}/
         %tr
           %td{:align => "right"}Total Seedlings displayed:
           %td
-            %div{:id => "lblshowing"}
+            %input{:id => "lblshowing", :Size => "2", :type => "label", :disabled => true,  :style => "border: 0px solid #000000;"}/  
         %tr
           %td{:align => "right"}
             %a{:id => "prev", :Title => "Jump to Next seedling", :href => "javascript:previous()"}
@@ -52,24 +65,81 @@
             %a{:id => "next", :Title => "Jump to Previous seedling", :href => "javascript:next()"}
         %tr
           %td{:colspan => "2", :align => "center"}    
-            %div{:id => "lblcurrent"}
+            %input{:id => "lblcurrent", :Size => "30", :type => "label", :disabled => true, :style => "border: 0px solid #000000;"}/
 
 %br 
 
 %script{:type => "text/javascript", :src => "http://www.google.com/jsapi?key=#{REGISTRY[:api_key]}"} 
 %script{:src => "http://earth-api-utility-library.googlecode.com/svn/trunk/extensions/dist/extensions.pack.js"}
 %script{:type => "text/javascript"}
+  function addBlueMarbleButton(caption, clickHandler) {
+  var blueMarbleBtn = document.createElement('input');
+  blueMarbleBtn.type = 'button';
+  blueMarbleBtn.value = caption;
   
-    
+  if (blueMarbleBtn.attachEvent)
+  blueMarbleBtn.attachEvent('onclick', clickHandler);
+  else
+  blueMarbleBtn.addEventListener('click', clickHandler, false);
+
+  document.getElementById('blue-marble-ui').appendChild(blueMarbleBtn);
+  }
+  
+  function addSampleButton(caption, clickHandler) {
+  var btn = document.createElement('input');
+  btn.type = 'button';
+  btn.value = caption;
+  
+  if (btn.attachEvent)
+  btn.attachEvent('onclick', clickHandler);
+  else
+  btn.addEventListener('click', clickHandler, false);
+
+  // add the button to the Sample UI
+  document.getElementById('border-ui').appendChild(btn);
+  }
+
+ 
+%script{:type => "text/javascript"}
   // Retrieve all seedlings into an Array
   var seeds = #{@seedlings.to_json};
+  
+  var seedlingsById = [];
+  for (var i = 0; i < seeds.length; i++) {
+  seedlingsById[i + 1] = seeds[i];
+  }
+  /alert(seedlingsById); 
+  
   // Retrieve all seedling friendly urls
   var titles = #{Seedling.get_friendly_ids(@seedlings).to_json};
-  // Retrieve all image URLs
-  var imageurls = #{Seedling.get_image_url(@seedlings).to_json};
+  var tagTitles = [];
+  for (var i = 0; i < titles.length; i++) {
+  tagTitles[i + 1] = titles[i]
+  }
+  /alert(tagTitles);
+  var thumbs = #{Seedling.get_image_url(@seedlings).to_json};
+  
+  var seedTagsNames = #{Seedling.get_tags(@seedlings).to_json};
+  var justTags = #{@tags.to_json};
+  for (var i = 0; i < justTags.length; i++) {
+  /alert(justTags[i].tag.name);
+  }
+  var seedsTags = #{@taggings.to_json};
+  var seedsTagsSeedlingIdArray = new Array();
+  var seedsTagsTagIdArray = new Array();
+  var numTags = #{@taggings.length.to_json};
+  for (var i = 0; i < seedsTags.length; i++) {
+  seedsTagsSeedlingIdArray.push(seedsTags[i].tagging.seedling_id);
+  seedsTagsTagIdArray.push(seedsTags[i].tagging.tag_id);
+  }
+  /alert(seedsTagsSeedlingIdArray);
+  /alert(seedsTagsTagIdArray);
+  /alert(numTags);
+  /alert(seedTagsNames);
+  
 
+  
   var ge;
-  var gex;
   var tosearch = "";
   var placemark = new Array();
   var matchseeds = new Array();  
@@ -81,24 +151,88 @@
   
   function init(){
   google.earth.createInstance('map3d', initCB, failureCB);
+  
+  addSampleButton('Show Blue Marble Layer', blueMarbleClick);
+  /addSampleButton('Hide Blue Marble Layer', hideBlueMarble);
+  addSampleButton('Show Borders', showBorders);
+  addSampleButton('Hide Borders', hideBorders);
   }
   
   function initCB(instance){
   ge = instance;
   ge.getWindow().setVisibility(true);
   ge.getNavigationControl().setVisibility(ge.VISIBILITY_SHOW);
-  ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true);
+  
   
   plantseeds(tosearch);
 
-
   }
+  
   function failureCB(errorCode){
   }
-
+  
   google.setOnLoadCallback(init);
 
+  var currentKmlObject = null;
   
+  function blueMarbleClick() {
+
+  var url = "http://www.gearthblog.com/kmfiles/BlueMarble.kml";
+  /var url = "http://onearth.jpl.nasa.gov/OnEarth_BMNG.kml";
+  google.earth.fetchKml(ge, url, function(kmlObject){
+  if (kmlObject) {
+  // add the fetched KML to Earth
+  currentKmlObject = kmlObject;
+  ge.getFeatures().appendChild(currentKmlObject);
+  } else {
+  / wrap alerts in API callbacks and event handlers
+  / in a setTimeout to prevent deadlock in some browsers
+  setTimeout(function() {
+  alert('Bad or null KML.');
+  }, 0);
+  }
+
+  });
+  /var blueMarbleKml = ge.parseKml(
+  /'<?xml version="1.0" encoding="UTF-8"?>' +
+  /'<kml xmlns="http://earth.google.com/kml/2.1">' +  
+  /'<Folder id="BMNG">' +
+  /'<name>NASA Blue Marble Next Generation, JPL WMS Server</name>' +
+  /'<description> NASA BMNG. Web Map Service image access from http://OnEarth.jpl.nasa.gov/. There are twelve styles, one for each month of the year.</description>' +
+  /'<NetworkLink>' +
+  /'<visibility>1</visibility>' +
+  /'<open>1</open>' +
+  /'<name>NASA BMNG</name>' +
+  /'<Region>' +
+  /'<LatLonAltBox>' +
+  /'<north>90</north> <south>-90</south> <east>180</east> <west>-180</west> <minAltitude>0</minAltitude> <maxAltitude>0</maxAltitude>' +
+  /'</LatLonAltBox>' +
+  /'<Lod> <minLodPixels>0</minLodPixels> <maxLodPixels>-1</maxLodPixels> </Lod>' +
+  /'</Region>' +
+  /'<Link><href>http://onearth.jpl.nasa.gov/bmng_Jun.kml</href><viewRefreshMode>onRegion</viewRefreshMode></Link>' +
+  /'</NetworkLink>' +
+  /'</Folder>' +
+  /'</kml>');
+  
+  /ge.getFeatures().appendChild(blueMarbleKml);
+  }
+  function hideBlueMarble() {
+  ge.getFeatures().removeChild(currentKmlObject);
+  currentKmlObject = null;
+  }
+  
+  function showBorders() {
+  var layerRoot = ge.getLayerRoot();
+  layerRoot.enableLayerById(ge.LAYER_BORDERS, true);
+  }
+  
+  function hideBorders() {
+  var layerRoot = ge.getLayerRoot();
+  layerRoot.enableLayerById(ge.LAYER_BORDERS, false);
+
+  }
+
+
   //   S E A R C H     C R I T E R I A     F O R        P L A N T I N G       S E E D S
   function seedsearch()
   {
@@ -110,7 +244,102 @@
   // Plant seeds according to search criteria
   plantseeds(tosearch);
   }
+  //   S E A R C H     C R I T E R I A     F O R        T A G S
+  function tagsearch()
+  {
+  tosearch = (document.getElementById('tagsearch').value).toLowerCase();
   
+  // Remove the originally loaded seedlings
+  for (var i = 0; i < placemark.length; i++)
+  { ge.getFeatures().removeChild(placemark[i]); }
+    
+  // Plant seeds according to search criteria
+  plantTaggedSeeds(tosearch);
+  }
+  
+  //   P L A N T I N G      T A G G E D       S E E D S       O N       G O O G L E        E A R T H 
+  function plantTaggedSeeds(tag)
+  {  
+  // Icon Style for Seedling placemarks
+  var icon = ge.createIcon('');
+  icon.setHref('http://karunatree.com/images/seedlings/seedicon.png');
+  var style = ge.createStyle('');
+  style.getIconStyle().setIcon(icon);
+  /gex = new GEarthExtensions(ge);
+    
+  // Initialize Counter (counts the total number of matches)
+  var count = 0;         
+  // Initialize the array that would contain the matched seedlings.
+  matchseeds = [];
+  seedIds = [];
+  // Initialize the current seedling to 0 (first in the array)
+  currentseed = 0;
+  
+
+  //  - - - - - - - - R E T R I E V E      M A T C H E S - - - - - - - - - - -
+  for (var i = 0; i < seedTagsNames.length; i++)
+  {
+  // get the title of current seedling being examined
+  
+  // if the seedling tag contains the search string:
+
+  if (seedTagsNames[i] == tag)
+  {
+  
+  seedIds[i] = seedsTagsSeedlingIdArray[i];
+
+  var j = seedIds[i];
+  // Copy matched seeds into a separate array
+  
+  var k = seedlingsById[j]
+  
+  matchseeds[count] = seedlingsById[j];
+  
+  
+  // Create placemarks for all matched seedlings
+  placemark[count] = ge.createPlacemark('');
+  var point = ge.createPoint('');
+  placemark[count].setStyleSelector(style);
+  point.setLatitude(seedlingsById[j].seedling.lat);
+  point.setLongitude(seedlingsById[j].seedling.lon);
+  placemark[count].setName(seedlingsById[j].seedling.title);
+
+  var title = tagTitles[j];
+  var link = go_to_link(title);
+  link_to_details = "Details";
+  link_to_details = link_to_details.link(link);
+
+  placemark[count].setDescription(seedlingsById[j].seedling.description + '\n' + link_to_details);
+  point.setAltitudeMode(13);
+  placemark[count].setGeometry(point);
+  
+
+  
+  
+  ge.getFeatures().appendChild(placemark[count]);
+  // Increment match count
+  count = count+1;
+  } // End of if structure
+  } //  - - - - - - - - - - - - - - - - - - - - - - - - - - - End of FOR loop
+  
+  // Populate the stat fields for the current search  
+  document.getElementById("lblshowing").value =  count; 
+  
+  if (tag != "" && count!=0)
+  {document.getElementById("lblsearch").value =  "containing \"" + tag + "\"";}
+  else 
+  if(tag != "")
+  {document.getElementById("lblsearch").value =  "No seedlings match";}
+  else
+  {document.getElementById("lblsearch").value =  "All"; }
+  
+  var length = (matchseeds.length.toString());
+  
+  document.getElementById("lblcurrent").value =  "Vewing seedling " + (currentseed + 1) + " of " + (matchseeds.length);
+  
+  // Look at the first seedling matching Search Critera
+  lookat();
+  }
   
   //   P L A N T I N G       S E E D S       O N       G O O G L E        E A R T H 
   function plantseeds(seedtitle)
@@ -120,7 +349,7 @@
   icon.setHref('http://karunatree.com/images/seedlings/seedicon.png');
   var style = ge.createStyle('');
   style.getIconStyle().setIcon(icon);
-  gex = new GEarthExtensions(ge);
+  /gex = new GEarthExtensions(ge);
     
   // Initialize Counter (counts the total number of matches)
   var count = 0;         
@@ -148,47 +377,40 @@
   point.setLatitude(seeds[i].seedling.lat);
   point.setLongitude(seeds[i].seedling.lon);
   placemark[count].setName(seeds[i].seedling.title);
-  
-  // Retireve Link to show page for this seedling
-  var link = go_to_link(titles[i]);
-  link_to_details = "here";
+
+  var title = titles[i];
+  /var seedid = seeds[i].seedling.id;
+  var link = go_to_link(title);
+  link_to_details = "Details";
   link_to_details = link_to_details.link(link);
-  // Retireve  Url of the thumbnail Image to be displayed
-  var imageurl = imageurls[i];
-  // Create an inner html 
-  var innerhtml = 
-  ' <div id="balloongrid">'  
-  + '<p><a href="' + link + '">'
-  + '<img id="more-link" src="' + imageurl + '" align="left" alt="Project image" /> </a> ' 
-  + seeds[i].seedling.description 
-  + '</p><p align="right"> <font size="-2"> click on the Image above or ' + link_to_details + ' to view details. </font></p></div>';
-  
-  // Use the above created inner HTML for placemark description
-  placemark[count].setDescription(innerhtml);
+
+  placemark[count].setDescription(seeds[i].seedling.description + '\n' + link_to_details);
   point.setAltitudeMode(13);
   placemark[count].setGeometry(point);
+  
+
+  
+  
   ge.getFeatures().appendChild(placemark[count]);
-  
-  
   // Increment match count
   count = count+1;
   } // End of if structure
   } //  - - - - - - - - - - - - - - - - - - - - - - - - - - - End of FOR loop
   
   // Populate the stat fields for the current search  
-  document.getElementById("lblshowing").innerHTML =  count; 
+  document.getElementById("lblshowing").value =  count; 
   
   if (seedtitle != "" && count!=0)
-  {document.getElementById("lblsearch").innerHTML =  "containing \"" + seedtitle + "\"";}
+  {document.getElementById("lblsearch").value =  "containing \"" + seedtitle + "\"";}
   else 
   if(seedtitle != "")
-  {document.getElementById("lblsearch").innerHTML =  "No seedlings match";}
+  {document.getElementById("lblsearch").value =  "No seedlings match";}
   else
-  {document.getElementById("lblsearch").innerHTML =  "All"; }
+  {document.getElementById("lblsearch").value =  "All"; }
   
   var length = (matchseeds.length.toString());
   
-  document.getElementById("lblcurrent").innerHTML =  "Vewing seedling " + (currentseed + 1) + " of " + (matchseeds.length);
+  document.getElementById("lblcurrent").value =  "Vewing seedling " + (currentseed + 1) + " of " + (matchseeds.length);
   
   // Look at the first seedling matching Search Critera
   lookat();
@@ -215,8 +437,8 @@
   { 
   currentseed++;
   lookat();
-  document.getElementById("lblcurrent").innerHTML =  "Vewing seedling " + (currentseed + 1) + " of " + matchseeds.length; }
-  else {document.getElementById("lblcurrent").innerHTML =  "Already at Last Seedling!!!"; }
+  document.getElementById("lblcurrent").value =  "Vewing seedling " + (currentseed + 1) + " of " + matchseeds.length; }
+  else {document.getElementById("lblcurrent").value =  "Already at Last Seedling!!!"; }
   }
   
   // < < P R E V I O U S
@@ -226,8 +448,8 @@
   {
   currentseed--;
   lookat(); 
-  document.getElementById("lblcurrent").innerHTML =  "Vewing seedling " + (currentseed + 1) + " of " + matchseeds.length; }
-  else {document.getElementById("lblcurrent").innerHTML =  "Already at First Seedling!!!"; }
+  document.getElementById("lblcurrent").value =  "Vewing seedling " + (currentseed + 1) + " of " + matchseeds.length; }
+  else {document.getElementById("lblcurrent").value =  "Already at First Seedling!!!"; }
   }  
 
   
@@ -250,7 +472,6 @@
   function go_to_link(symbol, seed)
   {
   part_of_link = symbol;
-  /full_link = "/seedlings/" + part_of_link + "/" + seed;
   full_link = "/seedlings/" + part_of_link;
   return full_link;
   }
@@ -261,6 +482,7 @@
   groupA[groupA.length] = "list_a_excl";
   groupA[groupA.length] = "list_b_excl";
   groupA[groupA.length] = "list_c_excl";
+  groupA[groupA.length] = "list_d_excl";
   
   // Swapping the Lists
   function swap(listIdPrefix, group) {

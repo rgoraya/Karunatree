@@ -472,3 +472,14 @@ background-repeat: no-repeat;
 background-position:center;
 }
 
+#index-background-column {
+	background: url('../images/seedlings/seedling_art2.jpg');
+	min-height: 600px;
+	min-width: 300px;
+	font-size:12px;
+    color: #307BA0;
+	border: 1px solid #669900;
+	margin:4px;
+	padding:4px;
+}
+

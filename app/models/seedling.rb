@@ -45,7 +45,7 @@ class Seedling < ActiveRecord::Base
     seedTags = Array.new
     seedlings.each do |seedling|
       for tag in seedling.tags
-        seedTags.push(tag.id)
+        seedTags.push(tag.name)
       end
       #seedTags.push(seedling.tag_names)
     end
