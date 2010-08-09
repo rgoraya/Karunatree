@@ -1,11 +1,16 @@
 require "set"
 
+#id
+{}
+
 #tabseed /*The table containing Globe and Form*/
 {
 border-collapse:collapse;
 width:100%;
 padding:0px;
 vertical-align:top;  
+font-family:Arial, Helvetica, sans-serif;
+font-size:13px;
 }
 
 #map3d  /*Earth Plugin Div Styles*/
@@ -40,11 +45,6 @@ width:75%;
 padding:0px;
 }
 
-#globe-column.show {
-	width: 20%;
-	height: 20%;
-	
-}
 #details-column {
 	width: 30%;
 	height: auto;
@@ -70,10 +70,17 @@ padding:10px;
 #globecontrols
 {
 width:100%;
-padding:0px;
-Font-size:12px;
 color:#307BA0;
-word-break:break-all;
+font-family:Arial, Helvetica, sans-serif;
+font-size:13px;
+}
+
+#globecontrols a
+{
+text-decoration:none;
+color:#307BA0;
+font-family:Arial, Helvetica, sans-serif;
+font-size:13px;
 }
 
 #showseed
@@ -159,17 +166,37 @@ background:url('../images/seedlings/prev.jpg') -4px -84px;
 #imggrid
 {
 padding: 4px;
-background-image: url('satgraphics/load.gif');
-background-repeat: no-repeat;
-background-position:center;
-text-align: center;
 background-color:#E6E6E6;
 border:1px solid #83B0C6;
-
+/* Curved Borders */
 -moz-border-radius: 3px;  
 -webkit-border-radius: 3px;  
 -khtml-border-radius: 3px;     
 border-radius: 3px;          
+
+/* Shadow effects */
+-moz-box-shadow: 2px 2px 3px #CCCCCC;
+-webkit-box-shadow: 2px 2px 3px #CCCCCC;
+box-shadow: 2px 2px 3px #CCCCCC;
+-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
+filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+
+/* Font properties */
+font-family:Arial, Helvetica, sans-serif;
+font-size:13px;
+padding:5px;
+text-align:left;
+}
+
+#imggrid.admindiv{
+background-image: url('../images/seedlings/paw.png');
+background-repeat: no-repeat;
+background-position: right top;
+min-height:150px;
+}
+
+#imggrid.mapdiv{
+text-align:center;
 }
 
 #balloongrid
@@ -182,7 +209,7 @@ Font-size:13px;
 color:#307BA0;
 font-family:Arial, Helvetica, sans-serif;
 width:350px;
-min-height:100px;
+min-height:140px;
 
 -moz-border-radius: 3px;  
 -webkit-border-radius: 3px;  
@@ -194,7 +221,6 @@ border-radius: 3px;
 #imggridmore
 {
 padding: 4px;
-text-align: center;
 background-color:#E6E6E6;
 border-left:1px solid #83B0C6;
 border-right:1px solid #83B0C6;
@@ -208,12 +234,28 @@ border-top:1px solid #83B0C6;
 -khtml-border-top-right-radius: 3px;
 border-top-left-radius:3px;
 border-top-right-radius:3px;          
+
+-moz-box-shadow: 2px 2px 3px #CCCCCC;
+-webkit-box-shadow: 2px 2px 3px #CCCCCC;
+box-shadow: 2px 2px 3px #CCCCCC;
+/* For IE 8 */
+-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
+/* For IE 5.5 - 7 */
+filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+
+font-family:Arial, Helvetica, sans-serif;
+font-size:13px;
+padding:5px;
+text-align:left;
+}
+
+#imggridmore.projectdiv{
+text-align:center;
 }
 
 #imggridclip
 {
 padding: 4px;
-text-align: center;
 background-color:#E6E6E6;
 border-left:1px solid #83B0C6;
 border-right:1px solid #83B0C6;
@@ -227,6 +269,28 @@ border-bottom:1px solid #83B0C6;
 -khtml-border-bottom-right-radius: 3px;
 border-bottom-left-radius:3px;
 border-bottom-right-radius:3px         
+
+-moz-box-shadow: 2px 2px 3px #CCCCCC;
+-webkit-box-shadow: 2px 2px 3px #CCCCCC;
+box-shadow: 2px 2px 3px #CCCCCC;
+/* For IE 8 */
+-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
+/* For IE 5.5 - 7 */
+filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+
+font-family:Arial, Helvetica, sans-serif;
+font-size:13px;
+padding:5px;
+text-align:left;
+}
+
+#imggridclip.bylinediv{
+font-size:16px;
+text-align:center;
+}
+
+#imggridclip.clip{
+text-align:center;
 }
 
 #tabseedlings /*tour Destinations Styles*/
@@ -352,29 +416,9 @@ width: 320px;
 
 
 #descrdiv{
-background-image: url('../images/seedlings/trans.png');
-background-repeat: no-repeat;
-background-position: right top;
-
 font-family:Arial, Helvetica, sans-serif;
 font-size:13px;
 padding:5px;
-}
-
-.styled 
-{
-/*    -moz-border-radius: 10px;  */
-/*    -webkit-border-radius: 10px;  */
-/*    -khtml-border-radius: 10px;   */  
-/*    border-radius: 10px;          */
-
--moz-box-shadow: 2px 2px 3px #CCCCCC;
--webkit-box-shadow: 2px 2px 3px #CCCCCC;
-box-shadow: 2px 2px 3px #CCCCCC;
-/* For IE 8 */
--ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
-/* For IE 5.5 - 7 */
-filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
 }
 
 .titlecolor
@@ -391,6 +435,9 @@ quotes: "«" "»" "'" "'";
 {
 max-width:620px;	
 max-height:500px;
+background-image: url('../images/seedlings/load.gif');
+background-repeat: no-repeat;
+background-position:center;
 }
 
 #more-link
@@ -406,5 +453,22 @@ max-height:100px;
 border:3px solid #ffffff;	
 }
 
+#lbladdress
+{
+padding:4px;
+}
 
+#map_canvas
+{
+background-image: url('../images/seedlings/load.gif');
+background-repeat: no-repeat;
+background-position:center;
+}
+
+#map_canvas_thumb
+{
+background-image: url('../images/seedlings/load.gif');
+background-repeat: no-repeat;
+background-position:center;
+}
 

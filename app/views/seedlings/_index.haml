@@ -40,11 +40,11 @@
         %tr
           %td{:align => "right"}Showing seedlings:       
           %td
-            %input{:id => "lblsearch", :Size => "20", :type => "label", :disabled => true, :style => "border: 0px solid #000000;"}/
+            %div{:id => "lblsearch"}
         %tr
           %td{:align => "right"}Total Seedlings displayed:
           %td
-            %input{:id => "lblshowing", :Size => "2", :type => "label", :disabled => true,  :style => "border: 0px solid #000000;"}/  
+            %div{:id => "lblshowing"}
         %tr
           %td{:align => "right"}
             %a{:id => "prev", :Title => "Jump to Next seedling", :href => "javascript:previous()"}
@@ -52,7 +52,7 @@
             %a{:id => "next", :Title => "Jump to Previous seedling", :href => "javascript:next()"}
         %tr
           %td{:colspan => "2", :align => "center"}    
-            %input{:id => "lblcurrent", :Size => "30", :type => "label", :disabled => true, :style => "border: 0px solid #000000;"}/
+            %div{:id => "lblcurrent"}
 
 %br 
 
@@ -68,7 +68,6 @@
   // Retrieve all image URLs
   var imageurls = #{Seedling.get_image_url(@seedlings).to_json};
 
-    
   var ge;
   var gex;
   var tosearch = "";
@@ -177,19 +176,19 @@
   } //  - - - - - - - - - - - - - - - - - - - - - - - - - - - End of FOR loop
   
   // Populate the stat fields for the current search  
-  document.getElementById("lblshowing").value =  count; 
+  document.getElementById("lblshowing").innerHTML =  count; 
   
   if (seedtitle != "" && count!=0)
-  {document.getElementById("lblsearch").value =  "containing \"" + seedtitle + "\"";}
+  {document.getElementById("lblsearch").innerHTML =  "containing \"" + seedtitle + "\"";}
   else 
   if(seedtitle != "")
-  {document.getElementById("lblsearch").value =  "No seedlings match";}
+  {document.getElementById("lblsearch").innerHTML =  "No seedlings match";}
   else
-  {document.getElementById("lblsearch").value =  "All"; }
+  {document.getElementById("lblsearch").innerHTML =  "All"; }
   
   var length = (matchseeds.length.toString());
   
-  document.getElementById("lblcurrent").value =  "Vewing seedling " + (currentseed + 1) + " of " + (matchseeds.length);
+  document.getElementById("lblcurrent").innerHTML =  "Vewing seedling " + (currentseed + 1) + " of " + (matchseeds.length);
   
   // Look at the first seedling matching Search Critera
   lookat();
@@ -216,8 +215,8 @@
   { 
   currentseed++;
   lookat();
-  document.getElementById("lblcurrent").value =  "Vewing seedling " + (currentseed + 1) + " of " + matchseeds.length; }
-  else {document.getElementById("lblcurrent").value =  "Already at Last Seedling!!!"; }
+  document.getElementById("lblcurrent").innerHTML =  "Vewing seedling " + (currentseed + 1) + " of " + matchseeds.length; }
+  else {document.getElementById("lblcurrent").innerHTML =  "Already at Last Seedling!!!"; }
   }
   
   // < < P R E V I O U S
@@ -227,8 +226,8 @@
   {
   currentseed--;
   lookat(); 
-  document.getElementById("lblcurrent").value =  "Vewing seedling " + (currentseed + 1) + " of " + matchseeds.length; }
-  else {document.getElementById("lblcurrent").value =  "Already at First Seedling!!!"; }
+  document.getElementById("lblcurrent").innerHTML =  "Vewing seedling " + (currentseed + 1) + " of " + matchseeds.length; }
+  else {document.getElementById("lblcurrent").innerHTML =  "Already at First Seedling!!!"; }
   }  
 
   

@@ -10,34 +10,36 @@
     %div{:id => "contentcolumn"}
       .innertube
         // Project Block
-        %div{:id => "imggridmore", :class => "styled"}
+        %div{:id => "imggridmore", :class => "projectdiv"}
           = image_tag @seedling.project.url(:large), :id => "proj-img"  
         // Byline Block
-        %div{:id => "imggridclip", :class => "styled"} 
+        %div{:id => "imggridclip", :class => "bylinediv"} 
           %strong 
             %q{:class => "titlecolor"}#{@seedling.title}
           by 
           %strong=h @seedling.authors
         %br
-        %div{:id => "contentwrapper", :class => "styled"}
-          // Segmented controls block (currently put in a random image sprites button)         
-          %div{:id => "btndiv"}
-            //%a{:id=>"reset", :Title => "Set the Seedling position", :href => "javascript:shiftplacemark()"}
-        // Audio controls block
-        %div{:id => "audiodiv"}
-          %audio{ :src => @seedling.audio_message.url, :controls => true}      
+
+        %div{:id => "imggrid", :style =>"min-height:25px;"}
+          %div{:id => "contentwrapper"}
+            // Segmented controls block (currently put in a random image sprites button)         
+            %div{:id => "btndiv"}
+              //%a{:id=>"reset", :Title => "Set the Seedling position", :href => "javascript:shiftplacemark()"}
+          // Audio controls block
+          %div{:id => "audiodiv"}
+            %audio{ :src => @seedling.audio_message.url, :controls => true}      
+
         %br
-        %br    
         // Description block
-        %div{:id => "descrdiv", :class => "styled"}
+        %div{:id => "imggrid", :class => "admindiv"}
           %b{:class => "titlecolor"} Description
           %p
           =h @seedling.description      
         %br
-        // Comments block
         
-        // Description block
-        %div{:id => "descrdiv", :class => "styled"}
+        
+        // Comments block
+        %div{:id => "imggridmore"}
           %b{:class => "titlecolor"} Comments
           %div{:id => "comment"}
             - @comments = @seedling.comments
@@ -51,10 +53,10 @@
                 Says:
                 = @comments[i].body
             = render :partial => "comments/comment", :object => @seedling.comments
-        %div{:id => "descrdiv", :class => "styled"}
+        %div{:id => "imggridclip"}
           
           %p 
-            %b{:class => "titlecolor"} New Comment:       
+            %b{:class => "titlecolor"} New Comment       
           - form_remote_for([@seedling, @seedling.comments.build]) do |f|
             = error_messages_for "comment"
             
@@ -62,8 +64,8 @@
               = f.label :author
               = f.text_field :author
             %p
-              = f.label :body
-              = f.text_area :body, :rows => 10
+              
+              = f.text_area :body, :rows => 6, :cols => 70
             %p
               = f.submit "Submit"      
         %br  
@@ -72,64 +74,67 @@
   %div{:id => "leftcolumn"}
     .innertube
       // Hybrid Google Map block
-      %div{:id => "imggrid", :class => "styled"}
-        %img{:id => "map_canvas", :width => "180px", :src =>"", :alt => "thumbnail map"}
+      %div{:id => "imggrid", :class => "mapdiv"}
+        %img{:id => "map_canvas", :width => "178px", :src =>"", :alt => "thumbnail map"}
         %br
-        %b{:class => "titlecolor"} Planted here 
+        %b{:class => "titlecolor"} Planted here
+        %br
+        %div{:id => "lbladdress"}   
       // Block containing a table with Likes, Tweets and Friendly ids  
       %br
-      %div{:class => "styled"}      
+      %div{:id => "imggridmore"}      
         %table{:id => "globecontrols"}
           %tr
-            %td
+            %td{:class => "titlecolor"}
               %button(){:name => "Like", :title => "Like this seedling!"}
                 Like! #{@seedling.likes}
-              %a{:href => "http://localhost:3000#{url_for(@seedling)}"}
-                Like this seedling! 
-              %td
-              
-          %tr
             %td
-              %img{:src => "http://twitter-badges.s3.amazonaws.com/t_small-a.png"}
-            
-              %a{:href => "http://twitter.com/home?status=Great @karunatree seedling here: http://localhost:3000#{url_for(@seedling)}", :title => "Tweet this!"}
-                Share this seedling on Twitter!
+              %a{:href => "http://localhost:3000#{url_for(@seedling)}"}
+                Like this seedling!              
           %tr
-            %td{:colspan => "2"}
-              %strong
-                www.karunatree.com/seedlings/#{@seedling.friendly_id}
+            %td{:class => "titlecolor"}
+              %img{:src => "http://twitter-badges.s3.amazonaws.com/t_small-a.png"}
+            %td
+              %a{:href => "http://twitter.com/home?status=Great @karunatree seedling here: http://localhost:3000#{url_for(@seedling)}", :title => "Tweet this!"}
+                Share seedling on Twitter!
+          %tr
+            %th{:class => "titlecolor"}
+              URL
+            %td{:style => "word-break:break-all;"}
+              www.karunatree.com/seedlings/#{@seedling.friendly_id}
                                
-      %br
+      
       // Tags block
-      %div{:class => "styled"}      
-        %b{:class => "titlecolor"} Tags:
-        %p
-        - for tag in @seedling.tags
-          =tag.name
+      %div{:id => "imggridclip"}      
+        %b{:class => "titlecolor"} Tags
         %br
+        - for tag in @seedling.tags
+          #{tag.name}
+          
+      %br
       // Geo data block    
-      %div{:class => "styled"}
+      %div{:id => "imggrid"}
         %ul#switchlist
           %li
             %div{:id => "list_a_excl_collapsed", :style => "display:block"}
-              %a{:href => "javascript:swap('list_a_excl',groupA)"} Geo Details
+              %a{:href => "javascript:swap('list_a_excl',groupA)"} View Geo Details
             %div{:id =>"list_a_excl_expanded", :style => "display:none"}
               %a{:href => "javascript:swap('list_a_excl',groupA)"} Hide Details
               // The details table which switches open:        
               %table{:id => "globecontrols"} 
                 %tr
                   %td{:align => "left"}
-                    %strong Latitude
+                    Latitude
                   %td{:align => "left"}  
                     =h @seedling.lat
                 %tr
                   %td{:align => "left"}
-                    %strong Longitude
+                    Longitude
                   %td{:align => "left"}  
                     =h @seedling.lon
                 %tr
                   %td{:align => "left"}
-                    %strong Altitude
+                    Altitude
                   %td{:align => "left"}  
                     =h @seedling.alt        
                     
@@ -139,20 +144,20 @@
   %div{:id => "rightcolumn"}
     .innertube
       // More_by block
-      %div{:id => "imggridmore", :class => "styled"}      
+      %div{:id => "imggridmore", :class => "projectdiv"}      
         More by
         %strong=h @seedling.authors
         %br
         = link_to image_tag (@seedling.project.url(:thumbnail), :width => "60px", :id => "more-link") , @seedling
       // Clippings block      
-      %div{:id => "imggridclip", :class => "styled"}      
+      %div{:id => "imggridclip", :class => "clip"}      
         This Seedling has "x" clippings
         %br
         %img{:id => "map_canvas_thumb", :width => "60px", :src =>"", :alt => "thumbnail map"}
         %br
       %br
       // Contact us block   
-      %div{:class => "styled"}      
+      %div      
         Contact Us!
         %br
           If you haven't yet filled out a consent form for your seedling, we can't show your name on the site!  In order to obtain a consent form, please e-mail delyons (at) uci (dot) edu with the subject line "Consent Form for (your name)."
@@ -165,43 +170,45 @@
 
          
 %p
-  = link_to "Edit", edit_seedling_path(@seedling)
-  |
-  = link_to "Destroy", @seedling, :confirm => 'Are you sure?', :method => :delete
-  |
+  //= link_to "Edit", edit_seedling_path(@seedling)
+  //|
+  //= link_to "Destroy", @seedling, :confirm => 'Are you sure?', :method => :delete
+  //|
   = link_to "View All", seedlings_path
 
-
+%script{:src => "http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA"}
 %script{:type => "text/javascript"}
   
-  // Retrieve all image URLs
-  //var seeds = #{@seedling.user.seedlings.to_json};
-  
-  //alert(seeds);
-  
-  // Retrieve all seedling friendly urls
-  //var moreby = #{User.get_more_by(@seedling).to_json};
+  var map;
+  var lat = #{@seedling.lat.to_json};
+  var lon = #{@seedling.lon.to_json};
     
   // Get the URL of the static Google Map to be displayed in map_canvas Div
   function MapImg() {
   
-  var lat = #{@seedling.lat.to_json};
-  var lon = #{@seedling.lon.to_json};
 
+  
+  
+  
   var mapurl = "http://maps.google.com/maps/api/staticmap?" +
   "center=" + lat + "," + lon +
   "&zoom=2&size=200x160&maptype=hybrid" +
-  "&markers=icon:http://sites.google.com/site/rimxzphoto/files/seedicon.png|" + lat + "," + lon +
+  "&markers=icon:http://karunatree.com/images/seedlings/seedicon.png|" + lat + "," + lon +
   "&sensor=false";
   
   var mapurlthumb = "http://maps.google.com/maps/api/staticmap?" +
   "center=" + lat + "," + lon +
   "&zoom=1&size=300x250&maptype=hybrid" +
-  "&markers=icon:http://sites.google.com/site/rimxzphoto/files/seedicon.png|" + lat + "," + lon +
+  "&markers=icon:http://karunatree.com/images/seedlings/seedicon.png|" + lat + "," + lon +
   "&sensor=false";
   
   document.getElementById("map_canvas").src= mapurl;
   document.getElementById("map_canvas_thumb").src= mapurlthumb;
+  
+  reverse();
+  
+  
+  
   }
   
   var groupA = new Array();
@@ -222,3 +229,22 @@
   expandedList.style.display = "none";
   }
   }  
+  
+  function reverse() {
+  var geocoder;
+  var address;
+  map = new GMap2(document.getElementById("map_canvas"));
+  var location=new GLatLng(lat,lon);
+  geocoder = new GClientGeocoder();
+  geocoder.getLocations(location, showAddress);
+  }
+  
+  function showAddress(response) {
+  map.clearOverlays();
+  if (!response || response.Status.code != 200) {
+  } else {
+  place = response.Placemark[0];
+  point = new GLatLng(place.Point.coordinates[1],place.Point.coordinates[0]);
+  document.getElementById("lbladdress").innerHTML = place.address;
+  }
+  }
