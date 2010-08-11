@@ -11,15 +11,10 @@
           %div{:id => "map3d"}
         %td{:id => "formcolumn"}  
           .form-row
-            %label{:for => "user"} User &nbsp;
-            = form.text_field :user_id, :size => Seedling::USER_SIZE, :maxlength => Seedling::USER_SIZE
-            /= form.hidden_field :user_id, :value => @seedling.project.url
+            = form.hidden_field :user_ids, :value => [current_user.id]
           .form-row
             %label{:for => "title"} Title &nbsp;
             = form.text_field :title, :size => Seedling::TITLE_SIZE, :maxlength => Seedling::TITLE_MAX_LENGTH
-          .form
-            %label{:for => "authors"} Authors &nbsp;
-            = form.text_field :authors
           .form-row
             %label{:for => "description"} Description &nbsp;
             = form.text_area :description, :size => Seedling::DESCRIPTION_SIZE, :maxlength => Seedling::DESCRIPTION_MAX_LENGTH

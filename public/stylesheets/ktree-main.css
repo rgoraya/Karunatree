@@ -1,3 +1,5 @@
+/* @override http://localhost:3000/stylesheets/ktree-main.css?1281484114 */
+
 /* @override 
 	http://localhost:3000/stylesheets/ktree-main.css?1270607370
 	http://localhost:3000/stylesheets/ktree-main.css?1270677087
@@ -23,10 +25,24 @@ body {
 }
 
 #header {
+	border-top: 1px solid #80ce21;
 	background: #5D9405;
-	color: #fef165;
-	padding: 0.3em;
+	background: -webkit-gradient(linear, left top, left bottom, from(#5D9405), to(#436e0c));
+	background: -moz-linear-gradient(top,  #5D9405,  #436e0c);
+
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	font: bold 14px/18px "Lucida Grande", "Verdana", sans-serif;
+	color: rgba(255,255,255,1.0);
+	text-decoration: none;
 	font-size: 2.5em;
+	padding: 20px;
+}
+
+.dummy {
+	background-color: #80ce21;
 }
 
 /* Thanks to Mike Rundle (@flyosity) for the sample CSS: http://pastie.org/947656 */

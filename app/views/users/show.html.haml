@@ -12,4 +12,4 @@
 #user_seedlings
   - @user.seedlings.each do |seedling|
     %a{:href => seedling_path(seedling)}
-    %img{:src => seedling.picture.url(:thumb)}/
+    %img{:src => seedling.project.url(:thumb)}/

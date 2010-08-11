@@ -1,7 +1,7 @@
 
 class Seedling < ActiveRecord::Base
   
-  belongs_to :user
+  has_and_belongs_to_many :users
   has_many :comments, :dependent => :destroy
   has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings
@@ -39,6 +39,13 @@ class Seedling < ActiveRecord::Base
   #def readonly?
   #  return false
   #end
+  
+  def linked_usernames
+    linked_usernames = Array.new
+    self.users.each do |user|
+      linked_usernames.push()
+    end
+  end
   
 
   def self.get_tags(seedlings)

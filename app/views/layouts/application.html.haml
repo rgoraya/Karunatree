@@ -8,6 +8,10 @@
     /= javascript_include_tag "prototype.js"
     /= javascript_include_tag "effects.js"
     = yield :include_custom_javascript_head
+    %script{:type => "text/javascript", :src => "http://use.typekit.com/wsn0ttv.js"}
+    %script{:type => "text/javascript"}
+      :plain
+        try{Typekit.load();}catch(e){}
   
   %body
     #header Karunatree

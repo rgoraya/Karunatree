@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   before_create :create_character
   
   has_one :character
-  has_many :seedlings
+  has_and_belongs_to_many :seedlings
   
   has_attached_file :avatar, :styles => { :square => "80x80#", :thumbnail => "100x100>", :small => "240x240>", :medium  => "500x500>", :large => "1024x1024>" },
                     :whiny_thumbnails => true,
