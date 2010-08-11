@@ -144,6 +144,7 @@
   var placemark = new Array();
   var matchseeds = new Array();  
   var currentseed = 0;
+  var place;
   
   google.load("earth", "1.x");
   google.load("maps", "2.x");
@@ -153,9 +154,9 @@
   google.earth.createInstance('map3d', initCB, failureCB);
   
   addSampleButton('Show Blue Marble Layer', blueMarbleClick);
-  /addSampleButton('Hide Blue Marble Layer', hideBlueMarble);
   addSampleButton('Show Borders', showBorders);
   addSampleButton('Hide Borders', hideBorders);
+  
   }
   
   function initCB(instance){
@@ -163,7 +164,7 @@
   ge.getWindow().setVisibility(true);
   ge.getNavigationControl().setVisibility(ge.VISIBILITY_SHOW);
   
-  
+
   plantseeds(tosearch);
 
   }
@@ -171,8 +172,14 @@
   function failureCB(errorCode){
   }
   
+ 
+  
+  
   google.setOnLoadCallback(init);
 
+
+
+  / Sets up the blue marble KML
   var currentKmlObject = null;
   
   function blueMarbleClick() {
@@ -193,34 +200,14 @@
   }
 
   });
-  /var blueMarbleKml = ge.parseKml(
-  /'<?xml version="1.0" encoding="UTF-8"?>' +
-  /'<kml xmlns="http://earth.google.com/kml/2.1">' +  
-  /'<Folder id="BMNG">' +
-  /'<name>NASA Blue Marble Next Generation, JPL WMS Server</name>' +
-  /'<description> NASA BMNG. Web Map Service image access from http://OnEarth.jpl.nasa.gov/. There are twelve styles, one for each month of the year.</description>' +
-  /'<NetworkLink>' +
-  /'<visibility>1</visibility>' +
-  /'<open>1</open>' +
-  /'<name>NASA BMNG</name>' +
-  /'<Region>' +
-  /'<LatLonAltBox>' +
-  /'<north>90</north> <south>-90</south> <east>180</east> <west>-180</west> <minAltitude>0</minAltitude> <maxAltitude>0</maxAltitude>' +
-  /'</LatLonAltBox>' +
-  /'<Lod> <minLodPixels>0</minLodPixels> <maxLodPixels>-1</maxLodPixels> </Lod>' +
-  /'</Region>' +
-  /'<Link><href>http://onearth.jpl.nasa.gov/bmng_Jun.kml</href><viewRefreshMode>onRegion</viewRefreshMode></Link>' +
-  /'</NetworkLink>' +
-  /'</Folder>' +
-  /'</kml>');
-  
-  /ge.getFeatures().appendChild(blueMarbleKml);
+
   }
   function hideBlueMarble() {
   ge.getFeatures().removeChild(currentKmlObject);
   currentKmlObject = null;
   }
   
+  /Show and hide borders
   function showBorders() {
   var layerRoot = ge.getLayerRoot();
   layerRoot.enableLayerById(ge.LAYER_BORDERS, true);
@@ -233,7 +220,7 @@
   }
 
 
-  //   S E A R C H     C R I T E R I A     F O R        P L A N T I N G       S E E D S
+  //   S E A R C H     C R I T E R I A     F O R        T I T L E
   function seedsearch()
   {
   tosearch = (document.getElementById('txtsearch').value).toLowerCase();
@@ -306,18 +293,30 @@
 
   var title = tagTitles[j];
   var link = go_to_link(title);
+  ajaxLink = link;
   link_to_details = "Details";
   link_to_details = link_to_details.link(link);
 
-  placemark[count].setDescription(seedlingsById[j].seedling.description + '\n' + link_to_details);
+  placemark[count].setDescription(link);
   point.setAltitudeMode(13);
   placemark[count].setGeometry(point);
   
 
   
-  
+  place = placemark[count];
+
+
   ge.getFeatures().appendChild(placemark[count]);
+  google.earth.addEventListener(place, 'click', function(event) {
+  event.preventDefault();
+  var placemark = event.getTarget();
+  placemark.setDescription(link);
+  /alert(placemark.getDescription());
+  window.location = placemark.getDescription();
+  }
+  );
   // Increment match count
+  
   count = count+1;
   } // End of if structure
   } //  - - - - - - - - - - - - - - - - - - - - - - - - - - - End of FOR loop
@@ -383,15 +382,23 @@
   var link = go_to_link(title);
   link_to_details = "Details";
   link_to_details = link_to_details.link(link);
-
-  placemark[count].setDescription(seeds[i].seedling.description + '\n' + link_to_details);
+ 
+  placemark[count].setDescription(link);
   point.setAltitudeMode(13);
   placemark[count].setGeometry(point);
   
 
   
-  
+  place = placemark[count];
+  //event handler for clicking seedlings to direct to details page
   ge.getFeatures().appendChild(placemark[count]);
+  google.earth.addEventListener(place, 'click', function(event) { 
+  event.preventDefault();
+  var placemark = event.getTarget();
+  /alert(placemark.getDescription());
+  window.location = placemark.getDescription();
+  }
+  );
   // Increment match count
   count = count+1;
   } // End of if structure
@@ -511,4 +518,5 @@
   document.getElementById(group[i] + "_collapsed").style.display = "block";
   document.getElementById(group[i] + "_expanded").style.display = "none";} }
   }
+  
 
