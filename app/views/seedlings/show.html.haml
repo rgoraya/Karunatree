@@ -199,21 +199,16 @@
 
 %script{:src => "http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA"}
 %script{:type => "text/javascript"}
-  
+
+  // S T A T I C       G O O G L E       M A P  
   var map;
   var lat = #{@seedling.lat.to_json};
   var lon = #{@seedling.lon.to_json};
-    
-  // Get the URL of the static Google Map to be displayed in map_canvas Div
+ 
   function MapImg() {
-  
-
-  
-  
-  
   var mapurl = "http://maps.google.com/maps/api/staticmap?" +
   "center=" + lat + "," + lon +
-  "&zoom=2&size=200x160&maptype=hybrid" +
+  "&zoom=15&size=200x160&maptype=hybrid" +
   "&markers=icon:http://karunatree.com/images/seedlings/seedicon.png|" + lat + "," + lon +
   "&sensor=false";
   
@@ -224,14 +219,15 @@
   "&sensor=false";
   
   document.getElementById("map_canvas").src= mapurl;
-  document.getElementById("map_canvas_thumb").src= mapurlthumb;
   
-  reverse();
+  //Commenting out this portion of code as we do not need this right (may need for clippings)
+  //document.getElementById("map_canvas_thumb").src= mapurlthumb;
   
-  
-  
+  // Call the Reverse Geocoding Function
+  reverse(); 
   }
   
+  //   F U N C T I O N S       F O R       S W I T C H - L I S T S
   var groupA = new Array();
   groupA[groupA.length] = "list_a_excl";
   
@@ -251,6 +247,7 @@
   }
   }  
   
+  //   R E V E R S E     G E O C O D E      T H E      A D D R E S S 
   function reverse() {
   var geocoder;
   var address;
