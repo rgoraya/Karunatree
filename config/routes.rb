@@ -17,7 +17,8 @@ ActionController::Routing::Routes.draw do |map|
   #map.resource :account, :controller => "users"
   
   map.resources :users, :member => {  :home => :get,
-                                      :avatar => :get }
+                                      :avatar => :get },
+                        :collection => { :test_mail => :get }
   
   map.signup "signup", :controller => "users",  :action => "new"
   
@@ -26,6 +27,16 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :behaviors
 
   map.resources :features, :member => { :behavior => :get }
+  
+  map.with_options :controller => 'contact' do |contact|
+    contact.contact '/contact',
+      :action => 'index',
+      :conditions => { :method => :get }
+      
+    contact.contact 'contact',
+      :action => 'create',
+      :conditions => { :method => :post }
+  end
   
   # The priority is based upon order of creation: first created -> highest priority.
 

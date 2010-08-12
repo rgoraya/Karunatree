@@ -615,6 +615,10 @@ author a:visited {
 	padding: 0.5em;
 }
 
+.contactusdiv a, .contactusdiv a:visited {
+	color: #fef9bd;
+}
+
 .dummy {
 	background-color: #fd467a;
 }

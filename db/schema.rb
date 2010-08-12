@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100809185735) do
+ActiveRecord::Schema.define(:version => 20100812225256) do
 
   create_table "behavior_bindings", :force => true do |t|
     t.string   "locator",      :null => false
@@ -95,10 +95,10 @@ ActiveRecord::Schema.define(:version => 20100809185735) do
     t.string   "audio_message_content_type"
     t.integer  "audio_message_file_size"
     t.datetime "audio_message_updated_at"
-    t.string   "authors"
     t.string   "short_url"
     t.integer  "likes",                                                    :default => 0, :null => false
     t.integer  "views",                                                    :default => 0, :null => false
+    t.integer  "uncredited_authors"
   end
 
   create_table "seedlings_tags", :id => false, :force => true do |t|

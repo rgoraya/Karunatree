@@ -43,4 +43,10 @@ class UsersController < ApplicationController
     send_file REGISTRY[:data_dir]+"/users/"+@user.username+'/avatar/'+@user.id.to_s()+'-'+style+'.jpg',
               :disposition => 'inline'
   end
+  
+  def test_mail
+    @user = User.find_by_username("derek")
+    SpeedyDelivery.deliver_test_mail(@user)
+    render "Done"
+  end
 end

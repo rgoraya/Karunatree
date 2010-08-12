@@ -11,26 +11,27 @@
     %div{:id => "contentcolumn"}
       .innertube
       
-      // Project Block
-      %div{:id => "imggrid", :class => "projectdiv"}
-        = image_tag @seedling.project.url(:large), :id => "proj-img"
-        
-      // Byline Block
-      %div{:class => "bylinediv"} 
-        %div{:class => "titlediv"}
-          %h1
-            %span{:class => "titlecolor"}#{@seedling.title}
-        = image_tag @seedling.users.first.avatar.url(:square), :id => "avatar-img", :size => "60x60"
-        %div{:class => "authordiv"}
-          by #{formatted_links_to_users}
-        
-        // Segmented controls block (currently put in a random image sprites button)         
-        //%div{:class => "clearleft"}
-        //%div{:id => "btndiv"}
-        //  %a{:id=>"reset", :Title => "Set the Seedling position", :href => "javascript:shiftplacemark()"}
-        %div{:class => "clearall"}
-        
-      %br
+        // Project Block
+        %div{:id => "imggrid", :class => "projectdiv"}
+          = image_tag @seedling.project.url(:large), :id => "proj-img"
+          
+        // Byline Block
+        %div{:class => "bylinediv"} 
+          %div{:class => "titlediv"}
+            %h1
+              %span{:class => "titlecolor"}#{@seedling.title}
+          - if(!@seedling.users.empty?)
+            = image_tag @seedling.users.first.avatar.url(:square), :id => "avatar-img", :size => "60x60"
+            %div{:class => "authordiv"}
+              by #{formatted_links_to_users}
+          
+          // Segmented controls block (currently put in a random image sprites button)         
+          //%div{:class => "clearleft"}
+          //%div{:id => "btndiv"}
+          //  %a{:id=>"reset", :Title => "Set the Seedling position", :href => "javascript:shiftplacemark()"}
+          %div{:class => "clearall"}
+          
+        %br
       
       // Description block
       %div{:id => "imggrid", :class => "artiststmt"}
@@ -166,7 +167,7 @@
       %div{:id => "imggrid", :class => "contactusdiv"}
         %h3 Girls, Inc. Parents:
         %p
-          Did your daughter help create this Seedling? Some authors are currently uncredited because we are missing consent forms. Please contact us to help your daughter claim her work! 
+          Did your daughter help create this Seedling? Some authors are not credited because we are missing consent forms. Please #{link_to "contact us", contact_path} to help your daughter claim her work! 
       
       
       // More_by block
