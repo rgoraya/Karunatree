@@ -11,78 +11,78 @@
     %div{:id => "contentcolumn"}
       .innertube
       
-        // Project Block
-        %div{:id => "imggrid", :class => "projectdiv"}
-          = image_tag @seedling.project.url(:large), :id => "proj-img"
-          
-        // Byline Block
-        %div{:class => "bylinediv"} 
-          %div{:class => "titlediv"}
-            %h1
-              %span{:class => "titlecolor"}#{@seedling.title}
-          = image_tag @seedling.users.first.avatar.url(:square), :id => "avatar-img", :size => "60x60"
-          %div{:class => "authordiv"}
-            by #{formatted_links_to_users}
-          
-          // Segmented controls block (currently put in a random image sprites button)         
-          //%div{:class => "clearleft"}
-          //%div{:id => "btndiv"}
-          //  %a{:id=>"reset", :Title => "Set the Seedling position", :href => "javascript:shiftplacemark()"}
-          %div{:class => "clearall"}
-          
-        %br
+      // Project Block
+      %div{:id => "imggrid", :class => "projectdiv"}
+        = image_tag @seedling.project.url(:large), :id => "proj-img"
         
-        // Description block
-        %div{:id => "imggrid", :class => "artiststmt"}
-          %h2{:class => "bluecolor"}
-            -if(@seedling.users.count == 1)
-              Artist's Statement
-            -else
-              Artists' Statement
-          // Audio controls block
-          %div{:id => "audiodiv"}
-            -if(!@seedling.audio_message_file_name.nil?)
-              %audio{ :src => @seedling.audio_message.url, :controls => true}
-          %div{:class => "clearall"}
-          %p
-            =h @seedling.description
-          %div{:id => "imggrid", :class => "admindiv"}
-            %p Great job! Most people don't know that palm oil threatens elephant habitats.
-        %br
+      // Byline Block
+      %div{:class => "bylinediv"} 
+        %div{:class => "titlediv"}
+          %h1
+            %span{:class => "titlecolor"}#{@seedling.title}
+        = image_tag @seedling.users.first.avatar.url(:square), :id => "avatar-img", :size => "60x60"
+        %div{:class => "authordiv"}
+          by #{formatted_links_to_users}
+        
+        // Segmented controls block (currently put in a random image sprites button)         
+        //%div{:class => "clearleft"}
+        //%div{:id => "btndiv"}
+        //  %a{:id=>"reset", :Title => "Set the Seedling position", :href => "javascript:shiftplacemark()"}
+        %div{:class => "clearall"}
+        
+      %br
+      
+      // Description block
+      %div{:id => "imggrid", :class => "artiststmt"}
+        %h2{:class => "bluecolor"}
+          -if(@seedling.users.count == 1)
+            Artist's Statement
+          -else
+            Artists' Statement
+        // Audio controls block
+        %div{:id => "audiodiv"}
+          -if(!@seedling.audio_message_file_name.nil?)
+            %audio{ :src => @seedling.audio_message.url, :controls => true}
+        %div{:class => "clearall"}
+        %p
+          =h @seedling.description
+        %div{:id => "imggrid", :class => "admindiv"}
+          %p Great job! Most people don't know that palm oil threatens elephant habitats.
+      %br
 
         // Comments block
-        %div{:id => "imggridmore", :class => "responses"}
-          %h2{:class => "bluecolor"} Responses
-          %div{:class => "clearleft"}
-          %div{:id => "comment"}
-            - @comments = @seedling.comments
-            - iterations = @comments.length - 1
-            - iterations.times do |i|
-              %p
-                %b #{@comments[i].author},
-                when:
-                = @comments[i].created_at
-                %br
-                Says:
-                = @comments[i].body
-            = render :partial => "comments/comment", :object => @seedling.comments
-        %div{:id => "imggridclip", :class => "responses"}
-          
-          %p 
-            %b{:class => "titlecolor"}Learn Something? Leave a Response       
-          - form_remote_for([@seedling, @seedling.comments.build]) do |f|
-            = error_messages_for "comment"
-            
+      %div{:id => "imggridmore", :class => "responses"}
+        %h2{:class => "bluecolor"} Responses
+        %div{:class => "clearleft"}
+        %div{:id => "comment"}
+          - @comments = @seedling.comments
+          - iterations = @comments.length - 1
+          - iterations.times do |i|
             %p
-              = f.label "Your name:"
-              = f.text_field :author
-            %p
-              = f.label "Your response:"
+              %b #{@comments[i].author},
+              when:
+              = @comments[i].created_at
               %br
-              = f.text_area :body, :rows => 6, :cols => 70
-            %p
-              = f.submit "Submit"      
-        %br  
+              Says:
+              = @comments[i].body
+          = render :partial => "comments/comment", :object => @seedling.comments
+      %div{:id => "imggridclip", :class => "responses"}
+        
+        %p 
+          %b{:class => "titlecolor"}Learn Something? Leave a Response       
+        - form_remote_for([@seedling, @seedling.comments.build]) do |f|
+          = error_messages_for "comment"
+          
+          %p
+            = f.label "Your name:"
+            = f.text_field :author
+          %p
+            = f.label "Your response:"
+            %br
+            = f.text_area :body, :rows => 6, :cols => 70
+          %p
+            = f.submit "Submit"      
+      %br  
   
   // T H E      S E C O N D       C O L U M N  ( C E N T E R )       
   %div{:id => "leftcolumn"}

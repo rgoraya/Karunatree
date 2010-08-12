@@ -70,7 +70,7 @@ class Seedling < ActiveRecord::Base
   def self.get_image_url(seedlings)
     urls = Array.new
     seedlings.each do |seedling|
-      urls.push(seedling.project.url)
+      urls.push(seedling.project.url(:thumbnail))
     end
     return urls
   end

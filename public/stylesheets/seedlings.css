@@ -241,6 +241,11 @@ text-align:left;
 	padding-left: 5px;
 }
 
+#imggrid.projectdiv{
+text-align:center;
+}
+
+
 .paneldiv {
 	border-top: 1px solid #fafafa;
 	background: #3e779d;
@@ -340,9 +345,7 @@ padding:5px;
 text-align:left;
 }
 
-#imggridmore.projectdiv{
-text-align:center;
-}
+
 
 #imggridclip
 {
@@ -496,7 +499,7 @@ color: #FFFF80;
 }
 
 .innertube{
-margin-right: 10px;           /*Margins for inner DIV inside each column (to provide padding)*/
+margin-left: 10px;           /*Margins for inner DIV inside each column (to provide padding)*/
 margin-top: 0;
 }
 
@@ -644,7 +647,7 @@ quotes: "«" "»" "'" "'";
 
 #proj-img
 {
-max-width:620px;	
+max-width:630px;	
 max-height:500px;
 background-image: url('../images/seedlings/load.gif');
 background-repeat: no-repeat;
@@ -653,15 +656,15 @@ background-position:center;
 
 #more-link
 {
-border:3px solid #CCCCCC;	
-margin:3px;
+border:3px solid #ffffff;	
+margin:2px;
 max-width:150px;	
 max-height:100px;
 }
 
 #more-link:hover 
 {
-border:3px solid #ffffff;	
+border:3px solid #CCCCCC;	
 }
 
 #lbladdress
@@ -695,3 +698,87 @@ background-position:center;
 	padding:4px;
 }
 
+#earthdiv{
+margin-right: 300px; /*Set right margin to RightColumnWidth*/
+color:#307BA0;
+font-family:Arial, Helvetica, sans-serif;
+font-size:13px;
+}
+
+#indexcontrols{
+float: left;
+width: 300px; /*Width of right column*/
+margin-left: -300px; /*Set left margin to -(RightColumnWidth) */
+color:#307BA0;
+font-family:Arial, Helvetica, sans-serif;
+font-size:14px;
+}
+
+#globe3d  /*Earth Plugin Div Styles*/
+{
+width:688px;
+height: 580px; 
+}
+
+#nowshowing
+{
+width:280px;
+height:198px;	
+}
+
+#nowshowing a
+{
+text-decoration:none;
+color:#669900;
+font-weight:bold;
+}
+#nowshowing a:hover
+{
+text-decoration:underline;
+}
+
+#summary
+{
+margin: 0px;
+width: 278px;
+}
+
+#summary.main
+{
+height:150px;
+text-overflow:ellipsis;
+overflow:hidden;
+white-space:normal;
+}
+
+#summary.head {
+text-overflow:ellipsis;
+overflow:hidden;
+white-space:nowrap;
+}	
+
+#summary.trail
+{
+text-align:right;
+font-size:smaller;
+}	
+
+
+#stattbl {
+width:100%;
+table-layout:fixed;
+border-collapse: collapse;
+}
+
+#stattbl td {
+text-overflow:ellipsis;
+overflow:hidden;
+white-space:nowrap;
+} 	
+
+#lblsearch
+{
+text-overflow:ellipsis;
+overflow:hidden;
+white-space:nowrap;
+}
