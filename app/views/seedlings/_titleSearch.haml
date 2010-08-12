@@ -1,0 +1,104 @@
+%script{:type => "text/javascript"}  
+  //   S E A R C H     C R I T E R I A     F O R        P L A N T I N G       S E E D S
+  function seedsearch()
+  {
+  tosearch = (document.getElementById('txtsearch').value).toLowerCase();
+  // Remove the originally loaded seedlings
+  for (var i = 0; i < placemark.length; i++)
+  { ge.getFeatures().removeChild(placemark[i]); }
+    
+  // Plant seeds according to search criteria
+  plantseeds(tosearch);
+  }
+  
+  
+  //   P L A N T I N G       S E E D S       O N       G O O G L E        E A R T H 
+  function plantseeds(seedtitle)
+  {  
+  // Icon Style for Seedling placemarks
+  var icon = ge.createIcon('');
+  icon.setHref('http://karunatree.com/images/seedlings/seedicon.png');
+  var style = ge.createStyle('');
+  style.getIconStyle().setIcon(icon);
+  gex = new GEarthExtensions(ge);
+    
+  // Initialize Counter (counts the total number of matches)
+  var count = 0;         
+  // Initialize the array that would contain the matched seedlings.
+  matchseeds = [];
+  matchtitles = [];
+  matchimageurls = [];
+  
+  // Copy Current seedling to lastViewed variable (for cookies) and initialize the current seedling to 0 (first in the array)
+  // lastviewed = currentseed;
+  currentseed = 0;
+  
+  //  - - - - - - - - R E T R I E V E      M A T C H E S - - - - - - - - - - -
+  for (var i = 0; i < seeds.length; i++)
+  {
+  // get the title of current seedling being examined
+  var title =( seeds[i].seedling.title).toLowerCase();
+  
+  // if the seedling title contains the search string:
+  if (title.indexOf(seedtitle) != "-1") 
+  {
+  // Copy matched seeds into a separate array  
+  matchseeds[count] = seeds[i]
+  matchtitles[count] = titles[i]
+  matchimageurls[count] = imageurls[i]  
+  
+  // Create placemarks for all matched seedlings
+  placemark[count] = ge.createPlacemark('');
+  var point = ge.createPoint('');
+  placemark[count].setStyleSelector(style);
+  point.setLatitude(seeds[i].seedling.lat);
+  point.setLongitude(seeds[i].seedling.lon);
+  placemark[count].setName(seeds[i].seedling.title);
+  placemark[count].setDescription(count.toString());
+  point.setAltitudeMode(13);
+  placemark[count].setGeometry(point);
+  ge.getFeatures().appendChild(placemark[count]);
+        
+  google.earth.addEventListener(placemark[count], 'mouseover', function(event) {
+  if (event.getTarget().getType() == 'KmlPlacemark' &&
+  event.getTarget().getGeometry().getType() == 'KmlPoint') {
+  var placemark = event.getTarget();
+  var description = placemark.getDescription(); 
+  SeedSummary(description);
+  }
+  });
+  
+  google.earth.addEventListener(placemark[count], 'click', function(event) { 
+  event.preventDefault();
+  var placemark = event.getTarget();
+  var description = placemark.getDescription();
+  var title = matchtitles[description];
+  var link = go_to_link(title);
+  window.location = link;
+  });
+
+  // Increment match count
+  count = count+1;
+  } // End of if structure
+  } //  - - - - - - - - - - - - - - - - - - - - - - - - - - - End of FOR loop
+  
+  // Populate the stat fields for the current search  
+  
+  //if (initzoom)
+  //{currentseed = lastviewed;}
+  
+  document.getElementById("lblshowing").innerHTML =  count; 
+  
+  if (seedtitle != "" && count!=0)
+  {document.getElementById("lblsearch").innerHTML =  "containing \"" + seedtitle + "\"";}
+  else 
+  if(seedtitle != "")
+  {document.getElementById("lblsearch").innerHTML =  "No seedlings match";}
+  else
+  {document.getElementById("lblsearch").innerHTML =  "All"; }
+  
+  document.getElementById("lblcurrent").innerHTML =  (currentseed+1) + ' of ' + (matchseeds.length);
+  
+  // Look at the first seedling matching Search Critera
+  lookat();
+  }

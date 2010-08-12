@@ -241,6 +241,16 @@ text-align:left;
 	padding-left: 5px;
 }
 
+
+#imggrid.projectdiv{
+text-align:center;
+}
+
+#map_description {
+	min-height: 25px;
+}
+
+
 #imggrid.projectdiv{
 text-align:center;
 }

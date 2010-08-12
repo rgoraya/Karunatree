@@ -9,29 +9,27 @@
   
     // T H E      C O N T E N T       C O L U M N
     %div{:id => "contentcolumn"}
-      .innertube
-      
-        // Project Block
-        %div{:id => "imggrid", :class => "projectdiv"}
-          = image_tag @seedling.project.url(:large), :id => "proj-img"
+      // Project Block
+      %div{:id => "imggrid", :class => "projectdiv"}
+        = image_tag @seedling.project.url(:large), :id => "proj-img"
+        
+      // Byline Block
+      %div{:class => "bylinediv"} 
+        %div{:class => "titlediv"}
+          %h1
+            %span{:class => "titlecolor"}#{@seedling.title}
+        - if(!@seedling.users.empty?)
+          = image_tag @seedling.users.first.avatar.url(:square), :id => "avatar-img", :size => "60x60"
+          %div{:class => "authordiv"}
+            by #{formatted_links_to_users}
+        
+        // Segmented controls block (currently put in a random image sprites button)         
+        //%div{:class => "clearleft"}
+        //%div{:id => "btndiv"}
+        //  %a{:id=>"reset", :Title => "Set the Seedling position", :href => "javascript:shiftplacemark()"}
+        %div{:class => "clearall"}
           
-        // Byline Block
-        %div{:class => "bylinediv"} 
-          %div{:class => "titlediv"}
-            %h1
-              %span{:class => "titlecolor"}#{@seedling.title}
-          - if(!@seedling.users.empty?)
-            = image_tag @seedling.users.first.avatar.url(:square), :id => "avatar-img", :size => "60x60"
-            %div{:class => "authordiv"}
-              by #{formatted_links_to_users}
-          
-          // Segmented controls block (currently put in a random image sprites button)         
-          //%div{:class => "clearleft"}
-          //%div{:id => "btndiv"}
-          //  %a{:id=>"reset", :Title => "Set the Seedling position", :href => "javascript:shiftplacemark()"}
-          %div{:class => "clearall"}
-          
-        %br
+      %br
       
       // Description block
       %div{:id => "imggrid", :class => "artiststmt"}
@@ -209,7 +207,8 @@
   function MapImg() {
   var mapurl = "http://maps.google.com/maps/api/staticmap?" +
   "center=" + lat + "," + lon +
-  "&zoom=15&size=200x160&maptype=hybrid" +
+
+  "&zoom=10&size=200x160&maptype=hybrid" +
   "&markers=icon:http://karunatree.com/images/seedlings/seedicon.png|" + lat + "," + lon +
   "&sensor=false";
   
@@ -261,6 +260,7 @@
   function showAddress(response) {
   map.clearOverlays();
   if (!response || response.Status.code != 200) {
+  document.getElementById("lbladdress").innerHTML = "No known address";
   } else {
   place = response.Placemark[0];
   point = new GLatLng(place.Point.coordinates[1],place.Point.coordinates[0]);

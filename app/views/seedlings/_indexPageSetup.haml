@@ -1,0 +1,92 @@
+%div{:id => "maincontainer"}
+  %div{:id => "contentwrapper"}
+    // G L O B E      C O L U M N
+    %div{:id => "earthdiv"}
+      %div{:id => "imggrid"}
+        // The Google Earth Block        
+        %div{:id => "globe3d"}
+        %ul#switchlist
+        /collapsable link for checkboxes, layer toggling
+        %li 
+          %div{:id => "list_c_excl_collapsed", :style => "display:block"}
+            %a{:href => "javascript:swap('list_c_excl',groupA)"} Open layer toggling options
+          %div{:id =>"list_c_excl_expanded", :style => "display:none"}
+            %a{:href => "javascript:swap('list_c_excl',groupA)"} Close layer toggling options
+            %table{:id => "globecontrols"} 
+              %tr
+                %td{:id => 'checkboxes-ui'}
+      %br
+  // C O N T R O L S      C O L U M N
+  %div{:id => "indexcontrols"}
+    .innertube
+      %div{:id => "imggrid"}
+        
+        %div{:id => "nowshowing"}
+              
+                   
+      %br
+      %div{:id => "imggrid"}
+        %table{:id => "stattbl"}
+          %tr
+            %td{:class => "titlecolor"} 
+              Showing seedlings       
+            %td
+              %div{:id => "lblsearch"}
+          %tr
+            %td{:class => "titlecolor"}
+              Seedlings displayed
+            %td
+              %div{:id => "lblshowing"}
+          %tr
+            %td{:class => "titlecolor"}
+              Now viewing
+            %td    
+              %div{:id => "lblcurrent"}
+        %table{:style => "width:100%"}  
+          %tr
+            %td{:align => "right"}
+              %a{:id => "prev", :Title => "Jump to Next seedling", :href => "javascript:previous()"}
+            %td{:align => "left"}  
+              %a{:id => "next", :Title => "Jump to Previous seedling", :href => "javascript:next()"}
+            
+      %br        
+      %div{:id => "imggrid"}
+        %div
+          %ul#switchlist
+            %li
+              %div{:id => "list_a_excl_collapsed", :style => "display:block"}
+                %a{:href => "javascript:swap('list_a_excl',groupA)"} Fly to any destination on the globe
+              %div{:id =>"list_a_excl_expanded", :style => "display:none"}
+                %a{:href => "javascript:swap('list_a_excl',groupA)"} Close Fly to Controls
+                       
+                %table{:id => "globecontrols"} 
+                  %tr
+                    %td{:align => "left"}
+                      %input{:id => "txtflyto", :Size => "20", :type => "text", :value => "San Francisco, CA", :onkeydown => "if (event.keyCode == 13) javascript:FlytoClick()" }/              
+                    %td{:align => "left"}  
+                      %a{:id => "flyto", :Title => "Fly to the Entered Destination", :href => "javascript:FlytoClick()"}
+                  
+            %li
+              %div{:id => "list_b_excl_collapsed", :style => "display:block"}
+                %a{:href => "javascript:swap('list_b_excl',groupA)"} Search for Seedlings
+              %div{:id => "list_b_excl_expanded", :style => "display:none"}
+                %a{:href => "javascript:swap('list_b_excl',groupA)"} Close Search
+                %table
+                  %tr     
+                    %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:seedling, :title, {:id =>'txtsearch',:size => "20", :onkeydown => "if (event.keyCode == 13) javascript:seedsearch()" })  
+                                          
+                    %td{:align => "left"}  
+                      %a{:id => "search", :Title => "Seach for the Seedlings", :href => "javascript:seedsearch()"}
+                    %td
+                      by Title
+                %table
+                  %tr  
+                    %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:tag, :name, {:id =>'tagsearch',:size => "20", :onkeydown => "if (event.keyCode == 13) javascript:tagsearch()" })
+                     
+                    %td{:align => "left"}  
+                      %a{:id => "search", :Title => "Seach for the Seedlings", :href => "javascript:tagsearch()"}
+                    %td
+                      by Tag
+            
+  %div{:id => "footer"}
+    Copyright &copy; 2009-2010 Karunatree. All seedlings &copy; by their creators.    

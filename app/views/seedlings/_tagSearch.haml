@@ -1,0 +1,106 @@
+%script{:type => "text/javascript"}  
+  //   S E A R C H     C R I T E R I A     F O R        T A G S
+  function tagsearch()
+  {
+  tosearch = (document.getElementById('tagsearch').value).toLowerCase();
+  
+  // Remove the originally loaded seedlings
+  for (var i = 0; i < placemark.length; i++)
+  { ge.getFeatures().removeChild(placemark[i]); }
+    
+  // Plant seeds according to search criteria
+  plantTaggedSeeds(tosearch);
+  }
+  
+  //   P L A N T I N G      T A G G E D       S E E D S       O N       G O O G L E        E A R T H 
+  function plantTaggedSeeds(tag)
+  {  
+  // Icon Style for Seedling placemarks
+  var icon = ge.createIcon('');
+  icon.setHref('http://karunatree.com/images/seedlings/seedicon.png');
+  var style = ge.createStyle('');
+  style.getIconStyle().setIcon(icon);
+    
+  // Initialize Counter (counts the total number of matches)
+  var count = 0;         
+  // Initialize the array that would contain the matched seedlings.
+  matchseeds = [];
+  seedIds = [];
+  // Initialize the current seedling to 0 (first in the array)
+  currentseed = 0;
+
+  //  - - - - - - - - R E T R I E V E      M A T C H E S - - - - - - - - - - -
+  for (var i = 0; i < seedTagsNames.length; i++)
+  {
+  // get the title of current seedling being examined
+  
+  // if the seedling tag contains the search string:
+
+  if (seedTagsNames[i] == tag)
+  {
+  
+  seedIds[i] = seedsTagsSeedlingIdArray[i];
+
+  var j = seedIds[i];
+  // Copy matched seeds into a separate array
+  
+  var k = seedlingsById[j];
+  
+  matchseeds[count] = seedlingsById[j];
+  matchimageurls[count] = tagImageUrls[j];
+  
+  // Create placemarks for all matched seedlings
+  placemark[count] = ge.createPlacemark('');
+  var point = ge.createPoint('');
+  placemark[count].setStyleSelector(style);
+  point.setLatitude(seedlingsById[j].seedling.lat);
+  point.setLongitude(seedlingsById[j].seedling.lon);
+  placemark[count].setName(seedlingsById[j].seedling.title);
+
+  var title = tagTitles[j];
+  var link = go_to_link(title);
+  
+  var hov = count.toString();
+  placemark[count].setDescription(hov + " " + link);
+  
+  point.setAltitudeMode(13);
+  placemark[count].setGeometry(point);
+
+
+  ge.getFeatures().appendChild(placemark[count]);
+
+  //adds click and hover listeners to placemark
+  addTagSearchListeners(placemark[count]);
+
+  // Increment match count
+  count = count+1;
+  } // End of if structure
+  } //  - - - - - - - - - - - - - - - - - - - - - - - - - - - End of FOR loop
+  //updates stat fields
+  summarize(count, tag, matchseeds, currentseed);
+  
+  // Look at the first seedling matching Search Critera
+  lookat();
+  }   
+  
+  //adds click and hover listeners to placemark
+  function addTagSearchListeners(placemark) {
+  /hover event listener
+  google.earth.addEventListener(placemark, 'mouseover', function(event) {
+  var placemark = event.getTarget();
+  var description = placemark.getDescription(); 
+  var index = description.search(" ");
+  SeedSummary(description.substr(0, index));
+  });
+  
+  /click event listener
+  google.earth.addEventListener(placemark, 'click', function(event) { 
+  event.preventDefault();
+  var placemark = event.getTarget();
+  var description = placemark.getDescription();
+  var index = description.search(" ");
+  window.location = description.substr(index + 1);
+  });
+  }
+  
+

@@ -74,6 +74,14 @@ class Seedling < ActiveRecord::Base
     end
     return urls
   end
+  
+  def self.get_tag_image_url(seedlings)
+    urls = Array.new
+    seedlings.each do |seedling|
+      urls.insert(seedling.id, seedling.project.url(:thumbnail))
+    end
+    return urls
+  end
 
   
   def like

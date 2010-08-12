@@ -1,0 +1,93 @@
+%script{:type => "text/javascript", :src => "http://www.google.com/jsapi?key=#{REGISTRY[:api_key]}"} 
+%script{:src => "http://earth-api-utility-library.googlecode.com/svn/trunk/extensions/dist/extensions.pack.js"}
+%script{:type => "text/javascript"}
+
+  // Retrieve all seedlings into an Array
+  var seeds = #{@seedlings.to_json};
+  
+  var imageurls = #{Seedling.get_image_url(@seedlings).to_json};
+  var tagImageUrls = #{Seedling.get_tag_image_url(@seedlings).to_json};
+
+  var seedlingsById = [];
+  for (var i = 0; i < seeds.length; i++) {
+  // so seedling id matches the index of the array
+  seedlingsById[seeds[i].seedling.id] = seeds[i];
+  }
+  /alert(seedlingsById); 
+  
+  // Retrieve all seedling friendly urls
+  var titles = #{Seedling.get_friendly_ids(@seedlings).to_json};
+  var tagTitles = [];
+  for (var i = 0; i < titles.length; i++) {
+  // so seedling id matches the index of the array
+  tagTitles[seeds[i].seedling.id] = titles[i]
+  }
+  /alert(tagTitles);
+  var thumbs = #{Seedling.get_image_url(@seedlings).to_json};
+  
+  var seedTagsNames = #{Seedling.get_tags(@seedlings).to_json};
+
+  var seedsTags = #{@taggings.to_json};
+  var seedsTagsSeedlingIdArray = new Array();
+  var seedsTagsTagIdArray = new Array();
+  /var numTags = #{@taggings.length.to_json};
+  for (var i = 0; i < seedsTags.length; i++) {
+  seedsTagsSeedlingIdArray.push(seedsTags[i].tagging.seedling_id);
+  seedsTagsTagIdArray.push(seedsTags[i].tagging.tag_id);
+  } 
+  
+
+  var ge;
+  var tosearch = "";
+  var placemark = new Array();
+  var matchseeds = new Array();  
+  var matchtitles = new Array();  
+  var matchimageurls = new Array();
+  var currentseed;
+  var initzoom = true;
+  var lastviewed;
+
+  
+  /initializes toggling objects
+  var currentKmlObjects = {
+  'blue-marble': null,
+  'border': null,
+  'atmosphere': null
+  };
+  
+  google.load("earth", "1.x");
+  google.load("maps", "2.x");
+  google.load("maps", "2.xx");
+  
+  function init(){
+  google.earth.createInstance('globe3d', initCB, failureCB);
+
+  addCheckboxesUIHtml(
+  '<input type="checkbox" id="kml-blue-marble-check" onclick="toggleKml(\'blue-marble\');"/><strong>Toggle Blue Marble Layer</strong><br>' +
+  '<input type="checkbox" id="kml-border-check" onclick="toggleKml(\'border\');"/><strong>Toggle Borders Layer</strong><br>' +
+  '<input type="checkbox" id="kml-atmosphere-check" onclick="toggleKml(\'atmosphere\');"/><strong>Toggle Atmosphere Layer</strong><br>'
+  );  
+  
+  }
+  
+  function initCB(instance){
+  ge = instance;
+  ge.getWindow().setVisibility(true);
+  ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
+  //ge.getOptions().setAtmosphereVisibility(false);
+  
+  //checkboxes loading
+  if (document.getElementById('kml-blue-marble-check').checked)
+  loadKml('blue-marble');
+  if (document.getElementById('kml-border-check').checked)
+  loadKml('border');
+  if (document.getElementById('kml-atmosphere-check').checked)
+  loadKml('atmosphere');
+  
+  plantseeds(tosearch);
+
+  }
+  function failureCB(errorCode){
+  }
+
+  google.setOnLoadCallback(init);

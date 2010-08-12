@@ -1,0 +1,210 @@
+%script{:type => "text/javascript"}
+  
+  // L O O K - A T       U P O N      S E E D L I N G S
+  function lookat()
+  {  
+  // Get the current range
+  var camera = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);    
+  // look at the last seedling matching search criteria
+  var lookAt = ge.createLookAt('');
+  
+  // The initial range is set to 9000000. 
+  if (initzoom)
+  {lookAt.set(matchseeds[currentseed].seedling.lat, matchseeds[currentseed].seedling.lon, 10, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 9000000);}
+  // after that all look at's are performed with range same as current zoom by the user
+  else
+  {lookAt.set(matchseeds[currentseed].seedling.lat, matchseeds[currentseed].seedling.lon, 10, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, camera.getRange());}
+  // after first zoom is done, the flag is set off.
+  initzoom=false;
+  
+  ge.getOptions().setFlyToSpeed(0.6);
+  ge.getView().setAbstractView(lookAt);
+  
+  // Display the summaryof currently looked at seedling
+  SeedSummary(currentseed);
+  
+  // Update the cookie to currently viewed Seedling
+  lastviewed = currentseed;
+  /alert(lastviewed);
+  setCookie('seedtoshow',lastviewed,365);
+  }
+  
+  function SeedSummary(for_this_seed)
+  {
+  // Retireve Link to show page for this seedling
+  var link = go_to_link(matchtitles[for_this_seed]);
+  link_to_details = "here";
+  link_to_details = link_to_details.link(link);
+  // Retireve  Url of the thumbnail Image to be displayed
+  var imageurl = matchimageurls[for_this_seed];
+  // Create an inner html 
+  
+  var descr = (matchseeds[for_this_seed].seedling.description)
+  if (descr.length > 300)
+  {descr = descr.substring(0,300) + '...';}
+  
+  var innerhtml = 
+  ' <div id="summary" class="head"><tr><td>Focused on <b class="titlecolor">' + matchseeds[for_this_seed].seedling.title + '</b></div>'
+  + '<div id = "summary" class="main"> <a href="' + link + '">'
+  + '<img id="more-link" src="' + imageurl + '" align="left" alt="Project image" /> </a>'
+  + descr + '</div><br>' 
+  + '<div id="summary" class="trail">click on the Image above or ' + link_to_details + ' to view details.</div>';
+  
+  document.getElementById("nowshowing").innerHTML =  innerhtml;
+  
+  // Commented out the code below for now, can be used fora FADE-IN effect
+  fadeInSummary();
+  }
+
+  // Populate the stat fields for the current search 
+  function summarize(count, tag, matchseeds, currentseed) {
+  if (initzoom)
+  {currentseed = lastviewed;}
+
+  document.getElementById("lblshowing").innerHTML =  count; 
+  
+  if (tag != "" && count!=0)
+  {document.getElementById("lblsearch").innerHTML =  "containing \"" + tag + "\"";}
+  else 
+  if(tag != "")
+  {document.getElementById("lblsearch").innerHTML =  "No seedlings match";}
+  else
+  {document.getElementById("lblsearch").innerHTML =  "All"; }
+  
+  var length = (matchseeds.length.toString());
+  
+  document.getElementById("lblcurrent").innerHTML =  "Vewing seedling " + (currentseed + 1) + " of " + (matchseeds.length);
+  } 
+  
+  // N E X T > >
+  function next()
+  {
+  if (currentseed < matchseeds.length-1)
+  { 
+  currentseed++;
+  lookat();
+  document.getElementById("lblcurrent").innerHTML =  (currentseed + 1) + " of " + matchseeds.length; }
+  else {document.getElementById("lblcurrent").innerHTML =  "Last Seedling!!!"; }
+  }
+  
+  // < < P R E V I O U S
+  function previous()  
+  {
+  if (currentseed > 0)
+  {
+  currentseed--;
+  lookat(); 
+  document.getElementById("lblcurrent").innerHTML =  (currentseed + 1) + " of " + matchseeds.length; }
+  else {document.getElementById("lblcurrent").innerHTML =  "First Seedling!!!"; }
+  }  
+
+  
+  //   F U N C T I O N        F O R         F L Y - T O        
+  function FlytoClick() 
+  {    
+  var geocodeLocation = document.getElementById('txtflyto').value;
+  var geocoder = new google.maps.ClientGeocoder();
+  geocoder.getLatLng(geocodeLocation, function(point) {
+  if (point) {
+  var lookAt = ge.createLookAt('');
+  lookAt.set(point.y, point.x, 10, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 9000000);
+  ge.getOptions().setFlyToSpeed(0.15);
+  ge.getView().setAbstractView(lookAt);
+  }
+  });
+  }
+  
+  //  C R E A T E       D E T A I L S       P A G E       L I N K  
+  function go_to_link(symbol)
+  {
+  part_of_link = symbol;
+  full_link = "/seedlings/" + part_of_link;
+  return full_link;
+  }
+  
+  
+  //   F U N C T I O N S       F O R       S W I T C H - L I S T S
+  var groupA = new Array();
+  groupA[groupA.length] = "list_a_excl";
+  groupA[groupA.length] = "list_b_excl";
+  groupA[groupA.length] = "list_c_excl";
+  groupA[groupA.length] = "list_d_excl";
+  
+  // Swapping the Lists
+  function swap(listIdPrefix, group) {
+  collapsedList = document.getElementById(listIdPrefix + "_collapsed");
+  expandedList = document.getElementById(listIdPrefix + "_expanded");
+  if (collapsedList.style.display == "block") 
+  {
+  collapsedList.style.display = "none";
+  expandedList.style.display = "block";
+  } 
+  else 
+  {
+  collapsedList.style.display = "block";
+  expandedList.style.display = "none";
+  }
+  if (group) 
+  {
+  ensureExclusivity(listIdPrefix, group);}
+  }
+  
+  // Ensuring Exclusivity
+  function ensureExclusivity(listIdPrefix, group) 
+  {
+  for (var i = 0; i < group.length; i++) {
+  if (group[i] != listIdPrefix) {
+  document.getElementById(group[i] + "_collapsed").style.display = "block";
+  document.getElementById(group[i] + "_expanded").style.display = "none";} }
+  }
+  
+  
+  //   F U N C T I O N S       F O R       C O O K I E S
+  function getCookie(c_seed)
+  {
+  if (document.cookie.length>0)
+  {
+  c_start=document.cookie.indexOf(c_seed + "=");
+  if (c_start!=-1)
+  { 
+  c_start=c_start + c_seed.length+1 ;
+  c_end=document.cookie.indexOf(";",c_start);
+  if (c_end==-1) c_end=document.cookie.length
+  return unescape(document.cookie.substring(c_start,c_end));
+  } 
+  }
+  return ""
+  }
+
+  function setCookie(c_seed,value,expiredays)
+  {
+  var exdate=new Date();
+  exdate.setDate(exdate.getDate()+expiredays);
+  document.cookie=c_seed+ "=" +escape(value)+((expiredays==null) ? "" : "; expires="+exdate.toUTCString());
+  }
+
+  function checkCookie()
+  {
+  seedtoshow=getCookie('seedtoshow');
+  if (seedtoshow!=null && seedtoshow!="")
+  {
+  currentseed = parseInt(seedtoshow);
+  }
+  }
+
+  //   F U N C T I O N S       F O R       F A D E - I N       E F F E C T
+  function setOpacity(level) {
+  var element = document.getElementById('nowshowing');
+  element.style.opacity = level;
+  element.style.MozOpacity = level;
+  element.style.KhtmlOpacity = level;
+  element.style.filter = "alpha(opacity=" + (level * 100) + ");";
+  }
+  // fade in the seedling summary
+  function fadeInSummary(){
+  var duration = 1000;  /* 1000 millisecond fade = 1 sec */
+  var steps = 30;       /* number of opacity intervals   */
+  for (i = 0; i <= 1; i += (1 / steps)) {
+  setTimeout("setOpacity(" + i + ")", i * duration);
+  }
+  }
