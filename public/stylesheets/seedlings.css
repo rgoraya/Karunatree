@@ -13,6 +13,8 @@ require "set"
 #id
 {}
 
+
+
 #tabseed /*The table containing Globe and Form*/
 {
 border-collapse:collapse;
@@ -255,13 +257,18 @@ text-align:center;
 text-align:center;
 }
 
+#imggrid.search
+{color:#307BA0;
+font-family:Arial, Helvetica, sans-serif;
+font-size:14px;
+}
 
 .paneldiv {
 	border-top: 1px solid #fafafa;
 	background: #3e779d;
 	background: -webkit-gradient(linear, left top, left bottom, from(#e3e3e3), to(#d5d5d5));
 	background: -moz-linear-gradient(top,  #e3e3e3,  #d5d5d5);
-	height: 22px;
+	min-height: 22px;
 	padding: 0 10px;
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
 	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
@@ -403,37 +410,19 @@ text-align:left;
 #switchlist
 {
 	list-style-type:none;
-	padding:5px;
+	padding:0px;
 	margin:0px;
-	border-top: 1px solid #fafafa;
-	background: #d5d5d5;
-	background: -webkit-gradient(linear, left top, left bottom, from(#e3e3e3), to(#d5d5d5));
-	background: -moz-linear-gradient(top,  #e3e3e3,  #d5d5d5);
-	padding: 0 10px;
-	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
-	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-	text-shadow: rgba(0,0,0,.4) 0 1px 0;
-	-webkit-text-stroke: 1px transparent;
-	font: bold 14px/18px "Lucida Grande", "Verdana", sans-serif;
-	color: rgba(255,255,255,.85);
-	text-decoration: none;
-	padding: 0.5em;
+	text-decoration: none;	
 }
 
 #switchlist li
 {
-	padding:5px;
 	color: #40413f;
 }
 
 #switchlist a
 {
 text-decoration:none;
-color: #40413f;
-padding:0px;
-font-family:Arial, Helvetica, sans-serif;
-font-size:13px;
-font-weight:bold;
 }
 
 #switchlist a:hover {color: #337292;}
@@ -732,6 +721,9 @@ font-size:14px;
 {
 width:688px;
 height: 580px; 
+border: 1px solid #d5d5d5;   
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
 }
 
 #nowshowing
@@ -790,9 +782,65 @@ overflow:hidden;
 white-space:nowrap;
 } 	
 
+
 #lblsearch
 {
 text-overflow:ellipsis;
 overflow:hidden;
 white-space:nowrap;
 }
+
+#blue-marble{      /* Blue Marble Layer */
+display: block; 	
+width:35px;
+height:35px;
+outline:0px;
+}
+#blue-marble.off {
+background:url('../images/seedlings/getoggle_nav.png') -0px 0px;
+}
+
+#blue-marble.off:hover { 
+background:url('../images/seedlings/getoggle_nav.png') -0px -35px;
+}
+#blue-marble.checked { 
+background:url('../images/seedlings/getoggle_nav.png') -0px -70px;
+}
+
+
+#atmosphere{       /* Weather visibility */
+display: block; 	
+width:35px;
+height:35px;
+outline:0px;
+}
+#atmosphere.off {
+background:url('../images/seedlings/getoggle_nav.png') -35px 0px;
+}
+
+#atmosphere.off:hover { 
+background:url('../images/seedlings/getoggle_nav.png') -35px -35px;
+}
+#atmosphere.checked { 
+background:url('../images/seedlings/getoggle_nav.png') -35px -70px;
+}
+
+
+#border{        /* Borders visibility */
+display: block; 	
+width:35px;
+height:35px;
+outline:0px;
+}
+#border.off {
+background:url('../images/seedlings/getoggle_nav.png') -70px 0px;
+}
+
+#border.off:hover { 
+background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
+}
+#border.checked { 
+background:url('../images/seedlings/getoggle_nav.png') -70px -70px;
+}
+
+

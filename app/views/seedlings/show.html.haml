@@ -89,7 +89,7 @@
       // Hybrid Google Map block
       %div{:id => "imggrid", :class => "mapdiv"}
         %h3{:class => "bluecolor"}Seedling Location
-        %img{:id => "map_canvas", :width => "178px", :src =>"", :alt => "thumbnail map"}
+        %img{:id => "map_canvas", :width => "180px", :src =>"", :alt => "thumbnail map"}
         %br
         %br
         %div{:id => "map_description"}
@@ -135,10 +135,12 @@
       %div{:id => "imggrid"}
         %ul#switchlist
           %li
-            %div{:id => "list_a_excl_collapsed", :style => "display:block"}
-              %a{:href => "javascript:swap('list_a_excl',groupA)"} View Geo Details
-            %div{:id =>"list_a_excl_expanded", :style => "display:none"}
-              %a{:href => "javascript:swap('list_a_excl',groupA)"} Hide Details
+            %div{:id => "list_a_excl_collapsed", :class => "paneldiv", :style => "display:block"}
+              %a{:href => "javascript:swap('list_a_excl',groupA)"}
+                %b View Geo Details
+            %div{:id =>"list_a_excl_expanded", :class => "paneldiv", :style => "display:none"}
+              %a{:href => "javascript:swap('list_a_excl',groupA)"} 
+                %b Hide Details
               // The details table which switches open:        
               %table{:id => "globecontrols"} 
                 %tr

@@ -1,3 +1,5 @@
+
+
 %div{:id => "maincontainer"}
   %div{:id => "contentwrapper"}
     // G L O B E      C O L U M N
@@ -5,17 +7,25 @@
       %div{:id => "imggrid"}
         // The Google Earth Block        
         %div{:id => "globe3d"}
-        %ul#switchlist
-        /collapsable link for checkboxes, layer toggling
-        %li 
-          %div{:id => "list_c_excl_collapsed", :style => "display:block"}
-            %a{:href => "javascript:swap('list_c_excl',groupA)"} Open layer toggling options
-          %div{:id =>"list_c_excl_expanded", :style => "display:none"}
-            %a{:href => "javascript:swap('list_c_excl',groupA)"} Close layer toggling options
-            %table{:id => "globecontrols"} 
-              %tr
-                %td{:id => 'checkboxes-ui'}
+        
+        %div{:class => "paneldiv", :style => "height:40px"}        
+          %table{:id => "globecontrols"}
+            %tr
+              %td{:style => "width:40px;"}
+                %a{:id => "blue-marble", :class => "checked", :href => "javascript:getoggle('kml-blue-marble-check','blue-marble');", :onMouseOver =>"javascript:toggletext('Show/hide blue-marble');", :onmouseout=>"javascript:toggletext('');"}
+              %td{:style => "width:40px;"}
+                %a{:id => "atmosphere", :class => "checked", :href => "javascript:getoggle('kml-atmosphere-check','atmosphere');", :onMouseOver =>"javascript:toggletext('Show/hide Atmosphere');", :onmouseout=>"javascript:toggletext('');"}
+              %td{:style => "width:40px;"}
+                %a{:id => "border", :class => "off", :href => "javascript:getoggle('kml-border-check','border');", :onMouseOver =>"javascript:toggletext('Show/hide Borders');", :onmouseout=>"javascript:toggletext('');"}
+              %td{:style => "vertical-align:bottom", :align => "right"}
+                %div{:id => "toggletext"}
+                
+        // A hidden div containing checkboxes to toggle Google earth layers visibility          
+        %div{:id => 'checkboxes-ui', :style => "visibility:collapse; height:0px"}
+          %td{:id => 'checkboxes-ui'}
+      
       %br
+  
   // C O N T R O L S      C O L U M N
   %div{:id => "indexcontrols"}
     .innertube
@@ -51,42 +61,44 @@
             
       %br        
       %div{:id => "imggrid"}
-        %div
-          %ul#switchlist
-            %li
-              %div{:id => "list_a_excl_collapsed", :style => "display:block"}
-                %a{:href => "javascript:swap('list_a_excl',groupA)"} Fly to any destination on the globe
-              %div{:id =>"list_a_excl_expanded", :style => "display:none"}
-                %a{:href => "javascript:swap('list_a_excl',groupA)"} Close Fly to Controls
-                       
-                %table{:id => "globecontrols"} 
-                  %tr
-                    %td{:align => "left"}
-                      %input{:id => "txtflyto", :Size => "20", :type => "text", :value => "San Francisco, CA", :onkeydown => "if (event.keyCode == 13) javascript:FlytoClick()" }/              
-                    %td{:align => "left"}  
-                      %a{:id => "flyto", :Title => "Fly to the Entered Destination", :href => "javascript:FlytoClick()"}
-                  
-            %li
-              %div{:id => "list_b_excl_collapsed", :style => "display:block"}
-                %a{:href => "javascript:swap('list_b_excl',groupA)"} Search for Seedlings
-              %div{:id => "list_b_excl_expanded", :style => "display:none"}
-                %a{:href => "javascript:swap('list_b_excl',groupA)"} Close Search
-                %table
-                  %tr     
-                    %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:seedling, :title, {:id =>'txtsearch',:size => "20", :onkeydown => "if (event.keyCode == 13) javascript:seedsearch()" })  
-                                          
-                    %td{:align => "left"}  
-                      %a{:id => "search", :Title => "Seach for the Seedlings", :href => "javascript:seedsearch()"}
-                    %td{:style => "font-size:smaller"}
-                      by Title
-                %table
-                  %tr  
-                    %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:tag, :name, {:id =>'tagsearch',:size => "20", :onkeydown => "if (event.keyCode == 13) javascript:tagsearch()" })
+        
+        %ul{:id => "switchlist"}
+          %li
+            %div{:id => "list_a_excl_collapsed", :class => "paneldiv", :style => "display:block" }
+              %a{:href => "javascript:swap('list_a_excl',groupA)"} 
+                %b Fly to any destination on the globe
+            %div{:id =>"list_a_excl_expanded", :class => "paneldiv", :style => "display:none"}
+              %a{:href => "javascript:swap('list_a_excl',groupA)"} 
+                %b  Close Fly to Controls
                      
-                    %td{:align => "left"}  
-                      %a{:id => "search", :Title => "Seach for the Seedlings", :href => "javascript:tagsearch()"}
-                    %td{:style => "font-size:smaller"}
-                      by Tag
+              %table 
+                %tr
+                  %td{:align => "left"}
+                    %input{:id => "txtflyto", :Size => "20", :type => "text", :value => "San Francisco, CA", :onkeydown => "if (event.keyCode == 13) javascript:FlytoClick()" }/              
+                  %td{:align => "left"}  
+                    %a{:id => "flyto", :Title => "Fly to the Entered Destination", :href => "javascript:FlytoClick()"}
+                
+          %li
+            %div{:id => "list_b_excl_collapsed", :class => "paneldiv", :style => "display:block"}
+              %a{:href => "javascript:swap('list_b_excl',groupA)"} 
+                %b Search for Seedlings
+            %div{:id => "list_b_excl_expanded", :class => "paneldiv", :style => "display:none"}
+              %a{:href => "javascript:swap('list_b_excl',groupA)"} 
+                %b Close Search
+              %table{:class => "auto_complete"}
+                %tr     
+                  %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:seedling, :title, {:id =>'txtsearch',:skip_style => true, :size => "20", :onkeydown => "if (event.keyCode == 13) javascript:seedsearch()" })  
+                                        
+                  %td{:align => "left"}  
+                    %a{:id => "search", :Title => "Seach for the Seedlings", :href => "javascript:seedsearch()"}
+                  %td by Title
+              
+                %tr  
+                  %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:tag, :name, {:id =>'tagsearch',:size => "20", :onkeydown => "if (event.keyCode == 13) javascript:tagsearch()" })
+                   
+                  %td{:align => "left"}  
+                    %a{:id => "search", :Title => "Seach for the Seedlings", :href => "javascript:tagsearch()"}
+                  %td by Tag
             
   %div{:id => "footer"}
     Copyright &copy; 2009-2010 Karunatree. #{link_to "Contact Us", contact_path}    

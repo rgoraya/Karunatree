@@ -58,8 +58,8 @@
 
   // Populate the stat fields for the current search 
   function summarize(count, tag, matchseeds, currentseed) {
-  if (initzoom)
-  {currentseed = lastviewed;}
+  //if (initzoom)
+  //{currentseed = lastviewed;}
 
   document.getElementById("lblshowing").innerHTML =  count; 
   
@@ -208,3 +208,32 @@
   setTimeout("setOpacity(" + i + ")", i * duration);
   }
   }
+  
+  
+  //   F U N C T I O N S       F O R       G L O B E - L A Y E R S      T O G G L E 
+  function getoggle(checkboxid,linkid) 
+  {
+  document.getElementById(checkboxid).checked = !(document.getElementById(checkboxid).checked);
+  
+  var element = document.getElementById(linkid)
+  
+  if (element.className == 'checked')
+  {element.className = 'off';}
+  else if (element.className == 'off')
+  {element.className = 'checked';}
+  
+  if (checkboxid == 'kml-blue-marble-check')
+  toggleKml('blue-marble');
+  if (checkboxid == 'kml-border-check')
+  toggleKml('border');
+  if (checkboxid == 'kml-atmosphere-check')
+  toggleKml('atmosphere');
+  }  
+
+  function toggletext(text)
+  {
+  document.getElementById("toggletext").innerHTML = text; 
+  } 
+  
+
+  
