@@ -17,17 +17,44 @@ end
 def formatted_links_to_users
   link_string = ""
   
-  @seedling.users.each do |user|
-    is_last = (user == @seedling.users.last)
-    if(is_last && @seedling.users.count > 1)
+  # If there are no registered users...
+  if(@seedling.users.count == 0)
+    if (@seedling.has_uncredited_authors)
+      if (@seedling.uncredited_authors > 1)
+        link_string << link_to(@seedling.uncredited_authors.to_s << " anonymous artists", :controller => "contact", :action => "credit")
+      else
+        link_string << link_to("an anonymous artist", :controller => "contact", :action => "credit")
+      end
+    else
+      link_string << link_to("an anonymous artist", :controller => "contact", :action => "credit")
+    end
+  
+  # If there are registered users...
+  else
+    @seedling.users.each do |user|
+      
+      is_last = ( (user == @seedling.users.last) && !@seedling.has_uncredited_authors )
+      if(is_last && @seedling.users.count > 1)
+        link_string << " & "
+      end
+    
+      link_string << link_to(user.username, url_for(user))
+    
+      if(@seedling.total_authors > 2 && !is_last)
+        link_string << ", "
+      end
+    end
+    
+    if(@seedling.has_uncredited_authors)
       link_string << " & "
+      if (@seedling.uncredited_authors > 1)
+        link_string << link_to(@seedling.uncredited_authors.to_s << " other artists", :controller => "contact", :action => "credit")
+      else
+        link_string << link_to("one other artist", :controller => "contact", :action => "credit")
+      end
     end
-    
-    link_string << link_to(user.username, url_for(user))
-    
-    if(@seedling.users.count > 2 && !is_last)
-      link_string << ", "
-    end
+      
+      
   end
   
   return link_string

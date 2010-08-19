@@ -1,0 +1,18 @@
+- form_for (:contact, :url => contact_path) do |form|
+  %fieldset
+    %legend We'd love to hear from you!
+    = error_messages_for "user"
+    .form-row
+      %label{:for => "name"} Your Name: &nbsp;
+      = form.text_field :name
+    .form-row
+      %label{:for => "email"} Your Email: &nbsp;
+      = form.text_field :email
+    .form-row
+      %label{:for => "subject"} Subject: &nbsp;
+      = form.text_field :subject
+    .form-row
+      %label{:for => "body"} Your Message:
+      = form.text_area :body
+    .form-row
+      = form.submit "Send", :class => "submit"

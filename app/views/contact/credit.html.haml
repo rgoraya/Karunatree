@@ -1,0 +1,6 @@
+-content_for(:include_custom_stylesheet) do
+  = stylesheet_link_tag "ktree-forms"
+ 
+%h1 Get Credit for Your Seedling
+%p Did you find one of your seedlings, but don't see your name listed as an artist? Some artists from our Girls, Inc. summer program are currently uncredited because we are missing parental consent forms. If you'd like to be credited for your work, please just contact us using the form below.
+= render :partial => 'form'

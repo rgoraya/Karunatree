@@ -20,8 +20,8 @@
             %span{:class => "titlecolor"}#{@seedling.title}
         - if(!@seedling.users.empty?)
           = image_tag @seedling.users.first.avatar.url(:square), :id => "avatar-img", :size => "60x60"
-          %div{:class => "authordiv"}
-            by #{formatted_links_to_users}
+        %div{:class => "authordiv"}
+          by #{formatted_links_to_users}
         
         // Segmented controls block (currently put in a random image sprites button)         
         //%div{:class => "clearleft"}
@@ -165,11 +165,12 @@
   %div{:id => "rightcolumn"}
     .innertube
     
-      // Contact us block   
-      %div{:id => "imggrid", :class => "contactusdiv"}
-        %h3 Girls, Inc. Parents:
-        %p
-          Did your daughter help create this Seedling? Some authors are not credited because we are missing consent forms. Please #{link_to "contact us", contact_path} to help your daughter claim her work! 
+      // Contact us block 
+      - if(@seedling.has_uncredited_authors)
+        %div{:id => "imggrid", :class => "contactusdiv"}
+          %h3 Girls, Inc. Parents:
+          %p
+            Did your daughter help create this Seedling? Some artists are not credited because we are missing parental consent forms. Please #{link_to "contact us", :controller => 'contact', :action => 'credit'} to help your daughter claim her work! 
       
       
       // More_by block

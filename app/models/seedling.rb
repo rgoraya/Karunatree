@@ -47,6 +47,20 @@ class Seedling < ActiveRecord::Base
     end
   end
   
+  def has_uncredited_authors
+    if(!self.uncredited_authors.blank?)
+      if(self.uncredited_authors > 0)
+        return true
+      else
+        return false
+      end
+    end
+  end
+  
+  def total_authors
+    number_uncredited_authors = self.has_uncredited_authors ? self.uncredited_authors : 0
+    return self.users.count + number_uncredited_authors
+  end
 
   def self.get_tags(seedlings)
     seedTags = Array.new

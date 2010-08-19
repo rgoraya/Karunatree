@@ -1,7 +1,11 @@
 class ContactController < ApplicationController
   
   def index
-    #render index.html.erb
+    #render index.html.haml
+  end
+  
+  def seedlings
+    #render seedlings.html.haml
   end
   
   def create
