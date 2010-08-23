@@ -1,0 +1,64 @@
+%script{:type => "text/javascript", :src => "http://www.google.com/jsapi?key=#{REGISTRY[:api_key]}"} 
+%script{:src => "http://earth-api-utility-library.googlecode.com/svn/trunk/extensions/dist/extensions.pack.js"}
+%script{:type => "text/javascript"}
+
+
+  var userSeedlings = #{User.get_user_seedlings(@user).to_json};
+  /alert(userSeedlings[0].seedling.title);
+  var seedlingTitles = #{Seedling.get_friendly_ids(@user.seedlings).to_json}
+  /alert(seedlingTitles);
+  var imageUrls = #{Seedling.get_image_url(@user.seedlings).to_json};
+  /alert(imageUrls);
+  
+  var ge;
+  var lookAt;
+  
+  /initializes toggling objects
+  var currentKmlObjects = {
+  'blue-marble': null,
+  'border': null,
+  'atmosphere': null
+  };
+  
+  google.load("earth", "1.x");
+  google.load("maps", "2.x");
+  google.load("maps", "2.xx");
+  
+  function init(){
+  google.earth.createInstance('globe-user', initCB, failureCB);
+
+  addCheckboxesUIHtml(
+  '<input type="checkbox" id="kml-blue-marble-check" onclick="toggleKml(\'blue-marble\');"/><strong>Toggle Blue Marble Layer</strong><br>' +
+  '<input type="checkbox" id="kml-border-check" onclick="toggleKml(\'border\');"/><strong>Toggle Borders Layer</strong><br>' +
+  '<input type="checkbox" id="kml-atmosphere-check" onclick="toggleKml(\'atmosphere\');"/><strong>Toggle Atmosphere Layer</strong><br>'
+  );  
+  
+  }
+  
+  function initCB(instance){
+  ge = instance;
+  ge.getWindow().setVisibility(true);
+  ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
+  lookAt = ge.createLookAt('');
+  var icon = ge.createIcon('');
+  icon.setHref('http://karunatree.com/images/seedlings/seedicon.png');
+  var style = ge.createStyle('');
+  style.getIconStyle().setIcon(icon);
+  
+  //checkboxes loading
+  if (document.getElementById('kml-blue-marble-check').checked)
+  loadKml('blue-marble');
+  if (document.getElementById('kml-border-check').checked)
+  loadKml('border');
+  if (document.getElementById('kml-atmosphere-check').checked)
+  loadKml('atmosphere');
+  
+  plantUserSeedlings(style);
+  
+  }
+  
+  function failureCB(errorCode){
+  }
+
+  google.setOnLoadCallback(init);
+		

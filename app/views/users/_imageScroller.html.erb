@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+	  <link rel="stylesheet" type="text/css" href="imageScroller.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+
+		<script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"></script>
+		<script type="text/javascript">
+			var $j = jQuery.noConflict();
+
+			$j(function() {
+			
+			  //remove js-disabled class
+				$j("#viewer").removeClass("js-disabled");
+			
+			  //create new container for images
+				$j("<div>").attr("id", "container").css({ position:"absolute"}).width($j(".wrapper").length * 100).height(100).appendTo("div#viewer");
+			  	
+				//add images to container
+				$j(".wrapper").each(function() {
+					$j(this).appendTo("div#container");
+				});
+				
+				//work out duration of anim based on number of images (1 second for each image)
+				var duration = $j(".wrapper").length * 2000;
+				
+				//store speed for later (distance / time)
+				var speed = (parseInt($j("div#container").width()) + parseInt($j("div#viewer").width())) / duration;
+								
+				//set direction
+				var direction = "rtl";
+				
+				//set initial position and class based on direction
+				(direction == "rtl") ? $j("div#container").css("left", $j("div#viewer").width()).addClass("rtl") : $j("div#container").css("left", 0 - $j("div#container").width()).addClass("ltr") ;
+				
+				//animator function
+				var animator = function(el, time, dir) {
+				 
+					//which direction to scroll
+					if(dir == "rtl") {
+					  
+					  //add direction class
+						el.removeClass("ltr").addClass("rtl");
+					 		
+						//animate the el
+						el.animate({ left:"-" + el.width() + "px" }, time, "linear", function() {
+												
+							//reset container position
+							$j(this).css({ left:$j("div#imageScroller").width(), right:"" });
+							
+							//restart animation
+							animator($j(this), duration, "rtl");
+							
+							//hide controls if visible
+							($j("div#controls").length > 0) ? $j("div#controls").slideUp("slow").remove() : null ;			
+											
+						});
+					} else {
+					
+					  //add direction class
+						el.removeClass("rtl").addClass("ltr");
+					
+						//animate the el
+						el.animate({ left:$j("div#viewer").width() + "px" }, time, "linear", function() {
+												
+							//reset container position
+							$j(this).css({ left:0 - $j("div#container").width() });
+							
+							//restart animation
+							animator($j(this), duration, "ltr");
+							
+							//hide controls if visible
+							($j("div#controls").length > 0) ? $j("div#controls").slideUp("slow").remove() : null ;			
+						});
+					}
+				}
+				
+				//start animation
+				animator($j("div#container"), duration, direction);
+				
+				//pause on mouseover
+				$j("a.wrapper").live("mouseover", function() {
+				  
+					//stop anim
+					$j("div#container").stop(true);
+					
+					//show controls
+					($j("div#controls").length == 0) ? $j("<div>").attr("id", "controls").appendTo("div#outerContainer").css({ opacity:1.0 }).slideDown("slow") : null ;
+					
+					
+					//variable to hold trigger element
+					var title = $j(this).attr("title");
+					if (title.length > 40) {
+						title = title.substr(0, 40) + "...";
+					}
+					//add p if doesn't exist, update it if it does
+					($j("p#title").length == 0) ? $j("<p>").attr("id", "title-hover").text(title).appendTo("div#controls") : $j("p#title").text(title) ;
+				});
+				
+				//restart on mouseout
+				$j("a.wrapper").live("mouseout", function(e) {
+				  
+					//hide controls if not hovering on them
+					(e.relatedTarget == null) ? null : (e.relatedTarget.id != "controls") ? $j("div#controls").slideUp("slow").remove() : null ;
+					
+					//work out total travel distance
+					var totalDistance = parseInt($j("div#container").width()) + parseInt($j("div#viewer").width());
+														
+					//work out distance left to travel
+					var distanceLeft = ($j("div#container").hasClass("ltr")) ? totalDistance - (parseInt($j("div#container").css("left")) + parseInt($j("div#container").width())) : totalDistance - (parseInt($j("div#viewer").width()) - (parseInt($j("div#container").css("left")))) ;
+					
+					//new duration is distance left / speed)
+					var newDuration = distanceLeft / speed;
+				
+					//restart anim
+					animator($j("div#container"), newDuration, $j("div#container").attr("class"));
+
+				});
+			});
+		</script>
+  </body>
+</html>

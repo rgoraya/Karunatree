@@ -7,6 +7,8 @@ class Seedling < ActiveRecord::Base
   has_many :tags, :through => :taggings
   attr_accessor :tag_names
   after_save :assign_tags
+  #multistep form
+  attr_writer :current_step
   
   accepts_nested_attributes_for :tags, :allow_destroy => :true ,  :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } } 
   
@@ -18,21 +20,21 @@ class Seedling < ActiveRecord::Base
                     :whiny_thumbnails => true,
                     :path => REGISTRY[:data_dir]+"/:class/:id-:seedling_slug/project/:id-:style.:extension",
                     :url => "/:class/:seedling_slug/project?style=:style"
-                    
+  
   has_attached_file :audio_message,
                     :path => ":rails_root/public/system/:class/:id-:seedling_slug/:id-audio-message.:extension",
                     :url => "/system/:class/:id-:seedling_slug/:id-audio-message.:extension"
-                    #:url => "/:class/:seedling_slug/audio_message"
-                      
+  #:url => "/:class/:seedling_slug/audio_message"
+  
   composed_of :location,
     :class_name => "Location",
     :mapping => 
-      [  #  db    ruby
+  [  #  db    ruby
         %w[ lat   lat ],
         %w[ lon   lon ],
         %w[ alt   alt ]
-      ]
-      
+  ]
+  
   # Uncomment this function to update Seedlings using a rake task,
   # e.g. rake paperclip:refresh
   #
@@ -72,7 +74,7 @@ class Seedling < ActiveRecord::Base
     end
     return seedTags
   end
-      
+  
   def self.get_friendly_ids(seedlings)
     friendly_ids = Array.new
     seedlings.each do |seedling|
@@ -80,13 +82,19 @@ class Seedling < ActiveRecord::Base
     end
     return friendly_ids
   end
-
+  def self.get_friendly_id(seedling) 
+    return seedling.friendly_id
+  end
+  
   def self.get_image_url(seedlings)
     urls = Array.new
     seedlings.each do |seedling|
       urls.push(seedling.project.url(:thumbnail))
     end
     return urls
+  end
+  def self.get_single_thumb(seedling)
+    return seedling.project.url(:thumbnail)
   end
   
   def self.get_tag_image_url(seedlings)
@@ -96,17 +104,44 @@ class Seedling < ActiveRecord::Base
     end
     return urls
   end
-
+  
   
   def like
     self.like += 1
     self.save
   end
-
+  
   def tag_names
     @tag_names || tags.map(&:name).join(' ')
   end
   
+  # multistep form
+  def current_step
+    @current_step || steps.first
+  end
+  
+  def steps
+    %w[project title description tag display]
+  end
+  
+  def next_step
+    self.current_step = steps[steps.index(current_step) + 1 ]
+  end
+  
+  def previous_step
+    self.current_step = steps[steps.index(current_step) - 1]
+  end
+  
+  def first_step?
+    current_step == steps.first
+  end
+  
+  def last_step?
+    current_step == steps.last
+  end
+  
+  
+  #private methods
   private
   
   def assign_tags
@@ -116,7 +151,7 @@ class Seedling < ActiveRecord::Base
       end
     end
   end
-      
+  
   # Max and min lengths for all fields    
   TITLE_MIN_LENGTH = 1
   TITLE_MAX_LENGTH = 50
@@ -124,24 +159,28 @@ class Seedling < ActiveRecord::Base
   DESCRIPTION_MIN_LENGTH = 1
   DESCRIPTION_MAX_LENGTH = 500
   DESCRIPTION_LENGTH_RANGE = DESCRIPTION_MIN_LENGTH..DESCRIPTION_MAX_LENGTH
-
+  
   
   #validations
-  validates_length_of :title, :within => TITLE_LENGTH_RANGE
-  validates_length_of :description, :within => DESCRIPTION_LENGTH_RANGE
-  validates_numericality_of :lat,
+  validates_length_of :title, :within => TITLE_LENGTH_RANGE, :if => lambda { |o| o.current_step == "title" }  
+  validates_length_of :description, :within => DESCRIPTION_LENGTH_RANGE, :if => lambda { |o| o.current_step == "description" }  
+  validates_numericality_of :lat, 
                       :greater_than_or_equal_to => -180,
                       :less_than_or_equal_to => 180,
-                      :message => "must be a number between -180 and 180."
+                      :message => "must be a number between -180 and 180.",
+                      :if => lambda { |o| o.current_step == "project" }  
   validates_numericality_of :lon,
                       :greater_than_or_equal_to => -180,
                       :less_than_or_equal_to => 180,
-                      :message => "must be a number between -180 and 180."
+                      :message => "must be a number between -180 and 180.",
+                      :if => lambda { |o| o.current_step == "project" }
   validates_numericality_of :alt,
                       :greater_than_or_equal_to => -1000,
                       :less_than_or_equal_to => 10000000,
-                      :message => "must must be a number between -1000 and 10000000."
-      
+                      :message => "must must be a number between -1000 and 10000000.",
+                      :if => lambda { |o| o.current_step == "project" }
+  
+  
   # Text box sizes for display of views 
   USER_SIZE = 5   
   TITLE_SIZE = 20   
@@ -149,5 +188,5 @@ class Seedling < ActiveRecord::Base
   LAT_SIZE = 11
   LON_SIZE = 11
   ALT_SIZE = 11
-      
+  
 end

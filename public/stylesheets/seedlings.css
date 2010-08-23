@@ -596,6 +596,7 @@ author a:visited {
 	padding-left: 3px;
 	margin-top: 4px;
 	margin-bottom: 6px;
+	border: hidden;
 }
 
 #morebyimg {
@@ -788,6 +789,13 @@ white-space:nowrap;
 text-overflow:ellipsis;
 overflow:hidden;
 white-space:nowrap;
+}
+
+#globe-user {
+	width:688px;
+	height: 580px; 
+}
+=======
 }
 
 #blue-marble{      /* Blue Marble Layer */

@@ -1,0 +1,149 @@
+%script{:type => "text/javascript"}
+  
+  function plantUserSeedlings(style) {
+  for (var i = 0; i < userSeedlings.length; i++) {
+  var title = userSeedlings[i].seedling.title;
+  var lat = userSeedlings[i].seedling.lat;
+  var lon = userSeedlings[i].seedling.lon;
+
+  var placemark = ge.createPlacemark('');
+  var point = ge.createPoint('');
+  placemark.setStyleSelector(style);
+  point.setLatitude(lat);
+  point.setLongitude(lon);
+  placemark.setName(title);
+  placemark.setDescription(i.toString());
+  point.setAltitudeMode(13);
+  placemark.setGeometry(point);
+  ge.getFeatures().appendChild(placemark);
+  addListeners(placemark);
+  }
+
+  lookAt.set(userSeedlings[0].seedling.lat, userSeedlings[0].seedling.lon, 10, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 9000000);
+  ge.getOptions().setFlyToSpeed(0.4);
+  ge.getView().setAbstractView(lookAt);
+  }
+  
+  function addListeners(placemark) {
+  google.earth.addEventListener(placemark, 'mouseover', function(event) {
+  var placemark = event.getTarget();
+  var description = placemark.getDescription(); 
+  seedSummary(description);
+  });
+  
+  google.earth.addEventListener(placemark, 'click', function(event) { 
+  event.preventDefault();
+  var placemark = event.getTarget();
+  var description = placemark.getDescription();
+  var title = seedlingTitles[description];
+  var link = go_to_link(title);
+  window.location = link;
+  });
+  
+  }
+  
+  function seedSummary(seedIndex) {
+  // Retireve Link to show page for this seedling
+  var link = go_to_link(seedlingTitles[seedIndex]);
+  link_to_details = "here";
+  link_to_details = link_to_details.link(link);
+  // Retireve  Url of the thumbnail Image to be displayed
+  var imageurl = imageUrls[seedIndex];
+  
+  var descr = (userSeedlings[seedIndex].seedling.description);
+  if (descr.length > 300)
+  {descr = descr.substring(0,300) + '...';}
+  
+  var innerhtml = 
+  ' <div id="summary" class="head"><tr><td>Focused on <b class="titlecolor">' + userSeedlings[seedIndex].seedling.title + '</b></div>'
+  + '<div id = "summary" class="main"> <a href="' + link + '">'
+  + '<img id="more-link" src="' + imageurl + '" align="left" alt="Project image" /> </a>'
+  + descr + '</div><br>' 
+  + '<div id="summary" class="trail">click on the Image above or ' + link_to_details + ' to view details.</div>';
+  
+  document.getElementById("nowshowing").innerHTML =  innerhtml;
+  fadeInSummary();
+  }
+  
+  //  C R E A T E       D E T A I L S       P A G E       L I N K  
+  function go_to_link(symbol)
+  {
+  part_of_link = symbol;
+  full_link = "/seedlings/" + part_of_link;
+  return full_link;
+  }
+  //   F U N C T I O N S       F O R       S W I T C H - L I S T S
+  var groupA = new Array();
+  groupA[groupA.length] = "list_a_excl";
+
+  
+  // Swapping the Lists
+  function swap(listIdPrefix, group) {
+  collapsedList = document.getElementById(listIdPrefix + "_collapsed");
+  expandedList = document.getElementById(listIdPrefix + "_expanded");
+  if (collapsedList.style.display == "block") 
+  {
+  collapsedList.style.display = "none";
+  expandedList.style.display = "block";
+  } 
+  else 
+  {
+  collapsedList.style.display = "block";
+  expandedList.style.display = "none";
+  }
+  if (group) 
+  {
+  ensureExclusivity(listIdPrefix, group);}
+  }
+  
+  // Ensuring Exclusivity
+  function ensureExclusivity(listIdPrefix, group) 
+  {
+  for (var i = 0; i < group.length; i++) {
+  if (group[i] != listIdPrefix) {
+  document.getElementById(group[i] + "_collapsed").style.display = "block";
+  document.getElementById(group[i] + "_expanded").style.display = "none";} }
+  }
+  
+  //   F U N C T I O N S       F O R       F A D E - I N       E F F E C T
+  function setOpacity(level) {
+  var element = document.getElementById('nowshowing');
+  element.style.opacity = level;
+  element.style.MozOpacity = level;
+  element.style.KhtmlOpacity = level;
+  element.style.filter = "alpha(opacity=" + (level * 100) + ");";
+  }
+  // fade in the seedling summary
+  function fadeInSummary(){
+  var duration = 1000;  /* 1000 millisecond fade = 1 sec */
+  var steps = 30;       /* number of opacity intervals   */
+  for (i = 0; i <= 1; i += (1 / steps)) {
+  setTimeout("setOpacity(" + i + ")", i * duration);
+  }
+  }
+  
+  //   F U N C T I O N S       F O R       G L O B E - L A Y E R S      T O G G L E 
+  function getoggle(checkboxid,linkid) 
+  {
+  document.getElementById(checkboxid).checked = !(document.getElementById(checkboxid).checked);
+  
+  var element = document.getElementById(linkid)
+  
+  if (element.className == 'checked')
+  {element.className = 'off';}
+  else if (element.className == 'off')
+  {element.className = 'checked';}
+  
+  if (checkboxid == 'kml-blue-marble-check')
+  toggleKml('blue-marble');
+  if (checkboxid == 'kml-border-check')
+  toggleKml('border');
+  if (checkboxid == 'kml-atmosphere-check')
+  toggleKml('atmosphere');
+  }  
+
+  function toggletext(text)
+  {
+  document.getElementById("toggletext").innerHTML = text; 
+  } 
+

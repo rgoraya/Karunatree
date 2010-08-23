@@ -22,6 +22,11 @@ class User < ActiveRecord::Base
     username
   end
   
+  def self.get_user_seedlings(user)
+    return user.seedlings
+  end
+    
+  
   # Max and min lengths for all fields
   USERNAME_MIN_LENGTH = 3
   USERNAME_MAX_LENGTH = 20

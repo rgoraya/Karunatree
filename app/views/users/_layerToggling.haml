@@ -1,0 +1,56 @@
+%script{:type => "text/javascript"}
+  function addCheckboxesUIHtml(html) {
+  document.getElementById('checkboxes-ui').innerHTML += html;
+  document.getElementById('kml-atmosphere-check').checked = 'true';
+  document.getElementById('kml-blue-marble-check').checked = 'true';
+  }
+%script{:type => "text/javascript"}
+  function toggleKml(file) {
+  // remove the old KML object if it exists
+  if (currentKmlObjects[file]) {
+  ge.getFeatures().removeChild(currentKmlObjects[file]);
+  currentKmlObject = null;
+  }
+  // if the checkbox is checked, fetch the KML and show it on Earth
+  var kmlCheckbox = document.getElementById('kml-' + file + '-check');
+  if (kmlCheckbox.checked)
+  loadKml(file);
+  else {
+  if (file == "border")
+  ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, false);
+  if (file == "atmosphere")
+  ge.getOptions().setAtmosphereVisibility(false);
+  }
+  }
+  
+  function loadKml(file) {
+  var kmlUrl = 'http://www.gearthblog.com/kmfiles/BlueMarble.kml';
+  if (file == "border") {
+  //alert("border");
+  ge.getLayerRoot().enableLayerById(ge.LAYER_BORDERS, true);
+  return;
+  }
+  if (file == "atmosphere") {
+  ge.getOptions().setAtmosphereVisibility(true); 
+  return;
+  }
+  // fetch the KML
+  google.earth.fetchKml(ge, kmlUrl, function(kmlObject) {
+  // NOTE: we still have access to the 'file' variable (via JS closures)
+  if (kmlObject) {
+  // show it on Earth
+  currentKmlObjects[file] = kmlObject;
+  ge.getFeatures().appendChild(kmlObject);
+  } else {
+  // bad KML
+  currentKmlObjects[file] = null;
+  // wrap alerts in API callbacks and event handlers
+  // in a setTimeout to prevent deadlock in some browsers
+  setTimeout(function() {
+  alert('Bad or null KML.');
+  }, 0);
+  // uncheck the box
+  document.getElementById('kml-' + file + '-check').checked = '';
+  }
+  });
+  }

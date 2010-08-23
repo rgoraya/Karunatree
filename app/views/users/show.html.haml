@@ -1,15 +1,70 @@
-%h2
-  = @user.username
+- content_for(:include_custom_stylesheet) do
+  = stylesheet_link_tag "seedlings"
+  = stylesheet_link_tag "imageScroller"
+  
+%div{:id => "maincontainer"}
+  %div{:id => "contentwrapper"}
+    // G L O B E      C O L U M N
+    %div{:id => "earthdiv"}
+      %div{:id => "imggrid"}
+        %div{:id => "globe-user", :style => "height: 570px"}
+        %div{:class => "paneldiv", :style => "height:40px"}        
+          %table{:id => "globecontrols"}
+            %tr
+              %td{:style => "width:40px;"}
+                %a{:id => "blue-marble", :class => "checked", :href => "javascript:getoggle('kml-blue-marble-check','blue-marble');", :onMouseOver =>"javascript:toggletext('Show/hide blue-marble');", :onmouseout=>"javascript:toggletext('');"}
+              %td{:style => "width:40px;"}
+                %a{:id => "atmosphere", :class => "checked", :href => "javascript:getoggle('kml-atmosphere-check','atmosphere');", :onMouseOver =>"javascript:toggletext('Show/hide Atmosphere');", :onmouseout=>"javascript:toggletext('');"}
+              %td{:style => "width:40px;"}
+                %a{:id => "border", :class => "off", :href => "javascript:getoggle('kml-border-check','border');", :onMouseOver =>"javascript:toggletext('Show/hide Borders');", :onmouseout=>"javascript:toggletext('');"}
+              %td{:style => "vertical-align:bottom", :align => "right"}
+                %div{:id => "toggletext"}
+                
+        // A hidden div containing checkboxes to toggle Google earth layers visibility          
+        %div{:id => 'checkboxes-ui', :style => "visibility:collapse; height:0px"}
+          %td{:id => 'checkboxes-ui'}
+       
+      %br
+      
+  // U S E R        S E E D L I N G      I N F O R M A T I O N
+  %div{:id => "indexcontrols"}
+    .innertube
+      %div{:id => "imggrid"}
+        
+        %div{:id => "nowshowing"}
+          %p #{@user.username}'s seedlings
+          #user_seedlings
+            - @user.seedlings.each do |seedling|
+          
+              %a{:href => "/seedlings/" + "#{Seedling.get_friendly_id(seedling)}"} #{seedling.title}
+              %br
+      %br
+      %div{:id => "imggrid"}
+        %h2
+          = @user.username
+        
+        %p
+          %b Account Type:
+          = @user.account_type
+        %p
+          = image_tag @user.avatar.url(:square)             
+      %br
+      %div{:id => "imggrid", :style => "height: 183px;"}
+        = render :partial => "imageScroller" 
+        %div{:id => "outerContainer"}
+          %div{:id => "imageScroller"}
+            %div{:id=> "viewer", :class=> "js-disabled"}
+              - for seed in @user.seedlings
+                %a.wrapper{:href => "/seedlings/" + "#{Seedling.get_friendly_id(seed)}", :title => seed.title}
+                  %img#seedling.logo{:alt => "seed.title", :src => "#{Seedling.get_single_thumb(seed)}"}
+            
+            %p{:id => "img-footer"} My Seedlings
+        
+           
+      
+  %div{:id => "footer"}
+    Copyright &copy; 2009-2010 Karunatree. #{link_to "Contact Us", contact_path}     
 
-%p
-  %b Account Type:
-  = @user.account_type
-%p
-  = image_tag @user.avatar.url(:square)
-
-%p #{@user.username}'s seedlings
-
-#user_seedlings
-  - @user.seedlings.each do |seedling|
-    %a{:href => seedling_path(seedling)}
-    %img{:src => seedling.project.url(:thumb)}/
+= render :partial => "layerToggling"
+= render :partial => "googleEarth"
+= render :partial => "showPageFunctions"
