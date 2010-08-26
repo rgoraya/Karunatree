@@ -134,13 +134,13 @@ padding:20px;
 display: block; 	
 width:66px;
 height:25px;
-background:url('../images/seedlings/fly.jpg') -4px -4px;
+background:url('../images/seedlings/fly.png') -4px -4px;
 }
 #flyto:hover { 
-background:url('../images/seedlings/fly.jpg') -4px -30px;
+background:url('../images/seedlings/fly.png') -4px -30px;
 }
 #flyto:active { 
-background:url('../images/seedlings/fly.jpg') -4px -58px;
+background:url('../images/seedlings/fly.png') -4px -58px;
 }
 
 
@@ -149,13 +149,27 @@ display: block;
 width:66px;
 height:25px;
 padding:0px;
-background:url('../images/seedlings/plant.jpg') -4px -4px;
+background:url('../images/seedlings/plant.png') -4px -4px;
 }
 #reset:hover { 
-background:url('../images/seedlings/plant.jpg') -4px -30px;
+background:url('../images/seedlings/plant.png') -4px -30px;
 }
 #reset:active { 
-background:url('../images/seedlings/plant.jpg') -4px -58px;
+background:url('../images/seedlings/plant.png') -4px -58px;
+}
+
+#plant{
+display: block; 	
+width:66px;
+height:25px;
+padding:0px;
+background:url('../images/seedlings/plant.png') -4px -4px;
+}
+plant:hover { 
+background:url('../images/seedlings/plant.png') -4px -30px;
+}
+#plant:active { 
+background:url('../images/seedlings/plant.png') -4px -58px;
 }
 
 #search{
@@ -163,13 +177,13 @@ display: block;
 width:66px;
 height:25px;
 padding:0px;
-background:url('../images/seedlings/search.jpg') -4px -4px;
+background:url('../images/seedlings/search.png') -4px -4px;
 }
 #search:hover { 
-background:url('../images/seedlings/search.jpg') -4px -30px;
+background:url('../images/seedlings/search.png') -4px -30px;
 }
 #search:active { 
-background:url('../images/seedlings/search.jpg') -4px -58px;
+background:url('../images/seedlings/search.png') -4px -58px;
 }
 
 #next{
@@ -177,30 +191,40 @@ display: block;
 width:66px;
 height:25px;
 padding:0px;
-background:url('../images/seedlings/next.jpg') -4px -4px;
 }
-#next:hover { 
-background:url('../images/seedlings/next.jpg') -4px -30px;
+#next.enabled{
+background:url('../images/seedlings/next.png') -4px -4px;
 }
-#next:active { 
-background:url('../images/seedlings/next.jpg') -4px -58px;
+#next.enabled:hover { 
+background:url('../images/seedlings/next.png') -4px -30px;
 }
+#next.enabled:active { 
+background:url('../images/seedlings/next.png') -4px -58px;
+}
+
+#next.disabled{
+background:url('../images/seedlings/next.png') -4px -88px;	
+}
+
+
 
 #prev{
 display: block; 	
 width:66px;
 height:25px;
 padding:0px;
-background:url('../images/seedlings/prev.jpg') -4px -4px;
 }
-#prev:hover { 
-background:url('../images/seedlings/prev.jpg') -4px -30px;
+#prev.enabled{
+background:url('../images/seedlings/prev.png') -4px -4px;
 }
-#prev:active { 
-background:url('../images/seedlings/prev.jpg') -4px -58px;
+#prev.enabled:hover { 
+background:url('../images/seedlings/prev.png') -4px -30px;
 }
-#prev:disabled { 
-background:url('../images/seedlings/prev.jpg') -4px -84px;
+#prev.enabled:active { 
+background:url('../images/seedlings/prev.png') -4px -58px;
+}
+#prev.disabled{ 
+background:url('../images/seedlings/prev.png') -4px -88px;
 }
 
 #imggrid
@@ -596,7 +620,6 @@ author a:visited {
 	padding-left: 3px;
 	margin-top: 4px;
 	margin-bottom: 6px;
-	border: hidden;
 }
 
 #morebyimg {
@@ -727,6 +750,18 @@ border: 1px solid #d5d5d5;
 	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
 }
 
+#globe3d.wizardhide
+{
+visibility:collapse;
+height:0px;
+}
+
+#globe3d.wizard
+{
+width:588px;
+height: 400px;
+}
+
 #nowshowing
 {
 width:280px;
@@ -791,12 +826,7 @@ overflow:hidden;
 white-space:nowrap;
 }
 
-#globe-user {
-	width:688px;
-	height: 580px; 
-}
-=======
-}
+/*         S T Y L E S         F O R         G L O B E - L A Y E R        C O N T R O L S            */
 
 #blue-marble{      /* Blue Marble Layer */
 display: block; 	
@@ -813,6 +843,9 @@ background:url('../images/seedlings/getoggle_nav.png') -0px -35px;
 }
 #blue-marble.checked { 
 background:url('../images/seedlings/getoggle_nav.png') -0px -70px;
+}
+#blue-marble.checked:hover { 
+background:url('../images/seedlings/getoggle_nav.png') -0px -35px;
 }
 
 
@@ -832,7 +865,9 @@ background:url('../images/seedlings/getoggle_nav.png') -35px -35px;
 #atmosphere.checked { 
 background:url('../images/seedlings/getoggle_nav.png') -35px -70px;
 }
-
+#atmosphere.checked:hover { 
+background:url('../images/seedlings/getoggle_nav.png') -35px -35px;
+}
 
 #border{        /* Borders visibility */
 display: block; 	
@@ -850,5 +885,281 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 #border.checked { 
 background:url('../images/seedlings/getoggle_nav.png') -70px -70px;
 }
+#border.checked:hover { 
+background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
+}
 
 
+/*         S T Y L E S         F O R         S E E D L I N G S        W I Z A R D            */
+
+#promptdiv{              
+	margin-right: 400px; /*Set right margin to RightColumnWidth*/
+	color:#307BA0;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+}
+
+#previewdiv{
+	float: left;
+	width: 400px; /*Width of right column*/
+	margin-left: -400px; /*Set left margin to -(RightColumnWidth) */
+	color:#307BA0;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	text-align:center;
+}
+
+#stephead{
+	width: 100%;
+	border-top: 1px solid #fafafa;
+	background: #3e779d;
+	background: -webkit-gradient(linear, left top, left bottom, from(#F1F1F1), to(#CFCFCF));
+	background: -moz-linear-gradient(top,  #F1F1F1,  #CFCFCF);
+	height: 80px;
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	font: bold 32px/36px "Lucida Grande", "Verdana", sans-serif;
+	color: #3e779d;
+	text-decoration: none;
+
+}
+
+#step{
+	min-height:500px;
+}
+
+#promptbtn{
+	height:70px;
+}
+
+#progress{       /* Weather visibility */
+display: block; 	
+width:410px;
+height:45px;
+outline:0px;
+}
+
+#progress.step1 {
+background:url('../images/seedlings/progress.png') -5px -5px;
+}
+
+#progress.step2 { 
+background:url('../images/seedlings/progress.png') -5px -51px;
+}
+#progress.step3 { 
+background:url('../images/seedlings/progress.png') -5px -97px;
+}
+#progress.step4 { 
+background:url('../images/seedlings/progress.png') -5px -142px;
+}
+#progress.step5 { 
+background:url('../images/seedlings/progress.png') -5px -188px;
+}
+
+
+#previewstep1{
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e3e3e3));
+	background: -moz-linear-gradient(top,  #ffffff,  #e3e3e3);
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	color: #8C8D8C;
+	text-decoration: none;
+	padding: 0.5em;
+	min-height:150px; 
+	
+}
+#previewstep1.inactive{
+	opacity:0.6;filter:alpha(opacity=60);
+	border: 10px solid #ffffff
+}
+#previewstep1.active{
+	border: 5px solid #3e779d;
+	margin:5px;
+	color: #3e779d;
+}
+	
+
+#previewstep2{
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e3e3e3));
+	background: -moz-linear-gradient(top,  #ffffff,  #e3e3e3);
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	color: #8C8D8C;
+	text-decoration: none;
+	padding: 0.5em;
+	min-height:50px; 
+}
+#previewstep2.inactive{
+	opacity:0.6;filter:alpha(opacity=60);
+	border: 10px solid #ffffff
+}
+#previewstep2.active{
+	border: 5px solid #3e779d;
+	margin:5px;
+	color: #3e779d;
+}
+#previewstep3{
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e3e3e3));
+	background: -moz-linear-gradient(top,  #ffffff,  #e3e3e3);
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	color: #8C8D8C;
+	text-decoration: none;
+	padding: 0.5em;
+	min-height:150px;
+}
+#previewstep3.inactive{
+	opacity:0.6;filter:alpha(opacity=60);
+	border: 10px solid #ffffff
+}
+#previewstep3.active{
+	border: 5px solid #3e779d;
+	margin:5px;
+	color: #3e779d;
+}
+
+#previewstep4{
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e3e3e3));
+	background: -moz-linear-gradient(top,  #ffffff,  #e3e3e3);
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	color: #8C8D8C;
+	text-decoration: none;
+	padding: 0.5em;
+	min-height:160px;
+}
+#previewstep4.inactive{
+	opacity:0.6;filter:alpha(opacity=60);
+	border: 10px solid #ffffff
+}
+#previewstep4.active{
+	border: 5px solid #3e779d;
+	margin:5px;
+	color: #3e779d;
+}
+
+.loctxt{
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	color: #40413f;
+	border: 1px solid #d5d5d5;  
+	padding:3px 2px 3px 2px;
+}
+
+.loctxt:hover{
+	border: 1px inset #fafafa;   
+}
+
+.desctxt{
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	color: #fafafa;
+	text-align:right;
+	vertical-align:botom;
+	border: 2px solid #d5d5d5;  
+	padding:3px 2px 3px 2px;
+}
+
+.desctxt:hover{
+	border: 2px inset #fafafa;   
+}
+
+.desctxt:focus{
+	color: #40413f;
+    background:pink;
+}
+
+#locationwrapper{
+float: left;
+width: 100%;
+}
+
+#previewmap{
+	margin-right: 165px; /*Set right margin to RightColumnWidth*/
+}
+
+#previewgeo{
+	float: left;
+	width: 165px; /*Width of right column*/
+	margin-left: -165px; /*Set left margin to -(RightColumnWidth) */
+}
+
+#share{
+display: block; 	
+width:143px;
+height:66px;
+padding:0px;
+background:url('../images/seedlings/share.png') -6px -5px;
+}
+#share:hover { 
+background:url('../images/seedlings/share.png') -6px -71px;
+}
+#share:active { 
+background:url('../images/seedlings/share.png') -6px -138px;
+}
+
+#nameit{
+display: block; 	
+width:143px;
+height:66px;
+padding:0px;
+background:url('../images/seedlings/nameit.png') -6px -5px;
+}
+#nameit:hover { 
+background:url('../images/seedlings/nameit.png') -6px -71px;
+}
+#nameit:active { 
+background:url('../images/seedlings/nameit.png') -6px -138px;
+}
+
+#message{
+display: block; 	
+width:143px;
+height:66px;
+padding:0px;
+background:url('../images/seedlings/message.png') -6px -5px;
+}
+#message:hover { 
+background:url('../images/seedlings/message.png') -6px -71px;
+}
+#message:active { 
+background:url('../images/seedlings/message.png') -6px -138px;
+}
+
+#sow{
+display: block; 	
+width:143px;
+height:66px;
+padding:0px;
+background:url('../images/seedlings/sow.png') -6px -5px;
+}
+#sow:hover { 
+background:url('../images/seedlings/sow.png') -6px -71px;
+}
+#sow:active { 
+background:url('../images/seedlings/sow.png') -6px -138px;
+}
+
+#plantit{
+display: block; 	
+width:143px;
+height:66px;
+padding:0px;
+background:url('../images/seedlings/plantit.png') -6px -5px;
+}
+#plantit:hover { 
+background:url('../images/seedlings/plantit.png') -6px -71px;
+}
+#plantit:active { 
+background:url('../images/seedlings/plantit.png') -6px -138px;
+}
+
+#previewdesc
+{
+height:150px;
+text-overflow:ellipsis;
+overflow:hidden;
+white-space:normal;
+}

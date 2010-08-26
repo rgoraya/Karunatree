@@ -1,0 +1,488 @@
+// G O O G L E       E A R T H       P L U G I N 
+%script{:type => "text/javascript", :src => "http://www.google.com/jsapi?key=#{REGISTRY[:api_key]}"}
+%script{:src => "http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{REGISTRY[:api_key]}"}
+%script{:type => "text/javascript"}
+  
+  // Initializes toggling objects
+  var currentKmlObjects = {
+  'blue-marble': null,
+  'border': null,
+  'atmosphere': null
+  };  
+  
+  var currentlat = 0;
+  var currentlon = 0;
+  var currentalt = 0;
+  
+  var stepcount = 0;
+  
+  var inner1 = 
+  '<div id = "step"> <div>Upload the project file </div><br>' +
+  '<div> <form method=\'POST\' enctype=\'multipart/form-data\' action=\'fup.cgi\'>' +
+  'File to upload: <input type=file name=upfile><br><br>' +
+  '<input type=submit value=\"upload the file!\"></div></div><div id="promptbtn"><table width="100%"><tr><td align="center">'+
+  '<a id = "share" Title = "Share project file" href = "javascript:FlytoClick()"></a></td></tr></table></div></form></div>';
+
+  var inner2 = 
+  '<div id = "step"><form> Title: <input type="text" id="seedtitle" class="bigtxt"/><br /> Tags: <input type="text" id="seedtag"  class="bigtxt"/></form></div>' +
+  '<div id="promptbtn"><table width="100%"><tr><td align="center"><a id = "nameit" Title = "Plant Seedling" href = "javascript:nameit();"></a></td></tr></table></div>';
+  
+  var inner3 = 
+  '<div id = "step"> What do you want others to learn? <br> <br> <textarea id = "desctext" rows = "10" cols = "60" > </textarea></div>' +
+  '<div id="promptbtn"><table width="100%"><tr><td align="center"><a id = "message" Title = "Plant Seedling" href = "javascript:desctext();"></a></td></tr></table></div>';
+
+  var inner4 =
+  '<div id = "step4"><div class="paneldiv"><table id = "globecontrols" ><tr>' +
+  '<td align = "center">Latitude <input id = "frmlat" class="loctxt" Size = "15" type = "text" /> ' +
+  'Longitude <input id = "frmlon" class="loctxt" Size = "15" type = "text" />' + 
+  'Altitude <input id = "frmalt" class="loctxt" Size = "15" type = "text" /> </td></tr></table></div>' +
+   
+  '<div class="paneldiv"><table id = "globecontrols" ><tr> <td style = "width:40px;"><a id = "blue-marble" class="checked" href = "javascript:getoggle(\'kml-blue-marble-check\',\'blue-marble\');" ' + 
+  'onMouseOver ="javascript:toggletext(\'Show/hide blue-marble\');" onmouseout="javascript:toggletext(\'\');"></a></td>' +
+  '<td style = "width:40px;"><a id = "atmosphere" class="checked" href = "javascript:getoggle(\'kml-atmosphere-check\',\'atmosphere\');" ' +
+  'onMouseOver ="javascript:toggletext(\'Show/hide Atmosphere\');" onmouseout="javascript:toggletext(\'\');"></a></td>' +
+  '<td style = "width:40px;"><a id = "border" class="off" href = "javascript:getoggle(\'kml-border-check\',\'border\');" ' +
+  'onMouseOver ="javascript:toggletext(\'Show/hide Borders\');" onmouseout="javascript:toggletext(\'\');"></a></td>' +  
+  '<td id ="toggletext" style = "vertical-align:bottom"></td>' +
+  '<td align = "right"><input id = "txtflyto" class="loctxt" Size = "15" type = "text" value = "San Francisco, CA" /></td>' +
+  '<td style = "width:66px;"><a id = "flyto" Title = "Fly to the Entered Destination" href = "javascript:FlytoClick()"></a></td></tr></table></div></div>'+
+  '<div id="promptbtn"><table width="100%"><tr><td align="center"><a id = "sow" Title = "Plant Seedling" href = "javascript:plantit()"></a></td></tr></table></div>';
+  
+  
+  var inner5 = 
+  '<div id="promptbtn"><table width="100%"><tr><td align="center"><a id = "plantit" Title = "Plant Seedling" href = ""></a></td></tr></table></div>'      
+  
+  var ge;
+  var globePlacemark = null;
+  
+  google.load("maps", "2.xx");
+  google.load("earth", "1");
+
+  function init() 
+  {
+  google.earth.createInstance('globe3d', initCB, failureCB);
+
+  addCheckboxesUIHtml(
+  '<input type="checkbox" id="kml-blue-marble-check" onclick="toggleKml(\'blue-marble\');"/><strong>Toggle Blue Marble Layer</strong><br>' +
+  '<input type="checkbox" id="kml-border-check" onclick="toggleKml(\'border\');"/><strong>Toggle Borders Layer</strong><br>' +
+  '<input type="checkbox" id="kml-atmosphere-check" onclick="toggleKml(\'atmosphere\');"/><strong>Toggle Atmosphere Layer</strong><br>'
+  );   
+  
+  }
+  
+  function initCB(instance) 
+  {
+  ge = instance;
+  ge.getWindow().setVisibility(true);
+  // Navigation Control Auto
+  ge.getNavigationControl().setVisibility(ge.VISIBILITY_AUTO);
+  // Load the layers (default)
+  if (document.getElementById('kml-blue-marble-check').checked)
+  loadKml('blue-marble');
+  if (document.getElementById('kml-border-check').checked)
+  loadKml('border');
+  if (document.getElementById('kml-atmosphere-check').checked)
+  loadKml('atmosphere');
+  
+  var la = ge.createLookAt(''); 
+  
+  var loadLat = document.getElementById("lat").value;
+  var loadLon = document.getElementById("lon").value;
+  var loadAlt = document.getElementById("alt").value;
+  //alert(loadAlt);
+  // If this is Edit seedling (text boxes are populated), look at the seedling placemark being Edited
+  if (loadLat != "" &&  loadLon != "" && loadAlt != "") {
+  loadLat = parseFloat(loadLat);
+  loadLon = parseFloat(loadLon);
+  loadAlt = parseFloat(loadAlt);
+  
+  globePlacemark = makePlacemark(loadLat, loadLon, loadAlt, ge.ALTITUDE_ABSOLUTE, 'G');
+  ge.getFeatures().appendChild(globePlacemark);
+  
+  la.set(loadLat, loadLon, loadAlt, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 9000000);}
+  
+  // Else if its New page (text boxes are empty), look at an aerial view of North America 
+  else
+  {la.set(33.717471, -117.831143, 0, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 9000000);}
+  
+  ge.getOptions().setFlyToSpeed(0.6);
+  ge.getView().setAbstractView(la);
+         
+  google.earth.addEventListener(ge.getGlobe(), 'click', function(evt) {
+  
+  if (evt.getButton() != 0)
+  
+  return;
+                 
+  // remove old placemarks if any
+  if (globePlacemark)
+  ge.getFeatures().removeChild(globePlacemark); 
+                      
+  // hit test and create new placemarks
+  var hitTestResult = ge.getView().hitTest(evt.getClientX(), ge.UNITS_PIXELS, evt.getClientY(), ge.UNITS_PIXELS, ge.HIT_TEST_GLOBE);
+  if (hitTestResult) {
+  globePlacemark = makePlacemark(hitTestResult.getLatitude(), hitTestResult.getLongitude(),
+  hitTestResult.getAltitude(), ge.ALTITUDE_ABSOLUTE, 'G');
+            
+  ge.getFeatures().appendChild(globePlacemark);
+
+  currentlat = hitTestResult.getLatitude().toFixed(6);
+  currentlon = hitTestResult.getLongitude().toFixed(6);
+  currentalt = hitTestResult.getAltitude().toFixed(6);
+  
+  document.getElementById("lat").value = currentlat;
+  document.getElementById("lon").value = currentlon;
+  document.getElementById("alt").value = currentalt;
+
+  }
+  });
+
+  }
+  function failureCB(errorCode) {
+  }
+  
+  
+  // the Fly-To Button        
+  function FlytoClick() 
+  {    
+  if (globePlacemark)
+  ge.getFeatures().removeChild(globePlacemark); 
+  var geocodeLocation = document.getElementById('txtflyto').value;
+  var geocoder = new google.maps.ClientGeocoder();
+  geocoder.getLatLng(geocodeLocation, function(point) {
+  if (point) {
+  var lookAt = ge.createLookAt('');
+  lookAt.set(point.y, point.x, 10, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 20000);
+  ge.getOptions().setFlyToSpeed(0.6);
+  ge.getView().setAbstractView(lookAt);
+  }
+  });
+  }
+  
+  // shift the placemark if user changes Lat/Long and hits Reset button
+  function shiftplacemark()
+  {  
+  if (globePlacemark)
+  ge.getFeatures().removeChild(globePlacemark); 
+    
+  var textLat = parseFloat(document.getElementById("lat").value);
+  var textLon = parseFloat(document.getElementById("lon").value);
+  var textAlt = parseFloat(document.getElementById("alt").value);
+      
+  globePlacemark = makePlacemark(textLat, textLon, textAlt, ge.ALTITUDE_ABSOLUTE, 'G');
+  ge.getFeatures().appendChild(globePlacemark);
+  
+  // Get the current range
+  var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+  // Look at the point where seedling was placed
+  var la = ge.createLookAt('');
+  la.set(textLat, textLon, textAlt, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, lookAt.getRange());  
+  ge.getOptions().setFlyToSpeed(0.6);
+  ge.getView().setAbstractView(la);
+  }
+  
+  // Create the Seedling Style placemark 
+  function makePlacemark(placelat, placelng, placealt, altMode, iconStr)   
+  {
+  var icon  = ge.createIcon('');
+  icon.setHref('http://karunatree.com/images/seedlings/seedicon.png');
+  var style = ge.createStyle('');
+  style.getIconStyle().setIcon(icon);
+  style.getIconStyle().getHotSpot().set(0.5, ge.UNITS_FRACTION, 0, ge.UNITS_FRACTION);
+            
+  var pt = ge.createPoint('');
+  pt.set(placelat, placelng, placealt, altMode, false, false);
+        
+  var pm = ge.createPlacemark('');
+  pm.setGeometry(pt);
+  pm.setStyleSelector(style);
+    
+  return pm;
+  }
+  
+  google.setOnLoadCallback(init);
+
+  
+  
+  function nextstep() {
+  
+  if (stepcount < 5)
+  {
+  stepcount++;
+
+  var prompt = document.getElementById("promptstep");
+  var progressbar = document.getElementById("progress");  
+  var element = document.getElementById("previewstep" + stepcount);
+  var prevelement = document.getElementById("previewstep" + (stepcount-1));
+  var heading = document.getElementById("stephead");
+  var globe = document.getElementById("globe3d");
+  var form = document.getElementById("wizform");
+  
+  
+  switch(stepcount)
+  {
+  case 1:
+  prompt.innerHTML = inner1
+  element.className = 'active';
+  progressbar.className = 'step' + stepcount;
+  heading.innerHTML = "Project"
+  
+  break;
+  
+  case 2:
+  prompt.innerHTML = inner2
+  element.className = 'active';
+  prevelement.className = 'inactive';
+  progressbar.className = 'step' + stepcount;
+  heading.innerHTML = "Title"
+  document.getElementById("prevbtn").innerHTML = 
+  '<a id="prev" class="enabled" title = "Go to Previous step" href ="javascript:prevstep()"> </a>';
+  
+  break;
+  
+  case 3:
+  prompt.innerHTML = inner3
+  element.className = 'active';
+  prevelement.className = 'inactive';
+  progressbar.className = 'step' + stepcount;
+  heading.innerHTML = "Statement"
+  
+  break;
+  
+  case 4:
+  prompt.innerHTML = inner4;
+  document.getElementById("frmlat").value = currentlat;
+  document.getElementById("frmlon").value = currentlon;
+  document.getElementById("frmalt").value = currentalt;
+  globe.className = 'wizard';
+  
+  element.className = 'active';
+  
+  prevelement.className = 'inactive';
+  
+  progressbar.className = 'step' + stepcount;
+  heading.innerHTML = "Location"
+  lookat(); 
+  
+  break;
+  
+  case 5:
+  globe.className = "wizardhide";
+  form.className = "form";
+  prompt.innerHTML = inner5
+  prevelement.className = 'inactive'; 
+  progressbar.className = 'step' + stepcount;
+  heading.innerHTML = "Plant it!"
+  populate_form(); 
+  document.getElementById("nextbtn").innerHTML = 
+  '<img id="next" class="disabled" src="/images/seedlings/trans.gif" width="1" height="1" />';
+  
+  break;      
+  
+  default:
+  alert('some problem');
+  }
+  }
+
+  }
+  
+  function prevstep() {
+  
+  if (stepcount > 1)
+  {
+  stepcount--;
+
+  var prompt = document.getElementById("promptstep");  
+  var progressbar = document.getElementById("progress");
+  var element = document.getElementById("previewstep" + stepcount);
+  var prevelement = document.getElementById("previewstep" + (stepcount+1));
+  var heading = document.getElementById("stephead");
+  var globe = document.getElementById("globe3d");
+  var form = document.getElementById("wizform");
+      
+  switch(stepcount)
+  {
+  case 1:
+  prompt.innerHTML = inner1
+  element.className = 'active';
+  prevelement.className = 'inactive';
+  progressbar.className = 'step' + stepcount;
+  heading.innerHTML = "Project"
+  document.getElementById("prevbtn").innerHTML = 
+  '<img id="prev" class="disabled" src="/images/seedlings/trans.gif" width="1" height="1" />';
+  
+  break;
+  
+  case 2:
+  prompt.innerHTML = inner2
+  element.className = 'active';
+  prevelement.className = 'inactive';
+  progressbar.className = 'step' + stepcount;
+  heading.innerHTML = "Title"
+  
+  break;
+  
+  case 3:
+  globe.className = "wizardhide"
+  prompt.innerHTML = inner3
+  element.className = 'active';
+  prevelement.className = 'inactive';
+  progressbar.className = 'step' + stepcount;
+  heading.innerHTML = "Statement"
+  
+  break;
+  
+  case 4:
+  form.className = "formhide"
+  globe.className = "wizard"
+  prompt.innerHTML = inner4
+  document.getElementById("frmlat").value = currentlat;
+  document.getElementById("frmlon").value = currentlon;
+  document.getElementById("frmalt").value = currentalt;
+  progressbar.className = 'step' + stepcount;
+  heading.innerHTML = "Location"
+  element.className = 'active';
+  document.getElementById("nextbtn").innerHTML = 
+  '<a id="next" class="enabled" title = "Go to Next step" href ="javascript:nextstep()"> </a>';
+  
+  break;
+  
+  case 5:
+  prompt.innerHTML = inner5
+  element.className = 'active';
+  prevelement.className = 'inactive'; 
+  progressbar.className = 'step' + stepcount;
+  heading.innerHTML = "Plant it!"
+  break;      
+  default:
+  alert('some problem');
+  }
+  }
+  }  
+  
+  //   F U N C T I O N S       F O R       P L A N T I N G - S E E D L I N G S
+  function plantit(){
+  shiftplacemark();
+  setOpacity('0', 'locationwrapper')
+  MapImg();
+  fadeIn('locationwrapper');
+  }
+  
+  //   F U N C T I O N S       F O R       G L O B E - L A Y E R S      T O G G L E 
+  function getoggle(checkboxid,linkid) 
+  {
+  document.getElementById(checkboxid).checked = !(document.getElementById(checkboxid).checked);
+  
+  var element = document.getElementById(linkid)
+  
+  if (element.className == 'checked')
+  {element.className = 'off';}
+  else if (element.className == 'off')
+  {element.className = 'checked';}
+  
+  if (checkboxid == 'kml-blue-marble-check')
+  toggleKml('blue-marble');
+  if (checkboxid == 'kml-border-check')
+  toggleKml('border');
+  if (checkboxid == 'kml-atmosphere-check')
+  toggleKml('atmosphere');
+  }  
+
+  function toggletext(text)
+  {
+  document.getElementById("toggletext").innerHTML = text; 
+  }   
+  
+  
+  //   F U N C T I O N S       F O R       F A D E - I N       E F F E C T
+  
+  function setOpacity(level, el) {
+  var element = document.getElementById(el);
+  element.style.opacity = level;
+  element.style.MozOpacity = level;
+  element.style.KhtmlOpacity = level;
+  element.style.filter = "alpha(opacity=" + (level * 100) + ");";
+  }
+  // fade in the seedling summary
+  
+  function fadeIn(elementid) {
+  var duration = 1000;  /* 1000 millisecond fade = 1 sec */
+  var steps = 30;       /* number of opacity intervals   */
+  for (i = 0; i <= 1; i += (1 / steps)) {
+  setTimeout("setOpacity(" + i + ",\"" + elementid + "\")", i * duration); }
+  }
+  
+  function fadeOut(elementid) {
+  var duration = 1000;  /* 1000 millisecond fade = 1 sec */
+  var steps = 30;       /* number of opacity intervals   */
+  for (i = 1; i >= 0; i -= (1 / steps)) {
+  setTimeout("setOpacity(" + i + ",\"" + elementid + "\")", i * duration); }
+  }
+
+  function MapImg() {
+  var map;
+  var lat = parseFloat(document.getElementById("lat").value);
+  var lon = parseFloat(document.getElementById("lon").value);
+  var alt = parseFloat(document.getElementById("alt").value);
+  var mapurl = "http://maps.google.com/maps/api/staticmap?" +
+  "center=" + lat + "," + lon +
+  "&zoom=3&size=200x160&maptype=hybrid" +
+  "&markers=icon:http://karunatree.com/images/seedlings/seedicon.png|" + lat + "," + lon +
+  "&sensor=false";
+
+  document.getElementById("map_canvas").src= mapurl;
+  reverse(lat, lon, alt); 
+  }  
+
+  //   R E V E R S E     G E O C O D E      T H E      A D D R E S S 
+  function reverse(lat, lon, alt) {
+  var geocoder;
+  var address;
+  map = new GMap2(document.getElementById("map_canvas"));
+  var location=new GLatLng(lat,lon);
+  geocoder = new GClientGeocoder();
+  geocoder.getLocations(location, showAddress);
+  document.getElementById("latkeeper").innerHTML = document.getElementById("lat").value;
+  document.getElementById("lonkeeper").innerHTML = document.getElementById("lon").value;
+  document.getElementById("altkeeper").innerHTML = document.getElementById("alt").value;
+  }
+  
+  function showAddress(response) {
+  map.clearOverlays();
+  if (!response || response.Status.code != 200) {
+  document.getElementById("lbladdress").innerHTML = "No known address";
+  } else {
+  place = response.Placemark[0];
+  point = new GLatLng(place.Point.coordinates[1],place.Point.coordinates[0]);
+  document.getElementById("lbladdress").innerHTML = place.address;
+  }
+  }
+  
+  function desctext() {
+  setOpacity('0', 'previewdesc')
+  document.getElementById("previewdesc").innerHTML = document.getElementById("desctext").value;
+  fadeIn('previewdesc')
+  }
+
+  function nameit() {
+  setOpacity('0', 'previewtitle')
+  document.getElementById("previewname").innerHTML = document.getElementById("seedtitle").value;
+  document.getElementById("previewtag").innerHTML = document.getElementById("seedtag").value;
+  fadeIn('previewtitle')
+  }
+  
+  function populate_form() {
+  document.getElementById("formlat").value = document.getElementById("latkeeper").innerHTML;
+  document.getElementById("formlon").value = document.getElementById("lonkeeper").innerHTML;
+  document.getElementById("formalt").value = document.getElementById("altkeeper").innerHTML;
+  document.getElementById("formtitle").value = document.getElementById("previewname").innerHTML;
+  document.getElementById("formtags").value = document.getElementById("previewtag").innerHTML;
+  document.getElementById("formdesc").value = document.getElementById("previewdesc").innerHTML;   
+  }
+  
+  // moving the camera to the Starting Point(default or seedling) and make initial seedling placemark (if Edit page)
+  function lookat(){ 
+
+  }
+  
+= render :partial => "layerToggling"  

@@ -162,23 +162,21 @@ class Seedling < ActiveRecord::Base
   
   
   #validations
-  validates_length_of :title, :within => TITLE_LENGTH_RANGE, :if => lambda { |o| o.current_step == "title" }  
-  validates_length_of :description, :within => DESCRIPTION_LENGTH_RANGE, :if => lambda { |o| o.current_step == "description" }  
+  validates_length_of :title, :within => TITLE_LENGTH_RANGE 
+  validates_length_of :description, :within => DESCRIPTION_LENGTH_RANGE
   validates_numericality_of :lat, 
-                      :greater_than_or_equal_to => -180,
-                      :less_than_or_equal_to => 180,
-                      :message => "must be a number between -180 and 180.",
-                      :if => lambda { |o| o.current_step == "project" }  
+                      :greater_than_or_equal_to => -90,
+                      :less_than_or_equal_to => 90,
+                      :message => "must be a number between -90 and 90."
+ 
   validates_numericality_of :lon,
                       :greater_than_or_equal_to => -180,
                       :less_than_or_equal_to => 180,
-                      :message => "must be a number between -180 and 180.",
-                      :if => lambda { |o| o.current_step == "project" }
+                      :message => "must be a number between -180 and 180."
   validates_numericality_of :alt,
                       :greater_than_or_equal_to => -1000,
                       :less_than_or_equal_to => 10000000,
-                      :message => "must must be a number between -1000 and 10000000.",
-                      :if => lambda { |o| o.current_step == "project" }
+                      :message => "must must be a number between -1000 and 10000000."
   
   
   # Text box sizes for display of views 

@@ -1,0 +1,109 @@
+%script{ :type => "text/javascript"}
+  /* Created by jankoatwarpspeed.com */
+
+  (function($){
+  
+  $.fn.formToWizard = function(options){
+  options = $.extend({
+  submitButton: ""
+  }, options);
+  
+  var element = this;
+  
+  var steps = $(element).find("fieldset");
+  var count = steps.size();
+  var submmitButtonName = "#" + options.submitButton;
+  /$(submmitButtonName).hide();
+  
+  
+  // 2
+  //$(element).before("<ul id='steps'></ul>");
+  //$(element).before("<div id='globe3d'></div>");
+
+  //$(element).before('<div id = "controls"><div class="paneldiv"><table id = "globecontrols" ><tr> <td style = "width:40px;"><a id = "blue-marble" class="checked" href = "javascript:getoggle(\'kml-blue-marble-check\',\'blue-marble\');" ' + 
+  /'onMouseOver ="javascript:toggletext(\'Show/hide blue-marble\');" onmouseout="javascript:toggletext(\'\');"></a></td>' +
+  /'<td style = "width:40px;"><a id = "atmosphere" class="checked" href = "javascript:getoggle(\'kml-atmosphere-check\',\'atmosphere\');" ' +
+  /'onMouseOver ="javascript:toggletext(\'Show/hide Atmosphere\');" onmouseout="javascript:toggletext(\'\');"></a></td>' +
+  /'<td style = "width:40px;"><a id = "border" class="off" href = "javascript:getoggle(\'kml-border-check\',\'border\');" ' +
+  /'onMouseOver ="javascript:toggletext(\'Show/hide Borders\');" onmouseout="javascript:toggletext(\'\');"></a></td>' +  
+  /'<td id ="toggletext" style = "vertical-align:bottom"></td>' +
+  /'<td align = "right"><input id = "txtflyto" class="loctxt" Size = "15" type = "text" value = "San Francisco, CA" /></td>' +
+  /'<td style = "width:66px;"><a id = "flyto" Title = "Fly to the Entered Destination" href = "javascript:FlytoClick()"></a></td></tr></table></div></div>');
+  
+  
+  steps.each(function(i){
+  $(this).wrap("<div id='step" + i + "'></div>");
+  $(this).append("<p id='step" + i + "commands'></p>");
+  
+  // 2
+  var name = $(this).find("legend").html();
+  $("#steps").append("<li id='stepDesc" + i + "'>Step " + (i + 1) + "<span>" + name + "</span></li>");
+  
+  if (i == 0) {
+  createNextButton(i);
+  selectStep(i);
+  }
+  else 
+  if (i == count - 1) {
+  $("#step" + i).hide();
+  createPrevButton(i);
+  }
+  else {
+  $("#step" + i).hide();
+  createPrevButton(i);
+  createNextButton(i);
+  }
+  });
+  
+  function createPrevButton(i){
+  var stepName = "step" + i;
+  $("#" + stepName + "commands").append("<a href='#' id='" + stepName + "Prev' class='prev'>< Back</a>");
+  
+  $("#" + stepName + "Prev").bind("click", function(e){
+  $("#" + stepName).hide();
+  $("#step" + (i - 1)).fadeIn(2000);
+  $("#step" + (i - 1)).show();
+  /$(submmitButtonName).hide();
+  selectStep(i - 1);
+  });
+  }
+  
+  function createNextButton(i){
+  var stepName = "step" + i;
+  $("#" + stepName + "commands").append("<a href='#' id='" + stepName + "Next' class='next'>Next ></a>");
+  $("#SignupForm").validate().form()
+  $("#" + stepName + "Next").bind("click", function(e){
+  
+
+  $("#" + stepName).hide();
+  $("#step" + (i + 1)).fadeIn(2000);
+  $("#step" + (i + 1)).show();
+  /if (i + 3 == count) 
+  /$(submmitButtonName).show();
+  selectStep(i + 1);
+  });
+  }
+  
+  function selectStep(i){
+  
+  $("#steps li").removeClass("current");
+  
+  $("#stepDesc" + i).addClass("current");
+  if (i != 0) {
+  $("#globe3d").removeClass("wizard");
+  $("#controls").removeClass("show");
+  }
+  else {
+  $("#globe3d").addClass("wizard");
+  $("#controls").addClass("show");
+  
+  }
+  }
+  
+    
+  }
+  })(jQuery);
+  
+
+  
+  

@@ -1,7 +1,7 @@
 - content_for(:include_custom_stylesheet) do
   = stylesheet_link_tag "seedlings"
 
-%body{:onload => "MapImg()"}/
+%body{:onload => "MapImg()"}
 
 - title "Seedling"
 %div{:id => "maincontainer"}
@@ -178,7 +178,7 @@
       - if(has_related_works)
         %div{:id => "imggrid", :class => "morebydiv"}      
           %h3{:class => "bluecolor"}
-            =more_by_description
+            = more_by_description
           = more_by_links
       // Clippings block      
       //%div{:id => "imggridclip", :class => "clip"}      
@@ -201,74 +201,4 @@
   //|
   = link_to "View All", seedlings_path
 
-%script{:src => "http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{REGISTRY[:api_key]}"}
-%script{:type => "text/javascript"}
-
-  // S T A T I C       G O O G L E       M A P  
-  var map;
-  var lat = #{@seedling.lat.to_json};
-  var lon = #{@seedling.lon.to_json};
- 
-  function MapImg() {
-  var mapurl = "http://maps.google.com/maps/api/staticmap?" +
-  "center=" + lat + "," + lon +
-
-  "&zoom=10&size=200x160&maptype=hybrid" +
-  "&markers=icon:http://karunatree.com/images/seedlings/seedicon.png|" + lat + "," + lon +
-  "&sensor=false";
-  
-  var mapurlthumb = "http://maps.google.com/maps/api/staticmap?" +
-  "center=" + lat + "," + lon +
-  "&zoom=1&size=300x250&maptype=hybrid" +
-  "&markers=icon:http://karunatree.com/images/seedlings/seedicon.png|" + lat + "," + lon +
-  "&sensor=false";
-  
-  document.getElementById("map_canvas").src= mapurl;
-  
-  //Commenting out this portion of code as we do not need this right (may need for clippings)
-  //document.getElementById("map_canvas_thumb").src= mapurlthumb;
-  
-  // Call the Reverse Geocoding Function
-  reverse(); 
-  }
-  
-  //   F U N C T I O N S       F O R       S W I T C H - L I S T S
-  var groupA = new Array();
-  groupA[groupA.length] = "list_a_excl";
-  
-  // Swapping the Lists
-  function swap(listIdPrefix, group) {
-  collapsedList = document.getElementById(listIdPrefix + "_collapsed");
-  expandedList = document.getElementById(listIdPrefix + "_expanded");
-  if (collapsedList.style.display == "block") 
-  {
-  collapsedList.style.display = "none";
-  expandedList.style.display = "block";
-  } 
-  else 
-  {
-  collapsedList.style.display = "block";
-  expandedList.style.display = "none";
-  }
-  }  
-  
-  //   R E V E R S E     G E O C O D E      T H E      A D D R E S S 
-  function reverse() {
-  var geocoder;
-  var address;
-  map = new GMap2(document.getElementById("map_canvas"));
-  var location=new GLatLng(lat,lon);
-  geocoder = new GClientGeocoder();
-  geocoder.getLocations(location, showAddress);
-  }
-  
-  function showAddress(response) {
-  map.clearOverlays();
-  if (!response || response.Status.code != 200) {
-  document.getElementById("lbladdress").innerHTML = "No known address";
-  } else {
-  place = response.Placemark[0];
-  point = new GLatLng(place.Point.coordinates[1],place.Point.coordinates[0]);
-  document.getElementById("lbladdress").innerHTML = place.address;
-  }
-  }
+= render :partial => "googleMaps"

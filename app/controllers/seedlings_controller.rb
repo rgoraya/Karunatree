@@ -29,10 +29,10 @@ class SeedlingsController < ApplicationController
       }
     end
   end
-  
   def new
     @seedling = Seedling.new
   end
+
   
   def create
     @seedling = Seedling.new(params[:seedling])
@@ -40,6 +40,7 @@ class SeedlingsController < ApplicationController
       flash[:notice] = "Successfully created seedling."
       redirect_to @seedling
     else
+
       render :action => 'new'
     end
   end
@@ -70,10 +71,6 @@ class SeedlingsController < ApplicationController
     flash[:notice] = "Successfully destroyed seedling."
     redirect_to seedlings_url
   end
-  
-  def testCSS
-    @seedling = Seedling.find(params[:id])
-  end
 
   def project
     @seedling = Seedling.find(params[:id])
@@ -89,5 +86,20 @@ class SeedlingsController < ApplicationController
               :type => 'audio/mp3',
               :disposition => 'inline'
   end
+  def guided_creation_new  
+    @seedling = Seedling.new
+    respond_to do |format|
+      format.html {}
+      format.xml{
+        render :text=>@seedling.to_xml
+      }
+      format.json{
+        render :text=>@seedling.to_json
+      }
+    end
+  end
+  
+
 
 end
+

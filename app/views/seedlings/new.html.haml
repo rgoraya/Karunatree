@@ -1,9 +1,97 @@
 - content_for(:include_custom_stylesheet) do
-  = stylesheet_link_tag "ktree-forms"
-  
-- title "New Seedling" 
+  = stylesheet_link_tag "seedlings-guided-creation"
+  /= stylesheet_link_tag "seedlings"
 
-= render :partial => 'form'
 
-%p= link_to "Back to List", seedlings_path
+%div{:id => "maincontainer"}
+  %div{:class => "paneldiv"}
+    %div{:class => "iconimg"}
+      %ul{ :id =>"steps"}
+  %div{:id => "contentwrapper"}
+    // C R E A T I O N      C O L U M N
+    %div{:id => "left-column-div"}
+      %div{:id => "gridform", :style => "height: 700px"}
+        %div{:id => "globe3d"}
+        %div{:id => "controls"}
+          %div{:id => "controlspanel"}        
+            %table{:id => "globecontrols"}
+              %tr
+                %td{:style => "width:40px;"}
+                  %a{:id => "blue-marble", :class => "checked", :href => "javascript:getoggle('kml-blue-marble-check','blue-marble');", :onMouseOver =>"javascript:toggletext('Show/hide blue-marble');", :onmouseout=>"javascript:toggletext('');"}
+                %td{:style => "width:40px;"}
+                  %a{:id => "atmosphere", :class => "checked", :href => "javascript:getoggle('kml-atmosphere-check','atmosphere');", :onMouseOver =>"javascript:toggletext('Show/hide Atmosphere');", :onmouseout=>"javascript:toggletext('');"}
+                %td{:style => "width:40px;"}
+                  %a{:id => "border", :class => "off", :href => "javascript:getoggle('kml-border-check','border');", :onMouseOver =>"javascript:toggletext('Show/hide Borders');", :onmouseout=>"javascript:toggletext('');"}
+                %td{:style => "vertical-align:bottom"}
+                  %div{:id => "toggletext"}
+                %td{:align => "right", :style => "width:120px;"}
+                  %input{ :id => "txtflyto", :class => "loctxt", :type => "text", :value => "San Francisco, CA"}/
+                %td{:style => "width:66px;"}
+                  %a{:id => "flyto", :Title => "Fly to the Entered Destination", :href =>"javascript:FlytoClick()"}
+        %div{:id => "replace"}
+          = render :partial => "formWizard"
+        
+      %br
+  // A hidden div containing checkboxes to toggle Google earth layers visibility          
+  %div{:id => 'checkboxes-ui', :style => "visibility:collapse; height:0px"}    
 
+
+    
+      
+  // P R E V I E W        S E E D L I N G      I N F O R M A T I O N
+  %div{:id => "previewcolumn"}
+    .innertube
+      %div{:id => "grid", :style => "height: 700px;"}
+        %strong Project
+        %div{:id => "placeholderimg"}
+          %br
+            
+          %img{ :alt => "Seedling will preview here", :id => "previewField"}
+        %strong Title
+        %div{:id => "placeholdertitle"}
+        %strong Description
+        %div{:id => "placeholderdescription"}
+        %strong Tags
+        %div{:id => "placeholdertag"}
+        %strong Geocode
+        %div{:id => "placeholdergeo"}
+          %div{:id => "locationwrapper"}
+            %div{:id => "contentwrapper"}
+              %div{:id => "previewmap"}
+                %img{:id => "map_canvas", :width => "180px", :src =>"http://placehold.it/180x150", :alt => "thumbnail map"}
+            %div{:id => "previewgeo"}  
+              %div{:id => "map_description", :style=>"min-height:80px;"}
+                %div{:class => "locationicon"}
+                  =image_tag "/images/system/icons/location.png", :size => "13x24"
+                %div{:id => "lbladdress"}
+            
+              %div
+                %table 
+                  %tr
+                    %td Latitude
+                    %td{:id => "latkeeper", :width=>"50%"}
+                  %tr               
+                    %td longitude
+                    %td{:id => "lonkeeper", :width=>"50%"}                
+                  %tr               
+                    %td Altitude
+                    %td{:id => "altkeeper", :width=>"50%"}                    
+
+  %div{:id => "footer"}
+    Copyright &copy; 2009-2010 Karunatree. #{link_to "Contact Us", contact_path}     
+
+= render :partial => "googleEarthGC"
+= render :partial => "imagePreview"
+= render :partial => "formWizardFunctions"
+    
+/          - form_for @seedling do |f|
+/            = f.error_messages
+/            = render :partial => "project_step", :locals => {:f => f}
+/        %p
+/          /= button_to_remote "Continue", :update => "replace", :partial => "#{@seedling.next_step}_step"
+/          = button_to_remote "Continue", :url => { :action => :next }
+/          
+/          /, :partial => "#{@seedling.current_step}_step", :locals => {:f => f}
+/          
+/        %p
+/          = button_to_remote "Back", :update => "replace", :url => { :action => :back }
