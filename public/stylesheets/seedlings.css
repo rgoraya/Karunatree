@@ -1128,19 +1128,7 @@ background:url('../images/seedlings/message.png') -6px -71px;
 background:url('../images/seedlings/message.png') -6px -138px;
 }
 
-#sow{
-display: block; 	
-width:143px;
-height:66px;
-padding:0px;
-background:url('../images/seedlings/sow.png') -6px -5px;
-}
-#sow:hover { 
-background:url('../images/seedlings/sow.png') -6px -71px;
-}
-#sow:active { 
-background:url('../images/seedlings/sow.png') -6px -138px;
-}
+
 
 #plantit{
 display: block; 	

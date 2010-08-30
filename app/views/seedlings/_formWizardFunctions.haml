@@ -15,22 +15,7 @@
   var submmitButtonName = "#" + options.submitButton;
   /$(submmitButtonName).hide();
   
-  
-  // 2
-  //$(element).before("<ul id='steps'></ul>");
-  //$(element).before("<div id='globe3d'></div>");
 
-  //$(element).before('<div id = "controls"><div class="paneldiv"><table id = "globecontrols" ><tr> <td style = "width:40px;"><a id = "blue-marble" class="checked" href = "javascript:getoggle(\'kml-blue-marble-check\',\'blue-marble\');" ' + 
-  /'onMouseOver ="javascript:toggletext(\'Show/hide blue-marble\');" onmouseout="javascript:toggletext(\'\');"></a></td>' +
-  /'<td style = "width:40px;"><a id = "atmosphere" class="checked" href = "javascript:getoggle(\'kml-atmosphere-check\',\'atmosphere\');" ' +
-  /'onMouseOver ="javascript:toggletext(\'Show/hide Atmosphere\');" onmouseout="javascript:toggletext(\'\');"></a></td>' +
-  /'<td style = "width:40px;"><a id = "border" class="off" href = "javascript:getoggle(\'kml-border-check\',\'border\');" ' +
-  /'onMouseOver ="javascript:toggletext(\'Show/hide Borders\');" onmouseout="javascript:toggletext(\'\');"></a></td>' +  
-  /'<td id ="toggletext" style = "vertical-align:bottom"></td>' +
-  /'<td align = "right"><input id = "txtflyto" class="loctxt" Size = "15" type = "text" value = "San Francisco, CA" /></td>' +
-  /'<td style = "width:66px;"><a id = "flyto" Title = "Fly to the Entered Destination" href = "javascript:FlytoClick()"></a></td></tr></table></div></div>');
-  
-  
   steps.each(function(i){
   $(this).wrap("<div id='step" + i + "'></div>");
   $(this).append("<p id='step" + i + "commands'></p>");
@@ -56,47 +41,70 @@
   });
   
   function createPrevButton(i){
+  
   var stepName = "step" + i;
   $("#" + stepName + "commands").append("<a href='#' id='" + stepName + "Prev' class='prev'>< Back</a>");
   
   $("#" + stepName + "Prev").bind("click", function(e){
+  //if (ValidateCurrentStep(i+1)) {
   $("#" + stepName).hide();
   $("#step" + (i - 1)).fadeIn(2000);
   $("#step" + (i - 1)).show();
   /$(submmitButtonName).hide();
   selectStep(i - 1);
+  //}
   });
   }
   
   function createNextButton(i){
+  
   var stepName = "step" + i;
   $("#" + stepName + "commands").append("<a href='#' id='" + stepName + "Next' class='next'>Next ></a>");
   $("#SignupForm").validate().form()
   $("#" + stepName + "Next").bind("click", function(e){
   
-
+  if (ValidateCurrentStep(i+1)) {
   $("#" + stepName).hide();
   $("#step" + (i + 1)).fadeIn(2000);
   $("#step" + (i + 1)).show();
   /if (i + 3 == count) 
   /$(submmitButtonName).show();
   selectStep(i + 1);
+  }
   });
   }
   
   function selectStep(i){
   
+  hidemsg();
+  
   $("#steps li").removeClass("current");
   
   $("#stepDesc" + i).addClass("current");
-  if (i != 0) {
+
+  if (i == 4) {
+  for(var j = 0; j <= 4; j++) {
+  $("#preview" + (j+1)).addClass("active");}
+  } 
+  else {
+  for(var j = 0; j <= 4; j++) {
+  $("#preview" + (j+1)).removeClass("active");}
+  }   
+  
+  // Switch the opacity of previews depending on current step
+  $("#preview" + (i+1)).addClass("active");
+ 
+  // Show globe and its controls only on the Location step
+  if (i != 3) {
   $("#globe3d").removeClass("wizard");
   $("#controls").removeClass("show");
+  $("#placeholderimg").removeClass("inactive");
   }
+  // Else hide globe and its controls.
   else {
   $("#globe3d").addClass("wizard");
   $("#controls").addClass("show");
-  
+  $("#placeholderimg").addClass("inactive");
   }
   }
   
@@ -104,6 +112,117 @@
   }
   })(jQuery);
   
+ 
+  function ValidateCurrentStep(step) {
+  
+  var errordiv = document.getElementById("errordiv")
+  
+  switch(step+1)
+  {
+  case 1:
+  alert('you are at step1');
+  return true;
+  break;
+  
+  case 2:  // Project step //
+  var validfile = false;
 
+  for (var i = 0; i < fileTypes.length; i++) {
+  if (fileTypes[i] == ext) {
+  validfile = true;} 
+  }
+
+  if (validfile) {
+  errordiv.className = "invisible";
+  return true;} else {
+  setOpacity('0', 'errordiv');
+  errordiv.innerHTML = "Please upload a valid image File!";
+  errordiv.className = "visible";
+  fadeIn('errordiv');
+  return false;}
+  
+  if (document.getElementById("picField").value != "" && document.getElementById("picField").value != null) {
+  errordiv.className = "invisible";
+  return true;} else {
+  setOpacity('0', 'errordiv');
+  errordiv.innerHTML = "Please upload a project!";
+  errordiv.className = "visible";
+  fadeIn('errordiv');
+  return false;}
+  break;
+  
+  case 3:  // Title and Tags //
+  if (document.getElementById("Title").value != "" && document.getElementById("Title").value != null) {
+  errordiv.className = "invisible";
+  return true;} else {
+  setOpacity('0', 'errordiv');
+  errordiv.innerHTML = "Please enter a Title!";
+  errordiv.className = "visible";
+  fadeIn('errordiv');
+  return false;}
+  break;
+  
+  case 4:  // Artist's statement // 
+  if (document.getElementById("Description").value != "" && document.getElementById("Description").value != null) {
+  errordiv.className = "invisible";
+  return true;} else {
+  setOpacity('0', 'errordiv');
+  errordiv.innerHTML = "Please enter some Statement!";
+  errordiv.className = "visible";
+  fadeIn('errordiv');
+  return false;}
+  break;
+  
+  case 5:  // Check for valid Geo Fields //   
+  var latval = document.getElementById("lat").value;
+  var lonval = document.getElementById("lon").value;
+  var altval = document.getElementById("alt").value;
   
   
+  if (latval == null || latval == "" || !latval.toString().match(/^[-]?\d*\.?\d*$/) || -90 > latval || 90 < latval) {
+  setOpacity('0', 'errordiv');
+  errordiv.innerHTML = "Invalid Latitude!";
+  errordiv.className = "visible";
+  fadeIn('errordiv');
+  return false;
+  } 
+  else if (lonval == null || lonval == "" || !lonval.toString().match(/^[-]?\d*\.?\d*$/) || -180 > lonval || 180 < lonval) {
+  setOpacity('0', 'errordiv');
+  errordiv.innerHTML = "Invalid Longitude!";
+  errordiv.className = "visible";
+  fadeIn('errordiv');  
+  return false;
+  } 
+  
+  else if (altval == null || altval == "" || !altval.toString().match(/^[-]?\d*\.?\d*$/) || -500 > altval || 10000< altval) {
+  setOpacity('0', 'errordiv');
+  errordiv.innerHTML = "Invalid Altitude!";
+  errordiv.className = "visible";
+  fadeIn('errordiv');  
+  return false;
+  } 
+  
+  else {
+  errordiv.className = "invisible";
+  return true;}
+
+  break;   
+
+  case 6:
+  return true;
+  break;
+  
+  default:
+  alert('some problem');
+  }
+  }
+  
+  function hidemsg() {
+  document.getElementById("errordiv").className = "invisible";
+  }
+  
+  function submitform() {
+  document.getElementById("SignupForm").submit() ;
+  }
+  
+   

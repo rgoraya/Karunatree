@@ -9,9 +9,9 @@
   
   // width to resize large images to
   
-  var maxWidth = 325;
+  var maxWidth = 340;
   // height to resize large images to  
-  var maxHeight = 250;
+  var maxHeight = 195;
   // valid file types    
   var fileTypes = ["bmp", "gif", "png", "jpg", "jpeg"];
   // the id of the preview image tag    
@@ -21,11 +21,13 @@
   
   /***** DO NOT EDIT BELOW *****/
   
+  var ext ="";
+  
   function preview(what){
   
   var source = what.value;
   
-  var ext = source.substring(source.lastIndexOf(".") + 1, source.length).toLowerCase();
+  ext = source.substring(source.lastIndexOf(".") + 1, source.length).toLowerCase();
   
   for (var i = 0; i < fileTypes.length; i++) {
   if (fileTypes[i] == ext) {
@@ -74,4 +76,7 @@
   field.width = x;
   field.height = y;
   }
+  
+
+  
             

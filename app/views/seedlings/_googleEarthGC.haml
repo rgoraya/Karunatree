@@ -16,42 +16,6 @@
   
   var stepcount = 0;
   
-  var inner1 = 
-  '<div id = "step"> <div>Upload the project file </div><br>' +
-  '<div> <form method=\'POST\' enctype=\'multipart/form-data\' action=\'fup.cgi\'>' +
-  'File to upload: <input type=file name=upfile><br><br>' +
-  '<input type=submit value=\"upload the file!\"></div></div><div id="promptbtn"><table width="100%"><tr><td align="center">'+
-  '<a id = "share" Title = "Share project file" href = "javascript:FlytoClick()"></a></td></tr></table></div></form></div>';
-
-  var inner2 = 
-  '<div id = "step"><form> Title: <input type="text" id="seedtitle" class="bigtxt"/><br /> Tags: <input type="text" id="seedtag"  class="bigtxt"/></form></div>' +
-  '<div id="promptbtn"><table width="100%"><tr><td align="center"><a id = "nameit" Title = "Plant Seedling" href = "javascript:nameit();"></a></td></tr></table></div>';
-  
-  var inner3 = 
-  '<div id = "step"> What do you want others to learn? <br> <br> <textarea id = "desctext" rows = "10" cols = "60" > </textarea></div>' +
-  '<div id="promptbtn"><table width="100%"><tr><td align="center"><a id = "message" Title = "Plant Seedling" href = "javascript:desctext();"></a></td></tr></table></div>';
-
-  var inner4 =
-  '<div id = "step4"><div class="paneldiv"><table id = "globecontrols" ><tr>' +
-  '<td align = "center">Latitude <input id = "frmlat" class="loctxt" Size = "15" type = "text" /> ' +
-  'Longitude <input id = "frmlon" class="loctxt" Size = "15" type = "text" />' + 
-  'Altitude <input id = "frmalt" class="loctxt" Size = "15" type = "text" /> </td></tr></table></div>' +
-   
-  '<div class="paneldiv"><table id = "globecontrols" ><tr> <td style = "width:40px;"><a id = "blue-marble" class="checked" href = "javascript:getoggle(\'kml-blue-marble-check\',\'blue-marble\');" ' + 
-  'onMouseOver ="javascript:toggletext(\'Show/hide blue-marble\');" onmouseout="javascript:toggletext(\'\');"></a></td>' +
-  '<td style = "width:40px;"><a id = "atmosphere" class="checked" href = "javascript:getoggle(\'kml-atmosphere-check\',\'atmosphere\');" ' +
-  'onMouseOver ="javascript:toggletext(\'Show/hide Atmosphere\');" onmouseout="javascript:toggletext(\'\');"></a></td>' +
-  '<td style = "width:40px;"><a id = "border" class="off" href = "javascript:getoggle(\'kml-border-check\',\'border\');" ' +
-  'onMouseOver ="javascript:toggletext(\'Show/hide Borders\');" onmouseout="javascript:toggletext(\'\');"></a></td>' +  
-  '<td id ="toggletext" style = "vertical-align:bottom"></td>' +
-  '<td align = "right"><input id = "txtflyto" class="loctxt" Size = "15" type = "text" value = "San Francisco, CA" /></td>' +
-  '<td style = "width:66px;"><a id = "flyto" Title = "Fly to the Entered Destination" href = "javascript:FlytoClick()"></a></td></tr></table></div></div>'+
-  '<div id="promptbtn"><table width="100%"><tr><td align="center"><a id = "sow" Title = "Plant Seedling" href = "javascript:plantit()"></a></td></tr></table></div>';
-  
-  
-  var inner5 = 
-  '<div id="promptbtn"><table width="100%"><tr><td align="center"><a id = "plantit" Title = "Plant Seedling" href = ""></a></td></tr></table></div>'      
-  
   var ge;
   var globePlacemark = null;
   
@@ -134,6 +98,8 @@
   document.getElementById("lon").value = currentlon;
   document.getElementById("alt").value = currentalt;
 
+  plantit();
+
   }
   });
 
@@ -151,10 +117,13 @@
   var geocoder = new google.maps.ClientGeocoder();
   geocoder.getLatLng(geocodeLocation, function(point) {
   if (point) {
-  var lookAt = ge.createLookAt('');
-  lookAt.set(point.y, point.x, 10, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 20000);
+  // Get the current range
+  var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+  // look at the entered destination
+  var la = ge.createLookAt('');
+  la.set(point.y, point.x, 10, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, lookAt.getRange());
   ge.getOptions().setFlyToSpeed(0.6);
-  ge.getView().setAbstractView(lookAt);
+  ge.getView().setAbstractView(la);
   }
   });
   }
@@ -363,9 +332,9 @@
   //   F U N C T I O N S       F O R       P L A N T I N G - S E E D L I N G S
   function plantit(){
   shiftplacemark();
-  setOpacity('0', 'locationwrapper')
+  setOpacity('0', 'placeholdergeo')
   MapImg();
-  fadeIn('locationwrapper');
+  fadeIn('placeholdergeo');
   }
   
   //   F U N C T I O N S       F O R       G L O B E - L A Y E R S      T O G G L E 
@@ -426,7 +395,7 @@
   var alt = parseFloat(document.getElementById("alt").value);
   var mapurl = "http://maps.google.com/maps/api/staticmap?" +
   "center=" + lat + "," + lon +
-  "&zoom=3&size=200x160&maptype=hybrid" +
+  "&zoom=3&size=340x160&maptype=hybrid" +
   "&markers=icon:http://karunatree.com/images/seedlings/seedicon.png|" + lat + "," + lon +
   "&sensor=false";
 

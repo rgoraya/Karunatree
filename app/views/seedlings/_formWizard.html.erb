@@ -46,73 +46,119 @@
 			
             <% form_for @seedling, :html => {:id => "SignupForm", :multipart  => true } do |f| %>
             <form id="SignupForm">
+
+                <fieldset>
+                    <legend style = "visibility:hidden; height:0px;">
+                        Project
+                    </legend>
+                    <div id="formdiv">
+					
+						<label class="formlabel">
+				              Share your seedling project! <font class="notetext"> ...(Required) </font>
+				        </label>
+					
+					    <%= f.file_field :project, :id => "picField", :onchange => "preview(this)"%>
+					</div>
+                </fieldset>
+
+                <fieldset>
+                    
+					<legend style = "visibility:hidden; height:0px;">
+                    Title
+                    </legend>
+                    
+					<div id="formdiv">
+						<label class="formlabel">
+				          Title <font class="notetext"> ...(Required) </font>
+				        </label>
+					
+					<%= f.text_field :title, :id => "Title", :class => "required, bigtextbox" %>
+	                    <br>
+	                    
+						<label class="formlabel">
+					     Tags
+					    </label>
+                    <%= f.text_field :tag_names, :id => "Tags", :class => "bigtextbox" %>
+                    <br>
+                    <br>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+					<legend style = "visibility:hidden; height:0px;">
+                        Statement
+                    </legend>
+					<div id="formdiv">
+	                    <label class="formlabel">
+				              What do you want others to learn? <font class="notetext"> ...(Required) </font>
+				        </label>
+                    
+                    <%= f.text_area :description, :id => "Description", :class => "desctextarea"  %>
+					</div>
+                </fieldset>
+
                 <fieldset>
                     <Legend style = "visibility:hidden; height:0px;">
                         Location
                     </Legend>
                     <%= f.hidden_field :user_ids, :value => [current_user.id] %>
-					<div id = "controlspanel" >
-						<table align="center" >
-							<tr>
+					<div class = "controlspanel" >
+						<table id="globecontrols">
+							<tr align="right">
 								<td >
-			                    <label for="Lat">
-			                        Latitude
+			                    <label class="formlabelsmall">
+			                        Latitude*
 			                    </label>
 								</td>
 								<td>
-			                    <%= f.text_field :lat, :class => "number, required" , :min => "-90", :max => "90", :id => "lat", :class => "loctxt"%>
+			                    <%= f.text_field :lat, :id => "lat", :class => "loctxt"%>
 			           			</td>
 								<td>
-			                    <label for="Lon">
-			                        Longitude
+			                    <label class="formlabelsmall">
+			                        Longitude*
 			                    </label>
 			                    </td>
 								<td>
-								<%= f.text_field :lon, :class => "number, required", :min => "-180", :max => "180", :id => "lon", :class => "loctxt"%>
+								<%= f.text_field :lon, :id => "lon", :class => "loctxt"%>
 			                    </td>
 								<td>
-			                    <label for="alt">
-			                        Altitude
+			                    <label class="formlabelsmall">
+			                        Altitude*
 			                    </label>
 			                    </td>
 								<td>
-								<%= f.text_field :alt, :class => "number, required", :min => "-500", :max => "10000", :id => "alt", :class => "loctxt"%>
-			                    <!--<div id = "globe3d"></div>-->
+								<%= f.text_field :alt, :id => "alt", :class => "loctxt"%>
+			                    
+								</td>
+								<td align="right" style="width:66px;"> 
+								<a id = "sow" Title = "Plant Seedling" href = "javascript:plantit()"></a>
 								</td>
 							</tr>
 						</table>
 					</div>
-					<div id="promptbtn"><table width="100%"><tr><td align="center"><a id = "sow" Title = "Plant Seedling" href = "javascript:plantit()"></a></td></tr></table></div> 
-                </fieldset>
+
+				</fieldset>
+
+                <fieldset>
+                    
+					<legend style = "visibility:hidden; height:0px;">
+                        Final Check
+                    </legend>
+                    <div id="formdiv">
+						<label class="formlabel">
+				              A final Check: You are ready to plant this seedling!
+				        </label>
+						<br> <br>
+						<!-- <%= f.submit "Submit", :id => "SaveAccount" %> -->
+						
+						<table width="100%"><tr><td align="center"><a id = "plantit" Title = "Plant Seedling" href = "javascript:submitform();"></a></td></tr></table>
+						
+                    </div>
+				</fieldset>
+
+                
+
 				
-                <fieldset>
-                    <legend>
-                        Project
-                    </legend>
-                    <%= f.file_field :project, :id => "picField", :onchange => "preview(this)", :class => "required" %>
-					
-                </fieldset>
-                <fieldset>
-                    <legend>
-                        Description
-                    </legend>
-                    <br>
-                    <%= f.text_area :description, :id => "Description", :rows => "7", :cols => "50", :class => "required" %>
-                </fieldset>
-                <fieldset>
-                    <legend>
-                        Title
-                    </legend>
-                    <%= f.text_field :title, :id => "Title", :class => "required" %>
-                    <br>
-                    <legend>
-                        Tags
-                    </legend>
-                    <%= f.text_field :tag_names, :id => "Tags", :class => "required" %>
-                    <br>
-                    <br>
-                    <%= f.submit "Submit", :id => "SaveAccount" %>
-                </fieldset>
             </form>
             <% end %>
 			
