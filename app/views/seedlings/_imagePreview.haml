@@ -17,40 +17,51 @@
   // the id of the preview image tag    
   var outImage = "previewField";
   // what to display when the image is not valid   
-  var defaultPic = "../images/icons/invalid_image.jpg";
+  var defaultPic = "../images/seedlings/invalidplacehold.png";
+  
+  // C U R R E N T L Y        C O M M E N T E D        O U T        P R E V I E W
   
   /***** DO NOT EDIT BELOW *****/
   
   var ext ="";
   
   function preview(what){
-  
+  var isValid = false;
   var source = what.value;
   
   ext = source.substring(source.lastIndexOf(".") + 1, source.length).toLowerCase();
   
   for (var i = 0; i < fileTypes.length; i++) {
   if (fileTypes[i] == ext) {
-  break;
+  isValid = true;
+  
+  /break;
   }
   }
   
   globalPic = new Image();
   
-  if (i < fileTypes.length) {
+  if (isValid) {
   
-  try {
-  globalPic.src = what.files[0].getAsDataURL();
-  } 
-  catch (err) {
-  globalPic.src = source;
-  }
+  //if (i < fileTypes.length) {
+  
+  //try {
+  //globalPic.src = what.files[0].getAsDataURL();
+  //} 
+  //catch (err) {
+  setOpacity('0', 'previewField');
+  document.getElementById(outImage).src = "../images/seedlings/validplacehold.png";
+  fadeIn('previewField');
+  //alert(err);
+  //}
   }
   else {
-  globalPic.src = defaultPic;
-      
+  setOpacity('0', 'previewField');
+  document.getElementById(outImage).src = "../images/seedlings/invalidplacehold.png";
+  fadeIn('previewField');    
   }
-  setTimeout("applyChanges()", 200);
+  
+  //setTimeout("applyChanges()", 200);
   }
   
   var globalPic;
