@@ -108,11 +108,26 @@
   }
   }
   
-    
+  $('#uploadForm input').change(function(){
+  $(this).parent().ajaxSubmit({
+  beforeSubmit: function(a,f,o) {
+  o.dataType = 'json';
+  },
+  complete: function(XMLHttpRequest, textStatus) {
+  alert(XMLHttpRequest.responseText);
+  // XMLHttpRequest.responseText will contain the URL of the uploaded image.
+  // Put it in an image element you create, or do with it what you will.
+  // For example, if you have an image elemtn with id "my_image", then
+  //  $('#my_image').attr('src', XMLHttpRequest.responseText);
+  // Will set that image tag to display the uploaded image.
+  },
+  });
+  });   
   }
   })(jQuery);
   
  
+  //  V A L I D A T I O N S      F O R      E A C H      S T E P 
   function ValidateCurrentStep(step) {
   
   var errordiv = document.getElementById("errordiv")
@@ -120,11 +135,10 @@
   switch(step+1)
   {
   case 1:
-  alert('you are at step1');
   return true;
   break;
   
-  case 2:  // Project step //
+  case 2:  // - - - - Project step - - - - //
   var validfile = false;
 
   for (var i = 0; i < fileTypes.length; i++) {
@@ -151,7 +165,7 @@
   return false;}
   break;
   
-  case 3:  // Title and Tags //
+  case 3:  // - - - - Title and Tags - - - - //
   if (document.getElementById("Title").value != "" && document.getElementById("Title").value != null) {
   errordiv.className = "invisible";
   return true;} else {
@@ -162,7 +176,7 @@
   return false;}
   break;
   
-  case 4:  // Artist's statement // 
+  case 4:  // - - - - Artist's statement - - - - // 
   if (document.getElementById("Description").value != "" && document.getElementById("Description").value != null) {
   errordiv.className = "invisible";
   return true;} else {
@@ -173,7 +187,7 @@
   return false;}
   break;
   
-  case 5:  // Check for valid Geo Fields //   
+  case 5:  // - - - - valid Geo Fields - - - - //   
   var latval = document.getElementById("lat").value;
   var lonval = document.getElementById("lon").value;
   var altval = document.getElementById("alt").value;
@@ -217,12 +231,13 @@
   }
   }
   
+  // hide the validation error message
   function hidemsg() {
   document.getElementById("errordiv").className = "invisible";
   }
   
+  // submit the form
   function submitform() {
   document.getElementById("SignupForm").submit() ;
   }
-  
    
