@@ -30,8 +30,7 @@ font-size:13px;
 }
 
 .locationicon {
-	float: left;
-	padding-left: 10px;	
+	float: left;	
 }
 
 .content-main {
@@ -328,9 +327,8 @@ font-size:14px;
 
 }
 
-.tagsdiv p{
+.tagsdiv{
 	padding-left: 8px;
-	color: #669900;
 	line-height: 1.4em;
 }
 
@@ -627,6 +625,7 @@ author a:visited {
 }
 
 .contactusdiv {
+	min-height:0px;
 	border-top: 1px solid #96d1f8;
 	background: #3e779d;
 	background: -webkit-gradient(linear, left top, left bottom, from(#ef6d93), to(#ee4272));
@@ -696,12 +695,14 @@ border:3px solid #CCCCCC;
 
 #lbladdress
 {
-	margin-left: 25px;
+	margin-left: 20px;
 	margin-right: 5px;
 }
 
 #map_canvas
 {
+width:179px;
+margin-bottom:5px;
 background-image: url('../images/seedlings/load.gif');
 background-repeat: no-repeat;
 background-position:center;
@@ -947,4 +948,35 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	font: normal 13px "Lucida Grande", "Verdana", sans-serif;
 	padding:5px;
 
+}
+
+
+.searchtxt{
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	color: #40413f;
+	border: 2px solid #cccccc;  
+	padding:3px 2px 3px 2px;
+	width:130px;
+	height:15px;
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	color:#40413f;
+	font: normal 13px "Lucida Grande", "Verdana", sans-serif;
+	outline: none; 
+    /* Curved Borders */
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border-radius: 5px; 
+}
+
+.searchtxt:hover{
+	border: 2px solid #7AAAC2;   
+}
+
+.searchtxt:focus {
+	border: 2px solid #7AAAC2;
+	background: -webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#ffffff));
+	background: -moz-linear-gradient(top,  #F0F0F0,  #ffffff);
 }

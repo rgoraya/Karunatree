@@ -74,7 +74,7 @@
   
   var length = (matchseeds.length.toString());
   
-  document.getElementById("lblcurrent").innerHTML =  "Vewing seedling " + (currentseed + 1) + " of " + (matchseeds.length);
+  document.getElementById("lblcurrent").innerHTML =  (currentseed + 1) + " of " + (matchseeds.length);
   } 
   
   // N E X T > >
@@ -109,7 +109,7 @@
   if (point) {
   var lookAt = ge.createLookAt('');
   lookAt.set(point.y, point.x, 10, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 9000000);
-  ge.getOptions().setFlyToSpeed(0.15);
+  ge.getOptions().setFlyToSpeed(0.6 );
   ge.getView().setAbstractView(lookAt);
   }
   });

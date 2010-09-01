@@ -87,18 +87,18 @@
   %div{:id => "leftcolumn"}
     .innertube
       // Hybrid Google Map block
-      %div{:id => "imggrid", :class => "mapdiv"}
-        %h3{:class => "bluecolor"}Seedling Location
-        %img{:id => "map_canvas", :width => "180px", :src =>"", :alt => "thumbnail map"}
-        %br
-        %br
+      %div{:class => "previewhead", :style =>"min-height:20px;"}
+        Seedling Location 
+      %div{:class => "previewcontent"}
+        %img{:id => "map_canvas", :src =>"/images/seedlings/mapplacehold.png", :alt => "thumbnail map"}
+        
         %div{:id => "map_description"}
           %div{:class => "locationicon"}
             =image_tag "/images/system/icons/location.png", :size => "13x24"
           %div{:id => "lbladdress"} 
-          
+            =image_tag "../images/seedlings/load.gif", :size => "20x20",:style=>"margin-left:130px;"
       // Block containing a table with Likes, Tweets and Friendly ids  
-      %br
+     
       %div{:id => "imggrid"}
         %div{:class => "paneldiv"}
           %div{:class => "iconimg"}
@@ -124,15 +124,19 @@
       
       // Tags block
       %br
-      %div{:id => "imggrid", :class => "tagsdiv"}      
-        %h3{:class => "bluecolor"} Tags
-        %p{:class => "titlecolor"}
-          - for tag in @seedling.tags
-            #{tag.name}
+      %div{:class => "previewhead", :style =>"min-height:20px;"}
+        Tags 
+      %div{:class => "previewcontent"}
+        %p{:class => "tagsdiv"}
+          %font{:class=>"titlecolor"}
+            - for tag in @seedling.tags
+              #{tag.name}
           
-      %br
+      
       // Geo data block    
-      %div{:id => "imggrid"}
+      %div{:class => "previewhead", :style =>"min-height:20px;"}
+        Geo Details 
+      %div{:class => "previewcontent"}
         %ul#switchlist
           %li
             %div{:id => "list_a_excl_collapsed", :class => "paneldiv", :style => "display:block"}
@@ -174,11 +178,11 @@
       
       
       // More_by block
-      %br
+      
       - if(has_related_works)
-        %div{:id => "imggrid", :class => "morebydiv"}      
-          %h3{:class => "bluecolor"}
-            = more_by_description
+        %div{:class => "previewhead", :style =>"min-height:20px;"}
+          = more_by_description 
+        %div{:class => "previewcontent"}     
           = more_by_links
       // Clippings block      
       //%div{:id => "imggridclip", :class => "clip"}      

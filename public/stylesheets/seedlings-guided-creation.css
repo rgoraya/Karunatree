@@ -402,19 +402,6 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 
 
 
-.loctxt{
-	text-shadow: rgba(0,0,0,.4) 0 1px 0;
-	-webkit-text-stroke: 1px transparent;
-	color: #40413f;
-	border: 1px solid #d5d5d5;  
-	padding:3px 2px 3px 2px;
-	width:100px;
-}
-
-.loctxt:hover{
-	border: 1px inset #fafafa;   
-}
-
 
 #flyto{
 display: block; 	
