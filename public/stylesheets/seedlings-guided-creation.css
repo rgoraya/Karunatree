@@ -512,10 +512,9 @@ width: 100%;
 	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	/* Fonts */	
-    /*color: #307BA0;*/
 	-webkit-text-stroke: 1px transparent;
-	font: bold 14px/18px "Lucida Grande", "Verdana", sans-serif;
 	padding:5px;
+	font: bold 14px/18px "Lucida Grande", "Verdana", sans-serif;	
 }
 
 .previewcontent {

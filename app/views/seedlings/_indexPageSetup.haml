@@ -29,13 +29,17 @@
   // C O N T R O L S      C O L U M N
   %div{:id => "indexcontrols"}
     .innertube
-      %div{:id => "imggrid"}
-        
+      %div{:class => "previewhead", :style =>"min-height:20px;"}
+        %div{:id => "nowshowinghead"}
+          Focussed on 
+      %div{:class => "previewcontent"}  
         %div{:id => "nowshowing"}
               
                    
-      %br
-      %div{:id => "imggrid"}
+      
+      %div{:class => "previewhead", :style =>"min-height:20px;"}
+        Seedling Stats 
+      %div{:class => "previewcontent"}
         %table{:id => "stattbl"}
           %tr
             %td{:class => "titlecolor"} 
@@ -59,8 +63,10 @@
             %td{:align => "left"}  
               %a{:id => "next", :class => "enabled", :Title => "Jump to Previous seedling", :href => "javascript:next()"}
             
-      %br        
-      %div{:id => "imggrid"}
+              
+      %div{:class => "previewhead", :style =>"min-height:20px;"}
+        Find Seedlings 
+      %div{:class => "previewcontent"}
         
         %ul{:id => "switchlist"}
           %li

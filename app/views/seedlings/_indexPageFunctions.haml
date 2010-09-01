@@ -43,14 +43,15 @@
   if (descr.length > 300)
   {descr = descr.substring(0,300) + '...';}
   
+  var headinnerhtml = '<div id="summary" class="head">Focused on <font class="titlecolor">' + matchseeds[for_this_seed].seedling.title + '</font></div>'
   var innerhtml = 
-  ' <div id="summary" class="head"><tr><td>Focused on <b class="titlecolor">' + matchseeds[for_this_seed].seedling.title + '</b></div>'
-  + '<div id = "summary" class="main"> <a href="' + link + '">'
+  '<div id = "summary" class="main"> <a href="' + link + '">'
   + '<img id="more-link" src="' + imageurl + '" align="left" alt="Project image" /> </a>'
   + descr + '</div><br>' 
   + '<div id="summary" class="trail">click on the Image above or ' + link_to_details + ' to view details.</div>';
   
   document.getElementById("nowshowing").innerHTML =  innerhtml;
+  document.getElementById("nowshowinghead").innerHTML =  headinnerhtml;
   
   // Commented out the code below for now, can be used fora FADE-IN effect
   fadeInSummary();

@@ -787,7 +787,7 @@ width: 278px;
 
 #summary.main
 {
-height:150px;
+height:160px;
 text-overflow:ellipsis;
 overflow:hidden;
 white-space:normal;
@@ -814,6 +814,7 @@ border-collapse: collapse;
 
 #stattbl td {
 text-overflow:ellipsis;
+padding:3px 0px 3px 0px;
 overflow:hidden;
 white-space:nowrap;
 } 	
@@ -890,264 +891,60 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 }
 
 
-/*         S T Y L E S         F O R         S E E D L I N G S        W I Z A R D            */
 
-#promptdiv{              
-	margin-right: 400px; /*Set right margin to RightColumnWidth*/
-	color:#307BA0;
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:14px;
-}
-
-#previewdiv{
-	float: left;
-	width: 400px; /*Width of right column*/
-	margin-left: -400px; /*Set left margin to -(RightColumnWidth) */
-	color:#307BA0;
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:14px;
-	text-align:center;
-}
-
-#stephead{
-	width: 100%;
+.previewhead {
 	border-top: 1px solid #fafafa;
-	background: #3e779d;
-	background: -webkit-gradient(linear, left top, left bottom, from(#F1F1F1), to(#CFCFCF));
-	background: -moz-linear-gradient(top,  #F1F1F1,  #CFCFCF);
-	height: 80px;
+    /* Curved Borders */
+	-moz-border-radius-topleft: 5px;  
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-left-radius: 5px;  
+	-webkit-border-top-right-radius: 5px;
+	-khtml-border-top-left-radius: 5px;     
+	-khtml-border-top-right-radius: 5px;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+	/* Gradient */
+	background: -webkit-gradient(linear, left top, left bottom, from(#e3e3e3), to(#d5d5d5));
+	background: -moz-linear-gradient(top,  #e3e3e3,  #d5d5d5);
+	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
-	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	-moz-box-shadow: 2px 2px 3px #CCCCCC;
+	box-shadow: 2px 2px 3px #CCCCCC;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	/* Fonts */	
 	-webkit-text-stroke: 1px transparent;
-	font: bold 32px/36px "Lucida Grande", "Verdana", sans-serif;
-	color: #3e779d;
-	text-decoration: none;
-
+	padding:5px;
+	font: bold 14px/18px "Lucida Grande", "Verdana", sans-serif;	
 }
 
-#step{
-	min-height:500px;
-}
-
-#promptbtn{
-	height:70px;
-}
-
-#progress{       /* Weather visibility */
-display: block; 	
-width:410px;
-height:45px;
-outline:0px;
-}
-
-#progress.step1 {
-background:url('../images/seedlings/progress.png') -5px -5px;
-}
-
-#progress.step2 { 
-background:url('../images/seedlings/progress.png') -5px -51px;
-}
-#progress.step3 { 
-background:url('../images/seedlings/progress.png') -5px -97px;
-}
-#progress.step4 { 
-background:url('../images/seedlings/progress.png') -5px -142px;
-}
-#progress.step5 { 
-background:url('../images/seedlings/progress.png') -5px -188px;
-}
-
-
-#previewstep1{
-	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e3e3e3));
-	background: -moz-linear-gradient(top,  #ffffff,  #e3e3e3);
+.previewcontent {
+	border: 1px solid #E6E6E6;
+    /* Curved Borders */
+	-moz-border-radius-bottomleft: 5px;  
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-left-radius: 5px;  
+	-webkit-border-bottom-right-radius: 5px;
+	-khtml-border-bottom-left-radius: 5px;     
+	-khtml-border-bottom-right-radius: 5px;
+	border-bottom-left-radius:5px;
+	border-bottom-right-radius:5px;  
+	/* Gradient */
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#F0F0F0));
+	background: -moz-linear-gradient(top,  #ffffff,  #F0F0F0);
+	/* Shadow effects */
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: 2px 2px 3px #CCCCCC;
+	box-shadow: 2px 2px 3px #CCCCCC;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+	margin: 0em 0em 1em 0em;
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	/* Fonts */	
+	color:#40413f;
 	-webkit-text-stroke: 1px transparent;
-	color: #8C8D8C;
-	text-decoration: none;
-	padding: 0.5em;
-	min-height:150px; 
-	
-}
-#previewstep1.inactive{
-	opacity:0.6;filter:alpha(opacity=60);
-	border: 10px solid #ffffff
-}
-#previewstep1.active{
-	border: 5px solid #3e779d;
-	margin:5px;
-	color: #3e779d;
-}
-	
+	font: normal 13px "Lucida Grande", "Verdana", sans-serif;
+	padding:5px;
 
-#previewstep2{
-	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e3e3e3));
-	background: -moz-linear-gradient(top,  #ffffff,  #e3e3e3);
-	text-shadow: rgba(0,0,0,.4) 0 1px 0;
-	-webkit-text-stroke: 1px transparent;
-	color: #8C8D8C;
-	text-decoration: none;
-	padding: 0.5em;
-	min-height:50px; 
-}
-#previewstep2.inactive{
-	opacity:0.6;filter:alpha(opacity=60);
-	border: 10px solid #ffffff
-}
-#previewstep2.active{
-	border: 5px solid #3e779d;
-	margin:5px;
-	color: #3e779d;
-}
-#previewstep3{
-	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e3e3e3));
-	background: -moz-linear-gradient(top,  #ffffff,  #e3e3e3);
-	text-shadow: rgba(0,0,0,.4) 0 1px 0;
-	-webkit-text-stroke: 1px transparent;
-	color: #8C8D8C;
-	text-decoration: none;
-	padding: 0.5em;
-	min-height:150px;
-}
-#previewstep3.inactive{
-	opacity:0.6;filter:alpha(opacity=60);
-	border: 10px solid #ffffff
-}
-#previewstep3.active{
-	border: 5px solid #3e779d;
-	margin:5px;
-	color: #3e779d;
-}
-
-#previewstep4{
-	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e3e3e3));
-	background: -moz-linear-gradient(top,  #ffffff,  #e3e3e3);
-	text-shadow: rgba(0,0,0,.4) 0 1px 0;
-	-webkit-text-stroke: 1px transparent;
-	color: #8C8D8C;
-	text-decoration: none;
-	padding: 0.5em;
-	min-height:160px;
-}
-#previewstep4.inactive{
-	opacity:0.6;filter:alpha(opacity=60);
-	border: 10px solid #ffffff
-}
-#previewstep4.active{
-	border: 5px solid #3e779d;
-	margin:5px;
-	color: #3e779d;
-}
-
-.loctxt{
-	text-shadow: rgba(0,0,0,.4) 0 1px 0;
-	-webkit-text-stroke: 1px transparent;
-	color: #40413f;
-	border: 1px solid #d5d5d5;  
-	padding:3px 2px 3px 2px;
-}
-
-.loctxt:hover{
-	border: 1px inset #fafafa;   
-}
-
-.desctxt{
-	text-shadow: rgba(0,0,0,.4) 0 1px 0;
-	-webkit-text-stroke: 1px transparent;
-	color: #fafafa;
-	text-align:right;
-	vertical-align:botom;
-	border: 2px solid #d5d5d5;  
-	padding:3px 2px 3px 2px;
-}
-
-.desctxt:hover{
-	border: 2px inset #fafafa;   
-}
-
-.desctxt:focus{
-	color: #40413f;
-    background:pink;
-}
-
-#locationwrapper{
-float: left;
-width: 100%;
-}
-
-#previewmap{
-	margin-right: 165px; /*Set right margin to RightColumnWidth*/
-}
-
-#previewgeo{
-	float: left;
-	width: 165px; /*Width of right column*/
-	margin-left: -165px; /*Set left margin to -(RightColumnWidth) */
-}
-
-#share{
-display: block; 	
-width:143px;
-height:66px;
-padding:0px;
-background:url('../images/seedlings/share.png') -6px -5px;
-}
-#share:hover { 
-background:url('../images/seedlings/share.png') -6px -71px;
-}
-#share:active { 
-background:url('../images/seedlings/share.png') -6px -138px;
-}
-
-#nameit{
-display: block; 	
-width:143px;
-height:66px;
-padding:0px;
-background:url('../images/seedlings/nameit.png') -6px -5px;
-}
-#nameit:hover { 
-background:url('../images/seedlings/nameit.png') -6px -71px;
-}
-#nameit:active { 
-background:url('../images/seedlings/nameit.png') -6px -138px;
-}
-
-#message{
-display: block; 	
-width:143px;
-height:66px;
-padding:0px;
-background:url('../images/seedlings/message.png') -6px -5px;
-}
-#message:hover { 
-background:url('../images/seedlings/message.png') -6px -71px;
-}
-#message:active { 
-background:url('../images/seedlings/message.png') -6px -138px;
-}
-
-
-
-#plantit{
-display: block; 	
-width:143px;
-height:66px;
-padding:0px;
-background:url('../images/seedlings/plantit.png') -6px -5px;
-}
-#plantit:hover { 
-background:url('../images/seedlings/plantit.png') -6px -71px;
-}
-#plantit:active { 
-background:url('../images/seedlings/plantit.png') -6px -138px;
-}
-
-#previewdesc
-{
-height:150px;
-text-overflow:ellipsis;
-overflow:hidden;
-white-space:normal;
 }
