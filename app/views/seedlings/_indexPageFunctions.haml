@@ -43,6 +43,7 @@
   if (descr.length > 300)
   {descr = descr.substring(0,300) + '...';}
   
+  
   var headinnerhtml = '<div id="summary" class="head">Focused on <font class="titlecolor">' + matchseeds[for_this_seed].seedling.title + '</font></div>'
   var innerhtml = 
   '<div id = "summary" class="main"> <a href="' + link + '">'
@@ -57,34 +58,54 @@
   fadeInSummary();
   }
 
-  // Populate the stat fields for the current search 
-  function summarize(count, tag, matchseeds, currentseed) {
-  //if (initzoom)
-  //{currentseed = lastviewed;}
-
+  // P O P U L A T E      S T A T S      F O R      S E A R C H
+  function summarize(count, searchstring, matchseeds, currentseed) {
+  //alert('aye')
+  // Initiate Buttons to Disabled state  
+  document.getElementById("nextbtn").innerHTML = '<img id="next" class="disabled" src="/images/seedlings/trans.gif" width="1" height="1" />';
+  document.getElementById("prevbtn").innerHTML = '<img id="prev" class="disabled" src="/images/seedlings/trans.gif" width="1" height="1" />';
+  
+  // Show count
   document.getElementById("lblshowing").innerHTML =  count; 
   
-  if (tag != "" && count!=0)
-  {document.getElementById("lblsearch").innerHTML =  "containing \"" + tag + "\"";}
+  // Show the Search Criteria
+  if (searchstring != "" && count!=0) {
+  document.getElementById("lblsearch").innerHTML =  "containing \"" + searchstring + "\""; }
   else 
-  if(tag != "")
-  {document.getElementById("lblsearch").innerHTML =  "No seedlings match";}
-  else
-  {document.getElementById("lblsearch").innerHTML =  "All"; }
+  if(searchstring != "") {
+  document.getElementById("lblsearch").innerHTML =  "No seedlings match";}
+  else {
+  document.getElementById("lblsearch").innerHTML =  "All"; }
   
-  var length = (matchseeds.length.toString());
+  var length = parseInt(matchseeds.length);
   
+  // Show Current seed message and enable Next button if more than 1 seedlings match the search criteria
+  if (length == 0) {
+  document.getElementById("lblcurrent").innerHTML =  (currentseed) + " of " + (matchseeds.length); } 
+  else if (length == 1) {
+  document.getElementById("lblcurrent").innerHTML =  (currentseed + 1) + " of " + (matchseeds.length); } 
+  else if (length > 1) {
   document.getElementById("lblcurrent").innerHTML =  (currentseed + 1) + " of " + (matchseeds.length);
+  document.getElementById("nextbtn").innerHTML =  '<a id="next" class="enabled" title = "Jump to Next seedling" href ="javascript:next()"> </a>'; }
+  
   } 
   
   // N E X T > >
-  function next()
-  {
+  function next() {
+  
   if (currentseed < matchseeds.length-1)
   { 
   currentseed++;
   lookat();
-  document.getElementById("lblcurrent").innerHTML =  (currentseed + 1) + " of " + matchseeds.length; }
+  document.getElementById("lblcurrent").innerHTML =  (currentseed + 1) + " of " + matchseeds.length; 
+  document.getElementById("prevbtn").innerHTML =  '<a id="prev" class="enabled" title = "Jump to Previous seedling" href ="javascript:previous()"> </a>';
+  
+  if (currentseed == matchseeds.length-1) {
+  document.getElementById("nextbtn").innerHTML = '<img id="next" class="disabled" src="/images/seedlings/trans.gif" width="1" height="1" />';}
+  }
+  
+  
+  
   else {document.getElementById("lblcurrent").innerHTML =  "Last Seedling!!!"; }
   }
   
@@ -95,7 +116,12 @@
   {
   currentseed--;
   lookat(); 
-  document.getElementById("lblcurrent").innerHTML =  (currentseed + 1) + " of " + matchseeds.length; }
+  document.getElementById("lblcurrent").innerHTML =  (currentseed + 1) + " of " + matchseeds.length; 
+  document.getElementById("nextbtn").innerHTML =  '<a id="next" class="enabled" title = "Jump to Next seedling" href ="javascript:next()"> </a>';
+  if (currentseed == 0) {
+  document.getElementById("prevbtn").innerHTML = '<img id="prev" class="disabled" src="/images/seedlings/trans.gif" width="1" height="1" />';}  
+  }
+  
   else {document.getElementById("lblcurrent").innerHTML =  "First Seedling!!!"; }
   }  
 

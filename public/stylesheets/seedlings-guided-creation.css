@@ -242,6 +242,11 @@ label {
     color: #fff;
     text-decoration: none;
 	margin:0px 15px 0px 15px;
+    /* Curved Borders */
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    border-radius: 3px; 	
 }
 
 .prev:hover, .next:hover {

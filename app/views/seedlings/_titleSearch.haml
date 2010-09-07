@@ -82,22 +82,8 @@
   } // End of if structure
   } //  - - - - - - - - - - - - - - - - - - - - - - - - - - - End of FOR loop
   
-  // Populate the stat fields for the current search  
-  
-  //if (initzoom)
-  //{currentseed = lastviewed;}
-  
-  document.getElementById("lblshowing").innerHTML =  count; 
-  
-  if (seedtitle != "" && count!=0)
-  {document.getElementById("lblsearch").innerHTML =  "containing \"" + seedtitle + "\"";}
-  else 
-  if(seedtitle != "")
-  {document.getElementById("lblsearch").innerHTML =  "No seedlings match";}
-  else
-  {document.getElementById("lblsearch").innerHTML =  "All"; }
-  
-  document.getElementById("lblcurrent").innerHTML =  (currentseed+1) + ' of ' + (matchseeds.length);
+  // Populate the stat fields for the current search
+  summarize(count, seedtitle, matchseeds, currentseed);
   
   // Look at the first seedling matching Search Critera
   lookat();

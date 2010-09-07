@@ -33,7 +33,7 @@
         %div{:id => "nowshowinghead"}
           Focussed on
       %div{:class => "previewcontent"}  
-        %div{:id => "nowshowing"} 
+        %div{:id => "nowshowing"}
           =image_tag "../images/seedlings/load.gif", :style=>"margin-top: 80px; margin-left:120px"
               
                    
@@ -59,10 +59,12 @@
               %div{:id => "lblcurrent"}
         %table{:style => "width:100%"}  
           %tr
-            %td{:align => "right"}
-              %a{:id => "prev", :class => "enabled", :Title => "Jump to Next seedling", :href => "javascript:previous()"}
-            %td{:align => "left"}  
-              %a{:id => "next", :class => "enabled", :Title => "Jump to Previous seedling", :href => "javascript:next()"}
+            %td{:align => "right", :id => "prevbtn"}
+              %img{:id => "prev", :class => "disabled", :src => "/images/seedlings/trans.gif", :width => "1px", :height => "1px"}
+              //%a{:id => "prev", :class => "enabled", :Title => "Jump to Next seedling", :href => "javascript:previous()"}
+            %td{:align => "left", :id => "nextbtn"}  
+              %img{:id => "next", :class => "disabled", :src => "/images/seedlings/trans.gif", :width => "1px", :height => "1px"}
+              //%a{:id => "next", :class => "enabled", :Title => "Jump to Previous seedling", :href => "javascript:next()"}
             
               
       %div{:class => "previewhead", :style =>"min-height:20px;"}
@@ -81,7 +83,7 @@
               %table 
                 %tr
                   %td{:align => "left"}
-                    %input{:id => "txtflyto", :type => "text",:class => "searchtxt",:style=>"width:180px;" ,:value => "San Francisco, CA", :onkeydown => "if (event.keyCode == 13) javascript:FlytoClick()" }/              
+                    %input{:id => "txtflyto", :type => "text",:class => "searchtxt", :placeholder => "San Francisco, CA", :onkeydown => "if (event.keyCode == 13) javascript:FlytoClick()" }/              
                   %td{:align => "right"}  
                     %a{:id => "flyto", :Title => "Fly to the Entered Destination", :href => "javascript:FlytoClick()"}
                 
@@ -94,18 +96,18 @@
                 %b Close Search
               %table{:class => "auto_complete"}
                 %tr     
-                  %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:seedling, :title, {:id =>'txtsearch',:class => "searchtxt"})  
+                  %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:seedling, :title, {:id =>'txtsearch',:class => "searchtxt", :placeholder => "Start typing a Title..."})  
                                         
-                  %td{:align => "left"}  
+                  %td{:align => "right"}  
                     %a{:id => "search", :Title => "Seach for the Seedlings", :href => "javascript:seedsearch()"}
-                  %td by Title
+                  
               
                 %tr  
-                  %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:tag, :name, {:id =>'tagsearch',:class => "searchtxt"})
+                  %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:tag, :name, {:id =>'tagsearch',:class => "searchtxt", :placeholder => "Start typing a Tag..."})
                    
-                  %td{:align => "left"}  
+                  %td{:align => "right"}  
                     %a{:id => "search", :Title => "Seach for the Seedlings", :href => "javascript:tagsearch()"}
-                  %td by Tag
+                  
             
   %div{:id => "footer"}
     Copyright &copy; 2009-2010 Karunatree. #{link_to "Contact Us", contact_path}    
