@@ -133,6 +133,7 @@ padding:20px;
 display: block; 	
 width:66px;
 height:25px;
+outline:0px;
 background:url('../images/seedlings/fly.png') -4px -4px;
 }
 #flyto:hover { 
@@ -148,6 +149,7 @@ display: block;
 width:66px;
 height:25px;
 padding:0px;
+outline:0px;
 background:url('../images/seedlings/plant.png') -4px -4px;
 }
 #reset:hover { 
@@ -162,6 +164,7 @@ display: block;
 width:66px;
 height:25px;
 padding:0px;
+outline:0px;
 background:url('../images/seedlings/plant.png') -4px -4px;
 }
 plant:hover { 
@@ -176,6 +179,7 @@ display: block;
 width:66px;
 height:25px;
 padding:0px;
+outline:0px;
 background:url('../images/seedlings/search.png') -4px -4px;
 }
 #search:hover { 
@@ -190,6 +194,7 @@ display: block;
 width:66px;
 height:25px;
 padding:0px;
+outline:0px;
 }
 #next.enabled{
 background:url('../images/seedlings/next.png') -4px -4px;
@@ -212,6 +217,7 @@ display: block;
 width:66px;
 height:25px;
 padding:0px;
+outline:0px;
 }
 #prev.enabled{
 background:url('../images/seedlings/prev.png') -4px -4px;
@@ -294,7 +300,7 @@ font-size:14px;
 	min-height: 22px;
 	padding: 0 10px;
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
-	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	-webkit-text-stroke: 1px transparent;
 
@@ -439,15 +445,20 @@ text-align:left;
 
 #switchlist li
 {
-	color: #40413f;
+	color: #337292;
 }
 
 #switchlist a
 {
+color: #337292;
 text-decoration:none;
+outline:0px;
 }
 
-#switchlist a:hover {color: #337292;}
+#switchlist a:hover {
+	color: #337292;
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+}
 
 #seedling-details-image 
 {
@@ -506,7 +517,7 @@ font-size:13px;
 	height: 18px;
 	padding: 0 10px;
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
-	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	-webkit-text-stroke: 1px transparent;
 	font: bold 14px/18px "Lucida Grande", "Verdana", sans-serif;
@@ -632,7 +643,7 @@ author a:visited {
 	background: -moz-linear-gradient(top,  #ef6d93,  #ee4272);
 	padding: 0 10px;
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
-	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
 	text-decoration: none;
 	padding: 0.5em;
 }
@@ -748,7 +759,7 @@ width:688px;
 height: 580px; 
 border: 1px solid #d5d5d5;   
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
-	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
 }
 
 #globe3d.wizardhide
@@ -909,15 +920,83 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	background: -moz-linear-gradient(top,  #e3e3e3,  #d5d5d5);
 	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
-	-moz-box-shadow: 2px 2px 3px #CCCCCC;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
 	box-shadow: 2px 2px 3px #CCCCCC;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
 	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
-	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	/* Fonts */	
 	-webkit-text-stroke: 1px transparent;
 	padding:5px;
 	font: bold 14px/18px "Lucida Grande", "Verdana", sans-serif;	
+	min-height:20px;
+}
+
+.headreverse {
+	border-top: 1px solid #fafafa;
+    /* Curved Borders */
+	-moz-border-radius-bottomleft: 5px;  
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-left-radius: 5px;  
+	-webkit-border-bottom-right-radius: 5px;
+	-khtml-border-bottom-left-radius: 5px;     
+	-khtml-border-bottom-right-radius: 5px;
+	border-bottom-left-radius:5px;
+	border-bottom-right-radius:5px; 
+	/* Gradient */
+	background: -webkit-gradient(linear, left top, left bottom, from(#e3e3e3), to(#d5d5d5));
+	background: -moz-linear-gradient(top,  #e3e3e3,  #d5d5d5);
+	/* Shadow effects */
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
+	box-shadow: 2px 2px 3px #CCCCCC;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+	/* Fonts */	
+	-webkit-text-stroke: 1px transparent;
+	padding:5px;
+	font: bold 14px/18px "Lucida Grande", "Verdana", sans-serif;	
+	min-height:20px;
+}
+
+.headflat {
+	border-top: 1px solid #fafafa;
+	/* Gradient */
+	background: -webkit-gradient(linear, left top, left bottom, from(#e3e3e3), to(#d5d5d5));
+	background: -moz-linear-gradient(top,  #e3e3e3,  #d5d5d5);
+	/* Shadow effects */
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
+	box-shadow: 2px 2px 3px #CCCCCC;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+	/* Fonts */	
+	-webkit-text-stroke: 1px transparent;
+	padding:5px;
+	font: bold 14px/18px "Lucida Grande", "Verdana", sans-serif;	
+	min-height:20px;
+}
+
+.headround {
+	border-top: 1px solid #fafafa;
+	/* Curved Borders */
+	-moz-border-radius: 5px;  
+	-webkit-border-radius: 5px;  
+	-khtml-border-radius: 5px;     
+	border-radius: 5px; 
+	/* Gradient */
+	background: -webkit-gradient(linear, left top, left bottom, from(#e3e3e3), to(#d5d5d5));
+	background: -moz-linear-gradient(top,  #e3e3e3,  #d5d5d5);
+	/* Shadow effects */
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
+	box-shadow: 2px 2px 3px #CCCCCC;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+	/* Fonts */	
+	-webkit-text-stroke: 1px transparent;
+	padding:5px;
+	font: bold 14px/18px "Lucida Grande", "Verdana", sans-serif;	
+	min-height:20px;
 }
 
 .previewcontent {
@@ -936,7 +1015,7 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	background: -moz-linear-gradient(top,  #ffffff,  #F0F0F0);
 	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
-	-moz-box-shadow: 2px 2px 3px #CCCCCC;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
 	box-shadow: 2px 2px 3px #CCCCCC;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
 	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
@@ -950,19 +1029,37 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 
 }
 
+.contentflat {
+	border: 1px solid #E6E6E6;
+	/* Gradient */
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#F0F0F0));
+	background: -moz-linear-gradient(top,  #ffffff,  #F0F0F0);
+	/* Shadow effects */
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
+	box-shadow: 2px 2px 3px #CCCCCC;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	/* Fonts */	
+	color:#40413f;
+	-webkit-text-stroke: 1px transparent;
+	font: normal 13px "Lucida Grande", "Verdana", sans-serif;
+	padding:5px;
+}
 
 .searchtxt{
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	-webkit-text-stroke: 1px transparent;
 	color: #40413f;
 	border: 2px solid #cccccc;  
-	padding:3px 2px 3px 2px;
-	width:180px;
+	padding:2px 2px 3px 2px;
+	width:190px;
 	height:15px;
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	-webkit-text-stroke: 1px transparent;
 	color:#40413f;
-	font: normal 13px "Lucida Grande", "Verdana", sans-serif;
+	font: normal 12.5px "Lucida Grande", "Verdana", sans-serif;
 	outline: none; 
     /* Curved Borders */
     -moz-border-radius: 5px;

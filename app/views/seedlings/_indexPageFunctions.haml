@@ -51,11 +51,13 @@
   + descr + '</div><br>' 
   + '<div id="summary" class="trail">click on the Image above or ' + link_to_details + ' to view details.</div>';
   
+  // set opacity to zero
+  setOpacity(0, 'nowshowing');
+  // change the innerHTML content
   document.getElementById("nowshowing").innerHTML =  innerhtml;
   document.getElementById("nowshowinghead").innerHTML =  headinnerhtml;
-  
-  // Commented out the code below for now, can be used fora FADE-IN effect
-  fadeInSummary();
+  // Fade In
+  fadeIn('nowshowing');
   }
 
   // P O P U L A T E      S T A T S      F O R      S E A R C H
@@ -139,6 +141,10 @@
   ge.getView().setAbstractView(lookAt);
   }
   });
+
+  // clear the search textbox
+  document.getElementById('txtflyto').value =  ""; 
+
   }
   
   //  C R E A T E       D E T A I L S       P A G E       L I N K  
@@ -219,22 +225,31 @@
   }
   }
 
-  //   F U N C T I O N S       F O R       F A D E - I N       E F F E C T
-  function setOpacity(level) {
-  var element = document.getElementById('nowshowing');
+  
+  // F U N C T I O N S       F O R       F A D E - I N       E F F E C T
+  
+  function setOpacity(level, el) {
+  var element = document.getElementById(el);
   element.style.opacity = level;
   element.style.MozOpacity = level;
   element.style.KhtmlOpacity = level;
   element.style.filter = "alpha(opacity=" + (level * 100) + ");";
   }
   // fade in the seedling summary
-  function fadeInSummary(){
+  
+  function fadeIn(elementid) {
   var duration = 1000;  /* 1000 millisecond fade = 1 sec */
   var steps = 30;       /* number of opacity intervals   */
   for (i = 0; i <= 1; i += (1 / steps)) {
-  setTimeout("setOpacity(" + i + ")", i * duration);
+  setTimeout("setOpacity(" + i + ",\"" + elementid + "\")", i * duration); }
   }
-  }
+  
+  function fadeOut(elementid) {
+  var duration = 1000;  /* 1000 millisecond fade = 1 sec */
+  var steps = 30;       /* number of opacity intervals   */
+  for (i = 1; i >= 0; i -= (1 / steps)) {
+  setTimeout("setOpacity(" + i + ",\"" + elementid + "\")", i * duration); }
+  }  
   
   
   //   F U N C T I O N S       F O R       G L O B E - L A Y E R S      T O G G L E 

@@ -134,17 +134,17 @@
           
       
       // Geo data block    
-      %div{:class => "previewhead", :style =>"min-height:20px;"}
-        Geo Details 
-      %div{:class => "previewcontent"}
-        %ul#switchlist
-          %li
-            %div{:id => "list_a_excl_collapsed", :class => "paneldiv", :style => "display:block"}
-              %a{:href => "javascript:swap('list_a_excl',groupA)"}
-                %b View Geo Details
-            %div{:id =>"list_a_excl_expanded", :class => "paneldiv", :style => "display:none"}
+      
+      %ul{:id => "switchlist"}
+        %li
+          %div{:id => "list_a_excl_collapsed", :class => "headround", :style => "display:block"}
+            %a{:href => "javascript:swap('list_a_excl',groupA)"}
+              View Geo Details
+          %div{:id =>"list_a_excl_expanded", :style => "display:none"}
+            %div{:class => "previewhead"}
               %a{:href => "javascript:swap('list_a_excl',groupA)"} 
-                %b Hide Details
+                Hide Details
+            %div{:class=>"previewcontent"}  
               // The details table which switches open:        
               %table{:id => "globecontrols"} 
                 %tr
