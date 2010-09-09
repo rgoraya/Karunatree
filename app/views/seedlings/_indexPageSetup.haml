@@ -4,25 +4,25 @@
   %div{:id => "contentwrapper"}
     // G L O B E      C O L U M N
     %div{:id => "earthdiv"}
-      %div{:id => "imggrid"}
-        // The Google Earth Block        
-        %div{:id => "globe3d"}
-        
-        %div{:class => "paneldiv", :style => "height:40px"}        
-          %table{:id => "globecontrols"}
-            %tr
-              %td{:style => "width:40px;"}
-                %a{:id => "blue-marble", :class => "checked", :href => "javascript:getoggle('kml-blue-marble-check','blue-marble');", :onMouseOver =>"javascript:toggletext('Show/hide blue-marble');", :onmouseout=>"javascript:toggletext('');"}
-              %td{:style => "width:40px;"}
-                %a{:id => "atmosphere", :class => "checked", :href => "javascript:getoggle('kml-atmosphere-check','atmosphere');", :onMouseOver =>"javascript:toggletext('Show/hide Atmosphere');", :onmouseout=>"javascript:toggletext('');"}
-              %td{:style => "width:40px;"}
-                %a{:id => "border", :class => "off", :href => "javascript:getoggle('kml-border-check','border');", :onMouseOver =>"javascript:toggletext('Show/hide Borders');", :onmouseout=>"javascript:toggletext('');"}
-              %td{:style => "vertical-align:bottom", :align => "right"}
-                %div{:id => "toggletext"}
-                
-        // A hidden div containing checkboxes to toggle Google earth layers visibility          
-        %div{:id => 'checkboxes-ui', :style => "visibility:collapse; height:0px"}
-          %td{:id => 'checkboxes-ui'}
+      //%div{:id => "imggrid"}
+      // The Google Earth Block        
+      %div{:id => "globe3d"}
+      
+      %div{:class => "headreverse"}        
+        %table{:style => "width:100%;"}
+          %tr
+            %td{:style => "width:40px;"}
+              %a{:id => "blue-marble", :class => "checked", :href => "javascript:getoggle('kml-blue-marble-check','blue-marble');", :onMouseOver =>"javascript:toggletext('Show/hide blue-marble');", :onmouseout=>"javascript:toggletext('');"}
+            %td{:style => "width:40px;"}
+              %a{:id => "atmosphere", :class => "checked", :href => "javascript:getoggle('kml-atmosphere-check','atmosphere');", :onMouseOver =>"javascript:toggletext('Show/hide Atmosphere');", :onmouseout=>"javascript:toggletext('');"}
+            %td{:style => "width:40px;"}
+              %a{:id => "border", :class => "off", :href => "javascript:getoggle('kml-border-check','border');", :onMouseOver =>"javascript:toggletext('Show/hide Borders');", :onmouseout=>"javascript:toggletext('');"}
+            %td{:style => "vertical-align:bottom", :align => "right"}
+              %div{:id => "toggletext"}
+              
+      // A hidden div containing checkboxes to toggle Google earth layers visibility          
+      %div{:id => 'checkboxes-ui', :style => "visibility:collapse; height:0px"}
+        %td{:id => 'checkboxes-ui'}
       
       %br
   
@@ -32,15 +32,15 @@
       %div{:class => "previewhead", :style =>"min-height:20px;"}
         %div{:id => "nowshowinghead"}
           Focussed on
-      %div{:class => "previewcontent"}  
+      %div{:class => "contentflat"}  
         %div{:id => "nowshowing"}
           =image_tag "../images/seedlings/load.gif", :style=>"margin-top: 80px; margin-left:120px"
               
                    
       
-      %div{:class => "previewhead", :style =>"min-height:20px;"}
+      %div{:class => "headflat", :style =>"min-height:20px;"}
         Seedling Stats 
-      %div{:class => "previewcontent"}
+      %div{:class => "contentflat"}
         %table{:id => "stattbl"}
           %tr
             %td{:class => "titlecolor"} 
@@ -69,13 +69,15 @@
    
       %ul{:id => "switchlist"}
         %li
-          %div{:id => "list_a_excl_collapsed", :class => "previewhead", :style => "display:block" }
+          %div{:id => "list_a_excl_collapsed", :class => "headflat", :style => "display:block" }
             %a{:href => "javascript:swap('list_a_excl',groupA)"} 
-              Fly to any destination on the globe
+              Fly to any destination on the globe 
+              %div{:style=>"float:right"} &darr;
           %div{:id =>"list_a_excl_expanded", :style => "display:none"}
-            %div{:class => "previewhead"}
+            %div{:class => "headflat"}
               %a{:href => "javascript:swap('list_a_excl',groupA)"} 
-                Close Fly to Controls
+                Close Fly to Controls 
+                %div{:style=>"float:right"} &uarr;
             %div{:class => "contentflat"}         
               %table 
                 %tr
@@ -88,10 +90,12 @@
           %div{:id => "list_b_excl_collapsed", :class => "headreverse", :style => "display:block"}
             %a{:href => "javascript:swap('list_b_excl',groupA)"} 
               Search for Seedlings
+              %div{:style=>"float:right"} &darr;
           %div{:id => "list_b_excl_expanded", :style => "display:none"}
             %div{:class => "headflat", :style =>"min-height:20px;"}
               %a{:href => "javascript:swap('list_b_excl',groupA)"} 
-                Close Search
+                Close Search 
+                %div{:style=>"float:right"} &uarr;
             %div{:class => "previewcontent"}
               %table{:class => "auto_complete"}
                 %tr     

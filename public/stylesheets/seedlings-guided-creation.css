@@ -503,7 +503,6 @@ width: 100%;
 	box-shadow: 2px 2px 3px #CCCCCC;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
 	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
-	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	/* Fonts */	
 	-webkit-text-stroke: 1px transparent;
 	padding:5px;
@@ -538,6 +537,44 @@ width: 100%;
 	font: normal 13px "Lucida Grande", "Verdana", sans-serif;
 	padding:5px;
 
+}
+
+.headflat {
+	border-top: 1px solid #fafafa;
+	/* Gradient */
+	background: -webkit-gradient(linear, left top, left bottom, from(#e3e3e3), to(#d5d5d5));
+	background: -moz-linear-gradient(top,  #e3e3e3,  #d5d5d5);
+	/* Shadow effects */
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
+	box-shadow: 2px 2px 3px #CCCCCC;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+	/* Fonts */	
+	-webkit-text-stroke: 1px transparent;
+	padding:5px;
+	font: bold 14px/18px "Lucida Grande", "Verdana", sans-serif;	
+	min-height:20px;
+}
+
+.contentflat {
+	border: 1px solid #E6E6E6;
+	/* Gradient */
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#F0F0F0));
+	background: -moz-linear-gradient(top,  #ffffff,  #F0F0F0);
+	/* Shadow effects */
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
+	box-shadow: 2px 2px 3px #CCCCCC;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	/* Fonts */	
+	color:#40413f;
+	-webkit-text-stroke: 1px transparent;
+	font: normal 13px "Lucida Grande", "Verdana", sans-serif;
+	padding:5px;
+	margin-bottom:3px
 }
 
 #formdiv{
@@ -676,8 +713,8 @@ width: 100%;
 	text-align:center;
 	padding-top:5px;
     /* Shadow effects */
-    -moz-box-shadow: 4px 4px 6px #CCCCCC;
-    -webkit-box-shadow: 4px 4px 6px #CCCCCC;
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
     box-shadow: 4px 4px 6px #CCCCCC;
     -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');	

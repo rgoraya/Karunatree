@@ -99,34 +99,34 @@
             =image_tag "../images/seedlings/load.gif", :size => "20x20",:style=>"margin-left:130px;"
       // Block containing a table with Likes, Tweets and Friendly ids  
      
-      %div{:id => "imggrid"}
-        %div{:class => "paneldiv"}
-          %div{:class => "iconimg"}
-            = image_tag "/images/system/icons/heart.png", :size => "18x18"
-          %div{:class => "icondesc"}
-            =link_to boosts_description, "http://google.com"
-        %div{:class => "paneldiv"}
-          %div{:class => "iconimg"}
-            = image_tag "/images/system/icons/transplant.png", :size => "18x18"
-          %div{:class => "icondesc"}
-            =link_to "Transplant", "http://google.com"   
-        %div{:class => "paneldiv"}
-          %div{:class => "iconimg"}
-            = image_tag "/images/system/icons/twitter.png", :size => "18x18"
-          %div{:class => "icondesc"}
-            =link_to "Tweet", "http://twitter.com/home?status=#{@seedling.title} on @karunatree: #{@seedling.short_url}", :title => "Tweet"
-        %div{:class => "paneldiv"}
-          %div{:class => "iconimg"}
-            = image_tag "/images/system/icons/link.png", :size => "18x18"
-          %div{:class => "icondesc"}
-            http://ktre.es/00000
+      //%div{:id => "imggrid"}
+      %div{:class => "paneldiv"}
+        %div{:class => "iconimg"}
+          = image_tag "/images/system/icons/heart.png", :size => "18x18"
+        %div{:class => "icondesc"}
+          =link_to boosts_description, "http://google.com"
+      %div{:class => "paneldiv"}
+        %div{:class => "iconimg"}
+          = image_tag "/images/system/icons/transplant.png", :size => "18x18"
+        %div{:class => "icondesc"}
+          =link_to "Transplant", "http://google.com"   
+      %div{:class => "paneldiv"}
+        %div{:class => "iconimg"}
+          = image_tag "/images/system/icons/twitter.png", :size => "18x18"
+        %div{:class => "icondesc"}
+          =link_to "Tweet", "http://twitter.com/home?status=#{@seedling.title} on @karunatree: #{@seedling.short_url}", :title => "Tweet"
+      %div{:class => "paneldiv"}
+        %div{:class => "iconimg"}
+          = image_tag "/images/system/icons/link.png", :size => "18x18"
+        %div{:class => "icondesc"}
+          http://ktre.es/00000
                                
       
       // Tags block
       %br
       %div{:class => "previewhead", :style =>"min-height:20px;"}
         Tags 
-      %div{:class => "previewcontent"}
+      %div{:class => "contentflat"}
         %p{:class => "tagsdiv"}
           %font{:class=>"titlecolor"}
             - for tag in @seedling.tags
@@ -137,30 +137,32 @@
       
       %ul{:id => "switchlist"}
         %li
-          %div{:id => "list_a_excl_collapsed", :class => "headround", :style => "display:block"}
+          %div{:id => "list_a_excl_collapsed", :class => "headreverse", :style => "display:block"}
             %a{:href => "javascript:swap('list_a_excl',groupA)"}
               View Geo Details
+              %div{:style=>"float:right;"} &darr;
           %div{:id =>"list_a_excl_expanded", :style => "display:none"}
-            %div{:class => "previewhead"}
+            %div{:class => "headflat"}
               %a{:href => "javascript:swap('list_a_excl',groupA)"} 
                 Hide Details
+                %div{:style=>"float:right"} &uarr;
             %div{:class=>"previewcontent"}  
               // The details table which switches open:        
-              %table{:id => "globecontrols"} 
+              %table{:style=>"width:100%"}
                 %tr
                   %td{:align => "left"}
                     Latitude
-                  %td{:align => "left"}  
+                  %td{:align => "right"}  
                     =h @seedling.lat
                 %tr
                   %td{:align => "left"}
                     Longitude
-                  %td{:align => "left"}  
+                  %td{:align => "right"}  
                     =h @seedling.lon
                 %tr
                   %td{:align => "left"}
                     Altitude
-                  %td{:align => "left"}  
+                  %td{:align => "right"}  
                     =h @seedling.alt        
                     
                     

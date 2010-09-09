@@ -299,8 +299,12 @@ font-size:14px;
 	background: -moz-linear-gradient(top,  #e3e3e3,  #d5d5d5);
 	min-height: 22px;
 	padding: 0 10px;
+	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
 	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
+	box-shadow: 0px 1px 3px rgba(0,0,0,1);
+	filter: progid:DXImageTransform.Microsoft.Shadow(color='rgba(0,0,0,1)', Direction=135, Strength=3);
+
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	-webkit-text-stroke: 1px transparent;
 
@@ -509,15 +513,19 @@ font-size:13px;
 
 #footer{
 	clear: left;
-	width: 100%;
+	width:auto;
 	border-top: 1px solid #96d1f8;
 	background: #3e779d;
 	background: -webkit-gradient(linear, left top, left bottom, from(#65a9d7), to(#3e779d));
 	background: -moz-linear-gradient(top,  #65a9d7,  #3e779d);
 	height: 18px;
 	padding: 0 10px;
+	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
 	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
+	box-shadow: 0px 1px 3px rgba(0,0,0,1);
+	filter: progid:DXImageTransform.Microsoft.Shadow(color='rgba(0,0,0,1)', Direction=135, Strength=3);
+
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	-webkit-text-stroke: 1px transparent;
 	font: bold 14px/18px "Lucida Grande", "Verdana", sans-serif;
@@ -642,8 +650,12 @@ author a:visited {
 	background: -webkit-gradient(linear, left top, left bottom, from(#ef6d93), to(#ee4272));
 	background: -moz-linear-gradient(top,  #ef6d93,  #ee4272);
 	padding: 0 10px;
+	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
 	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
+	box-shadow: 0px 1px 3px rgba(0,0,0,1);
+	filter: progid:DXImageTransform.Microsoft.Shadow(color='rgba(0,0,0,1)', Direction=135, Strength=3);
+
 	text-decoration: none;
 	padding: 0.5em;
 }
@@ -755,11 +767,25 @@ font-size:14px;
 
 #globe3d  /*Earth Plugin Div Styles*/
 {
-width:688px;
+/*width:688px;*/
 height: 580px; 
 border: 1px solid #d5d5d5;   
+	padding:2px;
+	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
 	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
+	box-shadow: 0px 1px 3px rgba(0,0,0,1);
+	filter: progid:DXImageTransform.Microsoft.Shadow(color='rgba(0,0,0,1)', Direction=135, Strength=3);
+
+    /* Curved Borders */
+	-moz-border-radius-topleft: 5px;  
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-left-radius: 5px;  
+	-webkit-border-top-right-radius: 5px;
+	-khtml-border-top-left-radius: 5px;     
+	-khtml-border-top-right-radius: 5px;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;	
 }
 
 #globe3d.wizardhide
@@ -921,9 +947,9 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
 	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
-	box-shadow: 2px 2px 3px #CCCCCC;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
-	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+	box-shadow: 0px 1px 3px rgba(0,0,0,1);
+	filter: progid:DXImageTransform.Microsoft.Shadow(color='rgba(0,0,0,1)', Direction=135, Strength=3);
+
 	/* Fonts */	
 	-webkit-text-stroke: 1px transparent;
 	padding:5px;
@@ -948,9 +974,9 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
 	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
-	box-shadow: 2px 2px 3px #CCCCCC;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
-	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+	box-shadow: 0px 1px 3px rgba(0,0,0,1);
+	filter: progid:DXImageTransform.Microsoft.Shadow(color='rgba(0,0,0,1)', Direction=135, Strength=3);
+
 	/* Fonts */	
 	-webkit-text-stroke: 1px transparent;
 	padding:5px;
@@ -966,9 +992,9 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
 	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
-	box-shadow: 2px 2px 3px #CCCCCC;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
-	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+	box-shadow: 0px 1px 3px rgba(0,0,0,1);
+	filter: progid:DXImageTransform.Microsoft.Shadow(color='rgba(0,0,0,1)', Direction=135, Strength=3);
+
 	/* Fonts */	
 	-webkit-text-stroke: 1px transparent;
 	padding:5px;
@@ -989,9 +1015,9 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
 	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
-	box-shadow: 2px 2px 3px #CCCCCC;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
-	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+	box-shadow: 0px 1px 3px rgba(0,0,0,1);
+	filter: progid:DXImageTransform.Microsoft.Shadow(color='rgba(0,0,0,1)', Direction=135, Strength=3);
+
 	/* Fonts */	
 	-webkit-text-stroke: 1px transparent;
 	padding:5px;
@@ -1016,9 +1042,9 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
 	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
-	box-shadow: 2px 2px 3px #CCCCCC;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
-	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+	box-shadow: 0px 1px 3px rgba(0,0,0,1);
+	filter: progid:DXImageTransform.Microsoft.Shadow(color='rgba(0,0,0,1)', Direction=135, Strength=3);
+
 	margin: 0em 0em 1em 0em;
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	/* Fonts */	
@@ -1026,7 +1052,6 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	-webkit-text-stroke: 1px transparent;
 	font: normal 13px "Lucida Grande", "Verdana", sans-serif;
 	padding:5px;
-
 }
 
 .contentflat {
@@ -1037,9 +1062,9 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
 	-moz-box-shadow: 0 1px 3px rgba(0,0,0,1);
-	box-shadow: 2px 2px 3px #CCCCCC;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC')";
-	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#CCCCCC');
+	box-shadow: 0px 1px 3px rgba(0,0,0,1);
+	filter: progid:DXImageTransform.Microsoft.Shadow(color='rgba(0,0,0,1)', Direction=135, Strength=3);
+
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	/* Fonts */	
 	color:#40413f;
@@ -1053,13 +1078,13 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	-webkit-text-stroke: 1px transparent;
 	color: #40413f;
 	border: 2px solid #cccccc;  
-	padding:2px 2px 3px 2px;
+	padding:2px;
 	width:190px;
-	height:15px;
+	height:17px;
 	text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	-webkit-text-stroke: 1px transparent;
 	color:#40413f;
-	font: normal 12.5px "Lucida Grande", "Verdana", sans-serif;
+	font: normal 13px "Lucida Grande", "Verdana", sans-serif;
 	outline: none; 
     /* Curved Borders */
     -moz-border-radius: 5px;
