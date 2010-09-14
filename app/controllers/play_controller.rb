@@ -8,9 +8,10 @@ class PlayController < ApplicationController
   before_filter :require_user
   
   def index
+    debugger
     @title = "Play KarunaTree"
     @user = current_user
-    @character = @user.character
+    @character = current_user.character
     @scene = Scene.find_by_name_and_subscene(@user.character.scene_name, @user.character.subscene)
   end
   

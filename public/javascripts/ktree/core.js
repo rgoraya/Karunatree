@@ -42,7 +42,7 @@ ktree.Core = function() {
 	this.soundscape_ = new ktree.Soundscape();
 	
 	this.toolbar_ = new ktree.ui.Toolbar();
-	this.engine_ = new ktree.engine.Sequoia(this.world_.getModel(), this.kmlManager_, this.toolbar_);
+	//this.engine_ = new ktree.engine.Sequoia(this.world_.getModel(), this.kmlManager_, this.toolbar_);
 	
 	this.initializeSplitPaneViewport();
 }

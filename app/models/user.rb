@@ -60,6 +60,6 @@ class User < ActiveRecord::Base
   validates_length_of :password, :within => PASSWORD_LENGTH_RANGE
   
   def create_character
-    self.character = Character.new(:scene_name => 'Level1')
+    self.character = Character.new(:scene_name => 'Dreams')
   end
 end

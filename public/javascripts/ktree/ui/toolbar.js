@@ -10,7 +10,7 @@ goog.require('goog.ui.ToolbarButton');
 */
 ktree.ui.Toolbar = function() {
 	this.bar_ = new goog.ui.Toolbar();
-	this.bar_.addChild(new goog.ui.ToolbarButton('World Time: 0'), true);
+	//this.bar_.addChild(new goog.ui.ToolbarButton('World Time: 0'), true);
 	this.bar_.render(goog.dom.getElement('toolbar'));
 }
 
