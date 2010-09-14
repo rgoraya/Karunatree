@@ -1,5 +1,5 @@
 #nav
-	#{link_to_unless_current 'Home', root_path} | #{link_to_unless_current 'About', static_path("about")} | #{link_to_unless_current "Seedlings", seedlings_path}
+	#{link_to_unless_current 'Home', root_path} | #{link_to_unless_current 'About', 'http://www.karunatree.com/canopy/2010/01/what-is-a-karunatree/'} | #{link_to_unless_current "Seedlings", seedlings_path}
 	%span{"style" => "float: right"}
 		-if current_user
 			-##{link_to_remote "Restart", :url => {:action => "restart", :controller => "play"} } | |
