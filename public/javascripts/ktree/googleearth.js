@@ -38,8 +38,6 @@ goog.require('goog.ui.Button');
 *	This is the only place in the system where direct calls to the
 *	Earth API should be issued.
 *
-*	Last version update: 02.26.10
-*
 *	@version 0.4
 *	@author Derek Lyons
 */
@@ -144,32 +142,6 @@ ktree.GoogleEarth = function(identifier) {
 		google.earth.addEventListener(target_.ge_.getWindow(), 'mousedown', target_.mouseMinder_.mouseDownEventCallback);
 		google.earth.addEventListener(target_.ge_.getGlobe(), 'mousemove', target_.mouseMinder_.mouseMoveEventCallback);		
 		google.earth.addEventListener(target_.ge_.getWindow(), 'mouseup', target_.mouseMinder_.mouseUpEventCallback);
-        
-		// FIXME First pass at walking animation
-		/*
-		google.earth.addEventListener(target_.ge_.getGlobe(), 'click', function(event) {
-			if (event.getButton() != 0) return;
-			//var x = event.getClientX();
-			//var y = event.getClientY();
-			//alert();
-			var hitTestResult = target_.ge_.getView().hitTest(event.getClientX(), target_.ge_.UNITS_PIXELS, event.getClientY(), target_.ge_.UNITS_INSET_PIXELS, target_.ge_.HIT_TEST_GLOBE);
-			if (hitTestResult) {
-				// Get a LatLon for the click location
-				var clickLocation = new ktree.earth.LatLon(hitTestResult.getLatitude(), hitTestResult.getLongitude());
-				ktree.debug.logInfo("Got a click: (" + hitTestResult.getLatitude() + "     ,     " + hitTestResult.getLongitude() + ")");
-
-				// Get a LatLon for Sam's location
-				var samCoords = target_.ktxCache_.coordinatesForPlacemark("Sam");
-				var samLocation = new ktree.earth.LatLon(samCoords.get(target_.LAT_KEY), samCoords.get(target_.LON_KEY));
-				ktree.debug.logInfo("Sam's location: (" + samLocation._lat + "     ,     " + samLocation._lon + ")");
-				var distance = samLocation.rhumbDistanceTo(clickLocation);
-				ktree.debug.logInfo("Distance to click: " + distance);
-				
-				// Send an animation call to move Sam towards the click
-				target_.moveSamToClick(samLocation, clickLocation);
-			}
-		});
-		*/
 	};
 
 	/**
@@ -210,45 +182,7 @@ ktree.GoogleEarth.prototype.moveSamToClick = function(samLocation, clickLocation
 	geom.setLatLng(moveLocation._lat, moveLocation._lon);
 	this.ktxCache_.updateCoordinatesForPlacemark("Sam", moveLocation._lat, moveLocation._lon);
 }
-	/*	
-		event.preventDefault();
-		
-		// FIXME (clean up and move to a function)
-		
-		// Get Sam's lat and lon
-		var samCoords = target.ktxCache_.coordinatesForPlacemark("Sam");
-		var samLat = samCoords.get(target.LAT_KEY);
-		var samLon = samCoords.get(target.LON_KEY);
-		var samLatLon = new ktree.earth.LatLon(parseFloat(samLat), parseFloat(samLon));
-		
-		// Get the lat and lon of the clicked object (this is much more accurate than calculating coordinates from
-		// the screen (X,Y) of the click)
-		var clickCoords = target.ktxCache_.coordinatesForPlacemark(kmlObject.getName());
-		var clickLat = clickCoords.get(target.LAT_KEY);
-		var clickLon = clickCoords.get(target.LON_KEY);
-		var clickLatLon = new ktree.earth.LatLon(parseFloat(clickLat), parseFloat(clickLon));
-			
-		// Calculate the distance between them (in km)
-		var distance = samLatLon.distanceTo(clickLatLon);
-		ktree.debug.logInfo("Selected feature is <" + distance + "> km from the player.")
-		
-		// If it's an interact action at a great distance...
-		var result;
-		if (target.getCurrentVerb() == "interact" && distance > 0.055) {
-			var result = "<p>That's too far away for Sam to inspect. Try getting closer.</p>"
-		}
-		
-		else {
-			var result = target.eventManager_.handleEvent(kmlObject.getName(), target.getCurrentVerb());
-		}
-		
-		var balloon = target.ge_.createHtmlStringBalloon('');
-		balloon.setContentString(result);
-		balloon.setFeature(kmlObject);
-		target.ge_.setBalloon(balloon);		
-	});
-}
-*/
+
 
 /**
 *	Installs a KTX cache for the World. Should only be called by the KmlManager.

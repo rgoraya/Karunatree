@@ -44,13 +44,11 @@ ktree.Core = function() {
 
 	this.world_ = new ktree.earth.Earth();
 	
-	// FIX: KmlManager should not know about the internal model
 	this.kmlManager_ = new ktree.kml.KmlManager(this.world_.getModel());
 	
 	this.soundscape_ = new ktree.Soundscape();
 	
 	this.toolbar_ = new ktree.ui.Toolbar();
-	//this.engine_ = new ktree.engine.Sequoia(this.world_.getModel(), this.kmlManager_, this.toolbar_);
 	
 	this.initializeSplitPaneViewport();
 }

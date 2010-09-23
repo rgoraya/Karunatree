@@ -24,7 +24,6 @@ goog.require('goog.ds.XmlDataSource');
 *	extracts from remote KTX (.xml) files. Caching allows the Earth view to refresh appropriately when
 *	the user navigates between scenes without repeatedly reloading the same data sources from the server.
 *	
-*	Last version 02.26.10
 *
 *	@version 0.2
 *	@author Derek Lyons
