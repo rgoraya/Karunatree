@@ -1,24 +1,23 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Derek Lyons, Raminder Goraya, & Jason Lu
+
 ActionController::Routing::Routes.draw do |map|
 
-  map.connect 'seedlings/guided_creation', :controller =>'seedlings', :action => 'guided_creation_new'   
   map.resources :seedlings, :collection => {:auto_complete_for_seedling_title => :get},
                             :member => {  :project => :get,
                                           :audio_message => :get },
-                            :has_many => :comments 
-                         
-  
-
+                            :has_many => :comments
+  map.connect 'seedlings/guided_creation', :controller =>'seedlings', :action => 'guided_creation_new'   
+                            
   map.resource :user_session
   map.login "login", :controller => "user_sessions", :action => "new"
   map.logout "logout", :controller => "user_sessions", :action => "destroy"
   
-  # I think omitting this helps to make the routing less complex
-  #map.resource :account, :controller => "users"
-  
   map.resources :users, :member => {  :home => :get,
                                       :avatar => :get },
                         :collection => { :test_mail => :get }
-  
   map.signup "signup", :controller => "users",  :action => "new"
   
   map.resources :characters, :collection => { :add_to_inventory => :put, :bind_behavior => :put }

@@ -1,3 +1,8 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Derek Lyons
+
 class Behavior < ActiveRecord::Base
   belongs_to :feature
   has_many :behavior_bindings, :dependent => :destroy
@@ -9,4 +14,5 @@ class Behavior < ActiveRecord::Base
   def to_param
     locator
   end
+  
 end

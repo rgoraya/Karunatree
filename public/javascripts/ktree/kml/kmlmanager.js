@@ -1,3 +1,11 @@
+/**
+*   Karunatree
+*   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+*   
+*   Author: Derek Lyons
+*
+**/
+
 goog.provide('ktree.kml.KmlManager');
 
 goog.require('ktree.debug');
@@ -23,8 +31,6 @@ goog.require('goog.async.ConditionalDelay');
 *	Note that while the KmlManager class knows how to parse KTX commands out of KML, it does not know how to do anything
 *	with those commands other than cache them. See ktree.kml.KtxCache for details on how KTX commands are eventually
 *	communicated to the World.
-*
-*	Last version update: 02.26.10
 *
 *	@see {ktree.kml.KtxCache}
 *

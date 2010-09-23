@@ -1,3 +1,8 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Authors: Derek Lyons & Mike Chai
+
 class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => [:edit, :update]
@@ -17,7 +22,6 @@ class UsersController < ApplicationController
   end
   
   def show
-    # @user = User.find(params[:id])
     # Note that we find by username here to be consistent with the way User models generate URLs
     # (see User::to_param)
     @user = User.find_by_username(params[:id])
@@ -28,7 +32,7 @@ class UsersController < ApplicationController
   end
   
   def update
-    @user = @current_user # makes our views "cleaner" and more consistent
+    @user = @current_user # makes our views cleaner and more consistent
     if @user.update_attributes(params[:user])
       flash[:notice] = "Account updated!"
       redirect_to user_path(@user)
@@ -44,9 +48,4 @@ class UsersController < ApplicationController
               :disposition => 'inline'
   end
   
-  def test_mail
-    @user = User.find_by_username("derek")
-    SpeedyDelivery.deliver_test_mail(@user)
-    render "Done"
-  end
 end

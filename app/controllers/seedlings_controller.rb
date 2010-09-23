@@ -1,3 +1,8 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Authors: Derek Lyons, Raminder Goraya, & Jason Lu
+
 class SeedlingsController < ApplicationController
   auto_complete_for :seedling, :title
   auto_complete_for :tag, :name
@@ -33,7 +38,6 @@ class SeedlingsController < ApplicationController
     @seedling = Seedling.new
   end
 
-  
   def create
     @seedling = Seedling.new(params[:seedling])
     if @seedling.save
@@ -82,10 +86,10 @@ class SeedlingsController < ApplicationController
   def audio_message
     @seedling = Seedling.find(params[:id])
     send_file "/Users/derek/code/kt/public/data/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/'+@seedling.id.to_s()+'-audio-message.mp3',
-    #send_file REGISTRY[:data_dir]+"/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/'+@seedling.id.to_s()+'-audio-message.mp3',
               :type => 'audio/mp3',
               :disposition => 'inline'
   end
+  
   def guided_creation_new  
     @seedling = Seedling.new
     respond_to do |format|
@@ -99,7 +103,5 @@ class SeedlingsController < ApplicationController
     end
   end
   
-
-
 end
 

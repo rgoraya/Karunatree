@@ -1,3 +1,8 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Derek Lyons
+
 class Scene < ActiveRecord::Base
   
   # Constants
@@ -5,7 +10,6 @@ class Scene < ActiveRecord::Base
   KTX_EXTENSION = '.xml'
   
   FIRST_SCENE = 'Dreams'
-  
   
   def path_to_kml
     filename = self.name.downcase
@@ -19,7 +23,6 @@ class Scene < ActiveRecord::Base
     return self.name + "-" + self.subscene.to_s
   end
     
-  
   def has_back
     if (self.prev_scene_name) 
       return true;

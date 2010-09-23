@@ -1,3 +1,8 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Derek Lyons
+
 class Feature < ActiveRecord::Base
   has_one :behavior, :dependent => :nullify
   has_and_belongs_to_many :characters

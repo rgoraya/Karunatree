@@ -1,12 +1,18 @@
+/**
+*   Karunatree
+*   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+*   
+*   Author: Derek Lyons
+*
+**/
+
 goog.provide('ktree.kml.constants');
 
 /**
 *	@fileoverview
 *	Defines constants used in the ktree.kml package, including labels for KarunaTree's 
 *	KML namespace extension KTX.
-*
-*	Last version update: 02.26.10
-*
+**
 *	@version 0.3
 *	@author Derek Lyons
 */

@@ -1,3 +1,8 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Derek Lyons
+
 module PlayHelper
   
   def story_nav_back
@@ -37,6 +42,4 @@ module PlayHelper
             ' alt="' + first_char + '" align="left"/>' + title
   end
     
-    
-  
 end

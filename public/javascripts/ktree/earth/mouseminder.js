@@ -1,5 +1,12 @@
-goog.provide('ktree.earth.MouseMinder');
+/**
+*   Karunatree
+*   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+*   
+*   Author: Derek Lyons
+*
+**/
 
+goog.provide('ktree.earth.MouseMinder');
 
 /**
 *	@constructor

@@ -1,15 +1,19 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Derek Lyons
+
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base    
 
-
   include ApplicationHelper
-  helper :all # include all helpers, all the time
+  helper :all
   
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
-  # persistence methods that help keep the user's session alive or to check if they're still logged in
+  # Persistence methods that help keep the user's session alive or to check if they're still logged in
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user
 
@@ -51,6 +55,4 @@ class ApplicationController < ActionController::Base
       session[:return_to] = nil
     end
 
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
 end

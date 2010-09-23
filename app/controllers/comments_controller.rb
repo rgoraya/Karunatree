@@ -1,3 +1,8 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Jason Lu
+
 class CommentsController < ApplicationController
   
   def index 
@@ -23,8 +28,6 @@ class CommentsController < ApplicationController
         format.html { redirect_to seedling_path(@comment.seedling_id)}
         format.js
       end
-      #redirect_to seedling_comment_url(@seedling, @comment)
-      #redirect_to seedling_url
     else
       render :action => "new"
     end
@@ -40,7 +43,6 @@ class CommentsController < ApplicationController
       format.xml {head :ok}
     end
   end
-  
   
 end
 

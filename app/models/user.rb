@@ -1,3 +1,8 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Derek Lyons & Mike Chai
+
 require 'digest/sha1'
 class User < ActiveRecord::Base
   

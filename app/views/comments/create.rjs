@@ -1,2 +1,6 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Jason Lu
+
 page.insert_html :bottom, :comment, :partial => 'comment', :object => @comment
-#page.replace_html :comment, :partial => 'comments', :object => @comment

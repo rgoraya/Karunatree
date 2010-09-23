@@ -1,7 +1,11 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Derek Lyons
+
 class CharactersController < ApplicationController
   
-  # TODO! Fix this before deployment!!!
-  # This is to get the save method to work
+  # Todo: The :except should be removed before deploying the story system to a production server
   protect_from_forgery :except => [:add_to_inventory, :bind_behavior, :update]
   
   # Todo: This is a fairly inelegant approach to accomplishing this.
@@ -75,4 +79,5 @@ class CharactersController < ApplicationController
     flash[:notice] = "Successfully destroyed character."
     redirect_to characters_url
   end
+  
 end

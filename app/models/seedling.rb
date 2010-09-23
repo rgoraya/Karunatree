@@ -1,3 +1,7 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Derek Lyons & Jason Lu
 
 class Seedling < ActiveRecord::Base
   
@@ -24,7 +28,6 @@ class Seedling < ActiveRecord::Base
   has_attached_file :audio_message,
                     :path => ":rails_root/public/system/:class/:id-:seedling_slug/:id-audio-message.:extension",
                     :url => "/system/:class/:id-:seedling_slug/:id-audio-message.:extension"
-  #:url => "/:class/:seedling_slug/audio_message"
   
   composed_of :location,
     :class_name => "Location",
@@ -37,7 +40,6 @@ class Seedling < ActiveRecord::Base
   
   # Uncomment this function to update Seedlings using a rake task,
   # e.g. rake paperclip:refresh
-  #
   #def readonly?
   #  return false
   #end
@@ -82,6 +84,7 @@ class Seedling < ActiveRecord::Base
     end
     return friendly_ids
   end
+  
   def self.get_friendly_id(seedling) 
     return seedling.friendly_id
   end
@@ -93,6 +96,7 @@ class Seedling < ActiveRecord::Base
     end
     return urls
   end
+  
   def self.get_single_thumb(seedling)
     return seedling.project.url(:thumbnail)
   end
@@ -104,7 +108,6 @@ class Seedling < ActiveRecord::Base
     end
     return urls
   end
-  
   
   def like
     self.like += 1
@@ -141,7 +144,7 @@ class Seedling < ActiveRecord::Base
   end
   
   
-  #private methods
+  # Private Methods
   private
   
   def assign_tags
@@ -151,6 +154,9 @@ class Seedling < ActiveRecord::Base
       end
     end
   end
+  
+  
+  # Validations
   
   # Max and min lengths for all fields    
   TITLE_MIN_LENGTH = 1
@@ -177,7 +183,6 @@ class Seedling < ActiveRecord::Base
                       :greater_than_or_equal_to => -1000,
                       :less_than_or_equal_to => 10000000,
                       :message => "must must be a number between -1000 and 10000000."
-  
   
   # Text box sizes for display of views 
   USER_SIZE = 5   

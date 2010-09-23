@@ -1,14 +1,15 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Derek Lyons
+
 class BehaviorsController < ApplicationController
   
-  # GET /behaviors
   def index
     @behaviors = Behavior.all
   end
   
-  # GET /behaviors/1
-  # GET /behaviors/1.json
   def show
-    #@behavior = Behavior.find(params[:id])
     @behavior = Behavior.find_by_locator(params[:id])
     
     respond_to do |format|
@@ -32,12 +33,10 @@ class BehaviorsController < ApplicationController
   end
   
   def edit
-    #@behavior = Behavior.find(params[:id])
     @behavior = Behavior.find_by_locator(params[:id])
   end
   
   def update
-    #@behavior = Behavior.find(params[:id])
     @behavior = Behavior.find_by_locator(params[:id])
     if @behavior.update_attributes(params[:behavior])
       flash[:notice] = "Successfully updated behavior."
@@ -48,10 +47,10 @@ class BehaviorsController < ApplicationController
   end
   
   def destroy
-    #@behavior = Behavior.find(params[:id])
     @behavior = Behavior.find_by_locator(params[:id])
     @behavior.destroy
     flash[:notice] = "Successfully destroyed behavior."
     redirect_to behaviors_url
   end
+  
 end

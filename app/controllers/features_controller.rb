@@ -1,14 +1,15 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Derek Lyons
+
 class FeaturesController < ApplicationController
       
-  # GET /features
   def index
     @features = Feature.all
   end
   
-  # GET /features/locator
-  # GET /features/locator.json
   def show
-    #@feature = Feature.find(params[:id])
     @feature = Feature.find_by_locator(params[:id])
     
     respond_to do |format|
@@ -28,8 +29,6 @@ class FeaturesController < ApplicationController
     end
   end
   
-  # GET /features/new
-  # Supporting GET /features/new.json could be cool in the future...
   def new
     @feature = Feature.new
   end
@@ -46,16 +45,13 @@ class FeaturesController < ApplicationController
     end
   end
   
-  # GET /features/locator/edit
   def edit
-    #@feature = Feature.find(params[:id])
     @feature = Feature.find_by_locator(params[:id])
   end
   
   # PUT /features/locator
   # Supporting PUT /features/locator.xml could be cool in the future...
   def update
-    #@feature = Feature.find(params[:id])
     @feature = Feature.find_by_locator(params[:id])
     if @feature.update_attributes(params[:feature])
       flash[:notice] = "Successfully updated feature."
@@ -65,9 +61,7 @@ class FeaturesController < ApplicationController
     end
   end
   
-  # DELETE /features/locator
   def destroy
-    #@feature = Feature.find(params[:id])
     @feature = Feature.find_by_locator(params[:id])
     @feature.destroy
     flash[:notice] = "Successfully destroyed feature."

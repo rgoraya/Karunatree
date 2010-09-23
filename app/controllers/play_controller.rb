@@ -1,8 +1,12 @@
+#   Karunatree
+#   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+#   
+#   Author: Derek Lyons
+
 class PlayController < ApplicationController
   include ApplicationHelper
   
-  # TODO! Fix this before deployment!!!
-  # This is to get the save method to work
+  # Todo: The :except should be removed before deploying the story system to a production server
   protect_from_forgery :only => [:create, :update, :destroy]
   
   before_filter :require_user
@@ -15,13 +19,7 @@ class PlayController < ApplicationController
     @scene = Scene.find_by_name_and_subscene(@user.character.scene_name, @user.character.subscene)
   end
   
-  #def earth_ready
-  #  @character = User.get_current_user(session).character
-  #  @scene = Scene.find_by_scene_number(@character.current_scene)
-  #  render :update_view
-  #end
-  
-  # Should be moved to a Scene controller
+  # Should eventually be moved to a Scene controller
   def next
     @character = current_user.character    
     @last_scene = Scene.find_by_name_and_subscene(@character.scene_name, @character.subscene)
@@ -32,7 +30,7 @@ class PlayController < ApplicationController
     render :update_view
   end
   
-  # Should be moved to a Scene controller
+  # Should eventually be moved to a Scene controller
   def back
     @character = current_user.character
     @last_scene = Scene.find_by_name_and_subscene(@character.scene_name, @character.subscene)
@@ -43,7 +41,7 @@ class PlayController < ApplicationController
     render :update_view
   end
   
-  # Should be moved to a Scene controller
+  # Should eventually be moved to a Scene controller
   def request_scene
     if (request.put?)
       scene_name = request.headers["scene"]
@@ -62,8 +60,8 @@ class PlayController < ApplicationController
     end
   end
   
-  # TODO First pass at serializing KML state back to the database. Eventually
-  # this should probably live in a separate controller
+  # TODO First pass at serializing KML state back to the database. 
+  # Eventually this should probably live in a separate controller
   def save
     if (request.post?)
       @character = current_user.character
@@ -84,10 +82,6 @@ class PlayController < ApplicationController
     @character.subscene = @scene.subscene
     @character.save
     render :update_view
-  end
-  
-  def test
-    render :text => "And so our story continues, for the feature " + params[:obj]
   end
 
 end
