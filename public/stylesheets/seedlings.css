@@ -1098,3 +1098,31 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	background: -webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#ffffff));
 	background: -moz-linear-gradient(top,  #F0F0F0,  #ffffff);
 }
+
+.createnew {
+    display:block;
+	height:30px;
+	border: 1px solid #5C8A00;	
+	background: -webkit-gradient(linear, left top, left bottom, from(#D1E0B2), to(#669900));
+	background: -moz-linear-gradient(top,  #D1E0B2,  #669900);
+	-webkit-text-stroke: 1px transparent;
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	color:#3e779d;
+	font: bolder 16px "Lucida Grande", "Verdana", sans-serif;
+    padding-top:10px;
+	text-decoration: none;
+    /* Curved Borders */
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border-radius: 5px; 	
+}
+
+.createnew:hover {
+	color: #A3C266;
+	border: 1px solid #386B8D;
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	background: -webkit-gradient(linear, left top, left bottom, from(#9EBBCE), to(#3e779d));
+	background: -moz-linear-gradient(top,  #9EBBCE,  #3e779d);
+    text-decoration: none;
+}

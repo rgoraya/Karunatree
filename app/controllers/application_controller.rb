@@ -15,8 +15,13 @@ class ApplicationController < ActionController::Base
   
   # Persistence methods that help keep the user's session alive or to check if they're still logged in
   filter_parameter_logging :password, :password_confirmation
-  helper_method :current_user_session, :current_user
+  helper_method :current_user_session, :current_user, :grow?
 
+  protected
+    def grow?
+      false
+    end
+  
   private
     def current_user_session
       return @current_user_session if defined?(@current_user_session)

@@ -1,8 +1,3 @@
-//   Karunatree
-//   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
-//   
-//   Author: Derek Lyons, Raminder Goraya & Jason Lu
-
 - content_for(:include_custom_stylesheet) do
   = stylesheet_link_tag "seedlings"
 
@@ -102,29 +97,47 @@
             =image_tag "/images/system/icons/location.png", :size => "13x24"
           %div{:id => "lbladdress"} 
             =image_tag "../images/seedlings/load.gif", :size => "20x20",:style=>"margin-left:130px;"
+
       // Block containing a table with Likes, Tweets and Friendly ids  
      
-      //%div{:id => "imggrid"}
+      // Like
       %div{:class => "paneldiv"}
         %div{:class => "iconimg"}
           = image_tag "/images/system/icons/heart.png", :size => "18x18"
-        %div{:class => "icondesc"}
-          =link_to boosts_description, ""
+        %div{:id => "likes", :class => "icondesc"}
+          Growth: 
+          = @seedling.likes
+          %br
+          Like it? Help it grow!
+          //if current user has clicked before, hide, else show
+          - if cookies[:seedling_id] == nil
+            - button_to_remote "Grow!", :url=> {:controller=>'seedlings',:action=>"like", :id=>@seedling.id}
+            //= cookies[:seedling_id]
+            //= @seedling.id
+            //= cookies
+      
+      //Transplant
       %div{:class => "paneldiv"}
         %div{:class => "iconimg"}
           = image_tag "/images/system/icons/transplant.png", :size => "18x18"
         %div{:class => "icondesc"}
           =link_to "Transplant", ""   
-      %div{:class => "paneldiv"}
-        %div{:class => "iconimg"}
-          = image_tag "/images/system/icons/twitter.png", :size => "18x18"
-        %div{:class => "icondesc"}
-          =link_to "Tweet", "http://twitter.com/home?status=#{@seedling.title} on @karunatree: #{@seedling.short_url}", :title => "Tweet"
-      %div{:class => "paneldiv"}
-        %div{:class => "iconimg"}
-          = image_tag "/images/system/icons/link.png", :size => "18x18"
-        %div{:class => "icondesc"}
-          http://ktre.es/00000
+      
+      -if(!@seedling.short_url.blank?)
+      
+        // Tweet
+        %div{:class => "paneldiv"}
+          %div{:class => "iconimg"}
+            = image_tag "/images/system/icons/twitter.png", :size => "18x18"
+          %div{:class => "icondesc"}
+            =link_to "Tweet", "http://twitter.com/home?status=#{@seedling.title} on @karunatree: #{@seedling.short_url}", :title => "Tweet"
+        
+        // Short URL
+        %div{:class => "paneldiv"}
+          %div{:class => "iconimg"}
+            = image_tag "/images/system/icons/link.png", :size => "18x18"
+          %div{:class => "icondesc"}
+            =link_to @seedling.short_url, @seedling.short_url
                                
       
       // Tags block
@@ -200,7 +213,7 @@
       //%br
       
   %div{:id => "footer"}
-    Copyright &copy; 2009-2010 Karunatree. #{link_to "Contact Us", contact_path}    
+    Copyright &copy; 2009-2011 Karunatree LLC. #{link_to "Contact Us", contact_path}    
 
 %br
 

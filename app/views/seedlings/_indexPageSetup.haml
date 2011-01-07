@@ -17,8 +17,12 @@
               %a{:id => "atmosphere", :class => "checked", :href => "javascript:getoggle('kml-atmosphere-check','atmosphere');", :onMouseOver =>"javascript:toggletext('Show/hide Atmosphere');", :onmouseout=>"javascript:toggletext('');"}
             %td{:style => "width:40px;"}
               %a{:id => "border", :class => "off", :href => "javascript:getoggle('kml-border-check','border');", :onMouseOver =>"javascript:toggletext('Show/hide Borders');", :onmouseout=>"javascript:toggletext('');"}
-            %td{:style => "vertical-align:bottom", :align => "right"}
+            %td{:style => "vertical-align:bottom", :align => "left"}
               %div{:id => "toggletext"}
+            %td{:style => "vertical-align:bottom; width:200px;", :align => "center"}
+              -if current_user
+                %a{:class => "createnew", :href => new_seedling_path}
+                  Create new seedling
               
       // A hidden div containing checkboxes to toggle Google earth layers visibility          
       %div{:id => 'checkboxes-ui', :style => "visibility:collapse; height:0px"}
@@ -71,7 +75,7 @@
         %li
           %div{:id => "list_a_excl_collapsed", :class => "headflat", :style => "display:block" }
             %a{:href => "javascript:swap('list_a_excl',groupA)"} 
-              Fly to any destination on the globe 
+              Fly to a destination on the globe 
               %div{:style=>"float:right"} &darr;
           %div{:id =>"list_a_excl_expanded", :style => "display:none"}
             %div{:class => "headflat"}
@@ -95,22 +99,22 @@
             %div{:class => "headflat", :style =>"min-height:20px;"}
               %a{:href => "javascript:swap('list_b_excl',groupA)"} 
                 Close Search 
-                %div{:style=>"float:right"} &uarr;
+                %div{:style=>"float:right; background-color:#fff;"} &uarr;
             %div{:class => "previewcontent"}
               %table{:class => "auto_complete"}
                 %tr     
                   %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:seedling, :title, {:id =>'txtsearch',:class => "searchtxt", :placeholder => "Start typing a Title..."})  
                                         
                   %td{:align => "right"}  
-                    %a{:id => "search", :Title => "Seach for the Seedlings", :href => "javascript:seedsearch()"}
+                    %a{:id => "search", :Title => "Search for the Seedlings", :href => "javascript:seedsearch()"}
                   
               
                 %tr  
                   %td{:align => "left"}= text_field_with_auto_complete_with_id_checking(:tag, :name, {:id =>'tagsearch',:class => "searchtxt", :placeholder => "Start typing a Tag..."})
                    
                   %td{:align => "right"}  
-                    %a{:id => "search", :Title => "Seach for the Seedlings", :href => "javascript:tagsearch()"}
+                    %a{:id => "search", :Title => "Search for the Seedlings", :href => "javascript:tagsearch()"}
                   
             
   %div{:id => "footer"}
-    Copyright &copy; 2009-2010 Karunatree. #{link_to "Contact Us", contact_path}    
+    Copyright &copy; 2009-2011 Karunatree LLC. #{link_to "Contact Us", contact_path}    

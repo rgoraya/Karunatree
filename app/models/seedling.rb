@@ -110,8 +110,13 @@ class Seedling < ActiveRecord::Base
   end
   
   def like
-    self.like += 1
-    self.save
+    #self.like += 1
+    #self.save
+    #likes = self.likes
+    #write_attribute(:likes, likes + 1)
+    logger.debug "here"
+    self.increment!(:likes)
+    #self.save
   end
   
   def tag_names

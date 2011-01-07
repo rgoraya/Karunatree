@@ -34,8 +34,22 @@ class SeedlingsController < ApplicationController
       }
     end
   end
+  
+  def like
+    @seedling = Seedling.find(params[:id], :readonly => false)
+    @seedling.increment!(:likes)
+    #cookies[:seedling_id] = {:value => @seedling.id }
+    cookies[:seedling_id].add(@seedling.id)
+  end
+  
   def new
-    @seedling = Seedling.new
+    @user_session = UserSession.find(:all)
+    if (@user_session == nil) 
+      flash[:notice] = "Please log in first."
+      redirect_back_or_default login_url
+    else 
+      @seedling = Seedling.new
+    end
   end
 
   def create
@@ -79,8 +93,13 @@ class SeedlingsController < ApplicationController
   def project
     @seedling = Seedling.find(params[:id])
     style = params[:style] ? params[:style] : 'original'
-    send_file REGISTRY[:data_dir]+"/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/project/'+@seedling.id.to_s()+'-'+style+'.jpg',
-              :disposition => 'inline'
+    if @seedling.project_content_type == "image/png"
+      send_file REGISTRY[:data_dir]+"/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/project/'+@seedling.id.to_s()+'-'+style+".png", :disposition => 'inline'
+    elsif @seedling.project_content_type == "image/jpeg"
+      send_file REGISTRY[:data_dir]+"/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/project/'+@seedling.id.to_s()+'-'+style+".jpg", :disposition => 'inline'
+    elsif @seedling.project_content_type == "image/gif"
+      send_file REGISTRY[:data_dir]+"/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/project/'+@seedling.id.to_s()+'-'+style+".gif", :disposition => 'inline'
+    end
   end
   
   def audio_message
