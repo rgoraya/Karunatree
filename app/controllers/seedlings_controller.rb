@@ -4,6 +4,7 @@
 #   Authors: Derek Lyons, Raminder Goraya, & Jason Lu
 
 class SeedlingsController < ApplicationController
+  before_filter :require_user, :only => [:new]
   auto_complete_for :seedling, :title
   auto_complete_for :tag, :name
   
@@ -43,13 +44,7 @@ class SeedlingsController < ApplicationController
   end
   
   def new
-    @user_session = UserSession.find(:all)
-    if (@user_session == nil) 
-      flash[:notice] = "Please log in first."
-      redirect_back_or_default login_url
-    else 
-      @seedling = Seedling.new
-    end
+  	@seedling = Seedling.new
   end
 
   def create
@@ -104,7 +99,7 @@ class SeedlingsController < ApplicationController
   
   def audio_message
     @seedling = Seedling.find(params[:id])
-    send_file "/Users/derek/code/kt/public/data/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/'+@seedling.id.to_s()+'-audio-message.mp3',
+    send_file REGISTRY[:data_dir]+"/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/'+@seedling.id.to_s()+'-audio-message.mp3',
               :type => 'audio/mp3',
               :disposition => 'inline'
   end
