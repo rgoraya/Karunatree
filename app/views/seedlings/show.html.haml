@@ -10,7 +10,7 @@
         $j(document).ready(function() {
           $j("#jplayer").jPlayer({
             ready: function() {
-              $j(this).jPlayer("setMedia", {mp3: "http://karunatree.com/#{@seedling.friendly_id}/audio_message"});
+              $j(this).jPlayer("setMedia", {mp3: "/seedlings/#{@seedling.friendly_id}/audio_message"});
             },
             swfPath: "/swf",
             supplied: "mp3"
@@ -87,7 +87,7 @@
                     %li #{@seedling.title}
         %div{:class => "clearall"}
         
-        // Description Block
+        // Written Artist's Statement Block
         %p
           =h @seedling.description
           
