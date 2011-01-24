@@ -10,7 +10,7 @@
         $j(document).ready(function() {
           $j("#jplayer").jPlayer({
             ready: function() {
-              $j(this).jPlayer("setMedia", {mp3: "/audio_message"});
+              $j(this).jPlayer("setMedia", {mp3: "http://karunatree.com/#{@seedling.friendly_id}/audio_message"});
             },
             swfPath: "/swf",
             supplied: "mp3"
@@ -87,11 +87,14 @@
                     %li #{@seedling.title}
         %div{:class => "clearall"}
         
-        // Editorial comments block
+        // Description Block
         %p
           =h @seedling.description
-        %div{:id => "imggrid", :class => "admindiv"}
-          %p Great job! Most people don't know that palm oil threatens elephant habitats.
+          
+        // Editorial Comments Block
+        - if(false)
+          %div{:id => "imggrid", :class => "admindiv"}
+            %p Great job! Most people don't know that palm oil threatens elephant habitats.
       %br
 
         // Comments block
