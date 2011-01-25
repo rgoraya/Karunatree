@@ -109,7 +109,7 @@ class SeedlingsController < ApplicationController
   def audio_message
     @seedling = Seedling.find(params[:id])
     send_file REGISTRY[:data_dir]+"/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/'+@seedling.id.to_s()+'-audio-message.mp3',
-              :type => 'audio/mp3',
+              :type => 'application/octet-stream', #Changed from type 'audio/mp3' to prevent Safari from displaying NaN for clip duration in jPlayer. See http://bit.ly/f0neWL
               :disposition => 'inline'
   end
   
