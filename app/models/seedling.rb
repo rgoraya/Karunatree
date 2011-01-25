@@ -41,7 +41,7 @@ class Seedling < ActiveRecord::Base
   # Uncomment this function to update Seedlings using a rake task,
   # e.g. rake paperclip:refresh
   #def readonly?
-  #  return false
+    #return false
   #end
   
   def linked_usernames
@@ -118,6 +118,7 @@ class Seedling < ActiveRecord::Base
     self.increment!(:likes)
     #self.save
   end
+
   
   def tag_names
     @tag_names || tags.map(&:name).join(' ')
@@ -147,8 +148,8 @@ class Seedling < ActiveRecord::Base
   def last_step?
     current_step == steps.last
   end
-  
-  
+
+ 
   # Private Methods
   private
   
@@ -160,6 +161,7 @@ class Seedling < ActiveRecord::Base
     end
   end
   
+
   
   # Validations
   
@@ -168,7 +170,7 @@ class Seedling < ActiveRecord::Base
   TITLE_MAX_LENGTH = 50
   TITLE_LENGTH_RANGE = TITLE_MIN_LENGTH..TITLE_MAX_LENGTH
   DESCRIPTION_MIN_LENGTH = 1
-  DESCRIPTION_MAX_LENGTH = 500
+  DESCRIPTION_MAX_LENGTH = 1000
   DESCRIPTION_LENGTH_RANGE = DESCRIPTION_MIN_LENGTH..DESCRIPTION_MAX_LENGTH
   
   

@@ -1,6 +1,8 @@
 - content_for(:include_custom_stylesheet) do
   = stylesheet_link_tag "seedlings"
 
+
+
 %body{:onload => "MapImg()"}
 
 - title "Seedling"
@@ -59,11 +61,11 @@
           - iterations.times do |i|
             %p
               %b #{@comments[i].author},
-              when:
-              = @comments[i].created_at
-              %br
               Says:
               = @comments[i].body
+              %br
+              when:
+              = @comments[i].created_at
           = render :partial => "comments/comment", :object => @seedling.comments
       %div{:id => "imggridclip", :class => "responses"}
         
@@ -108,9 +110,9 @@
           Growth: 
           = @seedling.likes
           %br
-          Like it? Help it grow!
+          //Like it? Help it grow!
           //if current user has clicked before, hide, else show
-          - if cookies[:seedling_id] == nil
+          - if cookies[:seedling_id]
             - button_to_remote "Grow!", :url=> {:controller=>'seedlings',:action=>"like", :id=>@seedling.id}
             //= cookies[:seedling_id]
             //= @seedling.id
@@ -123,15 +125,25 @@
         %div{:class => "icondesc"}
           =link_to "Transplant", ""   
       
-      -if(!@seedling.short_url.blank?)
+
       
-        // Tweet
-        %div{:class => "paneldiv"}
-          %div{:class => "iconimg"}
-            = image_tag "/images/system/icons/twitter.png", :size => "18x18"
-          %div{:class => "icondesc"}
-            =link_to "Tweet", "http://twitter.com/home?status=#{@seedling.title} on @karunatree: #{@seedling.short_url}", :title => "Tweet"
-        
+      // Tweet
+      %div{:class => "paneldiv"}
+        %div{:class => "iconimg"}
+          = image_tag "/images/system/icons/twitter.png", :size => "18x18"
+        %div{:class => "icondesc"}
+          =link_to "Tweet", "http://twitter.com/home?status=#{@seedling.title} on @karunatree: #{@seedling.short_url}", :title => "Tweet"
+
+
+      // Pageviews
+      %div{:class => "paneldiv"}
+        %div{:class => "iconimg"}
+          = image_tag "/images/system/icons/pageviews.png", :size => "18x18"
+        %div{:id => "showpageviews", :class => "icondesc"}
+          Pageviews:
+          = @seedling.views
+
+      -if(!@seedling.short_url.blank?)        
         // Short URL
         %div{:class => "paneldiv"}
           %div{:class => "iconimg"}
@@ -158,12 +170,12 @@
           %div{:id => "list_a_excl_collapsed", :class => "headreverse", :style => "display:block"}
             %a{:href => "javascript:swap('list_a_excl',groupA)"}
               View Geo Details
-              %div{:style=>"float:right;"} &darr;
+              %div{:class => "accord"} &darr;
           %div{:id =>"list_a_excl_expanded", :style => "display:none"}
             %div{:class => "headflat"}
               %a{:href => "javascript:swap('list_a_excl',groupA)"} 
                 Hide Details
-                %div{:style=>"float:right"} &uarr;
+                %div{:class => "accord"} &uarr;
             %div{:class=>"previewcontent"}  
               // The details table which switches open:        
               %table{:style=>"width:100%"}

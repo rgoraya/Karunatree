@@ -65,7 +65,7 @@
   
   var stepName = "step" + i;
   $("#" + stepName + "commands").append("<a href='#' id='" + stepName + "Next' class='next'>Next ></a>");
-  $("#SignupForm").validate().form()
+  /$("#SignupForm").validate().form()
   $("#" + stepName + "Next").bind("click", function(e){
   
   if (ValidateCurrentStep(i+1)) {

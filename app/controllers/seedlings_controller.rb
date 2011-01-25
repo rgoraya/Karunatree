@@ -39,8 +39,17 @@ class SeedlingsController < ApplicationController
   def like
     @seedling = Seedling.find(params[:id], :readonly => false)
     @seedling.increment!(:likes)
-    #cookies[:seedling_id] = {:value => @seedling.id }
-    cookies[:seedling_id].add(@seedling.id)
+    cookies[:seedling_id] = @seedling.id
+    #cookies[:seedling_id].add(@seedling.id)
+  end
+
+  def view
+    @seedling = Seedling.find(params[:id], :readonly => false)
+    #cookies[:seedling_id] = @seedling.id
+    #if cookies[:seedling_id] == ""
+    self.increment!(:views)
+    #flash[:notice] = "pageview"
+    #end  
   end
   
   def new

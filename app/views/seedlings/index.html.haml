@@ -20,38 +20,40 @@
 = render :partial => "tagSearch"
 = render :partial => "indexPageFunctions"
 
+// uncomment the following code to see an accordian for ALL seedlings
 
-%div{:id => "list_d_excl_collapsed", :style => "display:block"}
-  %a{:href => "javascript:swap('list_d_excl',groupA)"} Expand All seedlings
-%div{:id => "list_d_excl_expanded", :style => "display:none"}
-  %a{:href => "javascript:swap('list_d_excl',groupA)"} Close seedlings
-  %table{:style => "border:1px solid #669900; width:100%; cellpadding:20px;"}
-    %tr
-      %th User
-      %th Title
-      %th Description
-      %th Lat
-      %th Lon
-      %th Alt
-      %th Project
+//%div{:id => "list_d_excl_collapsed", :style => "display:block"}
+//  %a{:href => "javascript:swap('list_d_excl',groupA)"} Expand All seedlings
+//%div{:id => "list_d_excl_expanded", :style => "display:none"}
+//  %a{:href => "javascript:swap('list_d_excl',groupA)"} Close seedlings
+//  %table{:style => "border:1px solid #669900; width:100%; cellpadding:20px;"}
+//    %tr
+//      %th User
+//      %th Title
+//      %th Description
+//      %th Lat
+//      %th Lon
+//      %th Alt
+//      %th Project
   
-    - for seedling in @seedlings
-      %tr
-        %td= h seedling.user_ids
-        %td= h seedling.title
-        %td= h seedling.description
-        %td= h seedling.lat
-        %td= h seedling.lon
-        %td= h seedling.alt
-        %td= image_tag seedling.project.url(:thumbnail)
-        %td= link_to 'Show', seedling
-        /%td= link_to 'Edit', edit_seedling_path(seedling)
-        /%td= link_to 'Destroy', seedling, :confirm => 'Are you sure?', :method => :delete 
+//    - for seedling in @seedlings
+//      %tr
+//        %td= h seedling.user_ids
+//        %td= h seedling.title
+//        %td= h seedling.description
+//        %td= h seedling.lat
+//        %td= h seedling.lon
+//        %td= h seedling.alt
+//        %td= image_tag seedling.project.url(:thumbnail)
+//        %td= link_to 'Show', seedling
+//        %td= link_to 'Edit', edit_seedling_path(seedling)
+//        %td= link_to 'Destroy', seedling, :confirm => 'Are you sure?', :method => :delete 
 
 
+// Uncomment this code to see a link to New seedling
    
--if current_user
-  %p= link_to "New Seedling", new_seedling_path
+//-if current_user
+//  %p= link_to "New Seedling", new_seedling_path
   
 //#{@seedlings.length}
 //#{@seedlings[0].title}

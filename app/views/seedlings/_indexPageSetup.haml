@@ -22,7 +22,8 @@
             %td{:style => "vertical-align:bottom; width:200px;", :align => "center"}
               -if current_user
                 %a{:class => "createnew", :href => new_seedling_path}
-                  Create new seedling
+                  Create new Seedling
+                  
               
       // A hidden div containing checkboxes to toggle Google earth layers visibility          
       %div{:id => 'checkboxes-ui', :style => "visibility:collapse; height:0px"}
@@ -75,13 +76,13 @@
         %li
           %div{:id => "list_a_excl_collapsed", :class => "headflat", :style => "display:block" }
             %a{:href => "javascript:swap('list_a_excl',groupA)"} 
-              Fly to a destination on the globe 
-              %div{:style=>"float:right"} &darr;
+              Fly to a known destination 
+              %div{:class => "accord"} &darr;
           %div{:id =>"list_a_excl_expanded", :style => "display:none"}
             %div{:class => "headflat"}
               %a{:href => "javascript:swap('list_a_excl',groupA)"} 
                 Close Fly to Controls 
-                %div{:style=>"float:right"} &uarr;
+                %div{:class => "accord"} &uarr;
             %div{:class => "contentflat"}         
               %table 
                 %tr
@@ -94,12 +95,12 @@
           %div{:id => "list_b_excl_collapsed", :class => "headreverse", :style => "display:block"}
             %a{:href => "javascript:swap('list_b_excl',groupA)"} 
               Search for Seedlings
-              %div{:style=>"float:right"} &darr;
+              %div{:class => "accord"} &darr;
           %div{:id => "list_b_excl_expanded", :style => "display:none"}
             %div{:class => "headflat", :style =>"min-height:20px;"}
               %a{:href => "javascript:swap('list_b_excl',groupA)"} 
                 Close Search 
-                %div{:style=>"float:right; background-color:#fff;"} &uarr;
+                %div{:class => "accord"} &uarr;
             %div{:class => "previewcontent"}
               %table{:class => "auto_complete"}
                 %tr     
@@ -115,6 +116,6 @@
                   %td{:align => "right"}  
                     %a{:id => "search", :Title => "Search for the Seedlings", :href => "javascript:tagsearch()"}
                   
-            
+              
   %div{:id => "footer"}
     Copyright &copy; 2009-2011 Karunatree LLC. #{link_to "Contact Us", contact_path}    
