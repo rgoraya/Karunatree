@@ -3,6 +3,9 @@
 //   
 //   Author: Jason Lu
 
+- content_for(:include_custom_stylesheet) do
+  = stylesheet_link_tag "seedlings"
+
 %tr{:class => "three-column-description"}
   - comments = @seedling.comments
   - if comments.length > 0

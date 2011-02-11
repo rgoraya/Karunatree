@@ -109,17 +109,6 @@ class Seedling < ActiveRecord::Base
     return urls
   end
   
-  def like
-    #self.like += 1
-    #self.save
-    #likes = self.likes
-    #write_attribute(:likes, likes + 1)
-    logger.debug "here"
-    self.increment!(:likes)
-    #self.save
-  end
-
-  
   def tag_names
     @tag_names || tags.map(&:name).join(' ')
   end
@@ -149,7 +138,6 @@ class Seedling < ActiveRecord::Base
     current_step == steps.last
   end
 
- 
   # Private Methods
   private
   
@@ -161,7 +149,6 @@ class Seedling < ActiveRecord::Base
     end
   end
   
-
   
   # Validations
   

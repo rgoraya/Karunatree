@@ -699,7 +699,7 @@ background-repeat: no-repeat;
 background-position:center;
 }
 
-#more-link
+.more-link
 {
 border:3px solid #ffffff;	
 margin:2px;
@@ -707,7 +707,7 @@ max-width:150px;
 max-height:100px;
 }
 
-#more-link:hover 
+.more-link:hover 
 {
 border:3px solid #CCCCCC;	
 }
@@ -1148,3 +1148,64 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	background: -moz-linear-gradient(top,  #DFE9C9,  #669900);
     text-decoration: none;
 }
+
+.commenttxt {
+	width: 580px;
+	margin:5px 0px 5px 0px;
+	height: 100px;
+	border: 2px solid #cccccc;
+	padding: 5px;
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	color:#40413f;
+	font: normal 14px/20px "Lucida Grande", "Verdana", sans-serif;
+	outline: none; 
+    /* Curved Borders */
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;   
+	resize:none;
+}
+
+.commenttxt:hover {
+	border: 2px solid #7AAAC2; 
+}
+
+.commenttxt:focus {
+	border: 2px solid #7AAAC2;
+	background: -webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#ffffff));
+	background: -moz-linear-gradient(top,  #F0F0F0,  #ffffff);
+}
+
+.nametxt{
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	color: #40413f;
+	margin:5px 0px 5px 0px;
+	border: 2px solid #cccccc;  
+	padding:3px 2px 3px 2px;
+	width:100px;
+	height:15px;
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	color:#40413f;
+	font: bold 13px "Lucida Grande", "Verdana", sans-serif;
+	outline: none; 
+    /* Curved Borders */
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border-radius: 5px; 
+}
+
+.nametxt:hover{
+	border: 2px solid #7AAAC2;   
+}
+
+.nametxt:focus {
+	border: 2px solid #7AAAC2;
+	background: -webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#ffffff));
+	background: -moz-linear-gradient(top,  #F0F0F0,  #ffffff);
+}
+

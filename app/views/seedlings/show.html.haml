@@ -1,5 +1,7 @@
 - content_for(:include_custom_stylesheet) do
   = stylesheet_link_tag "seedlings", "jplayer/jplayer.blue.monday"
+
+= javascript_include_tag :defaults
   
 - content_for(:include_custom_javascript_head) do
   -if(!@seedling.audio_message_file_name.nil?)
@@ -16,7 +18,6 @@
             supplied: "mp3"
           });
         });
-
 
 
 
@@ -124,13 +125,14 @@
           
           %p
             = f.label "Your name:"
-            = f.text_field :author
+            %br
+            = f.text_field :author, :class => "nametxt" 
           %p
             = f.label "Your response:"
             %br
-            = f.text_area :body, :rows => 6, :cols => 70
+            = f.text_area :body, :rows => 6, :cols => 70, :class => "commenttxt" 
           %p
-            = f.submit "Submit"      
+            = f.submit "Submit"     
       %br  
   
   // T H E      S E C O N D       C O L U M N  ( C E N T E R )       
@@ -154,17 +156,11 @@
       %div{:class => "paneldiv"}
         %div{:class => "iconimg"}
           = image_tag "/images/system/icons/heart.png", :size => "18x18"
-        %div{:id => "likes", :class => "icondesc"}
-          Growth: 
-          = @seedling.likes
-          %br
-          //Like it? Help it grow!
-          //if current user has clicked before, hide, else show
-          - if cookies[:seedling_id]
-            - button_to_remote "Grow!", :url=> {:controller=>'seedlings',:action=>"like", :id=>@seedling.id}
-            //= cookies[:seedling_id]
-            //= @seedling.id
-            //= cookies
+        %div{:id => "boosts", :class => "icondesc"}
+          = render :partial => 'boosts'
+     
+        %div
+
       
       //Transplant
       %div{:class => "paneldiv"}
@@ -262,7 +258,7 @@
       - if(has_related_works)
         %div{:class => "previewhead", :style =>"min-height:20px;"}
           = more_by_description 
-        %div{:class => "previewcontent"}     
+        %div{:class => "previewcontent", :style =>"text-align:center;"}     
           = more_by_links
       // Clippings block      
       //%div{:id => "imggridclip", :class => "clip"}      

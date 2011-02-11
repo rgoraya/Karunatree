@@ -1,0 +1,22 @@
+//   Karunatree
+//   Copyright 2009-2010 Derek Lyons & Karunatree. All Rights Reserved.
+//   
+//   Author: Raminder Goraya & Jason Lu
+
+- content_for(:include_custom_stylesheet) do
+  = stylesheet_link_tag "seedlings"
+
+= javascript_include_tag :defaults
+
+
+Boosts: 
+= @seedling.likes
+
+- if !cookies['liked' + @seedling.id.to_s()] # => @seedling.id
+  %div{:class => "accord", :style=> "padding:1px"} 
+    
+    = link_to_remote image_tag('/images/system/icons/like.png', :size => "16x16", :title => "boost this seedling") , {:url=> {:model=>'seedling',:action=>"like", :id=>@seedling.id}, :update => 'boosts'}
+- else
+  %div{:class => "accord", :style=> "padding:1px"} 
+    
+    = link_to_remote image_tag('/images/system/icons/unlike.png', :size => "16x16", :title => "stop boosting this seedling") , {:url=> {:model=>'seedling',:action=>"unlike", :id=>@seedling.id}, :update => 'boosts'}   

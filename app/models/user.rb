@@ -19,6 +19,11 @@ class User < ActiveRecord::Base
                     :path => REGISTRY[:data_dir]+"/:class/:username/avatar/:id-:style.:extension",
                     :url => "/:class/:username/avatar?style=:style",
                     :default_url => "/images/system/default-avatar/default-:style.jpg"
+
+  has_many :likes
+  def already_likes?(current_user, seedling_id)
+    :likes.find(:first, :conditions => ['user_id = ? AND seedling_id = ?', current_user, seedling_id] ).nil?
+  end
   
   # By overriding this method, we specify that when behaviors are
   # converted to corresponding URLs, the locator attribute should
