@@ -19,7 +19,20 @@
   document.getElementById('txtsearch').value =  "";
 
   }
-  
+
+  function seedsearchall()
+  {
+  tosearch = "";
+  // Remove the originally loaded seedlings
+  for (var i = 0; i < placemark.length; i++)
+  { ge.getFeatures().removeChild(placemark[i]); }
+    
+  // Plant seeds according to search criteria
+  plantseeds(tosearch);
+
+  // clear the search textbox
+  document.getElementById('txtsearch').value =  "";
+  }  
   
   //   P L A N T I N G       S E E D S       O N       G O O G L E        E A R T H 
   function plantseeds(seedtitle)

@@ -4,3 +4,4 @@
 #   Author: Jason Lu
 
 page.insert_html :bottom, :comment, :partial => 'comment', :object => @comment
+page[:new_comment].reset

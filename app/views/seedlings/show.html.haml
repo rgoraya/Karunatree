@@ -101,7 +101,8 @@
       %br
 
         // Comments block
-      %div{:id => "imggridmore", :class => "responses"}
+      %div{:id => "imggrid", :class => "responses"}
+
         %h2{:class => "bluecolor"} Responses
         %div{:class => "clearleft"}
         %div{:id => "comment"}
@@ -109,30 +110,29 @@
           - iterations = @comments.length - 1
           - iterations.times do |i|
             %p
-              %b #{@comments[i].author},
-              Says:
-              = @comments[i].body
-              %br
-              when:
-              = @comments[i].created_at
+              %div{:class => "commentor"}
+                %b #{@comments[i].author}
+                says:
+              %div{:class => "commentbody"}
+                = @comments[i].body
+              %div{:class => "commentwhen"}
+                = @comments[i].created_at
           = render :partial => "comments/comment", :object => @seedling.comments
-      %div{:id => "imggridclip", :class => "responses"}
+          /%div{:id => "imggridclip", :class => "responses"}
         
-        %p 
-          %b{:class => "titlecolor"}Learn Something? Leave a Response       
-        - form_remote_for([@seedling, @seedling.comments.build]) do |f|
-          = error_messages_for "comment"
-          
-          %p
-            = f.label "Your name:"
-            %br
-            = f.text_field :author, :class => "nametxt" 
-          %p
-            = f.label "Your response:"
-            %br
-            = f.text_area :body, :rows => 6, :cols => 70, :class => "commenttxt" 
-          %p
-            = f.submit "Submit"     
+        %div{:class => "paneldiv", :style=>"padding:16px;"}      
+          - form_remote_for([@seedling, @seedling.comments.build]) do |f|
+            = error_messages_for "comment"
+  
+            %div
+              /= f.label "Your response:"
+              
+              = f.text_area :body, :rows => 6, :cols => 70, :class => "commenttxt", :placeholder => "Learn Something? Leave a Response:"           
+            %div
+              /= f.label "Your name:"
+              
+              = f.text_field :author, :class => "nametxt", :placeholder => "Name:"
+              = f.submit "Post your Response", :class => "accord", :style => "padding:3px; margin:5px; font-weight:bold"  
       %br  
   
   // T H E      S E C O N D       C O L U M N  ( C E N T E R )       
@@ -187,6 +187,7 @@
           Pageviews:
           = @seedling.views
 
+
       -if(!@seedling.short_url.blank?)        
         // Short URL
         %div{:class => "paneldiv"}
@@ -197,29 +198,37 @@
                                
       
       // Tags block
-      %br
-      %div{:class => "previewhead", :style =>"min-height:20px;"}
-        Tags 
-      %div{:class => "contentflat"}
-        %p{:class => "tagsdiv"}
-          %font{:class=>"titlecolor"}
-            - for tag in @seedling.tags
-              #{tag.name}
-          
+      /%br
+      -if(!@seedling.tags.blank?)
+        %div{:class => "paneldiv"}
+          %div{:class => "iconimg"}
+            = image_tag "/images/system/icons/tag.png", :size => "18x18"        
+          %div{:class => "icondesc"}
+            Tags: 
+            %font{:class=>"titlecolor"}
+              - for tag in @seedling.tags
+                #{tag.name}
+                  
       
       // Geo data block    
       
       %ul{:id => "switchlist"}
         %li
-          %div{:id => "list_a_excl_collapsed", :class => "headreverse", :style => "display:block"}
-            %a{:href => "javascript:swap('list_a_excl',groupA)"}
-              View Geo Details
-              %div{:class => "accord"} &darr;
+          %div{:class => "paneldiv", :id => "list_a_excl_collapsed", :style => "display:block"}
+            %div{:class => "iconimg"}
+              =image_tag "/images/system/icons/location.png", :size => "15x18"        
+            %div{:class => "icondesc"}
+              %a{:href => "javascript:swap('list_a_excl',groupA)", :style => "color: #40413f;"}
+                View Geo Details
+                %div{:class => "accord"} &#9660;
           %div{:id =>"list_a_excl_expanded", :style => "display:none"}
-            %div{:class => "headflat"}
-              %a{:href => "javascript:swap('list_a_excl',groupA)"} 
-                Hide Details
-                %div{:class => "accord"} &uarr;
+            %div{:class => "paneldiv"}
+              %div{:class => "iconimg"}
+                =image_tag "/images/system/icons/location.png", :size => "15x18"        
+              %div{:class => "icondesc"}             
+                %a{:href => "javascript:swap('list_a_excl',groupA)", :style => "color: #40413f;"} 
+                  Hide Details
+                  %div{:class => "accord"} &#9650;
             %div{:class=>"previewcontent"}  
               // The details table which switches open:        
               %table{:style=>"width:100%"}
@@ -244,7 +253,11 @@
   // T H E      R I G H T       C O L U M N                        
   %div{:id => "rightcolumn"}
     .innertube
-    
+
+      %a{:class => "createnew", :href => "/seedlings"}
+        All Seedlings
+      %br
+        
       // Contact us block 
       - if(@seedling.has_uncredited_authors)
         %div{:id => "imggrid", :class => "contactusdiv"}
@@ -258,7 +271,7 @@
       - if(has_related_works)
         %div{:class => "previewhead", :style =>"min-height:20px;"}
           = more_by_description 
-        %div{:class => "previewcontent", :style =>"text-align:center;"}     
+        %div{:class => "previewcontent", :style =>"text-align:center; padding:2px;"}     
           = more_by_links
       // Clippings block      
       //%div{:id => "imggridclip", :class => "clip"}      
@@ -267,6 +280,12 @@
       //  %img{:id => "map_canvas_thumb", :width => "60px", :src =>"", :alt => "thumbnail map"}
       //  %br
       //%br
+      
+
+      
+      
+      
+      
       
   %div{:id => "footer"}
     Copyright &copy; 2009-2011 Karunatree LLC. #{link_to "Contact Us", contact_path}    
@@ -279,6 +298,6 @@
   //|
   //= link_to "Destroy", @seedling, :confirm => 'Are you sure?', :method => :delete
   //|
-  = link_to "View All", seedlings_path
+  //= link_to "View All", seedlings_path
 
 = render :partial => "googleMaps"

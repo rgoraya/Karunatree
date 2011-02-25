@@ -105,7 +105,7 @@ module SeedlingsHelper
     for i in (1..[2, users_seedlings.count].max)
       r = rand(users_seedlings.count)
       seedling = users_seedlings[r]
-      link_string << link_to(image_tag(seedling.project.url(:square), :width => "52px", :id => "morebyimg", :class => "more-link"), url_for(seedling))
+      link_string << link_to(image_tag(seedling.project.url(:square), :width => "55px", :id => "morebyimg", :class => "more-link"), url_for(seedling))
       users_seedlings.delete(seedling)
     end
   

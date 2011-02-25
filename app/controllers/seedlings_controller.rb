@@ -9,18 +9,27 @@ class SeedlingsController < ApplicationController
   auto_complete_for :tag, :name
   
   def index
-    @seedlings = Seedling.find(:all)
-    @taggings = Tagging.find(:all)
-    @tags = Tag.find(:all)
-    respond_to do |format|
-      format.html {}
-      format.xml{
-        render :text=>@seedling.to_xml(:only=>[:title, :lat,:lon,:description], :root=>"name")
-      }
-      format.json{
-        render :text=>@seedling.to_json
-      }
+    
+    user_agent = request.env['HTTP_USER_AGENT'].downcase 
+     if user_agent =~ /msie/i 
+        "Internet Explorer" 
+        redirect_to :controller=>"root"
+        flash[:notice] = "Oops! Your browser is not supported. Please use Safari, Google Chrome or Mozilla Firefox to access the website."
+     else
+        @seedlings = Seedling.find(:all)
+        @taggings = Tagging.find(:all)
+        @tags = Tag.find(:all)
+        respond_to do |format|
+          format.html {}
+          format.xml{
+            render :text=>@seedling.to_xml(:only=>[:title, :lat,:lon,:description], :root=>"name")
+          }
+          format.json{
+            render :text=>@seedling.to_json
+          }
+      end
     end
+    
   end
   
   def show

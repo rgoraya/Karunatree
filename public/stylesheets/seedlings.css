@@ -293,7 +293,7 @@ font-size:14px;
 	background: #3e779d;
 	background: -webkit-gradient(linear, left top, left bottom, from(#e3e3e3), to(#d5d5d5));
 	background: -moz-linear-gradient(top,  #e3e3e3,  #d5d5d5);
-	min-height: 22px;
+	min-height: 25px;
 	padding: 0 10px;
 	/* Shadow effects */
 	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 3px;
@@ -315,6 +315,7 @@ font-size:14px;
 
 .iconimg {
 	float: left;
+	width:auto;
 }
 
 .icondesc {
@@ -1110,10 +1111,11 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
     padding-top:10px;
 	text-decoration: none;
     /* Curved Borders */
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -khtml-border-radius: 5px;
-    border-radius: 5px; 	
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -khtml-border-radius: 2px;
+    border-radius: 2px; 	
+	text-align:center;
 }
 
 .createnew:hover {
@@ -1129,8 +1131,9 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	color:#40413f;
 	min-width:19px;
 	text-align:center;
-	padding:0px;
+	padding:1px;
 	border: 1px solid #7c7c7c;	
+	font: normal 14px "Lucida Grande", "Verdana", sans-serif;
 	background: -webkit-gradient(linear, left top, left bottom, from(#FAFAFA), to(#bababa));
 	background: -moz-linear-gradient(top,  #FAFAFA,  #bababa);
 	-webkit-text-stroke: 1px transparent;
@@ -1209,3 +1212,21 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	background: -moz-linear-gradient(top,  #F0F0F0,  #ffffff);
 }
 
+.commentor {
+	padding:2px 16px 2px 16px;
+	color: #40413f;
+	font: bold 14px "Lucida Grande", "Verdana", sans-serif;
+}
+
+.commentbody {
+	padding:0px 16px 2px 16px;
+	color: #40413f;
+	font: normal 13px "Lucida Grande", "Verdana", sans-serif;
+}
+
+.commentwhen {
+	padding:0px 16px 10px 16px;
+	color: #A0A09F;
+	font: normal 12px "Lucida Grande", "Verdana", sans-serif;
+	border-bottom: 1px solid #E6E6E6;
+}
