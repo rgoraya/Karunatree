@@ -44,8 +44,9 @@
   // NOTE: we still have access to the 'file' variable (via JS closures)
   if (kmlObject) {
   // show it on Earth
-  currentKmlObjects[file] = kmlObject;
-  ge.getFeatures().appendChild(kmlObject);
+  // I M P O R T A N T : the following 2 lines have been commented out *until* the blue marble URL above starts working again
+  //currentKmlObjects[file] = kmlObject;
+  //ge.getFeatures().appendChild(kmlObject);
   } else {
   // bad KML
   currentKmlObjects[file] = null;

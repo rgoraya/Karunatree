@@ -17,6 +17,8 @@
   
   var ge;
   var lookAt;
+  var currentseed = 0;
+  var initzoom = true;  
   
   /initializes toggling objects
   var currentKmlObjects = {
@@ -30,7 +32,7 @@
   google.load("maps", "2.xx");
   
   function init(){
-  google.earth.createInstance('globe-user', initCB, failureCB);
+  google.earth.createInstance('globe3d', initCB, failureCB);
 
   addCheckboxesUIHtml(
   '<input type="checkbox" id="kml-blue-marble-check" onclick="toggleKml(\'blue-marble\');"/><strong>Toggle Blue Marble Layer</strong><br>' +

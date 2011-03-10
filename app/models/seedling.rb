@@ -10,6 +10,7 @@ class Seedling < ActiveRecord::Base
   has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings
   attr_accessor :tag_names
+
   after_save :assign_tags
   #multistep form
   attr_writer :current_step

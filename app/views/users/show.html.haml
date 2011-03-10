@@ -11,19 +11,19 @@
   %div{:id => "contentwrapper"}
     // G L O B E      C O L U M N
     %div{:id => "earthdiv"}
-      %div{:id => "imggrid"}
-        %div{:id => "globe-user", :style => "height: 570px"}
-        %div{:class => "paneldiv", :style => "height:40px"}        
-          %table{:id => "globecontrols"}
-            %tr
-              %td{:style => "width:40px;"}
-                %a{:id => "blue-marble", :class => "checked", :href => "javascript:getoggle('kml-blue-marble-check','blue-marble');", :onMouseOver =>"javascript:toggletext('Show/hide blue-marble');", :onmouseout=>"javascript:toggletext('');"}
-              %td{:style => "width:40px;"}
-                %a{:id => "atmosphere", :class => "checked", :href => "javascript:getoggle('kml-atmosphere-check','atmosphere');", :onMouseOver =>"javascript:toggletext('Show/hide Atmosphere');", :onmouseout=>"javascript:toggletext('');"}
-              %td{:style => "width:40px;"}
-                %a{:id => "border", :class => "off", :href => "javascript:getoggle('kml-border-check','border');", :onMouseOver =>"javascript:toggletext('Show/hide Borders');", :onmouseout=>"javascript:toggletext('');"}
-              %td{:style => "vertical-align:bottom", :align => "right"}
-                %div{:id => "toggletext"}
+      %div{:id => "globe3d"}
+      
+      %div{:class => "headreverse"}        
+        %table{:style => "width:100%;"}
+          %tr
+            %td{:style => "width:40px;"}
+              %a{:id => "blue-marble", :class => "checked", :href => "javascript:getoggle('kml-blue-marble-check','blue-marble');", :onMouseOver =>"javascript:toggletext('Show/hide blue-marble');", :onmouseout=>"javascript:toggletext('');"}
+            %td{:style => "width:40px;"}
+              %a{:id => "atmosphere", :class => "checked", :href => "javascript:getoggle('kml-atmosphere-check','atmosphere');", :onMouseOver =>"javascript:toggletext('Show/hide Atmosphere');", :onmouseout=>"javascript:toggletext('');"}
+            %td{:style => "width:40px;"}
+              %a{:id => "border", :class => "off", :href => "javascript:getoggle('kml-border-check','border');", :onMouseOver =>"javascript:toggletext('Show/hide Borders');", :onmouseout=>"javascript:toggletext('');"}
+            %td{:style => "vertical-align:bottom", :align => "left"}
+              %div{:id => "toggletext"}
                 
         // A hidden div containing checkboxes to toggle Google earth layers visibility          
         %div{:id => 'checkboxes-ui', :style => "visibility:collapse; height:0px"}
@@ -34,37 +34,53 @@
   // U S E R        S E E D L I N G      I N F O R M A T I O N
   %div{:id => "indexcontrols"}
     .innertube
-      %div{:id => "imggrid"}
-        
-        %div{:id => "nowshowing"}
-          %p #{@user.username}'s seedlings
-          #user_seedlings
-            - @user.seedlings.each do |seedling|
-          
-              %a{:href => "/seedlings/" + "#{Seedling.get_friendly_id(seedling)}"} #{seedling.title}
-              %br
-      %br
-      %div{:id => "imggrid"}
-        %h2
-          = @user.username
-        
+      / Profile
+      %div{:class => "previewhead"}
+        #{@user.username}'s Profile
+
+      %div{:class => "contentflat"}
+        = image_tag @user.avatar.url(:square) 
+        %H2{:class => "titlecolor"}
+          = @user.username  
         %p
           %b Account Type:
           = @user.account_type
-        %p
-          = image_tag @user.avatar.url(:square)             
-      %br
-      %div{:id => "imggrid", :style => "height: 183px;"}
-        = render :partial => "imageScroller" 
-        %div{:id => "outerContainer"}
-          %div{:id => "imageScroller"}
-            %div{:id=> "viewer", :class=> "js-disabled"}
-              - for seed in @user.seedlings
-                %a.wrapper{:href => "/seedlings/" + "#{Seedling.get_friendly_id(seed)}", :title => seed.title}
-                  %img#seedling.logo{:alt => "seed.title", :src => "#{Seedling.get_single_thumb(seed)}"}
-            
-            %p{:id => "img-footer"} My Seedlings
+     
+      / Stats
+      %div{:class => "headflat"}
+        Browse seedlings
+      %div{:class => "contentflat"}
         
+        %div{:id=>"seedpreview", :style=> "height:130px; text-align:center"}
+        
+        %table{:style => "width:100%"}  
+          %tr
+            %td{:align => "right", :id => "prevbtn"}
+              %img{:id => "prev", :class => "disabled", :src => "/images/seedlings/trans.gif", :width => "1px", :height => "1px"}
+              //%a{:id => "prev", :class => "enabled", :Title => "Jump to Next seedling", :href => "javascript:previous()"}
+            %td{:align => "left", :id => "nextbtn"}  
+              %img{:id => "next", :class => "disabled", :src => "/images/seedlings/trans.gif", :width => "1px", :height => "1px"}
+              //%a{:id => "next", :class => "enabled", :Title => "Jump to Previous seedling", :href => "javascript:next()"}
+        
+        
+      / Preview of all Seedlings
+      %div{:class => "headflat"}
+        Jump to a seedling
+      %div{:class => "previewcontent", :style=>"overflow:auto; height:170px;"}
+        = previews
+        
+        / Commented out the auto scroller for now.
+        
+        /= render :partial => "imageScroller" 
+        /%div{:id => "outerContainer"}
+        /%div{:id => "imageScroller"}
+        /%div{:id=> "viewer", :class=> "js-disabled"}
+        /- for seed in @user.seedlings
+        /%a.wrapper{:href => "/seedlings/" + "#{Seedling.get_friendly_id(seed)}", :title => seed.title}
+        /%img#seedling.logo{:alt => "seed.title", :src => "#{Seedling.get_single_thumb(seed)}"}
+            
+        /%p{:id => "img-footer"} My Seedlings
+ 
            
       
   %div{:id => "footer"}

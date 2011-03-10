@@ -14,9 +14,7 @@ Boosts:
 
 - if !cookies['liked' + @seedling.id.to_s()] # => @seedling.id
   %div{:class => "accord", :style=> "padding:1px"} 
-    
     = link_to_remote image_tag('/images/system/icons/like.png', :size => "16x16", :title => "boost this seedling") , {:url=> {:model=>'seedling',:action=>"like", :id=>@seedling.id}, :update => 'boosts'}
 - else
   %div{:class => "accord", :style=> "padding:1px"} 
-    
-    = link_to_remote image_tag('/images/system/icons/unlike.png', :size => "16x16", :title => "stop boosting this seedling") , {:url=> {:model=>'seedling',:action=>"unlike", :id=>@seedling.id}, :update => 'boosts'}   
+    = link_to_remote image_tag('/images/system/icons/unlike.png', :size => "16x16", :title => "stop boosting this seedling") , {:url=> {:model=>'seedling',:action=>"unlike", :id=>@seedling.id}, :update => 'boosts'} 

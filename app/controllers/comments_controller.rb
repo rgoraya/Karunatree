@@ -20,17 +20,18 @@ class CommentsController < ApplicationController
     @comment = @seedling.comments.build
   end
   
-  def create
-    @seedling = Seedling.find(params[:seedling_id])
-    @comment = @seedling.comments.build(params[:comment])
-    if @comment.save
-      respond_to do |format|
-        format.html { redirect_to seedling_path(@comment.seedling_id)}
-        format.js
-      end
-    else
-      render :action => "new"
-    end
+  def create  
+      @seedling = Seedling.find(params[:seedling_id])
+      @comment = @seedling.comments.build(params[:comment])
+      
+      if @comment.save
+        respond_to do |format|
+          format.html { redirect_to seedling_path(@comment.seedling_id)}
+          format.js
+        end
+      else
+        render :action => "new"
+      end    
   end
   
   def destroy
@@ -43,6 +44,8 @@ class CommentsController < ApplicationController
       format.xml {head :ok}
     end
   end
-  
+
 end
+
+
 

@@ -33,27 +33,34 @@ class SeedlingsController < ApplicationController
   end
   
   def show
-    @seedling = Seedling.find(params[:id], :readonly => false)
-    respond_to do |format|
-      format.html {}
-      format.xml{
-        render :text=>@seedling.to_xml(:only=>[:title, :lat,:lon,:description], :root=>"name")
-      }
-      format.json{
-        render :text=>@seedling.to_json
-      }
-    end
     
-    # The following code checks for the unique page view Cookie. If not found, the database
-    # field "Views" is incremented and a cookie (expires after 1year) is set in the browser
-
-    cookie_viewed = "viewed" + @seedling.id.to_s()
-    if cookies[cookie_viewed] # => @seedling.id
-    else
-      @seedling.increment!(:views)
-      cookies[cookie_viewed] = {:value => @seedling.id, :expires => 1.year.from_now}
-    end
-  
+    user_agent = request.env['HTTP_USER_AGENT'].downcase  
+     if user_agent =~ /msie/i 
+        "Internet Explorer" 
+        redirect_to :controller=>"root"
+        flash[:notice] = "Oops! Your browser is not supported. Please use Safari, Google Chrome or Mozilla Firefox to access the website."
+     else
+        @seedling = Seedling.find(params[:id], :readonly => false)
+        respond_to do |format|
+          format.html {}
+          format.xml{
+            render :text=>@seedling.to_xml(:only=>[:title, :lat,:lon,:description], :root=>"name")
+          }
+          format.json{
+            render :text=>@seedling.to_json
+          }
+        end
+        
+        # The following code checks for the unique page view Cookie. If not found, the database
+        # field "Views" is incremented and a cookie (expires after 1year) is set in the browser
+    
+        cookie_viewed = "viewed" + @seedling.id.to_s()
+        if cookies[cookie_viewed] # => @seedling.id
+        else
+          @seedling.increment!(:views)
+          cookies[cookie_viewed] = {:value => @seedling.id, :expires => 1.year.from_now}
+        end
+     end  
   end
 
  

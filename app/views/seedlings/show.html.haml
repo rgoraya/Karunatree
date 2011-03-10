@@ -120,19 +120,36 @@
           = render :partial => "comments/comment", :object => @seedling.comments
           /%div{:id => "imggridclip", :class => "responses"}
         
-        %div{:class => "paneldiv", :style=>"padding:16px;"}      
-          - form_remote_for([@seedling, @seedling.comments.build]) do |f|
-            = error_messages_for "comment"
-  
-            %div
-              /= f.label "Your response:"
+        - if current_user
+          %div{:class => "paneldiv", :style=>"padding:16px;"}      
+            - form_remote_for([@seedling, @seedling.comments.build]) do |f|
+              = error_messages_for "comment"
+    
+              %div
+                /= f.label "Your response:"
+                
+                = f.text_area :body, :rows => 6, :cols => 70, :class => "commenttxt", :placeholder => "Learn Something? Leave a Response:"           
+              %div
+                /= f.label "Your name:"
+                
+                = f.text_field :author, :class => "nametxt", :placeholder => "Name:"
+                = f.submit "Post your Response", :class => "accord", :style => "padding:3px; margin:5px; font-weight:bold"  
+        - else 
+          %div{:class => "paneldiv", :style=>"padding:16px;"}      
+            - form_remote_for([@seedling, @seedling.comments.build]) do |f|
+              = error_messages_for "comment"
+    
+              %div
+                /= f.label "Your response:"
+                
+                = f.text_area :body, :rows => 6, :cols => 70, :class => "commenttxt", :placeholder => "Learn Something? Leave a Response:", :disabled => true           
+              %div
+                /= f.label "Your name:"
+                
+                = f.text_field :author, :class => "nametxt", :placeholder => "Name:", :disabled => true
+                Note: Only registered users can post responses.
+                = f.submit "Post your Response", :class => "accord", :style => "padding:3px; margin:5px; font-weight:bold", :disabled => true              
               
-              = f.text_area :body, :rows => 6, :cols => 70, :class => "commenttxt", :placeholder => "Learn Something? Leave a Response:"           
-            %div
-              /= f.label "Your name:"
-              
-              = f.text_field :author, :class => "nametxt", :placeholder => "Name:"
-              = f.submit "Post your Response", :class => "accord", :style => "padding:3px; margin:5px; font-weight:bold"  
       %br  
   
   // T H E      S E C O N D       C O L U M N  ( C E N T E R )       
