@@ -1284,3 +1284,29 @@ background:url('../images/seedlings/getoggle_nav.png') -70px -35px;
 	font: normal 12px "Lucida Grande", "Verdana", sans-serif;
 	border-bottom: 1px solid #E6E6E6;
 }
+
+.nonusermsg {
+	border: 1px solid #E6E6E6;
+	/* Fonts */	
+	color:#307BA0;
+	text-shadow: rgba(0,0,0,.4) 0 1px 0;
+	-webkit-text-stroke: 1px transparent;
+	padding:6px;
+	margin:10px;
+	font: normal 16px/18px "Lucida Grande", "Verdana", sans-serif;	
+	/* Curved Borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -khtml-border-radius: 2px;
+    border-radius: 2px; 
+}
+
+.nonusermsg a{
+	color:#669900;
+	text-decoration:none;
+}
+
+.nonusermsg a:hover{
+	text-decoration:underline;
+}
+

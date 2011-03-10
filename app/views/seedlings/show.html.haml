@@ -135,7 +135,12 @@
                 = f.text_field :author, :class => "nametxt", :placeholder => "Name:"
                 = f.submit "Post your Response", :class => "accord", :style => "padding:3px; margin:5px; font-weight:bold"  
         - else 
+          %div{:class => "nonusermsg"} 
+            You must 
+            %a{:class=> "titlecolor", :href => "/login" } sign in 
+            to post a response.
           %div{:class => "paneldiv", :style=>"padding:16px;"}      
+
             - form_remote_for([@seedling, @seedling.comments.build]) do |f|
               = error_messages_for "comment"
     
@@ -147,7 +152,7 @@
                 /= f.label "Your name:"
                 
                 = f.text_field :author, :class => "nametxt", :placeholder => "Name:", :disabled => true
-                Note: Only registered users can post responses.
+
                 = f.submit "Post your Response", :class => "accord", :style => "padding:3px; margin:5px; font-weight:bold", :disabled => true              
               
       %br  
