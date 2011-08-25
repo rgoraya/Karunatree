@@ -33,7 +33,12 @@
   
   // C O N T R O L S      C O L U M N
   %div{:id => "indexcontrols"}
+
     .innertube
+      %a{:class => "createnew", :href => "javascript:seedsearchall();"}
+        All Seedlings  
+      %br      
+      
       %div{:class => "previewhead", :style =>"min-height:20px;"}
         %div{:id => "nowshowinghead"}
           Focused on
@@ -44,7 +49,7 @@
                    
       
       %div{:class => "headflat", :style =>"min-height:20px;"}
-        Seedling Stats 
+        Seedling Stats
       %div{:class => "contentflat"}
         %table{:id => "stattbl"}
           %tr
@@ -70,19 +75,19 @@
             %td{:align => "left", :id => "nextbtn"}  
               %img{:id => "next", :class => "disabled", :src => "/images/seedlings/trans.gif", :width => "1px", :height => "1px"}
               //%a{:id => "next", :class => "enabled", :Title => "Jump to Previous seedling", :href => "javascript:next()"}
-            
+
    
       %ul{:id => "switchlist"}
         %li
           %div{:id => "list_a_excl_collapsed", :class => "headflat", :style => "display:block" }
             %a{:href => "javascript:swap('list_a_excl',groupA)"} 
               Fly to a known destination 
-              %div{:class => "accord"} &darr;
+              %div{:class => "accord"} &#9660;
           %div{:id =>"list_a_excl_expanded", :style => "display:none"}
             %div{:class => "headflat"}
               %a{:href => "javascript:swap('list_a_excl',groupA)"} 
                 Close Fly to Controls 
-                %div{:class => "accord"} &uarr;
+                %div{:class => "accord"} &#9650;
             %div{:class => "contentflat"}         
               %table 
                 %tr
@@ -95,12 +100,12 @@
           %div{:id => "list_b_excl_collapsed", :class => "headreverse", :style => "display:block"}
             %a{:href => "javascript:swap('list_b_excl',groupA)"} 
               Search for Seedlings
-              %div{:class => "accord"} &darr;
+              %div{:class => "accord"} &#9660;
           %div{:id => "list_b_excl_expanded", :style => "display:none"}
             %div{:class => "headflat", :style =>"min-height:20px;"}
               %a{:href => "javascript:swap('list_b_excl',groupA)"} 
                 Close Search 
-                %div{:class => "accord"} &uarr;
+                %div{:class => "accord"} &#9650;
             %div{:class => "previewcontent"}
               %table{:class => "auto_complete"}
                 %tr     
@@ -115,7 +120,8 @@
                    
                   %td{:align => "right"}  
                     %a{:id => "search", :Title => "Search for the Seedlings", :href => "javascript:tagsearch()"}
-                  
+        
+   
               
   %div{:id => "footer"}
     Copyright &copy; 2009-2011 Karunatree LLC. #{link_to "Contact Us", contact_path}    

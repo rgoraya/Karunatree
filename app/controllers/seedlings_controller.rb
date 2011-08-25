@@ -9,48 +9,82 @@ class SeedlingsController < ApplicationController
   auto_complete_for :tag, :name
   
   def index
-    @seedlings = Seedling.find(:all)
-    @taggings = Tagging.find(:all)
-    @tags = Tag.find(:all)
-    respond_to do |format|
-      format.html {}
-      format.xml{
-        render :text=>@seedling.to_xml(:only=>[:title, :lat,:lon,:description], :root=>"name")
-      }
-      format.json{
-        render :text=>@seedling.to_json
-      }
+    
+    user_agent = request.env['HTTP_USER_AGENT'].downcase 
+     if user_agent =~ /msie/i 
+        "Internet Explorer" 
+        redirect_to :controller=>"root"
+        flash[:notice] = "Oops! Your browser is not supported. Please use Safari, Google Chrome or Mozilla Firefox to access the website."
+     else
+        @seedlings = Seedling.find(:all)
+        @taggings = Tagging.find(:all)
+        @tags = Tag.find(:all)
+        respond_to do |format|
+          format.html {}
+          format.xml{
+            render :text=>@seedling.to_xml(:only=>[:title, :lat,:lon,:description], :root=>"name")
+          }
+          format.json{
+            render :text=>@seedling.to_json
+          }
+      end
     end
+    
   end
   
   def show
-    @seedling = Seedling.find(params[:id])
-    respond_to do |format|
-      format.html {}
-      format.xml{
-        render :text=>@seedling.to_xml(:only=>[:title, :lat,:lon,:description], :root=>"name")
-      }
-      format.json{
-        render :text=>@seedling.to_json
-      }
-    end
-  end
-  
-  def like
-    @seedling = Seedling.find(params[:id], :readonly => false)
-    @seedling.increment!(:likes)
-    cookies[:seedling_id] = @seedling.id
-    #cookies[:seedling_id].add(@seedling.id)
+    
+    user_agent = request.env['HTTP_USER_AGENT'].downcase  
+     if user_agent =~ /msie/i 
+        "Internet Explorer" 
+        redirect_to :controller=>"root"
+        flash[:notice] = "Oops! Your browser is not supported. Please use Safari, Google Chrome or Mozilla Firefox to access the website."
+     else
+        @seedling = Seedling.find(params[:id], :readonly => false)
+        respond_to do |format|
+          format.html {}
+          format.xml{
+            render :text=>@seedling.to_xml(:only=>[:title, :lat,:lon,:description], :root=>"name")
+          }
+          format.json{
+            render :text=>@seedling.to_json
+          }
+        end
+        
+        # The following code checks for the unique page view Cookie. If not found, the database
+        # field "Views" is incremented and a cookie (expires after 1year) is set in the browser
+    
+        cookie_viewed = "viewed" + @seedling.id.to_s()
+        if cookies[cookie_viewed] # => @seedling.id
+        else
+          @seedling.increment!(:views)
+          cookies[cookie_viewed] = {:value => @seedling.id, :expires => 1.year.from_now}
+        end
+     end  
   end
 
-  def view
+ 
+  def like
     @seedling = Seedling.find(params[:id], :readonly => false)
-    #cookies[:seedling_id] = @seedling.id
-    #if cookies[:seedling_id] == ""
-    self.increment!(:views)
-    #flash[:notice] = "pageview"
-    #end  
+    cookie_liked = "liked" + @seedling.id.to_s()
+    if cookies[cookie_liked] # => @seedling.id
+    else  
+      cookies[cookie_liked] = {:value => @seedling.id, :expires => 1.year.from_now}
+      @seedling.increment!(:likes)      
+      render :partial => 'boosts'
+    end
   end
+
+  def unlike
+    @seedling = Seedling.find(params[:id], :readonly => false)
+    cookie_liked = "liked" + @seedling.id.to_s()
+    if cookies[cookie_liked] # => @seedling.id
+      cookies.delete cookie_liked  
+      @seedling.decrement!(:likes)      
+      render :partial => 'boosts'
+    end
+  end
+
   
   def new
   	@seedling = Seedling.new
@@ -58,9 +92,19 @@ class SeedlingsController < ApplicationController
 
   def create
     @seedling = Seedling.new(params[:seedling])
-    if @seedling.save
+    if @seedling.save      
+      # retrieve the URL of this newly created seedling
+      long_url = url_for(@seedling).to_s()
+      
+      # make bit.ly API call to get shortened URL
+      short_url = shorten_with_bitly(long_url) 
+      
+      # save the shortened URL in the DB
+      @seedling.update_attribute(:short_url, short_url)
+      
       flash[:notice] = "Successfully created seedling."
       redirect_to @seedling
+      
     else
 
       render :action => 'new'
@@ -124,6 +168,25 @@ class SeedlingsController < ApplicationController
       }
     end
   end
+  
+  def shorten_with_bitly(url)
+    
+    # required for Opening the bit.ly URL and conversion
+    require 'open-uri'
+
+    # create the URL for bit.ly API call
+    user = "karunatree"
+    apikey = "R_fb23f038adfb891a3cf351ef4bfceb14"
+    bitly_url = "http://api.bit.ly/v3/shorten?login=#{user}&apiKey=#{apikey}&longUrl=#{url}&format=txt"
+    
+    # make the API call
+    short_url = open(bitly_url, "UserAgent" => "Ruby-ExpandLink").read
+
+    # return the shortened URL
+    return short_url
+ 
+  end 
+  
   
 end
 

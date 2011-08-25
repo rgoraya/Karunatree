@@ -87,7 +87,7 @@ module SeedlingsHelper
 
   def more_by_description
     if(@seedling.users.count == 1)
-      return "More by " + link_to(@seedling.users.first.username, url_for(@seedling.users.first))
+      return "More by " + link_to(@seedling.users.first.username, url_for(@seedling.users.first), :style => "color:#307BA0;")
     else
       return "More by these artists"
     end
@@ -105,11 +105,13 @@ module SeedlingsHelper
     for i in (1..[2, users_seedlings.count].max)
       r = rand(users_seedlings.count)
       seedling = users_seedlings[r]
-      link_string << link_to(image_tag(seedling.project.url(:square), :width => "60px", :id => "morebyimg"), url_for(seedling))
+      link_string << link_to(image_tag(seedling.project.url(:square), :width => "55px", :id => "morebyimg", :class => "more-link"), url_for(seedling))
       users_seedlings.delete(seedling)
     end
   
     return link_string
   end
+
+
 
 end

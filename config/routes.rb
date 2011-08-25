@@ -7,7 +7,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :seedlings, :collection => {:auto_complete_for_seedling_title => :get},
                             :member => {  :project => :get,
-                                          :audio_message => :get },
+                                          :audio_message => :get},
                             :has_many => :comments
   map.connect 'seedlings/guided_creation', :controller =>'seedlings', :action => 'guided_creation_new'   
                             

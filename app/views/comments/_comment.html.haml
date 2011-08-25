@@ -3,13 +3,18 @@
 //   
 //   Author: Jason Lu
 
+- content_for(:include_custom_stylesheet) do
+  = stylesheet_link_tag "seedlings"
+
 %tr{:class => "three-column-description"}
   - comments = @seedling.comments
   - if comments.length > 0
     %p
-      %b #{comments.last.author},
-      when:
+    %div{:class => "commentor"}
+      %b #{comments.last.author}
+      says:
+    %div{:class => "commentbody"}
+      #{comments.last.body}
+    %div{:class => "commentwhen"}
       = comments.last.created_at
-      %br
-      Says:
-      = comments.last.body
+      

@@ -33,10 +33,6 @@
   // Call the Reverse Geocoding Function
   reverse(); 
   
-  //incrPageviews();
-  
-
-  
   }
   
   //   F U N C T I O N S       F O R       S W I T C H - L I S T S
@@ -80,91 +76,6 @@
   }
   }
 
-
-  //   F U N C T I O N S       F O R       C O O K I E S
-  function getCookie(cookie_name)
-  {
-  alert('came to retrieve ' + cookie_name)
-  if (document.cookie.length>0)
-  {
-  c_start=document.cookie.indexOf(cookie_name + "=");
-  if (c_start!=-1)
-  { 
-  c_start=c_start + cookie_name.length+1 ;
-  c_end=document.cookie.indexOf(";",c_start);
-  if (c_end==-1) c_end=document.cookie.length
-  return unescape(document.cookie.substring(c_start,c_end));
-  } 
+  function submitComment() {
+  document.getElementById("new_comment").submit() ;
   }
-  return ""
-  }
-
-  function setCookie(cookie_name,value,expiredays)
-  {
-  alert('setting ' + cookie_name);
-  var exdate=new Date();
-  exdate.setDate(exdate.getDate()+expiredays);
-  document.cookie=cookie_name+ "=" +escape(value)+((expiredays==null) ? "" : "; expires="+exdate.toUTCString());
-  }
-
-  //   F U N C T I O N S       F O R       P A G E V I E W S       &       L I K E S
-  
-  // INCREMENT PAGEVIEWS --- if this user is visiting first time  
-  function incrPageviews() {
-  
-  // get the unique name for the cookie for this page
-  var viewed_seedling = #{@seedling.id.to_json};
-  var pageviews = #{@seedling.views.to_json};
-  alert (viewed_seedling);
-  
-  // check cookie to see if this seedling was viewed already by the user
-  var viewed_earlier = 0;
-  viewed_earlier = getCookie(viewed_seedling);
-  alert(viewed_earlier);
-  
-  // if it is the first time
-  if (viewed_earlier == "") { 
-  
-  //<%= remote_function :url => {:controller => 'seedlings', :action => 'view', :id=>@seedling.id} %>
-  
-  // set the cookie to mark that this seedling has been viewed by user 
-  
-  setCookie(viewed_seedling,1,365);
-  alert('you are viewing this page for the first time');
-  
-  // put in code here to increment the unique page views
-  //#{@seedling.view}
-  
-  } else {alert('you already visited this page'); }
-  
-  // otherwise do nothing
-    
-  }
-  
-  
-  // INCREMENT BOOSTS --- if this user is boosting this seedling first time.  
-  function incrBoosts() {
-  
-  // get the unique name for the cookie for this page
-  var boost_seedling = 'boost' + #{@seedling.id.to_json};
-  alert (boost_seedling);
-  
-  // check cookie to see if this seedling was viewed already by the user
-  var boosted_earlier = 0;
-  boosted_earlier = getCookie(boost_seedling);
-  alert(boosted_earlier);
-  
-  // if it is the first time
-  if (boosted_earlier == "")
-  {
-  // set the cookie to mark that this seedling has been viewed by user 
-  setCookie(boost_seedling,1,365);
-  alert('you are boosting this seedling for the first time');
-
-  // put in code here to increment the unique page views
-  }
-  else 
-  // otherwise do nothing
-  {alert('you already boosted this page');}  
-  }
-  
