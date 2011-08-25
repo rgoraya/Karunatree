@@ -1,0 +1,15 @@
+# OS X Finder files
+.DS_Store
+
+# Other SCM archive directories
+.svn
+
+# Automatic backup files
+*~.nib
+*.swp
+
+# Rails project ignore files
+log/*.log
+tmp/**/*
+db/*.sqlite3
+
