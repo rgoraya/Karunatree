@@ -109,8 +109,7 @@ class SeedlingsController < ApplicationController
   def audio_message
     @seedling = Seedling.find(params[:id])
     send_file REGISTRY[:data_dir]+"/seedlings/"+@seedling.id.to_s()+'-'+@seedling.friendly_id+'/'+@seedling.id.to_s()+'-audio-message.mp3',
-              :type => 'audio/mp3',
-              :disposition => 'inline'
+              :disposition => 'inline' #Note: Specifying :type => 'audio/mp3' here causes jPlayer to display an expected duration of NaN in Safari. Omitting the type attribute solves the problem.
   end
   
   def guided_creation_new  
